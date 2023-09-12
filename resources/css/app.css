@@ -1,0 +1,16 @@
+.nav-link{
+    font-size: 16px !important;
+
+}
+body{
+    font-family: 'Open Sans', sans-serif !important;
+    /* font-family: 'Playfair Display', serif !important; */
+}
+.form-control{
+    border-color:grey !important;
+}
+.small-banner {
+    aspect-ratio: 7/8;
+    padding: 25px;
+} 
+   
