@@ -11,6 +11,8 @@ body{
 }
 .small-banner {
     aspect-ratio: 7/8;
-    padding: 25px;
+    padding: 25px; 
 } 
-   
+.error{
+    color: red;
+} 

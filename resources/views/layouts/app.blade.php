@@ -15,7 +15,9 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Scripts -->
+    @notifyCss
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    
 </head>
 
 <body>
@@ -172,7 +174,8 @@
             </div>
         </footer>
     </div>
+    <x-notify::notify />
+    @notifyJs
 </body>
-
 </html>
 @yield('script')
