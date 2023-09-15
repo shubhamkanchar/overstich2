@@ -82,4 +82,266 @@
         </div>
     </form>
 </div>
+
+<div class="modal fade" id="guideline1" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>
+                    <h3 class="text-decoration-underline m-5 text-center"><b>How It Benefits You As Seller?</b></h3>
+
+                    <ul>
+                        <li class="mt-3"><b>1. Enhanced Visibility :</b> Our platform ensures all brands receive equal exposure, letting smaller
+                            businesses shine alongside larger ones, and attracting customers looking for something special.
+                        </li>
+                        <li class="mt-3"><b>2. Social Media Boost :</b> Utilising our Instagram presence, we create attractive ad posters and graphics,
+                            promoting your brand and products to a broader audience. This not only benefits you as a seller but
+                            also helps customers explore the wide range of products from different brands.
+                        </li>
+                        <li class="mt-3"><b>3. Targeted Reach :</b> With strategic marketing tactics, we ensure that your products are presented to the
+                            right customers, increasing the likelihood of meaningful sales.
+                        </li>
+                        <li class="mt-3"><b>4. Shipping and Delivery :</b> We handle shipping and delivery of products to customers. Sellers do not
+                            need to worry about shipping and handling.
+                        </li>
+                        <li class="mt-3"><b>5. FREE Early Access Advantage:</b> For a limited time, early registration rewards you with premium
+                            homepage placement at no cost, capturing valuable attention and potentially boosting Sales & Brand
+                            Value.
+                        </li>
+                        <li class="mt-3"><b>6. Zero-Risk Entry :</b> Sellers enjoy FREE registration, eliminating upfront expenses and simplifying the
+                            process of starting your selling journey.
+                        </li>
+                        <li class="mt-3"><b>7. Promotional Support :</b> Enjoy FREE Advertisement creation during your discounts or sales. These ads
+                            will appear on our Social Media and Platform Homepage, benefiting both sellers and customers. This
+                            ensures your special offers reach a wider audience, helping buyers discover great deals.</li>
+                    </ul>
+                </div>
+                <div class="text-center fs-1">
+                    <button class="btn btn-default fs-1" data-bs-target="#guideline2" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="bi bi-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="guideline2" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>
+                    <h3 class="text-decoration-underline m-5 text-center"><b>Order-to-Delivery Process</b></h3>
+
+                    <ul>
+                        <li class="mt-3"><b class="d-block">1. Order Placement</b>
+                            <span class="d-block">The customer places an order on the website.</span>
+                            <span class="d-block">The order is received and processed by our system.</span>
+                            <span class="d-block">The order details are displayed on seller's dashboards.</span>
+                        </li>
+                        <li class="mt-3"><b class="d-block">2. Information Processing</b>
+                            <span class="d-block">The seller verifies the order details and confirms the availability of the products.</span>
+                            <span class="d-block">The seller prepares the package for shipping.</span>
+                            <span class="d-block">The seller weighs and measures the package and provides us with the details via WhatsApp.</span>
+                            <span class="d-block">We generate a shipping label and send it to the seller via WhatsApp.</span>
+                        </li>
+                        <li class="mt-3"><b class="d-block">3. Order Preparation</b>
+                            <span class="d-block">The seller affixes the shipping label to the package.</span>
+                            <span class="d-block">We arrange for a pickup of the package from the seller's address.</span>
+                        </li>
+                        <li class="mt-3 mb-5"><b class="d-block">4. Order Delivery</b>
+                            <span class="d-block">The package is picked up by the shipping carrier.</span>
+                            <span class="d-block">The package is delivered to the customer.</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="text-center mt-5">
+                    <span class="d-block mt-5"><img class="d-inline" width="15" src="{{ asset('image/other/green.png') }}"> HAVE READ ORDER-TO-DELIVERY PROCESS</span>
+                    <button class="btn btn-default fs-1" data-bs-target="#guideline3" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="bi bi-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="guideline3" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>
+                    <h3 class="text-decoration-underline m-5 text-center"><b>Seller Guidelines</b></h3>
+
+                    <ul>
+                        <li class="mt-3">Thank you for considering joining our platform as a seller. Before you proceed with your registration, kindly
+                            review and understand the following important guidelines to ensure a smooth and successful partnership:</li>
+                        <li class="mt-3"><b class="d-block">1. Exclusive Brand Ownership and Seller Details -</b> Sellers are required to exclusively offer their own branded
+                            products on our platform. Reselling of other brands products is strictly prohibited. Your brand details,
+                            including brand name, Legal name, address and email ID, will be visible to customers on the platform. This
+                            ensures transparency and trust in the products being offered.
+                        </li>
+                        <li class="mt-3"><b class="d-block">2. Intellectual Property and Trademarks -</b> Sellers must make sure that the products they list don't violate any
+                            intellectual property rights or trademarks owned by others. This includes confirming the authenticity of the
+                            items.
+                        </li>
+                        <li class="mt-3"><b class="d-block">3. GST Registration - </b> must have a valid GST registration for their business.
+                        </li>
+                        <li class="mt-3"><b class="d-block">4. Shipping and Delivery - </b>We handle shipping and delivery of products to customers. Sellers do not need to
+                            worry about shipping and handling. Delhivery courier service is used.
+                        </li>
+                        <li class="mt-3"><b class="d-block">5. Packaging and Labelling - </b>All products must be packaged in bags suitable for shipping. Additionally, each
+                            product should have a label sticker with dimensions 6x4 inches, displaying relevant information.
+                        </li>
+                        <li class="mt-3"><b class="d-block">6. Pricing Policy - </b>Product selling prices listed on our platform should not exceed the Maximum Retail Price
+                            (M.R.P.) mentioned on the physical product label/tag.
+                        </li>
+                        <li class="mt-3"><b class="d-block">7. Product Presentation - </b>For clothing items, provide at least 5 high-quality photos of the product, including
+                            images with a model wearing the clothing, size chart, and detailed product information such as fabric, fit, and
+                            occasion. While model images are recommended for other products to reduce returns, they are not
+                            mandatory.
+                        </li>
+                        <li class="mt-3"><b class="d-block">8. Product Quality and Authenticity - </b>All products listed on our platform must be of high quality and
+                            authentic. This is crucial to maintain customer satisfaction and the platform's reputation.
+                        </li>
+                    </ul>
+                </div>
+                <div class="text-center mt-5">
+                    <button class="btn btn-default fs-1" data-bs-target="#guideline4" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="bi bi-arrow-down"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="guideline4" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>
+                    <h3 class="text-decoration-underline m-5 text-center"><b>Seller Guidelines</b></h3>
+
+                    <ul>
+                        <li class="mt-3"><b class="d-block">9. Delivery Charges - </b>Delivery charges will be borne by the seller if the order value is above Rs.500/-. For orders below
+                            this amount, the delivery charge will be paid by the customer. Delhivery courier service will be used for product
+                            deliveries.
+                        </li>
+                        <li class="mt-3"><b class="d-block">10. Overstitch Commission - </b>Overstitch charges a 5% commission on the sold product amount (excluding GST). This fee
+                            covers our efforts in creating custom ad posters to boost your brand's sales on our platform. Rest assured, in the event
+                            of no sales, no charges will be incurred. This makes registering on our platform a risk-free opportunity to give it a try.
+                            Furthermore, we take the responsibility of ensuring the secure delivery of your packages.
+                        </li>
+                        <li class="mt-3"><b class="d-block">11. Order Misplacement Responsibility - </b>If the courier company misplaces an order, Overstitch will refund the amount.
+                        </li>
+                        <li class="mt-3"><b class="d-block">12. Return and Exchange Charges - </b>Sellers are responsible for bearing the cost of shipment in any case a customer
+                            requests a return or exchange. This policy applies even if the order value is below Rs. 500. To minimise return or
+
+                            exchange requests, it's recommended to provide detailed information such as size chart, material composition, and high-
+                            quality photos to ensure customer satisfaction.
+
+                        </li>
+                        <li class="mt-3"><b class="d-block">13. Payment Process - </b>We will create an invoice for the seller after the return/exchange period for the specific order has
+                            ended. Invoices will be mostly issued between Monday to Friday, excluding holidays. Once the invoice is generated, we
+                            will start the payment process to the seller's designated bank account. This payment will be processed within 48 hours
+                            after deducting any applicable fees such as 5% commission, GST charges, Delivery charge, Return/exchange charge,
+                            Weight discrepancy charge, Payment processing charges.
+
+                        </li>
+                        <li class="mt-3"><b class="d-block">14. Payment processing and COD charges -</b> A payment processing charge is a fee charged by
+                            the payment processor every time a transaction is done to process credit/debit card, net-banking
+                            payments. The amount of the fee varies depending on the payment processor, the type of card
+                            used, and the size of the transaction. The average payment processing fee ranges between 1.5%
+                            to 3.5%. This charge is applicable on receiving payments as well as refunds.
+                            A COD (Cash on Delivery) charge is a fixed fee charged for orders that are paid for in cash upon
+                            delivery. The amount of the fee is Rs.40. This charge helps cover the higher delivery cost
+                            associated with COD orders.</li>
+                        <li class="mt-3"><b class="d-block">15. Weight Discrepancy Responsibility - </b>Sellers are responsible for accurately providing the weight and dimension
+                            information of their products to us. In cases where a weight discrepancy issue arises, and additional charges are incurred
+                            due to incorrect weight information provided by the seller, the associated penalties and charges must be paid by the
+                            seller. It is essential to ensure accurate weight and dimension details to avoid any financial implications arising from
+                            discrepancies.
+                        </li>
+                        <li class="mt-3"><b class="d-block">16. Termination of Partnership - </b>The partnership between the platform and the seller may be terminated in case of
+                            violations of guidelines, repeated customer complaints, or other valid reasons. Legal action could also result from such
+                            violations.
+                        </li>
+                        <li class="mt-3"><b class="d-block">17. Product Availability - </b>Sellers should promptly update the platform if a product is out of stock to prevent customers
+                            from placing orders for unavailable items.
+                        </li>
+                    </ul>
+                </div>
+                <div class="text-center mt-5">
+                    <button class="btn btn-default fs-1" data-bs-target="#guideline5" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="bi bi-arrow-down"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="guideline5" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>
+                    <h3 class="text-decoration-underline m-5 text-center"><b>Seller Guidelines</b></h3>
+
+                    <ul>
+                        <li class="mt-3"><b class="d-block">18. Order Fulfilment and Responsiveness -</b> Sellers must actively manage their orders and promptly fulfil customer
+                            requests within a timeframe of 48 hours, except on Sundays and holidays. In cases where orders are not fulfilled or there
+                            is unresponsiveness without any valid reason, it may result in the removal of the seller from our platform and could
+                            potentially lead to legal action. If a seller no longer wishes to accept orders from our platform, they have the option to
+                            deactivate their seller account.
+                        </li>
+                        <li class="mt-3"><b class="d-block">19. Boost Sales with Coupon Codes -</b> Sellers, feel free to use your own coupon codes to attract customers and increase
+                            sales. If you let us know about any upcoming discounts or sales you're planning, we can also help promote them to
+                            maximise your sales potential.
+                        </li>
+                        <li class="mt-3"><b class="d-block">20. Photos for Ad Poster -</b> To feature your brand in our ad posters, we will ask you to provide us
+                            with high-quality photos of your product so that we can edit them to our specifications and use
+                            them. You also need to grant us permission to use the photos without any copyright issues. It is
+                            not mandatory to provide us with photos of your product for the ad posters. This is a free service,
+                            and we understand that you may not have the necessary photos or the time to provide them.</li>
+                        <li class="mt-3"><b class="d-block">21. Modification of Guidelines -</b> These guidelines are subject to updates or modifications as needed to adapt to changing
+                            circumstances. Sellers will be informed of any changes.</li>
+                        <li class="mt-3">Thank you for reviewing and understanding these crucial guidelines before proceeding with your registration. We look
+                            forward to a successful partnership with you on our platform.</li>
+                        <span class="d-block">If you have any further Questions or Doubts, please feel free to contact us at</span>
+                        <span class="d-block">Mail : overstitch.in@gmail.com</span>
+                        <span class="d-block">WhatsApp : +917066856414</span>
+
+                    </ul>
+                </div>
+                <div class="text-center mt-5">
+                    <span class="d-block mt-5"><img class="d-inline" width="15" src="{{ asset('image/other/green.png') }}"> HAVE READ ORDER-TO-DELIVERY PROCESS</span>
+                    <button class="btn btn-default fs-1" data-bs-target="#guideline6" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="bi bi-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="guideline6" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>
+                    <h3 class="text-decoration-underline m-5 text-center"><b>Seller Registration Process</b></h3>
+
+                    <ul>
+                        <li class="mt-3 mb-2">To become a seller on Overstitch for FREE, please follow these steps:</li>
+                        <ol>
+                            <li>Fill out the provided seller registration form.</li>
+                            <li>Await verification of your submission.</li>
+                            <li>Upon approval of your brand, a confirmation email will be sent to your provided email address.</li>
+                        </ol>
+                        <span class="d-block mt-2 mb-2">Please note that our website is expected to be launched in November 2023.</span>
+                        <span class="d-block mt-2 mb-2">Thank you for choosing Overstitch as your platform for selling. We look forward to the opportunity to work
+                            with you!</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="text-center mt-5">
+                    <span class="d-block mt-5"><img class="d-inline" width="15" src="{{ asset('image/other/green.png') }}"> HAVE READ SELLER REGISTRATION FORM</span>
+                    <button class="btn btn-default fs-1" data-bs-target="#guideline6" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="bi bi-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

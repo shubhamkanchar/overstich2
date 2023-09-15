@@ -1,3 +1,5 @@
+import { Modal } from "bootstrap";
+
 const seller = () => {
     $.validator.addMethod("maxupload", function(value, element, param) {
         var $fileUpload = $("input[type='file']");
@@ -43,5 +45,9 @@ const seller = () => {
             }
         }
     });
+
+    // $('#guideline').modal('show');
+    let modal = new Modal(document.getElementById('guideline1'));
+    modal.show();
 }
 export default seller;
