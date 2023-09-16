@@ -54,7 +54,7 @@
     <div class="row mt-5 mb-5">
         <div class="col-md-3 pb-5">
             <a href="{{ route('products.show',1) }}">
-                <img class="small-banner pb-1" width="100%" src="{{ asset('public/image/small/1.jpg') }}">
+                <img class="small-banner pb-1" width="100%" src="{{ asset('image/small/1.jpg') }}">
             </a>
             <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
             <i class="bi bi-heart fs-4 me-4 float-end"></i>
@@ -63,7 +63,7 @@
             <span class="ps-4 fs-5"><b>RS. 500</b></span>
         </div>
         <div class="col-md-3 pb-5">
-            <img class="small-banner" width="100%" src="{{ asset('public/image/small/2.jpg') }}">
+            <img class="small-banner" width="100%" src="{{ asset('image/small/2.jpg') }}">
             <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
             <i class="bi bi-heart fs-4 me-4 float-end"></i>
             <span class="ps-4 fs-6 d-block">XYZ WOMEN TOP</span>
@@ -71,7 +71,7 @@
             <span class="ps-4 fs-5"><b>RS. 500</b></span>
         </div>
         <div class="col-md-3 pb-5">
-            <img class="small-banner" width="100%" src="{{ asset('public/image/small/3.jpg') }}">
+            <img class="small-banner" width="100%" src="{{ asset('image/small/3.jpg') }}">
             <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
             <i class="bi bi-heart fs-4 me-4 float-end"></i>
             <span class="ps-4 fs-6 d-block">XYZ WOMEN TOP</span>
@@ -79,7 +79,7 @@
             <span class="ps-4 fs-5"><b>RS. 500</b></span>
         </div>
         <div class="col-md-3 pb-5">
-            <img class="small-banner" width="100%" src="{{ asset('public/image/small/4.jpg') }}">
+            <img class="small-banner" width="100%" src="{{ asset('image/small/4.jpg') }}">
             <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
             <i class="bi bi-heart fs-4 me-4 float-end"></i>
             <span class="ps-4 fs-6 d-block">XYZ WOMEN TOP</span>
@@ -87,7 +87,7 @@
             <span class="ps-4 fs-5"><b>RS. 500</b></span>
         </div>
         <div class="col-md-3 pb-5">
-            <img class="small-banner" width="100%" src="{{ asset('public/image/small/5.jpg') }}">
+            <img class="small-banner" width="100%" src="{{ asset('image/small/5.jpg') }}">
             <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
             <i class="bi bi-heart fs-4 me-4 float-end"></i>
             <span class="ps-4 fs-6 d-block">XYZ WOMEN TOP</span>
@@ -95,7 +95,7 @@
             <span class="ps-4 fs-5"><b>RS. 500</b></span>
         </div>
         <div class="col-md-3 pb-5">
-            <img class="small-banner" width="100%" src="{{ asset('public/image/small/6.jpg') }}">
+            <img class="small-banner" width="100%" src="{{ asset('image/small/6.jpg') }}">
             <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
             <i class="bi bi-heart fs-4 me-4 float-end"></i>
             <span class="ps-4 fs-6 d-block">XYZ WOMEN TOP</span>
@@ -103,7 +103,7 @@
             <span class="ps-4 fs-5"><b>RS. 500</b></span>
         </div>
         <div class="col-md-3 pb-5">
-            <img class="small-banner" width="100%" src="{{ asset('public/image/small/4.jpg') }}">
+            <img class="small-banner" width="100%" src="{{ asset('image/small/4.jpg') }}">
             <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
             <i class="bi bi-heart fs-4 me-4 float-end"></i>
             <span class="ps-4 fs-6 d-block">XYZ WOMEN TOP</span>
@@ -111,7 +111,7 @@
             <span class="ps-4 fs-5"><b>RS. 500</b></span>
         </div>
         <div class="col-md-3 pb-5">
-            <img class="small-banner" width="100%" src="{{ asset('public/image/small/5.jpg') }}">
+            <img class="small-banner" width="100%" src="{{ asset('image/small/5.jpg') }}">
             <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
             <i class="bi bi-heart fs-4 me-4 float-end"></i>
             <span class="ps-4 fs-6 d-block">XYZ WOMEN TOP</span>
@@ -119,7 +119,7 @@
             <span class="ps-4 fs-5"><b>RS. 500</b></span>
         </div>
         <div class="col-md-3 pb-5">
-            <img class="small-banner" width="100%" src="{{ asset('public/image/small/6.jpg') }}">
+            <img class="small-banner" width="100%" src="{{ asset('image/small/6.jpg') }}">
             <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
             <i class="bi bi-heart fs-4 me-4 float-end"></i>
             <span class="ps-4 fs-6 d-block">XYZ WOMEN TOP</span>
@@ -127,7 +127,7 @@
             <span class="ps-4 fs-5"><b>RS. 500</b></span>
         </div>
         <div class="col-md-3 pb-5">
-            <img class="small-banner" width="100%" src="{{ asset('public/image/small/1.jpg') }}">
+            <img class="small-banner" width="100%" src="{{ asset('image/small/1.jpg') }}">
             <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
             <i class="bi bi-heart fs-4 me-4 float-end"></i>
             <span class="ps-4 fs-6 d-block">XYZ WOMEN TOP</span>
@@ -135,7 +135,7 @@
             <span class="ps-4 fs-5"><b>RS. 500</b></span>
         </div>
         <div class="col-md-3 pb-5">
-            <img class="small-banner" width="100%" src="{{ asset('public/image/small/2.jpg') }}">
+            <img class="small-banner" width="100%" src="{{ asset('image/small/2.jpg') }}">
             <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
             <i class="bi bi-heart fs-4 me-4 float-end"></i>
             <span class="ps-4 fs-6 d-block">XYZ WOMEN TOP</span>
@@ -143,7 +143,7 @@
             <span class="ps-4 fs-5"><b>RS. 500</b></span>
         </div>
         <div class="col-md-3 pb-5">
-            <img class="small-banner" width="100%" src="{{ asset('public/image/small/3.jpg') }}">
+            <img class="small-banner" width="100%" src="{{ asset('image/small/3.jpg') }}">
             <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
             <i class="bi bi-heart fs-4 me-4 float-end"></i>
             <span class="ps-4 fs-6 d-block">XYZ WOMEN TOP</span>
@@ -151,7 +151,7 @@
             <span class="ps-4 fs-5"><b>RS. 500</b></span>
         </div>
         <div class="col-md-3 pb-5">
-            <img class="small-banner" width="100%" src="{{ asset('public/image/small/4.jpg') }}">
+            <img class="small-banner" width="100%" src="{{ asset('image/small/4.jpg') }}">
             <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
             <i class="bi bi-heart fs-4 me-4 float-end"></i>
             <span class="ps-4 fs-6 d-block">XYZ WOMEN TOP</span>
@@ -159,7 +159,7 @@
             <span class="ps-4 fs-5"><b>RS. 500</b></span>
         </div>
         <div class="col-md-3 pb-5">
-            <img class="small-banner" width="100%" src="{{ asset('public/image/small/1.jpg') }}">
+            <img class="small-banner" width="100%" src="{{ asset('image/small/1.jpg') }}">
             <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
             <i class="bi bi-heart fs-4 me-4 float-end"></i>
             <span class="ps-4 fs-6 d-block">XYZ WOMEN TOP</span>
@@ -167,7 +167,7 @@
             <span class="ps-4 fs-5"><b>RS. 500</b></span>
         </div>
         <div class="col-md-3 pb-5">
-            <img class="small-banner" width="100%" src="{{ asset('public/image/small/2.jpg') }}">
+            <img class="small-banner" width="100%" src="{{ asset('image/small/2.jpg') }}">
             <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
             <i class="bi bi-heart fs-4 me-4 float-end"></i>
             <span class="ps-4 fs-6 d-block">XYZ WOMEN TOP</span>
@@ -175,7 +175,7 @@
             <span class="ps-4 fs-5"><b>RS. 500</b></span>
         </div>
         <div class="col-md-3 pb-5">
-            <img class="small-banner" width="100%" src="{{ asset('public/image/small/3.jpg') }}">
+            <img class="small-banner" width="100%" src="{{ asset('image/small/3.jpg') }}">
             <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
             <i class="bi bi-heart fs-4 me-4 float-end"></i>
             <span class="ps-4 fs-6 d-block">XYZ WOMEN TOP</span>
@@ -183,7 +183,7 @@
             <span class="ps-4 fs-5"><b>RS. 500</b></span>
         </div>
         <div class="col-md-3 pb-5">
-            <img class="small-banner" width="100%" src="{{ asset('public/image/small/4.jpg') }}">
+            <img class="small-banner" width="100%" src="{{ asset('image/small/4.jpg') }}">
             <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
             <i class="bi bi-heart fs-4 me-4 float-end"></i>
             <span class="ps-4 fs-6 d-block">XYZ WOMEN TOP</span>
@@ -191,7 +191,7 @@
             <span class="ps-4 fs-5"><b>RS. 500</b></span>
         </div>
         <div class="col-md-3 pb-5">
-            <img class="small-banner" width="100%" src="{{ asset('public/image/small/5.jpg') }}">
+            <img class="small-banner" width="100%" src="{{ asset('image/small/5.jpg') }}">
             <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
             <i class="bi bi-heart fs-4 me-4 float-end"></i>
             <span class="ps-4 fs-6 d-block">XYZ WOMEN TOP</span>
@@ -199,7 +199,7 @@
             <span class="ps-4 fs-5"><b>RS. 500</b></span>
         </div>
         <div class="col-md-3 pb-5">
-            <img class="small-banner" width="100%" src="{{ asset('public/image/small/6.jpg') }}">
+            <img class="small-banner" width="100%" src="{{ asset('image/small/6.jpg') }}">
             <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
             <i class="bi bi-heart fs-4 me-4 float-end"></i>
             <span class="ps-4 fs-6 d-block">XYZ WOMEN TOP</span>
@@ -207,7 +207,7 @@
             <span class="ps-4 fs-5"><b>RS. 500</b></span>
         </div>
         <div class="col-md-3 pb-5">
-            <img class="small-banner" width="100%" src="{{ asset('public/image/small/4.jpg') }}">
+            <img class="small-banner" width="100%" src="{{ asset('image/small/4.jpg') }}">
             <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
             <i class="bi bi-heart fs-4 me-4 float-end"></i>
             <span class="ps-4 fs-6 d-block">XYZ WOMEN TOP</span>
@@ -215,7 +215,7 @@
             <span class="ps-4 fs-5"><b>RS. 500</b></span>
         </div>
         <div class="col-md-3 pb-5">
-            <img class="small-banner" width="100%" src="{{ asset('public/image/small/5.jpg') }}">
+            <img class="small-banner" width="100%" src="{{ asset('image/small/5.jpg') }}">
             <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
             <i class="bi bi-heart fs-4 me-4 float-end"></i>
             <span class="ps-4 fs-6 d-block">XYZ WOMEN TOP</span>
@@ -223,7 +223,7 @@
             <span class="ps-4 fs-5"><b>RS. 500</b></span>
         </div>
         <div class="col-md-3 pb-5">
-            <img class="small-banner" width="100%" src="{{ asset('public/image/small/6.jpg') }}">
+            <img class="small-banner" width="100%" src="{{ asset('image/small/6.jpg') }}">
             <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
             <i class="bi bi-heart fs-4 me-4 float-end"></i>
             <span class="ps-4 fs-6 d-block">XYZ WOMEN TOP</span>
@@ -231,7 +231,7 @@
             <span class="ps-4 fs-5"><b>RS. 500</b></span>
         </div>
         <div class="col-md-3 pb-5">
-            <img class="small-banner" width="100%" src="{{ asset('public/image/small/1.jpg') }}">
+            <img class="small-banner" width="100%" src="{{ asset('image/small/1.jpg') }}">
             <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
             <i class="bi bi-heart fs-4 me-4 float-end"></i>
             <span class="ps-4 fs-6 d-block">XYZ WOMEN TOP</span>
@@ -239,7 +239,7 @@
             <span class="ps-4 fs-5"><b>RS. 500</b></span>
         </div>
         <div class="col-md-3 pb-5">
-            <img class="small-banner" width="100%" src="{{ asset('public/image/small/2.jpg') }}">
+            <img class="small-banner" width="100%" src="{{ asset('image/small/2.jpg') }}">
             <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
             <i class="bi bi-heart fs-4 me-4 float-end"></i>
             <span class="ps-4 fs-6 d-block">XYZ WOMEN TOP</span>

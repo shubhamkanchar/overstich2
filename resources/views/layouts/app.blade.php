@@ -26,7 +26,7 @@
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <span class="d-md-none">
-                        <img src="{{ asset('public/image/logo.png') }}" style="width:150px">
+                        <img src="{{ asset('image/logo.png') }}" style="width:150px">
                     </span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -48,7 +48,7 @@
                     </ul>
 
                     <ul class="navbar-nav text-center d-none d-md-block d-lg-block d-xl-block">
-                        <a href="{{ route('welcome') }}"><img src="{{ asset('public/image/logo.png') }}" style="width:150px"></a>
+                        <a href="{{ route('welcome') }}"><img src="{{ asset('image/logo.png') }}" style="width:150px"></a>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
