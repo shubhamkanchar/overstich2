@@ -154,7 +154,7 @@
                     </ul>
                 </div>
                 <div class="text-center mt-5">
-                    <span class="d-block mt-5"><img class="d-inline" width="15" src="{{ asset('image/other/green.png') }}"> HAVE READ ORDER-TO-DELIVERY PROCESS</span>
+                    <span class="d-block mt-5"><img class="d-inline" width="15" src="{{ asset('public/image/other/green.png') }}"> HAVE READ ORDER-TO-DELIVERY PROCESS</span>
                     <button class="btn btn-default fs-1" data-bs-target="#guideline3" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="bi bi-arrow-right"></i></button>
                 </div>
             </div>
@@ -308,7 +308,7 @@
                     </ul>
                 </div>
                 <div class="text-center mt-5">
-                    <span class="d-block mt-5"><img class="d-inline" width="15" src="{{ asset('image/other/green.png') }}"> HAVE READ ORDER-TO-DELIVERY PROCESS</span>
+                    <span class="d-block mt-5"><img class="d-inline" width="15" src="{{ asset('public/image/other/green.png') }}"> HAVE READ ORDER-TO-DELIVERY PROCESS</span>
                     <button class="btn btn-default fs-1" data-bs-target="#guideline6" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="bi bi-arrow-right"></i></button>
                 </div>
             </div>
@@ -337,7 +337,7 @@
                     </ul>
                 </div>
                 <div class="text-center mt-5">
-                    <span class="d-block mt-5"><img class="d-inline" width="15" src="{{ asset('image/other/green.png') }}"> HAVE READ SELLER REGISTRATION FORM</span>
+                    <span class="d-block mt-5"><img class="d-inline" width="15" src="{{ asset('public/image/other/green.png') }}"> HAVE READ SELLER REGISTRATION FORM</span>
                     <button class="btn btn-default fs-1" data-bs-target="#guideline6" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="bi bi-arrow-right"></i></button>
                 </div>
             </div>

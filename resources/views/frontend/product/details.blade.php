@@ -5,19 +5,19 @@
         <div class="col-lg-4 col-md-6 pb-5">
             <div class="row">
                 <div class="col-md-6">
-                    <img class="pb-4" width="100%" src="{{ asset('image/small/1.jpg') }}">
+                    <img class="pb-4" width="100%" src="{{ asset('public/image/small/1.jpg') }}">
                 </div>
                 <div class="col-md-6">
-                    <img class="pb-4" width="100%" src="{{ asset('image/small/1.jpg') }}">
+                    <img class="pb-4" width="100%" src="{{ asset('public/image/small/1.jpg') }}">
                 </div>
                 <div class="col-md-6">
-                    <img class="pb-4" width="100%" src="{{ asset('image/small/1.jpg') }}">
+                    <img class="pb-4" width="100%" src="{{ asset('public/image/small/1.jpg') }}">
                 </div>
                 <div class="col-md-6">
-                    <img class="pb-4" width="100%" src="{{ asset('image/small/1.jpg') }}">
+                    <img class="pb-4" width="100%" src="{{ asset('public/image/small/1.jpg') }}">
                 </div>
                 <div class="col-md-6">
-                    <img class="pb-4" width="100%" src="{{ asset('image/small/1.jpg') }}">
+                    <img class="pb-4" width="100%" src="{{ asset('public/image/small/1.jpg') }}">
                 </div>
                 <div class="col-md-12">
                     <p>SELLER INFORMATION :-</p>
