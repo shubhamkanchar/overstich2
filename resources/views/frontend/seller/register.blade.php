@@ -20,7 +20,7 @@
                         <input class="form-control" type="email" name="mail">
                     </div>
                     <div class="col-md-6 p-3">
-                        <label>Whatsapp</label>
+                        <label>WhatsApp No.</label>
                         <input class="form-control" type="text" name="whatsapp">
                     </div>
                     <div class="col-md-6 p-3">
@@ -91,29 +91,20 @@
                     <h3 class="text-decoration-underline m-5 text-center"><b>How It Benefits You As Seller?</b></h3>
 
                     <ul>
-                        <li class="mt-3"><b>1. Enhanced Visibility :</b> Our platform ensures all brands receive equal exposure, letting smaller
-                            businesses shine alongside larger ones, and attracting customers looking for something special.
+                        <li class="mt-3"><b>1. Enhanced Visibility :</b> Our Fashion E-commerce Platform ensures all brands receive equal exposure, letting smaller businesses shine alongside larger ones, and attracting customers looking for something special.
                         </li>
-                        <li class="mt-3"><b>2. Social Media Boost :</b> Utilising our Instagram presence, we create attractive ad posters and graphics,
-                            promoting your brand and products to a broader audience. This not only benefits you as a seller but
-                            also helps customers explore the wide range of products from different brands.
+                        <li class="mt-3"><b>2. Social Media Boost :</b> Utilising our Instagram presence, we create attractive ad posters and graphics, Might promoting your brand and products to a broader audience. This not only benefits you as a seller but also helps customers explore the wide range of products from different brands.
                         </li>
-                        <li class="mt-3"><b>3. Targeted Reach :</b> With strategic marketing tactics, we ensure that your products are presented to the
-                            right customers, increasing the likelihood of meaningful sales.
+                        <li class="mt-3"><b>3. Targeted Reach :</b> With strategic marketing tactics, we ensure that your products are presented to the right customers, increasing the likelihood of meaningful sales.
                         </li>
-                        <li class="mt-3"><b>4. Shipping and Delivery :</b> We handle shipping and delivery of products to customers. Sellers do not
-                            need to worry about shipping and handling.
+                        <li class="mt-3"><b>4. Shipping and Delivery :</b> We handle shipping and delivery of products to customers. Sellers do not need to worry about shipping and handling.
                         </li>
-                        <li class="mt-3"><b>5. FREE Early Access Advantage:</b> For a limited time, early registration rewards you with premium
-                            homepage placement at no cost, capturing valuable attention and potentially boosting Sales & Brand
-                            Value.
+                        <li class="mt-3"><b>5. FREE Early Access Advantage:</b> For a limited time, early registration rewards you with premium homepage placement at no cost, capturing valuable attention and potentially boosting Sales & Brand Value.
                         </li>
-                        <li class="mt-3"><b>6. Zero-Risk Entry :</b> Sellers enjoy FREE registration, eliminating upfront expenses and simplifying the
-                            process of starting your selling journey.
+                        <li class="mt-3"><b>6. Zero-Risk Entry :</b> Sellers enjoy FREE registration, eliminating upfront expenses and simplifying the process of starting your selling journey.
                         </li>
-                        <li class="mt-3"><b>7. Promotional Support :</b> Enjoy FREE Advertisement creation during your discounts or sales. These ads
-                            will appear on our Social Media and Platform Homepage, benefiting both sellers and customers. This
-                            ensures your special offers reach a wider audience, helping buyers discover great deals.</li>
+                        <li class="mt-3"><b>7. Promotional Support :</b> Enjoy FREE Advertisement creation during your discounts or sales. These ads will appear on our Social Media and Platform Homepage, benefiting both sellers and customers. This ensures your special offers reach a wider audience, helping buyers discover great deals.
+                        </li>
                     </ul>
                 </div>
                 <div class="text-center fs-1">
@@ -154,8 +145,11 @@
                     </ul>
                 </div>
                 <div class="text-center mt-5">
-                    <span class="d-block mt-5"><img class="d-inline" width="15" src="{{ asset('image/other/green.png') }}"> HAVE READ ORDER-TO-DELIVERY PROCESS</span>
-                    <button class="btn btn-default fs-1" data-bs-target="#guideline3" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="bi bi-arrow-right"></i></button>
+                    <span class="d-block mt-5">
+                        <input type="checkbox" class="checkbox align-middle guideline2"> HAVE READ ORDER-TO-DELIVERY PROCESS
+                    </span>
+                    <span class="modal1_noti error d-none d-block">Please select checkbox to proceed</span>
+                    <button class="btn btn-default fs-1 modal1"><i class="bi bi-arrow-right"></i></button>
                 </div>
             </div>
         </div>
@@ -172,33 +166,31 @@
                     <ul>
                         <li class="mt-3">Thank you for considering joining our platform as a seller. Before you proceed with your registration, kindly
                             review and understand the following important guidelines to ensure a smooth and successful partnership:</li>
-                        <li class="mt-3"><b class="d-block">1. Exclusive Brand Ownership and Seller Details -</b> Sellers are required to exclusively offer their own branded
-                            products on our platform. Reselling of other brands products is strictly prohibited. Your brand details,
-                            including brand name, Legal name, address and email ID, will be visible to customers on the platform. This
-                            ensures transparency and trust in the products being offered.
+                        <li class="mt-3"><b class="d-block">1. Exclusive Brand Ownership and Seller Details -</b> Sellers are required to exclusively offer their own branded products on our platform. Reselling of other brands products is strictly prohibited. Your brand details, including brand name, Legal name, address and email ID, will be visible to customers on the platform. This ensures transparency and trust in the products being offered.
                         </li>
-                        <li class="mt-3"><b class="d-block">2. Intellectual Property and Trademarks -</b> Sellers must make sure that the products they list don't violate any
-                            intellectual property rights or trademarks owned by others. This includes confirming the authenticity of the
-                            items.
+                        <li class="mt-3"><b class="d-block">2. Intellectual Property and Trademarks -</b> Sellers must make sure that the products they list
+don't violate any intellectual property rights or trademarks owned by others. This includes
+confirming the authenticity of the items.
                         </li>
-                        <li class="mt-3"><b class="d-block">3. GST Registration - </b> must have a valid GST registration for their business.
+                        <li class="mt-3"><b class="d-block">3. GST Registration - </b> Sellers must have a valid GST registration for their business.
                         </li>
-                        <li class="mt-3"><b class="d-block">4. Shipping and Delivery - </b>We handle shipping and delivery of products to customers. Sellers do not need to
-                            worry about shipping and handling. Delhivery courier service is used.
+                        <li class="mt-3"><b class="d-block">4. Shipping and Delivery - </b> We handle shipping and delivery of products to customers. Sellers do
+not need to worry about shipping and handling. Delhivery courier service is used.
                         </li>
-                        <li class="mt-3"><b class="d-block">5. Packaging and Labelling - </b>All products must be packaged in bags suitable for shipping. Additionally, each
-                            product should have a label sticker with dimensions 6x4 inches, displaying relevant information.
+                        <li class="mt-3"><b class="d-block">5. Packaging and Labelling - </b>- All products must be packaged in bags suitable for shipping.
+Additionally, each product should have a label sticker with dimensions 6x4 inches, displaying
+relevant information.
                         </li>
-                        <li class="mt-3"><b class="d-block">6. Pricing Policy - </b>Product selling prices listed on our platform should not exceed the Maximum Retail Price
-                            (M.R.P.) mentioned on the physical product label/tag.
+                        <li class="mt-3"><b class="d-block">6. Pricing Policy - </b>Product selling prices listed on our platform should not exceed the Maximum
+Retail Price (M.R.P.) mentioned on the physical product label/tag.
                         </li>
-                        <li class="mt-3"><b class="d-block">7. Product Presentation - </b>For clothing items, provide at least 5 high-quality photos of the product, including
-                            images with a model wearing the clothing, size chart, and detailed product information such as fabric, fit, and
-                            occasion. While model images are recommended for other products to reduce returns, they are not
-                            mandatory.
+                        <li class="mt-3"><b class="d-block">7. Product Presentation - </b>For clothing items, provide at least 5 high-quality photos of the
+product, including images with a model wearing the clothing, size chart, and detailed product
+information such as fabric, fit, and occasion. While model images are recommended for other
+products to reduce returns, they are not mandatory.
                         </li>
-                        <li class="mt-3"><b class="d-block">8. Product Quality and Authenticity - </b>All products listed on our platform must be of high quality and
-                            authentic. This is crucial to maintain customer satisfaction and the platform's reputation.
+                        <li class="mt-3"><b class="d-block">8. Product Quality and Authenticity - </b>All products listed on our platform must be of high quality
+and authentic. This is crucial to maintain customer satisfaction and the platform's reputation.
                         </li>
                     </ul>
                 </div>
@@ -218,16 +210,21 @@
                     <h3 class="text-decoration-underline m-5 text-center"><b>Seller Guidelines</b></h3>
 
                     <ul>
-                        <li class="mt-3"><b class="d-block">9. Delivery Charges - </b>Delivery charges will be borne by the seller if the order value is above Rs.500/-. For orders below
-                            this amount, the delivery charge will be paid by the customer. Delhivery courier service will be used for product
-                            deliveries.
+                        <li class="mt-3"><b class="d-block">9. Delivery Charges - </b>Delivery charges will be borne by the seller if the order value is above
+Rs.500/-. For orders below this amount, the delivery charge will be paid by the customer.
+Delhivery courier service will be used for product deliveries.
                         </li>
-                        <li class="mt-3"><b class="d-block">10. Overstitch Commission - </b>Overstitch charges a 5% commission on the sold product amount (excluding GST). This fee
-                            covers our efforts in creating custom ad posters to boost your brand's sales on our platform. Rest assured, in the event
-                            of no sales, no charges will be incurred. This makes registering on our platform a risk-free opportunity to give it a try.
-                            Furthermore, we take the responsibility of ensuring the secure delivery of your packages.
+                        <li class="mt-3"><b class="d-block">10. Overstitch Commission - </b>Overstitch charges a 5% commission on the sold product amount
+(excluding GST of 18%). This fee covers our efforts in creating custom ad posters to boost your
+brand's sales on our platform. Rest assured, in the event of no sales, no charges will be incurred.
+This makes registering on our platform a risk-free opportunity to give it a try. Furthermore, we take
+the responsibility of ensuring the secure delivery of your packages.
                         </li>
-                        <li class="mt-3"><b class="d-block">11. Order Misplacement Responsibility - </b>If the courier company misplaces an order, Overstitch will refund the amount.
+                        <li class="mt-3"><b class="d-block">11. Order Misplacement Responsibility - </b>- If the courier company misplaces an order, Overstitch
+will refund the amount. But if the customer claims that the product is missing after the package is
+delivered to the customer, Overstitch is not responsible for that. This is because when the order
+was shipped, the package was sealed and there is no way for the delivery company to tamper
+with it. Seller need to refund the total amount.
                         </li>
                         <li class="mt-3"><b class="d-block">12. Return and Exchange Charges - </b>Sellers are responsible for bearing the cost of shipment in any case a customer
                             requests a return or exchange. This policy applies even if the order value is below Rs. 500. To minimise return or
@@ -301,15 +298,16 @@
                             circumstances. Sellers will be informed of any changes.</li>
                         <li class="mt-3">Thank you for reviewing and understanding these crucial guidelines before proceeding with your registration. We look
                             forward to a successful partnership with you on our platform.</li>
-                        <span class="d-block">If you have any further Questions or Doubts, please feel free to contact us at</span>
+                        <span class="d-block mt-3">If you have any further Questions or Doubts, please feel free to contact us at</span>
                         <span class="d-block">Mail : overstitch.in@gmail.com</span>
                         <span class="d-block">WhatsApp : +917066856414</span>
 
                     </ul>
                 </div>
                 <div class="text-center mt-5">
-                    <span class="d-block mt-5"><img class="d-inline" width="15" src="{{ asset('image/other/green.png') }}"> HAVE READ ORDER-TO-DELIVERY PROCESS</span>
-                    <button class="btn btn-default fs-1" data-bs-target="#guideline6" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="bi bi-arrow-right"></i></button>
+                    <span class="d-block mt-5"><input type="checkbox" class="checkbox align-middle guideline5"> HAVE READ SELLER GUIDELINES</span>
+                    <span class="modal2_noti error d-none d-block">Please select checkbox to proceed</span>
+                    <button class="btn btn-default fs-1 modal2"><i class="bi bi-arrow-right"></i></button>
                 </div>
             </div>
         </div>
@@ -337,8 +335,9 @@
                     </ul>
                 </div>
                 <div class="text-center mt-5">
-                    <span class="d-block mt-5"><img class="d-inline" width="15" src="{{ asset('image/other/green.png') }}"> HAVE READ SELLER REGISTRATION FORM</span>
-                    <button class="btn btn-default fs-1" data-bs-target="#guideline6" data-bs-toggle="modal" data-bs-dismiss="modal"><i class="bi bi-arrow-right"></i></button>
+                    <span class="d-block mt-5"><input type="checkbox" class="checkbox align-middle guideline6"> HAVE READ SELLER REGISTRATION PROCESS</span>
+                    <span class="modal3_noti error d-none d-block">Please select checkbox to proceed</span>
+                    <button class="btn btn-default fs-1 modal3"><i class="bi bi-arrow-right"></i></button>
                 </div>
             </div>
         </div>

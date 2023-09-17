@@ -46,8 +46,58 @@ const seller = () => {
         }
     });
 
-    // $('#guideline').modal('show');
+    if($('#guideline1').length > 0){
     let modal = new Modal(document.getElementById('guideline1'));
     modal.show();
+    }
+
+    $(document).on('click','.modal1',function(){
+        if($('.guideline2').is(':checked')){
+            Modal.getInstance(document.getElementById('guideline2')).hide();
+            let modal1 = new Modal(document.getElementById('guideline3'));
+            modal1.show();
+            $('.modal1_noti').addClass('d-none');
+        }else{
+            $('.modal1_noti').removeClass('d-none');
+        }
+    });
+
+    $(document).on('click','.guideline2',function(){
+        if($(this).is(":checked")) {
+            $('.modal1_noti').addClass('d-none');
+        }  
+    });
+
+    $(document).on('click','.modal2',function(){
+        if($('.guideline5').is(':checked')){
+            Modal.getInstance(document.getElementById('guideline5')).hide();
+            let modal1 = new Modal(document.getElementById('guideline6'));
+            modal1.show();
+            $('.modal2_noti').addClass('d-none');
+        }else{
+            $('.modal2_noti').removeClass('d-none');
+        }
+    });
+
+    $(document).on('click','.guideline5',function(){
+        if($(this).is(":checked")) {
+            $('.modal2_noti').addClass('d-none');
+        }  
+    });
+
+    $(document).on('click','.modal3',function(){
+        if($('.guideline6').is(':checked')){
+            Modal.getInstance(document.getElementById('guideline6')).hide();
+            $('.modal3_noti').addClass('d-none');
+        }else{
+            $('.modal3_noti').removeClass('d-none');
+        }
+    });
+
+    $(document).on('click','.guideline6',function(){
+        if($(this).is(":checked")) {
+            $('.modal3_noti').addClass('d-none');
+        }  
+    });
 }
 export default seller;

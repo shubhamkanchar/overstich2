@@ -9,7 +9,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -23,10 +26,10 @@
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white mt-sm-4">
-            <div class="container-fluid">
+            <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <span class="d-md-none">
-                        <img src="{{ asset('image/logo.png') }}" style="width:150px">
+                        <img src="{{ asset('image/logo.png') }}" style="width:50px">
                     </span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -48,7 +51,7 @@
                     </ul>
 
                     <ul class="navbar-nav text-center d-none d-md-block d-lg-block d-xl-block">
-                        <a href="{{ route('welcome') }}"><img src="{{ asset('image/logo.png') }}" style="width:150px"></a>
+                        <a href="{{ route('welcome') }}"><img src="{{ asset('image/logo.png') }}" style="width:80px"></a>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -97,7 +100,7 @@
 
         </nav>
         <nav class="navbar navbar-expand-md navbar-light bg-white mt-lg-4 ">
-            <div class="container-fluid">
+            <div class="container">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav" style="width: 39%;">
                         <li class="nav-item ps-xl-4 pe-xl-4">
@@ -135,7 +138,7 @@
         <footer class="mt-5">
             <div class="container">
                 <div class="row">
-                    <div class="offset-md-1 col-md-11 col-lg-10 offset-lg-2">
+                    <div class="offset-md-1 col-md-10 col-lg-8 offset-lg-2">
                         <nav class="navbar navbar-expand-md navbar-light bg-white">
                             <ul class="navbar-nav w-100 me-auto text-center">
                                 <li class="nav-item ps-xl-4 pe-xl-4">
@@ -165,10 +168,12 @@
                 </div>
                 <div class="row mb-5">
                     <div class="col-12 text-center">
-                        <a class="nav-link fs-1 m-1 d-inline" href="{{ route('login') }}"><b><i class="bi bi-instagram"></i></b></a>
-                        <a class="nav-link fs-1 m-1 d-inline" href="{{ route('login') }}"><b><i class="bi bi-facebook"></i></b></a>
-                        <a class="nav-link fs-1 m-1 d-inline" href="{{ route('login') }}"><b><i class="bi bi-whatsapp"></i></b></a>
-                        <a class="nav-link fs-1 m-1 d-inline" href="{{ route('login') }}"><b><i class="bi bi-twitter"></i></b></a>
+                        <a class="nav-link fs-1 m-1 d-inline" target="_blank" href="https://www.instagram.com/
+overstitch.in/"><b><i class="bi bi-instagram"></i></b></a>
+                        <a class="nav-link fs-1 m-1 d-inline" target="_blank" href=" https://www.facebook.com/profile.php?
+id=100090246980494"><b><i class="bi bi-facebook"></i></b></a>
+                        <a class="nav-link fs-1 m-1 d-inline" target="_blank" href="https://wa.me/7066856414?text=Hello%20Overstitch"><b><i class="bi bi-whatsapp"></i></b></a>
+                        <a class="nav-link fs-1 m-1 d-inline" target="_blank" href="https://twitter.com/overstitch_in"><b><i class="bi bi-twitter"></i></b></a>
                     </div>
                 </div>
             </div>

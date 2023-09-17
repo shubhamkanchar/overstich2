@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">
                     {{ __('Login') }}
-                    <a class="float-end" href="{{ route('register') }}">Register</a>
+                    <a class="float-end" href="{{ route('register') }}">Sign Up</a>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
