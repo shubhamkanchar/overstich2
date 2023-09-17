@@ -99,11 +99,11 @@
                         </li>
                         <li class="mt-3"><b>4. Shipping and Delivery :</b> We handle shipping and delivery of products to customers. Sellers do not need to worry about shipping and handling.
                         </li>
-                        <li class="mt-3"><b>5. FREE Early Access Advantage:</b> For a limited time, early registration rewards you with premium homepage placement at no cost, capturing valuable attention and potentially boosting Sales & Brand Value.
+                        <li class="mt-3"><b>5. FREE Early Access Advantage:</b> For a limited time, early registration might rewards you with premium homepage placement at no extra cost, capturing valuable attention and potentially boosting Sales & Brand Value.
                         </li>
                         <li class="mt-3"><b>6. Zero-Risk Entry :</b> Sellers enjoy FREE registration, eliminating upfront expenses and simplifying the process of starting your selling journey.
                         </li>
-                        <li class="mt-3"><b>7. Promotional Support :</b> Enjoy FREE Advertisement creation during your discounts or sales. These ads will appear on our Social Media and Platform Homepage, benefiting both sellers and customers. This ensures your special offers reach a wider audience, helping buyers discover great deals.
+                        <li class="mt-3"><b>7. Promotional Support :</b> Enjoy FREE Advertisement creation during your discounts or sales. These ads will might appear on our Social Media and Platform Homepage, benefiting both sellers and customers. This ensures your special offers reach a wider audience, helping buyers discover great deals.
                         </li>
                     </ul>
                 </div>
@@ -146,7 +146,7 @@
                 </div>
                 <div class="text-center mt-5">
                     <span class="d-block mt-5">
-                        <input type="checkbox" class="checkbox align-middle guideline2"> HAVE READ ORDER-TO-DELIVERY PROCESS
+                        <input type="checkbox" class="checkbox align-middle guideline2 me-1">I HAVE READ ORDER-TO-DELIVERY PROCESS
                     </span>
                     <span class="modal1_noti error d-none d-block">Please select checkbox to proceed</span>
                     <button class="btn btn-default fs-1 modal1"><i class="bi bi-arrow-right"></i></button>
@@ -305,7 +305,7 @@ with it. Seller need to refund the total amount.
                     </ul>
                 </div>
                 <div class="text-center mt-5">
-                    <span class="d-block mt-5"><input type="checkbox" class="checkbox align-middle guideline5"> HAVE READ SELLER GUIDELINES</span>
+                    <span class="d-block mt-5"><input type="checkbox" class="checkbox align-middle guideline5 me-1"> I HAVE READ SELLER GUIDELINES</span>
                     <span class="modal2_noti error d-none d-block">Please select checkbox to proceed</span>
                     <button class="btn btn-default fs-1 modal2"><i class="bi bi-arrow-right"></i></button>
                 </div>
@@ -328,14 +328,17 @@ with it. Seller need to refund the total amount.
                             <li>Await verification of your submission.</li>
                             <li>Upon approval of your brand, a confirmation email will be sent to your provided email address.</li>
                         </ol>
-                        <span class="d-block mt-2 mb-2">Please note that our website is expected to be launched in November 2023.</span>
+                        <span class="d-block mt-2 mb-2">Please note that our website launch is expected in November 2023. Due to this, we may not be
+able to respond to your emails as quickly as usual. It may take us up to one month or more to
+respond. We apologise for any inconvenience this may cause.
+</span>
                         <span class="d-block mt-2 mb-2">Thank you for choosing Overstitch as your platform for selling. We look forward to the opportunity to work
                             with you!</span>
                         </li>
                     </ul>
                 </div>
                 <div class="text-center mt-5">
-                    <span class="d-block mt-5"><input type="checkbox" class="checkbox align-middle guideline6"> HAVE READ SELLER REGISTRATION PROCESS</span>
+                    <span class="d-block mt-5"><input type="checkbox" class="checkbox align-middle guideline6 me-1">I HAVE READ SELLER REGISTRATION PROCESS</span>
                     <span class="modal3_noti error d-none d-block">Please select checkbox to proceed</span>
                     <button class="btn btn-default fs-1 modal3"><i class="bi bi-arrow-right"></i></button>
                 </div>

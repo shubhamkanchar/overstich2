@@ -9,12 +9,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ asset('/site.webmanifest') }}">
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <link rel="dns-prefetch" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Scripts -->
@@ -43,7 +43,7 @@
                             <a class="nav-link" href="{{ route('login') }}">Contact Us</a>
                         </li>
                         <li class="nav-item d-none d-md-block d-lg-block d-xl-block">
-                            <a class="nav-link" href="#">|</a>
+                            <a class="nav-link fw-bolder" href="#">|</a>
                         </li>
                         <li class="nav-item ps-xl-4 pe-xl-4">
                             <a class="nav-link" href="{{ route('seller.index') }}">Register as Seller</a>
@@ -58,10 +58,10 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         <li class="nav-item ps-xl-4 pe-xl-4">
-                            <a class="nav-link" href="{{ route('register') }}"><i class="bi bi-bag me-1"></i>Shopping Bag</a>
+                            <a class="nav-link" href="{{ route('register') }}"><i class="bi bi-bag me-1 fw-bolder"></i>Shopping Bag</a>
                         </li>
                         <li class="nav-item ps-xl-4 pe-xl-4">
-                            <a class="nav-link" href="{{ route('register') }}"><i class="bi bi-heart me-1"></i>Wishlist</a>
+                            <a class="nav-link" href="{{ route('register') }}"><i class="bi bi-heart me-1 fw-bolder"></i>Wishlist</a>
                         </li>
 
                         @guest
@@ -112,13 +112,13 @@
                             <a class="nav-link" href="{{ route('products.index') }}">Men</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">|</a>
+                            <a class="nav-link fw-bolder" href="#">|</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">Women</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">|</a>
+                            <a class="nav-link fw-bolder" href="#">|</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">Kids</a>
