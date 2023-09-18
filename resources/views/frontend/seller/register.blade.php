@@ -9,39 +9,54 @@
                 <div class="row">
                     <div class="col-md-6 p-3">
                         <label>GST no.</label>
-                        <input class="form-control" type="text" name="gst">
+                        <input class="form-control" type="text" name="gst" value="{{ old('gst') ?? ''}}">
                     </div>
                     <div class="col-md-6 p-3">
                         <label>Brand Name</label>
-                        <input class="form-control" type="text" name="brand">
+                        <input class="form-control @error('brand') is-invalid @enderror" type="text" name="brand" value="{{ old('brand') ?? ''}}">
+                        @error('brand')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                     <div class="col-md-6 p-3">
                         <label>Mail ID</label>
-                        <input class="form-control" type="email" name="mail">
+                        <input class="form-control  @error('email') is-invalid @enderror" type="email" name="email" value="{{ old('email') ?? ''}}">
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                     <div class="col-md-6 p-3">
                         <label>WhatsApp No.</label>
-                        <input class="form-control" type="text" name="whatsapp">
+                        <input class="form-control" type="text" name="whatsapp" value="{{ old('whatsapp') ?? '' }}">
                     </div>
                     <div class="col-md-6 p-3">
                         <label>Category</label>
-                        <input class="form-control" type="text" name="category" placeholder="Clothing, footwear, jewellery etc.*">
+                        <input class="form-control" type="text" name="category" placeholder="Clothing, footwear, jewellery etc.*" value="{{ old('category') ?? ''}}">
                     </div>
                     <div class="col-md-6 p-3">
                         <label>Products</label>
-                        <input class="form-control" type="text" name="product" placeholder="Casual Men t-shirts, formal shirts">
+                        <input class="form-control" type="text" name="product" placeholder="Casual Men t-shirts, formal shirts" value="{{ old('product') ?? ''}}">
                     </div>
                     <div class="col-md-6 p-3">
                         <label>Password</label>
-                        <input class="form-control" type="password" name="password" placeholder="Password" id="password">
+                        <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" placeholder="Password" id="password">
+                        @error('password') 
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                     <div class="col-md-6 p-3">
                         <label>Confirm Password</label>
-                        <input class="form-control" type="password" name="c_password" placeholder="Confirm Password">
+                        <input class="form-control" type="password" name="password_confirmation" placeholder="Confirm Password">
                     </div>
                     <div class="col-md-6 p-3">
                         <label>Product price range</label>
-                        <input class="form-control" type="text" name="price_range" placeholder="Rs.500 - 1500, Rs.700 - 3000, etc.">
+                        <input class="form-control" type="text" name="price_range" placeholder="Rs.500 - 1500, Rs.700 - 3000, etc." value="{{ old('price_range') ?? ''}}">
                     </div>
                     <div class="col-md-6 p-3">
                         <label>Upload product photos</label>
@@ -49,30 +64,30 @@
                     </div>
                     <div class="col-md-12 p-3">
                         <label>Pick Up Address</label>
-                        <input class="form-control" type="text" name="address_line" placeholder="Plot no, Building, street, Area*">
+                        <input class="form-control" type="text" name="address_line" placeholder="Plot no, Building, street, Area*" value="{{ old('address_line') ?? ''}}">
                     </div>
                     <div class="col-md-6 p-3">
-                        <input class="form-control" type="text" name="locality" placeholder="Locality">
+                        <input class="form-control" type="text" name="locality" placeholder="Locality" value="{{ old('locality') ?? ''}}">
                     </div>
                     <div class="col-md-6 p-3">
-                        <input class="form-control" type="text" name="city" placeholder="City">
+                        <input class="form-control" type="text" name="city" placeholder="City" value="{{ old('city') ?? ''}}">
                     </div>
                     <div class="col-md-6 p-3">
-                        <input class="form-control" type="text" name="state" placeholder="State">
+                        <input class="form-control" type="text" name="state" placeholder="State" value="{{ old('state') ?? ''}}">
                     </div>
                     <div class="col-md-6 p-3">
-                        <input class="form-control" type="text" name="pincode" placeholder="Pincode">
+                        <input class="form-control" type="text" name="pincode" placeholder="Pincode" value="{{ old('pincode') ?? ''}}">
                     </div>
                     <div class="col-md-12 pt-3 ps-3">
                         <label>Bank A/c Details</label>
                     </div>
                     <div class="col-md-6 p-3">
                         <span>Account No</span>
-                        <input class="form-control" type="text" name="account">
+                        <input class="form-control" type="text" name="account" value="{{ old('account') ?? ''}}">
                     </div>
                     <div class="col-md-6 p-3">
                         <span>IFSC Code</span>
-                        <input class="form-control" type="text" name="ifsc">
+                        <input class="form-control" type="text" name="ifsc" value="{{ old('ifsc') ?? ''}}">
                     </div>
                     <div class="col-md-12 p-3 text-center">
                         <button type="submit" class="btn border fs-2">Submit For Approval</button>

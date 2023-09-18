@@ -40,13 +40,17 @@ const seller = () => {
             account:'required',
             ifsc:'required',
             password: "required",
-            c_password: {
+            password_confirmation: {
                 equalTo: "#password"
             }
+        },
+        submitHandler: function (form) {
+            loader('show');
+            form.submit();
         }
     });
 
-    if($('#guideline1').length > 0){
+    if($('#guideline1').length > 0 && !localStorage.getItem("condition")){
     let modal = new Modal(document.getElementById('guideline1'));
     modal.show();
     }
@@ -89,6 +93,7 @@ const seller = () => {
         if($('.guideline6').is(':checked')){
             Modal.getInstance(document.getElementById('guideline6')).hide();
             $('.modal3_noti').addClass('d-none');
+            localStorage.setItem("condition", 1);
         }else{
             $('.modal3_noti').removeClass('d-none');
         }
@@ -99,5 +104,15 @@ const seller = () => {
             $('.modal3_noti').addClass('d-none');
         }  
     });
+
+    window.loader = (action) =>{
+        if(action == 'show'){
+            $('#popup-overlay').removeClass('d-none')
+            $('.spinner').removeClass('d-none')
+        }else{
+            $('#popup-overlay').addClass('d-none')
+            $('.spinner').addClass('d-none')
+        }
+    }
 }
 export default seller;

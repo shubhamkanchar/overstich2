@@ -24,6 +24,10 @@
 </head>
 
 <body>
+    <div id="popup-overlay" class="d-none"></div>
+    <div class="spinner d-none">
+        <img src="{{ asset('/image/spinner.svg') }}">
+    </div>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white mt-sm-4">
             <div class="container">
