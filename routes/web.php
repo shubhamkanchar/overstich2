@@ -28,8 +28,15 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('seller',SellerController::class);
 Route::resource('products',ProductController::class);
 
-Route::group(['middleware'=>['auth']],function(){
+Route::group(['middleware'=>['auth','adminMiddleware']],function(){
     Route::get('admin/dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');
     Route::get('seller/dashboard',[SelllerController::class,'dashboard'])->name('seller.dashboard');
     Route::get('sellers/list',[SelllerController::class,'index'])->name('seller.list');
+    Route::get('sellers/approve/{id}',[SelllerController::class,'approve'])->name('seller.approve');
+    Route::get('sellers/reject/{id}',[SelllerController::class,'reject'])->name('seller.reject');
+    Route::get('sellers/delete/{id}',[SelllerController::class,'delete'])->name('seller.delete');
+});
+
+Route::group(['middleware'=>['auth','adminMiddleware']],function(){
+    Route::get('seller/dashboard',[SelllerController::class,'dashboard'])->name('seller.dashboard');
 });

@@ -61,6 +61,7 @@
                     <div class="col-md-6 p-3">
                         <label>Upload product photos</label>
                         <input class="form-control" accept="image/*" type="file" name="product_photos[]" placeholder="Minimum 5 photos" multiple>
+                        <small>(Note: Please upload file size less than 500KB )</small>
                     </div>
                     <div class="col-md-12 p-3">
                         <label>Pick Up Address</label>

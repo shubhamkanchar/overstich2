@@ -24,10 +24,17 @@ class SellersDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', function(){
-                return '<a class="btn btn-sm btn-primary m-2">Approve</a>
-                <a class="btn btn-sm btn-warning m-2">Reject</a>
-                <a class="btn btn-sm btn-danger m-2">Delete</a>';
+            ->addColumn('action', function($row){
+                $html = '';
+                if($row->sellerInfo->is_approved == 0){
+                    $html .= '<a href="'.route('seller.approve',$row->id).'" class="btn btn-sm btn-primary m-2">Approve</a>';
+                }
+                if($row->sellerInfo->is_approved == 1){
+                    $html .= '<a href="'.route('seller.reject',$row->id).'" class="btn btn-sm btn-warning m-2">Reject</a>';
+                }
+                $html .= '<a href="'.route('seller.delete',$row->id).'" class="btn btn-sm btn-danger m-2">Delete</a>';
+
+                return $html;
             })
             ->editColumn('updated_at',function($row){
                 return Carbon::createFromDate($row->updated_at)->format('d-m-Y');

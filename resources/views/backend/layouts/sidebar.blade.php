@@ -11,9 +11,9 @@
         <div class="accordion accordion-flush mt-3" id="accordionFlushExample">
             <div class="accordion-item">
                 <h6 class="accordion-header1 p-3" id="flush-headingOne">
-                    <button class="accordion-button1" type="button">
+                    <a href="{{ route('admin.dashboard') }}" class="accordion-button1" type="button">
                         Dashboard
-                    </button>
+                    </a>
                 </h6>
             </div>
             <div class="accordion-item">
