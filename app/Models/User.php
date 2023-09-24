@@ -43,4 +43,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function sellerInfo(){
+        return $this->hasOne(SellerInfo::class,'seller_id','id');
+    }
 }
