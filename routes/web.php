@@ -27,5 +27,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::resource('seller',SellerController::class);
 Route::resource('products',ProductController::class);
-Route::get('admin/dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');
-Route::get('seller/dashboard',[SelllerController::class,'dashboard'])->name('seller.dashboard');
+
+Route::group(['middleware'=>['auth']],function(){
+    Route::get('admin/dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');
+    Route::get('seller/dashboard',[SelllerController::class,'dashboard'])->name('seller.dashboard');
+});
