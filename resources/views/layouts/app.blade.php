@@ -20,7 +20,7 @@
     <!-- Scripts -->
     @notifyCss
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    
+
 </head>
 
 <body>
@@ -83,10 +83,23 @@
                         @else
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
+                                {{ ucwords(Auth::user()->name) }}
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                @if(Auth::user()->user_type == 'admin')
+                                <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
+                                    Dashboard
+                                </a>
+                                @elseif(Auth::user()->user_type == 'seller')
+                                <a class="dropdown-item" href="{{ route('seller.dashboard') }}">
+                                    Dashboard
+                                </a>
+                                @else
+                                <a class="dropdown-item" href="{{ route('user.dashboard') }}">
+                                    Dashboard
+                                </a>
+                                @endif
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
@@ -95,8 +108,10 @@
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
+                                
                             </div>
                         </li>
+                        
                         @endguest
                     </ul>
                 </div>
@@ -139,52 +154,51 @@
         <main class="py-4">
             @yield('content')
         </main>
-        <footer class="mt-5">
-            <div class="container">
-                <div class="row">
-                    <div class="offset-md-1 col-md-10 col-lg-8 offset-lg-2">
-                        <nav class="navbar navbar-expand-md navbar-light bg-white">
-                            <ul class="navbar-nav w-100 me-auto text-center">
-                                <li class="nav-item ps-xl-4 pe-xl-4">
-                                    <a class="nav-link fs-6" href="{{ route('login') }}"><b>TERMS & CONDITIONS</b></a>
-                                </li>
-                                <li class="nav-item d-none d-md-block d-lg-block d-xl-block">
-                                    <a class="nav-link" href="#">|</a>
-                                </li>
-                                <li class="nav-item ps-xl-4 pe-xl-4">
-                                    <a class="nav-link fs-6" href="{{ route('login') }}"><b>PRIVACY POLICY</b></a>
-                                </li>
-                                <li class="nav-item d-none d-md-block d-lg-block d-xl-block">
-                                    <a class="nav-link" href="#">|</a>
-                                </li>
-                                <li class="nav-item ps-xl-4 pe-xl-4">
-                                    <a class="nav-link fs-6" href="{{ route('login') }}"><b>CONTACT US</b></a>
-                                </li>
-                                <li class="nav-item d-none d-md-block d-lg-block d-xl-block">
-                                    <a class="nav-link" href="#">|</a>
-                                </li>
-                                <li class="nav-item ps-xl-4 pe-xl-4">
-                                    <a class="nav-link fs-6" href="{{ route('login') }}"><b>COOKIE SETTING</b></a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-                <div class="row mb-5">
-                    <div class="col-12 text-center">
-                        <a class="nav-link fs-1 m-1 d-inline" target="_blank" href="https://www.instagram.com/
-overstitch.in/"><b><i class="bi bi-instagram"></i></b></a>
-                        <a class="nav-link fs-1 m-1 d-inline" target="_blank" href=" https://www.facebook.com/profile.php?
-id=100090246980494"><b><i class="bi bi-facebook"></i></b></a>
-                        <a class="nav-link fs-1 m-1 d-inline" target="_blank" href="https://wa.me/7066856414?text=Hello%20Overstitch"><b><i class="bi bi-whatsapp"></i></b></a>
-                        <a class="nav-link fs-1 m-1 d-inline" target="_blank" href="https://twitter.com/overstitch_in"><b><i class="bi bi-twitter"></i></b></a>
-                    </div>
+    </div>
+    <footer class="mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="offset-md-1 col-md-10 col-lg-8 offset-lg-2">
+                    <nav class="navbar navbar-expand-md navbar-light bg-white">
+                        <ul class="navbar-nav w-100 me-auto text-center">
+                            <li class="nav-item ps-xl-4 pe-xl-4">
+                                <a class="nav-link fs-6" href="{{ route('login') }}"><b>TERMS & CONDITIONS</b></a>
+                            </li>
+                            <li class="nav-item d-none d-md-block d-lg-block d-xl-block">
+                                <a class="nav-link" href="#">|</a>
+                            </li>
+                            <li class="nav-item ps-xl-4 pe-xl-4">
+                                <a class="nav-link fs-6" href="{{ route('login') }}"><b>PRIVACY POLICY</b></a>
+                            </li>
+                            <li class="nav-item d-none d-md-block d-lg-block d-xl-block">
+                                <a class="nav-link" href="#">|</a>
+                            </li>
+                            <li class="nav-item ps-xl-4 pe-xl-4">
+                                <a class="nav-link fs-6" href="{{ route('login') }}"><b>CONTACT US</b></a>
+                            </li>
+                            <li class="nav-item d-none d-md-block d-lg-block d-xl-block">
+                                <a class="nav-link" href="#">|</a>
+                            </li>
+                            <li class="nav-item ps-xl-4 pe-xl-4">
+                                <a class="nav-link fs-6" href="{{ route('login') }}"><b>COOKIE SETTING</b></a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
-        </footer>
-    </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <a class="nav-link fs-1 m-1 d-inline" target="_blank" href="https://www.instagram.com/overstitch.in/"><b><i class="bi bi-instagram"></i></b></a>
+                    <a class="nav-link fs-1 m-1 d-inline" target="_blank" href=" https://www.facebook.com/profile.php?id=100090246980494"><b><i class="bi bi-facebook"></i></b></a>
+                    <a class="nav-link fs-1 m-1 d-inline" target="_blank" href="https://wa.me/7066856414?text=Hello%20Overstitch"><b><i class="bi bi-whatsapp"></i></b></a>
+                    <a class="nav-link fs-1 m-1 d-inline" target="_blank" href="https://twitter.com/overstitch_in"><b><i class="bi bi-twitter"></i></b></a>
+                </div>
+            </div>
+        </div>
+    </footer>
     <x-notify::notify />
     @notifyJs
 </body>
+
 </html>
 @yield('script')

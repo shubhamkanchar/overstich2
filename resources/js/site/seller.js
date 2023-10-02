@@ -50,7 +50,7 @@ const seller = () => {
         }
     });
 
-    if($('#guideline1').length > 0 && !localStorage.getItem("condition")){
+    if($('#guideline1').length > 0 && $('#guidelinesBackend').val() == '0'){
     let modal = new Modal(document.getElementById('guideline1'));
     modal.show();
     }

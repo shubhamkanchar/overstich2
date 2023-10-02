@@ -97,6 +97,11 @@
             </div>
         </div>
     </form>
+    @if($errors->isEmpty() && empty($formSubmit))
+        <input type="hidden" id="guidelinesBackend" value="0"> 
+    @else
+        <input type="hidden" id="guidelinesBackend" value="1"> 
+    @endif
 </div>
 
 <div class="modal fade" id="guideline1" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

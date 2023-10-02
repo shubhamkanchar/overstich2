@@ -32,11 +32,11 @@
             </div>
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingOne">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeller" aria-expanded="false" aria-controls="flush-collapseSeller">
+                    <button class="accordion-button @if(Route::is('seller.*') )  @else collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeller" aria-expanded="false" aria-controls="flush-collapseSeller">
                         Sellers
                     </button>
                 </h2>
-                <div id="flush-collapseSeller" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <div id="flush-collapseSeller" class="accordion-collapse collapse @if(Route::is('seller.*') ) show @endif" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <ul>
                             <li><a href="{{ route('seller.list') }}">View Sellers</a></li>

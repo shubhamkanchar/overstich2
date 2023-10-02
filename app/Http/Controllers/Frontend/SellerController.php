@@ -46,6 +46,7 @@ class SellerController extends Controller
                 'name' => $request->brand,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
+                'user_type' => 'seller',
             ]);
             $user->assignRole('seller');
 
@@ -81,7 +82,7 @@ class SellerController extends Controller
             notify()->error('Something went wrong! Please try again');
             DB::rollBack();
         }
-        return redirect()->back();
+        return redirect()->back()->withErrors(['formSubmit'=>1]);
     }
 
     /**

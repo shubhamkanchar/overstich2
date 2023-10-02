@@ -6,11 +6,12 @@
       </button>
     </div>
     <div class="col-10 text-end">
-      <div class="dropdown me-5 mt-2">
+      <div class="dropdown me-md-3 mt-2">
         <button class=" dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
           {{ ucwords(Auth::user()->name) }}
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          
           <li class="dropdown-item">
             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">
