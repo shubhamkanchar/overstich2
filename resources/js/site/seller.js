@@ -15,40 +15,40 @@ const seller = () => {
         }
     }, "Please upload 5 files");
 
-    $("form").validate({
-        rules:{
-            product:'required',
-            gst:'required',
-            brand:'required',
-            mail:{
-                required:true,
-                email:true
-            },
-            'product_photos[]':{
-                required:true,
-                'maxupload' : 5,
-                'minupload' : 5
-            },
-            whatsapp:'required',
-            category:'required',
-            price_range:'required',
-            address_line:'required',
-            locality:'required',
-            city:'required',
-            state:'required',
-            pincode:'required',
-            account:'required',
-            ifsc:'required',
-            password: "required",
-            password_confirmation: {
-                equalTo: "#password"
-            }
-        },
-        submitHandler: function (form) {
-            loader('show');
-            form.submit();
-        }
-    });
+    // $("form").validate({
+    //     rules:{
+    //         product:'required',
+    //         gst:'required',
+    //         brand:'required',
+    //         mail:{
+    //             required:true,
+    //             email:true
+    //         },
+    //         'product_photos[]':{
+    //             required:true,
+    //             'maxupload' : 5,
+    //             'minupload' : 5
+    //         },
+    //         whatsapp:'required',
+    //         category:'required',
+    //         price_range:'required',
+    //         address_line:'required',
+    //         locality:'required',
+    //         city:'required',
+    //         state:'required',
+    //         pincode:'required',
+    //         account:'required',
+    //         ifsc:'required',
+    //         password: "required",
+    //         password_confirmation: {
+    //             equalTo: "#password"
+    //         }
+    //     },
+    //     submitHandler: function (form) {
+    //         loader('show');
+    //         form.submit();
+    //     }
+    // });
 
     if($('#guideline1').length > 0 && $('#guidelinesBackend').val() == '0'){
     let modal = new Modal(document.getElementById('guideline1'));
