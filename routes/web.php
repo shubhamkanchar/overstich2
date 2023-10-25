@@ -18,9 +18,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+Route::domain(env('DOMAIN'))->group(function () {
+    Route::get('/', function () {
+        return view('welcome');
+    })->name('welcome');
+});
 
 Auth::routes();
 
@@ -40,4 +42,8 @@ Route::group(['middleware'=>['auth','adminMiddleware']],function(){
 Route::group(['middleware'=>['auth']],function(){
     Route::get('sellers/dashboard',[SelllerController::class,'dashboard'])->name('seller.dashboard');
     Route::resource('categories',CategoryController::class);
+});
+
+Route::domain('partners.'.env('DOMAIN'))->group(function () {
+    Route::get('/',[SellerController::class,'homepage']);
 });

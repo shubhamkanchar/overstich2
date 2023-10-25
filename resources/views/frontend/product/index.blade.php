@@ -52,6 +52,18 @@
         </div>
     </div>
     <div class="row mt-5 mb-5">
+        <div class="col-md-3">
+            <div class="card shadow rounded mb-5">
+                <img class="card-img-top small-banner" src="{{ asset('image/small/1.jpg') }}" alt="Card image">
+                <div class="card-body">
+                    <span class="ps-4 fs-5"><b>BRAND NAME</b></span>
+                    <i class="bi bi-heart fs-4 me-4 float-end"></i>
+                    <span class="ps-4 fs-6 d-block">XYZ WOMEN TOP</span>
+                    <span class="ps-4 fs-6 d-block"><strike>RS. 1000</strike><span class="text-danger ms-2">50% OFF</span></span>
+                    <span class="ps-4 fs-5"><b>RS. 500</b></span>
+                </div>
+            </div>
+        </div>
         <div class="col-md-3 pb-5">
             <a href="{{ route('products.show',1) }}">
                 <img class="small-banner pb-1" width="100%" src="{{ asset('image/small/1.jpg') }}">

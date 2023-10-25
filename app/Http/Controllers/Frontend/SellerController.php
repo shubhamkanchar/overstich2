@@ -116,4 +116,8 @@ class SellerController extends Controller
     {
         //
     }
+
+    public function homepage(){
+        return view('frontend.seller.homepage');
+    }
 }
