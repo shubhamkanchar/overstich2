@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\SelllerController;
+use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\SellerController;
 use Illuminate\Support\Facades\Route;
@@ -41,6 +42,7 @@ Route::group(['middleware'=>['auth','adminMiddleware']],function(){
 
 Route::group(['middleware'=>['auth']],function(){
     Route::get('sellers/dashboard',[SelllerController::class,'dashboard'])->name('seller.dashboard');
+    Route::get('user/dashboard',[UserController::class,'dashboard'])->name('user.dashboard');
     Route::resource('categories',CategoryController::class);
 });
 
