@@ -12,6 +12,9 @@ window.axios = axios;
 import {Modal} from 'bootstrap';
 window.Modal = Modal;
 
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+window.Swal = Swal;
+
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**

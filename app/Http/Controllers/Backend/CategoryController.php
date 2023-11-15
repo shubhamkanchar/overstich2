@@ -23,7 +23,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $category = Category::all();
+        $category = Category::whereNull('parent_id')->get();
         return view('backend.seller.category.add',compact('category'));
     }
 

@@ -18,6 +18,7 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     @notifyCss
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @stack('styles')
 </head>
 
 <body>

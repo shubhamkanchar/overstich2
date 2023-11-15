@@ -11,22 +11,22 @@
         <div class="accordion accordion-flush mt-3" id="accordionFlushExample">
             <div class="accordion-item">
                 <h6 class="accordion-header1 p-3" id="flush-headingOne">
-                    <a href="{{ route('admin.dashboard') }}" class="accordion-button1" type="button">
+                    <a href="{{ route('seller.dashboard') }}" class="accordion-button1" type="button">
                         Dashboard
                     </a>
                 </h6>
             </div>
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingOne">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseProduct" aria-expanded="false" aria-controls="flush-product">
                         Product
                     </button>
                 </h2>
-                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <div id="flush-collapseProduct" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <ul>
-                            <li><a href="#">Add Product</a></li>
-                            <li><a href="#">View Product</a></li>
+                            <li><a href="{{ route('seller.products.create')}}">Add Product</a></li>
+                            <li><a href="{{ route('seller.products.index')}}">View Product</a></li>
                         </ul>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                     </div>
                 </div>
             </div>
-            <div class="accordion-item">
+            {{-- <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingThree">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
                         Products
@@ -71,7 +71,7 @@
 
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

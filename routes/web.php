@@ -4,6 +4,8 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\SelllerController;
 use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Backend\ProductController as SellerProductController;
+
 use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\SellerController;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +46,13 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('sellers/dashboard',[SelllerController::class,'dashboard'])->name('seller.dashboard');
     Route::get('user/dashboard',[UserController::class,'dashboard'])->name('user.dashboard');
     Route::resource('categories',CategoryController::class);
+   
+    Route::group(['prefix' => 'sellers','as' => 'seller.', 'middleware' => ['role:seller'] ], function () {
+        Route::resource('products',SellerProductController::class);
+        Route::get('products/get-category/{category}', [SellerProductController::class, 'getSubcategory'])->name('get-category');
+        Route::get('products/{product}/images', [SellerProductController::class, 'getImages'])->name('products.images');
+        Route::patch('products/{product}/images/{productImage}', [SellerProductController::class, 'replaceImage'])->name('product.replace-image');
+    });
 });
 
 Route::domain('partners.'.env('DOMAIN'))->group(function () {

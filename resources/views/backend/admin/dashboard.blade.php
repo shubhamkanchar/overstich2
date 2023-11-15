@@ -46,7 +46,7 @@
                                 <i class="bi bi-cart fs-1"></i>
                             </div>
                             <div class="media-body text-end w-50">
-                                <h3>0</h3>
+                                <h3>{{ App\Models\Product::where('status', 'active')->count() }}</h3>
                                 <span>Total Product's</span>
                             </div>
                         </div>

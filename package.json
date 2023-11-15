@@ -17,6 +17,7 @@
     "dependencies": {
         "bootstrap-icons": "^1.10.5",
         "jquery": "^3.7.1",
-        "jquery-validation": "^1.19.5"
+        "jquery-validation": "^1.19.5",
+        "sweetalert2": "^11.9.0"
     }
 }
