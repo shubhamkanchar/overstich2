@@ -1,5 +1,7 @@
 const sellerProduct = () =>{
-    $('#productForm').validate({
+    let sizeNo = $(".size-row").length;
+    const productForm = $('#productForm');
+    productForm.validate({
         rules: {
             title: {
                 required: true
@@ -13,14 +15,14 @@ const sellerProduct = () =>{
             child_category_id: {
                 required: true
             },
-            size: {
+            'size[]': {
                 required: true
             },
             price: {
                 required: true,
                 number: true
             },
-            stock: {
+            'quantity[]': {
                 required: true,
                 min: 1
             },
@@ -52,16 +54,16 @@ const sellerProduct = () =>{
             child_category_id: {
                 required: "Sub Category is required"
             },
-            size: {
+            'size[]': {
                 required: "Size is required."
             },
             price: {
                 required: "Price is required.",
                 number: "Please enter a valid number."
             },
-            stock: {
-                required: "Stock is required.",
-                min: "Stock must be at least 1."
+            'quantity[]': {
+                required: "quantity is required.",
+                min: "quantity must be at least 1."
             },
             discount: {
                 number: "Please enter a valid number.",
@@ -143,6 +145,36 @@ const sellerProduct = () =>{
         let button = $($(this).data('target')).trigger('click');
         $('#popup-overlay').removeClass('d-none')
         $('.spinner').removeClass('d-none')
+    });
+
+
+    $("#sizeContainer").on("click", ".add-size-btn", function () {
+        
+        var newSizeRow = $(".size-row:first").clone();
+        newSizeRow.find('input.quantity-input').val('').attr('name', 'quantity['+sizeNo+']');
+        newSizeRow.find('input.size-input').val('').attr('name', 'size['+sizeNo+']');
+        newSizeRow.find('.add-size-row').remove();
+        newSizeRow.append('<div class="col-4"><button type="button" class="btn btn-danger remove-size-btn">Remove</button></div>');
+        $("#sizeContainer").append(newSizeRow);
+
+        $('.quantity-input').each(function () {
+            $(this).rules("add", {
+                required: true,
+                min: 0
+            });
+        });
+
+        $('.size-input').each(function () {
+            $(this).rules("add", {
+                required: true
+            });
+        });
+
+        sizeNo++;
+    });
+
+    $(document).on('click', '.remove-size-btn', function () {
+        $(this).closest('.size-row').remove();
     });
 
 }

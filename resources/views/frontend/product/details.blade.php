@@ -4,48 +4,62 @@
     <div class="row mt-5 mb-5 justify-content-center">
         <div class="col-lg-4 col-md-6 pb-5">
             <div class="row">
-                <div class="col-md-6">
-                    <img class="pb-4" width="100%" src="{{ asset('image/small/1.jpg') }}">
-                </div>
-                <div class="col-md-6">
-                    <img class="pb-4" width="100%" src="{{ asset('image/small/1.jpg') }}">
-                </div>
-                <div class="col-md-6">
-                    <img class="pb-4" width="100%" src="{{ asset('image/small/1.jpg') }}">
-                </div>
-                <div class="col-md-6">
-                    <img class="pb-4" width="100%" src="{{ asset('image/small/1.jpg') }}">
-                </div>
-                <div class="col-md-6">
-                    <img class="pb-4" width="100%" src="{{ asset('image/small/1.jpg') }}">
-                </div>
+                @foreach ($product->images as $image)
+                    <div class="col-md-6">
+                        <img class="pb-4" width="100%" src="{{ asset($image->image_path) }}">
+                    </div>
+                @endforeach
                 <div class="col-md-12">
                     <p>SELLER INFORMATION :-</p>
-                    <span class="d-block"><b>BRAND :-</b> XYZ FASHION</span>
-                    <span class="d-block"><b>LEGAL NAME :-</b> FAB & FASHION</span>
-                    <span class="d-block"><b>ADDRESS :-</b> PLOT 25718 INSIDE RIGHT SIDE SHOP,</span>
-                    <span class="d-block"><b>RAJASTHAN :-</b> 302029</span>
-                    <span class="d-block"><b>MAIL :-</b> fab&fashion@gmail.com</span>
+                    <span class="d-block"><b>BRAND :-</b> {{ $product->brand }}</span>
+                    <span class="d-block"><b>LEGAL NAME :-</b> {{ $seller->name }}</span>
+                    @if ($sellerInfo)
+                        <span class="d-block"><b>ADDRESS :-</b> {{ $sellerInfo->address }},</span>
+                        <span class="d-block"><b>LOCALITY :-</b> {{ $sellerInfo->locality }},</span>
+                        <span class="d-block"><b>CITY :-</b> {{ $sellerInfo->city }},</span>
+                        <span class="d-block"><b>STATE :-</b> {{ $sellerInfo->state }},</span>
+                        <span class="d-block"><b>PINCODE :-</b> {{ $sellerInfo->pincode }}</span>
+                    @endif
                 </div>
             </div>
         </div>
         <div class="col-lg-4 col-md-6 pb-5">
-            <span class="ps-4 fs-3"><b>BRAND NAME</b></span>
+            <div class="ps-4 fs-3"><b>{{ $product->brand }}</b></div>
             <i class="bi bi-heart fs-2 me-4 float-end"></i>
-            <span class="ps-4 fs-4 d-block">XYZ WOMEN TOP</span>
-            <span class="ps-4 fs-4 d-block"><strike>RS. 1000</strike><span class="text-danger ms-2">50% OFF</span></span>
-            <span class="ps-4 fs-3 d-block"><b>RS. 500</b></span>
-            <span class="ps-4 fs-3 mt-3 d-block"><b>Sizes</b></span>
-            <div class="ps-3">
-                <button class="btn btn-lg border w-25 m-2">XS</button>
-                <button class="btn btn-lg border w-25 m-2">S</button>
-                <button class="btn btn-lg border w-25 m-2">M</button>
-                <button class="btn btn-lg border w-25 m-2">L</button>
-                <button class="btn btn-lg border w-25 m-2">XL</button>
-                <button class="btn btn-lg border w-25 m-2">XXL</button>
+            <div class="ps-4 fs-4 d-block">{{ $product->title }}</div>
+            <div class="ps-4 fs-4 d-block">
+                <strike>RS. {{ $product->price }}</strike>
+                <span class="text-danger ms-2">{{ $product->discount }}% OFF</span>
             </div>
+            @php $discountedPrice = $product->price - ($product->price * ($product->discount / 100));@endphp
+            <div class="ps-4 fs-3 d-block"><b>RS. {{ $discountedPrice }}</b></div>
+            {{-- <div class="ps-4 fs-3 mt-3 d-block"><b>Sizes</b></div> --}}
             <span class="ps-4 fs-3 mt-3 d-block">Sizes Chart</span>
-            <button class="ms-4 fs-3 mt-5 mb-5 btn btn-dark" style="width:85%"><i class="bi bi-bag me-1"></i>Add</button>
+            <form class="d-inline" action="{{ route('cart.store')}}" method="post">
+                @csrf
+                <input type="hidden" value="{{ $product->slug }}" name="slug">
+                {{-- <input type="hidden" name="already_exist" value="{{ in_array($product->slug, $addItems) ? '1' : '0' }}"> --}}
+                <div class="ps-3">
+                    @php $totalQuantity = 0; @endphp
+                    @foreach ($product->sizes as $size)
+                        @if($size->quantity > 0)
+                            <div class="form-check form-check-inline">
+                                <input class="d-none hidden" type="radio" name="size" id="size{{ $loop->index }}" value="{{ $size->size }}" @checked($loop->index == 0)>
+                                <label class="border-2 btn border @if ($loop->index == 0) border-2 border-black @endif text-center mt-2 w-25 ps-3 pe-4 py-2 size-label" for="size{{ $loop->index }}">{{ $size->size }}</label>
+                            </div>
+                        @else
+                            <button class="disabled border-1 btn border m-2 py-2 px-4">{{ $size->size }}</button>
+                        @endif
+                        @php $totalQuantity += $size->quantity; @endphp
+                    @endforeach
+                    
+                </div>
+                {{-- <span class="ps-4 fs-3 mt-3 d-block">Sizes Chart</span> --}}
+                @if ($totalQuantity <= 0)
+                    <span class="ps-4 fs-4 mt-3 d-block">Product not available now</span>
+                @endif
+                <button class="ms-4 fs-3 mt-5 mb-5 btn btn-dark" style="width:85%" @disabled($totalQuantity <= 0)><i class="bi bi-bag me-1"></i>Add</button>
+            </form>
             <ul class="ms-4">
                 <li>Standart Delivery in 5 - 9 days</li>
                 <li>Return/Exchange Available for 7 days</li>
@@ -55,7 +69,7 @@
             <a class="text-danger ms-2">CHECK</a>
             <span class="ps-4 fs-4 mt-3 d-block">PRODUCT DETAILS</span>
             <ul class="ms-4">
-                <li>Colour : solid black</li>
+                <li>Colour : {{ $product->color }}</li>
                 <li>Round neck</li>
                 <li>Slim fit</li>
                 <li>Material : Cotton</li>

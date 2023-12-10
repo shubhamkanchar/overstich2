@@ -61,28 +61,12 @@
                                     @error('color')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
-                                </div>
-
-                                <div class="col-12 col-md-4 mb-3">
-                                    <label for="size" class="form-label">Size</label>
-                                    <input type="text" class="form-control @error('size') is-invalid @enderror" placeholder="Size" id="size" name="size" value="{{ old('size', $product->size) }}">
-                                    @error('size')
-                                        <span class="invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>    
+                                </div>   
 
                                 <div class="col-12 col-md-4 mb-3">
                                     <label for="price" class="form-label">Price</label>
                                     <input type="number" step="0.01" placeholder="Price" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price', $product->price) }}" required>
                                     @error('price')
-                                        <span class="invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-4 mb-3">
-                                    <label for="stock" class="form-label">Stock</label>
-                                    <input type="number" class="form-control @error('stock') is-invalid @enderror" placeholder="Stock" id="stock" name="stock" value="{{ old('stock', $product->stock) }}" min="1">
-                                    @error('stock')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -117,7 +101,44 @@
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>    
-
+                                <div class="col-12 col-md-12 row p-3 mb-3" id="sizeContainer">
+                                    <label for="size" class="form-label">Size and Quantity</label>
+                                    @if (count($productSizes) > 0)
+                                        @foreach ($productSizes as $size)
+                                            <div class="size-row row mb-2 col-8">
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control size-input" placeholder="Size" value="{{ $size->size}}" name="size[{{$loop->index}}]" required>
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="number" class="form-control quantity-input" placeholder="Quantity" value="{{ $size->quantity}}" name="quantity[{{$loop->index}}]" required>
+                                                </div>
+                                                @if ($loop->index == 0)
+                                                    <div class="col-4 add-size-row">
+                                                        <button type="button" class="btn btn-primary add-size-btn">Add More Sizes</button>
+                                                    </div>
+                                                @else
+                                                    <div class="col-4 add-size-row">
+                                                        <button type="button" class="btn btn-danger remove-size-btn">Remove</button>
+                                                    </div>
+                                                @endif
+                                                
+                                            </div>
+                                        @endforeach
+                                    @else
+                                        <div class="size-row row mb-2 col-8">
+                                            <div class="col-4">
+                                                <input type="text" class="form-control size-input" placeholder="Size" name="size[0]" required>
+                                            </div>
+                                            <div class="col-4">
+                                                <input type="number" class="form-control quantity-input" placeholder="Quantity" name="quantity[0]" required>
+                                            </div>
+                                            <div class="col-4 add-size-row">
+                                                <button type="button" class="btn btn-primary add-size-btn">Add More Sizes</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                
+                                </div>
                                 <div class="col-12 col-md-12 mb-3">
                                     <label for="description" class="form-label">Description</label>
                                     <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description">{{ old('description', $product->description) }}</textarea>

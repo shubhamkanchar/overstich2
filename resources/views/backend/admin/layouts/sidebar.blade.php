@@ -52,7 +52,9 @@
                 </h2>
                 <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
-
+                        <ul>
+                            <li><a href="{{ route('admin.order.list') }}">View Orders</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>

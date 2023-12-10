@@ -6,6 +6,22 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+//bootrap font size
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+
+// Merge the custom font sizes with Bootstrap's font-size utilities
+$utilities: map-merge(
+  map-get($utilities, "font-size"),
+  (
+    rfs: true,
+    property: font-size,
+    class: fs,
+    values: $font-sizes,
+    responsive: true
+  )
+);
+
 @import '../css/app.css';
 @import '/node_modules/bootstrap-icons/font/bootstrap-icons.min.css';
 

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Cart;
 
 class ProductController extends Controller
 {
@@ -12,7 +14,21 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('frontend.product.index');
+        $user = auth()->user();
+        $userIdentifier = session()->getId();
+        if($user){
+            $userIdentifier = $user->name.$user->id;
+        }
+
+        Cart::instance($userIdentifier)->restore($userIdentifier);
+        $cartItems = Cart::instance($userIdentifier)->content();
+        $addItems = [];
+        foreach ($cartItems as $item) {
+            $addItems[] = $item->id;
+        }
+
+        $products = Product::with('images')->where('status', 'active')->get();
+        return view('frontend.product.index', compact('products', 'cartItems', 'addItems'));
     }
 
     /**
@@ -34,9 +50,13 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $slug)
     {
-        return view('frontend.product.details');
+        $product = Product::with(['images', 'seller', 'seller.sellerInfo', 'sizes'])->where('slug', $slug)->first();
+        $seller = $product->seller;
+        $sellerInfo = $product->seller?->sellerInfo;
+
+        return view('frontend.product.details', compact('product', 'seller', 'sellerInfo'));
     }
 
     /**

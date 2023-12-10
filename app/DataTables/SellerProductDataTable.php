@@ -113,7 +113,6 @@ class SellerProductDataTable extends DataTable
             Column::make('brand')->title('Brand'),
             Column::make('category_id')->title('Category'),
             Column::make('child_category_id')->title('Sub Category'),
-            Column::make('stock')->title('Stock'),
             Column::make('images')->title('Image')->width(200),
             Column::computed('action')
                   ->exportable(false)

@@ -54,7 +54,7 @@
                             <a class="nav-link" href="{{ route('login') }}"><i class="bi bi-search ms-sm-3 "></i></a>
                         </li>
                         <li class="nav-item ps-xl-2 pe-xl-2">
-                            <a class="nav-link" href="{{ route('register') }}"><i class="bi bi-bag fw-bolder"></i></a>
+                            <a class="nav-link" href="{{ route('cart.index') }}"><i class="bi bi-bag fw-bolder"></i></a>
                         </li>
                         <li class="nav-item ps-xl-2 pe-xl-2">
                             <a class="nav-link" href="{{ route('register') }}"><i class="bi bi-heart fw-bolder"></i></a>

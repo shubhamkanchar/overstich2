@@ -16,6 +16,11 @@ class Product extends Model
         return $this->hasMany(ProductImage::class, 'product_id', 'id');
     }
 
+    public function sizes():HasMany
+    {
+        return $this->hasMany(ProductSize::class, 'product_id', 'id');
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
@@ -24,6 +29,11 @@ class Product extends Model
     public function subCategory()
     {
         return $this->belongsTo(Category::class, 'child_category_id', 'id');
+    }
+
+    public function seller()
+    {
+        return $this->belongsTo(User::class, 'seller_id', 'id');
     }
 
     public function getRouteKeyName(): string

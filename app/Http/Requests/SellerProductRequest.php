@@ -26,9 +26,9 @@ class SellerProductRequest extends FormRequest
             'brand' => 'required',
             'category_id' => 'required',
             'child_category_id' => 'required',
-            'size' => 'required',
+            // 'size' => 'required',
             'price' => 'required|numeric|min:1',
-            'stock' => 'required|min:1',
+            // 'stock' => 'required|min:1',
             'discount' => 'nullable|numeric|min:0|max:100',
             'condition' => 'required',
             'status' => 'required'
@@ -36,6 +36,8 @@ class SellerProductRequest extends FormRequest
 
         if ($this->has('product_images')) {
             $rules['product_images'] = 'required|array|size:5'; 
+            $rules['size'] = 'required|array'; 
+            $rules['quantity'] = 'required|array'; 
             $rules['product_images.*'] = 'image'; 
         }
         

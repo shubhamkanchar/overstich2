@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-content">
-                    <div class="card-header">Add Product</div>
+                    <div class="card-header">Add Product1</div>
                     <form id="productForm" method="POST" action="{{ route('seller.products.store') }}" enctype="multipart/form-data">
                         <div class="card-body">
                             @csrf 
@@ -59,28 +59,12 @@
                                     @error('color')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
-                                </div>
-
-                                <div class="col-12 col-md-4 mb-3">
-                                    <label for="size" class="form-label">Size</label>
-                                    <input type="text" class="form-control @error('size') is-invalid @enderror" placeholder="Size" id="size" name="size" value="{{ old('size', 'M') }}">
-                                    @error('size')
-                                        <span class="invalid-feedback">{{ $message }}</span>
-                                    @enderror
                                 </div>    
 
                                 <div class="col-12 col-md-4 mb-3">
                                     <label for="price" class="form-label">Price</label>
                                     <input type="number" step="0.01" placeholder="Price" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price') }}" required>
                                     @error('price')
-                                        <span class="invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-4 mb-3">
-                                    <label for="stock" class="form-label">Stock</label>
-                                    <input type="number" class="form-control @error('stock') is-invalid @enderror" placeholder="Stock" id="stock" name="stock" value="{{ old('stock', 1) }}" min="1">
-                                    @error('stock')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -117,13 +101,29 @@
                                 </div>
                                   
                                 <div class="col-12 col-md-4 p-3">
-                                    <label>Upload product images</label>
+                                    <label class="form-label">Upload product images</label>
                                     <input class="form-control @error('product_images') is-invalid @enderror" accept="image/*" type="file" name="product_images[]" placeholder="Minimum 5 images" multiple>
                                     <small>(Note: Please upload file size less than 500KB )</small>
                                     @error('product_images')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
-                                </div>    
+                                </div>
+                                
+                                <div class="col-12 col-md-8 row p-3 mb-3" id="sizeContainer">
+                                    <label for="size" class="form-label">Size and Quantity</label>
+                                    <div class="size-row row mb-2 col-8">
+                                        <div class="col-4">
+                                            <input type="text" class="form-control size-input" placeholder="Size" name="size[0]" required>
+                                        </div>
+                                        <div class="col-4">
+                                            <input type="number" class="form-control quantity-input" placeholder="Quantity" name="quantity[0]" required>
+                                        </div>
+                                        <div class="col-4 add-size-row">
+                                            <button type="button" class="btn btn-primary add-size-btn">Add More Sizes</button>
+                                        </div>
+                                    </div>
+                                
+                                </div>
 
                                 <div class="col-12 col-md-12 mb-3">
                                     <label for="description" class="form-label">Description</label>

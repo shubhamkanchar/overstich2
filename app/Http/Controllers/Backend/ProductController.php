@@ -8,6 +8,7 @@ use App\Http\Requests\SellerProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\ProductSize;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -48,10 +49,10 @@ class ProductController extends Controller
             $product->brand = $request->brand;
             $product->category_id = $request->category_id;
             $product->child_category_id = $request->child_category_id;
-            $product->size = $request->size;
+            // $product->size = $request->size;
             $product->color = $request->color;
             $product->price = $request->price;
-            $product->stock = $request->stock;
+            // $product->stock = $request->stock;
             $product->discount = $request->discount;
             $product->condition = $request->condition;
             $product->status = $request->status;
@@ -59,6 +60,16 @@ class ProductController extends Controller
         
             $product->save();
         
+            $sizes = $request->size;
+            $quantities = $request->quantity;
+            foreach($sizes as $key => $size) {
+                $productSize = new ProductSize();
+                $productSize->product_id = $product->id;
+                $productSize->size = $size;
+                $productSize->quantity = $quantities[$key];
+                $product->sizes()->save($productSize);
+            }
+
             if ($request->hasFile('product_images')) {
                 $images = $request->file('product_images');
                 foreach ($images as $image) {
@@ -102,7 +113,8 @@ class ProductController extends Controller
         // $this->authorize('update', $product);
         $category = Category::whereNull('parent_id')->get();
         $subCategory = Category::whereNotNull('parent_id')->get();
-        return view('backend.seller.product.edit',compact('product', 'category', 'subCategory'));
+        $productSizes = ProductSize::where('product_id', $product->id)->get();
+        return view('backend.seller.product.edit',compact('product', 'category', 'subCategory', 'productSizes'));
     }
 
     /**
@@ -118,16 +130,27 @@ class ProductController extends Controller
         $product->category_id = $request->category_id;
         $product->category_id = $request->category_id;
         $product->child_category_id = $request->child_category_id;
-        $product->size = $request->size;
+        // $product->size = $request->size;
         $product->color = $request->color;
         $product->price = $request->price;
-        $product->stock = $request->stock;
+        // $product->stock = $request->stock;
         $product->discount = $request->discount;
         $product->condition = $request->condition;
         $product->status = $request->status;
         $product->description = $request->description;
     
         $product->update();
+
+        $sizes = $request->size;
+        $quantities = $request->quantity;
+        $product->sizes()->delete();
+        foreach($sizes as $key => $size) {
+            $productSize = new ProductSize();
+            $productSize->product_id = $product->id;
+            $productSize->size = $size;
+            $productSize->quantity = $quantities[$key];
+            $product->sizes()->save($productSize);
+        }
         
         notify()->success('Product updated successfully');
         return redirect()->back();
