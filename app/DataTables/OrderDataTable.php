@@ -21,7 +21,9 @@ class OrderDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        return (new EloquentDataTable($query))
+        $user = auth()->user(); 
+
+        $dataTable = (new EloquentDataTable($query))
             ->addColumn('user_name', function($order) {
                 return ucfirst($order->user?->name);
             })
@@ -31,10 +33,23 @@ class OrderDataTable extends DataTable
             ->addColumn('payment_status', function($order) {
                 return ucfirst($order->payments?->status);
             })
-            ->addColumn('action', function($order) {
-                return '<a href="' . route('admin.order.view', ['id' => $order->id]) . '" class="btn btn-success mt-2">View</a>';
+            ->addColumn('action', function($order) use ($user) {
+                $route = route('admin.order.view', ['id' => $order->id]);
+                if($user->user_type == 'seller') {
+                    $route = route('seller.order.view', ['id' => $order->id]);    
+                }
+                return '<a href="' . $route . '" class="btn btn-success mt-2">View</a>';
             })
             ->setRowId('id');
+
+            
+            if ($user->user_type == 'admin') {
+                $dataTable->addColumn('seller_name', function ($order) {
+                    return ucfirst($order->seller?->name);
+                });
+            }
+    
+            return $dataTable;
     }
 
     /**
@@ -77,11 +92,18 @@ class OrderDataTable extends DataTable
      */
     public function getColumns(): array
     {
-        return [
-            Column::make('id'),
+        $columns = [
             Column::make('order_number')->title('Order Number'),
             Column::make('user_name')->title('User'),
-            Column::make('seller_name')->title('Seller'),
+            // Column::make('seller_name')->title('Seller'),
+        ];
+
+        $user = auth()->user();
+        if ($user->user_type == 'admin') {
+            $columns[] = Column::make('seller_name')->title('Seller');
+        }
+
+        $columns = array_merge($columns, [
             Column::make('payment_method')->title('Payment Method'),
             Column::make('payment_status')->title('Payment Status'),
             Column::make('total_amount')->title('Total'),
@@ -94,7 +116,9 @@ class OrderDataTable extends DataTable
             ->width(60)
             ->addClass('text-center')
             ->title('Action')
-        ];
+        ]);
+
+        return $columns;
     
     }
 

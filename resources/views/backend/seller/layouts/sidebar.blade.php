@@ -55,7 +55,7 @@
                 <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <ul>
-                            <li><a href="{{ route('seller.list') }}">View Category</a></li>
+                            <li><a href="{{ route('seller.order.list') }}">View Orders</a></li>
                         </ul>
                     </div>
                 </div>

@@ -60,6 +60,8 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('products/get-category/{category}', [SellerProductController::class, 'getSubcategory'])->name('get-category');
         Route::get('products/{product}/images', [SellerProductController::class, 'getImages'])->name('products.images');
         Route::patch('products/{product}/images/{productImage}', [SellerProductController::class, 'replaceImage'])->name('product.replace-image');
+        Route::get('orders/list',[BackendOrderController::class,'index'])->name('order.list');
+        Route::get('orders/{id}',[BackendOrderController::class,'viewOrder'])->name('order.view');
     });
 });
 
