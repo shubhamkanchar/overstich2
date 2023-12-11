@@ -39,14 +39,15 @@
                 @csrf
                 <input type="hidden" value="{{ $product->slug }}" name="slug">
                 {{-- <input type="hidden" name="already_exist" value="{{ in_array($product->slug, $addItems) ? '1' : '0' }}"> --}}
-                <div class="ps-3">
-                    @php $totalQuantity = 0; @endphp
+                <div class="p-2">
+                    @php $totalQuantity = 0; $checkFirst = true; @endphp
                     @foreach ($product->sizes as $size)
                         @if($size->quantity > 0)
-                            <div class="form-check form-check-inline">
-                                <input class="d-none hidden" type="radio" name="size" id="size{{ $loop->index }}" value="{{ $size->size }}" @checked($loop->index == 0)>
-                                <label class="border-2 btn border @if ($loop->index == 0) border-2 border-black @endif text-center mt-2 w-25 ps-3 pe-4 py-2 size-label" for="size{{ $loop->index }}">{{ $size->size }}</label>
-                            </div>
+                            {{-- <div class="form-check form-check-inline"> --}}
+                                <input class="d-none hidden" type="radio" name="size" id="size{{ $loop->index }}" value="{{ $size->size }}" @checked($checkFirst)>
+                                <button type="button" class="border-2 btn border @if ($checkFirst) border-2 border-black @endif m-2 py-2 px-4 size-label" for="size{{ $loop->index }}">{{ $size->size }}</button>
+                                @php $checkFirst = false; @endphp
+                            {{-- </div> --}}
                         @else
                             <button class="disabled border-1 btn border m-2 py-2 px-4">{{ $size->size }}</button>
                         @endif

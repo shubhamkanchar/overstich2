@@ -2,6 +2,7 @@ const frontend = () => {
     $('.size-label').on('click', function() {
         $('.size-label').removeClass('border-2 border-black');
         $(this).addClass('border-2 border-black');
+        $('#' + $(this).attr('for')).prop('checked', true);
     })
 
     $('#checkoutForm').validate({
