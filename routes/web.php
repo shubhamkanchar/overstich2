@@ -11,6 +11,7 @@ use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\SellerController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -71,6 +72,8 @@ Route::post('add-to-cart', [CartController::class, 'store'])->name('cart.store')
 Route::post('update-cart-item', [CartController::class, 'update'])->name('cart.update');
 Route::post('remove-cart-item', [CartController::class, 'remove'])->name('cart.remove-item');
 Route::post('clear-cart', [CartController::class, 'destroy'])->name('cart.clear-cart');
+Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+Route::post('add-to-wishlist/{id}', [WishlistController::class, 'addRemoveWishlist'])->name('wishlist.add-remove-wishlist');
 
 Route::domain('partners.'.env('DOMAIN'))->group(function () {
     Route::get('/',[SellerController::class,'homepage']);

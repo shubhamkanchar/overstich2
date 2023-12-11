@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Cart;
 
@@ -15,20 +16,14 @@ class ProductController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $userIdentifier = session()->getId();
-        if($user){
-            $userIdentifier = $user->name.$user->id;
+        $userId = session()->getId();
+        if($user = auth()->user()) {
+            $userId = $user->id;
         }
-
-        Cart::instance($userIdentifier)->restore($userIdentifier);
-        $cartItems = Cart::instance($userIdentifier)->content();
-        $addItems = [];
-        foreach ($cartItems as $item) {
-            $addItems[] = $item->id;
-        }
-
+        $productIds = Wishlist::where('user_id', $userId)->pluck('product_id')->toArray();
         $products = Product::with('images')->where('status', 'active')->get();
-        return view('frontend.product.index', compact('products', 'cartItems', 'addItems'));
+
+        return view('frontend.product.index', compact('products', 'productIds'));
     }
 
     /**

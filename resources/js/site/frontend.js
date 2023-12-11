@@ -54,6 +54,29 @@ const frontend = () => {
         },
     });
 
+    $('.add-to-wishlist').on('click', function() {
+        let url = $(this).data('route');
+        console.log(url)
+        let product = $(this);
+        console.log(product)
+        $.ajax({
+            url: url,
+            method: 'POST',
+            success: function(response) {
+                if(response.added) {
+                    product.addClass('bi-heart-fill text-danger');
+                    product.removeClass('bi-heart');
+                } else {
+                    product.removeClass('bi-heart-fill text-danger');
+                    product.addClass('bi-heart');
+                }
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+
     $("#paymentMethod").on('change', function () {
         var selectedPaymentMethod = $("#paymentMethod option:selected").data('target');
         $('.payment-fields').hide();

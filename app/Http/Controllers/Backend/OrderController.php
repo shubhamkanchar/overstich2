@@ -18,9 +18,12 @@ class OrderController extends Controller
 
     public function viewOrder($id) {
 
-        // dd('test');
+        $user = auth()->user();
         $order = Order::where('id', $id)->with(['orderItem', 'orderItem.product'])->first();
-        if(auth()->user()->user_type == 'seller') {
+        if($user->user_type == 'seller') {
+            if($user->id !== $order->seller_id) {
+                return abort(401, "Don't try to access others");
+            }
             return view('backend.seller.order.view', compact('order'));    
         }
         return view('backend.admin.order.view', compact('order'));
