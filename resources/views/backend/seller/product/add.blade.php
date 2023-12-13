@@ -32,7 +32,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 mb-3">
+                                {{-- <div class="col-12 col-md-4 mb-3">
                                     <label for="subCategory" class="form-label">Sub Category</label>
                                     <select class="form-select @error('child_category_id') is-invalid @enderror" name="child_category_id" id="subCategory">
                                         <option value="" selected disabled>Sub Category</option>
@@ -43,7 +43,7 @@
                                     @error('child_category_id')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
-                                </div>
+                                </div> --}}
 
                                 <div class="col-12 col-md-4 mb-3">
                                     <label for="brand" class="form-label">Brand</label>

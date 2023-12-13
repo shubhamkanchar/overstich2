@@ -83,6 +83,13 @@ const frontend = () => {
         $(selectedPaymentMethod).fadeIn();
 
     });
+
+    $('.show-subcategory').on('click', function() {
+        var targetId = $(this).data('target');
+        console.log(targetId)
+        $('.child-categories').not(targetId).hide();
+        $(targetId).toggle();
+    })
 }
 
 export default frontend;

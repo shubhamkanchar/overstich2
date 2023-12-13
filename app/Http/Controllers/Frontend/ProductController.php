@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request, $categoryId = null)
     {
         $user = auth()->user();
         $userId = session()->getId();
@@ -22,6 +23,9 @@ class ProductController extends Controller
         }
         $productIds = Wishlist::where('user_id', $userId)->pluck('product_id')->toArray();
         $products = Product::with('images')->where('status', 'active')->get();
+        if($categoryId) {
+           $products = Product::where('category_id', $categoryId)->get();
+        }
 
         return view('frontend.product.index', compact('products', 'productIds'));
     }

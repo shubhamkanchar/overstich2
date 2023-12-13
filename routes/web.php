@@ -36,7 +36,8 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('seller',SellerController::class);
-Route::resource('products',ProductController::class);
+Route::resource('products', ProductController::class)->except(['index']);
+Route::get('category/products/{category?}', [ProductController::class, 'index'])->name('products.index');
 
 Route::group(['middleware'=>['auth','adminMiddleware']],function(){
     Route::get('admin/dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');

@@ -22,7 +22,43 @@ class Category extends Model
 
     public function children()
     {
-        return $this->hasMany(Category::class, 'parent_id', 'id');
+        return $this->hasMany(Category::class, 'parent_id', 'id')->with('children');
     }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'category_id', 'id')->where('status', 'active');
+    }
+
+    public function categoryTreeView($categories, $id) {
+        $html = '';
+        $html .= $this->makechildcat($categories, $id);
+        return $html;
+    }
+
+    public function makechildcat($categories, $id = null)
+    {
+        $html = '';
+        foreach($categories as $category){
+            $count = count($category->children);            
+            $colstart = '';            
+            $colEnd = '';
+            $class = '';
+            if($category->parent_id == $id) {
+                $colstart = '<div class="col-sm-12 col-md text-start text-md-center">';            
+                $colEnd = '</div>';
+                $class = 'fs-4 fw-bold';
+            }         
+            $html .= $colstart;
+            $html .= '<a class="nav-link ms-5 me-5 '.$class.'" href="'.route('products.index', $category->id).'">'.$category->category.'</a>';
+
+            if(count($category->children) > 0 ) { 
+                $html .= $this->makechildcat($category->children);
+            }
+            $html .= $colEnd;
+        }        
+        return $html;
+    }
+    
 
 }

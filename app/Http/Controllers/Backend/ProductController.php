@@ -28,7 +28,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $category = Category::whereNull('parent_id')->get();
+        $category = Category::all();
         $subCategory = Category::whereNotNull('parent_id')->get();
         return view('backend.seller.product.add',compact('category', 'subCategory'));//
     }
@@ -48,7 +48,7 @@ class ProductController extends Controller
             $product->seller_id = $user->id;
             $product->brand = $request->brand;
             $product->category_id = $request->category_id;
-            $product->child_category_id = $request->child_category_id;
+            // $product->child_category_id = $request->child_category_id;
             // $product->size = $request->size;
             $product->color = $request->color;
             $product->price = $request->price;
@@ -111,7 +111,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         // $this->authorize('update', $product);
-        $category = Category::whereNull('parent_id')->get();
+        $category = Category::all();
         $subCategory = Category::whereNotNull('parent_id')->get();
         $productSizes = ProductSize::where('product_id', $product->id)->get();
         return view('backend.seller.product.edit',compact('product', 'category', 'subCategory', 'productSizes'));
@@ -129,7 +129,7 @@ class ProductController extends Controller
         $product->brand = $request->brand;
         $product->category_id = $request->category_id;
         $product->category_id = $request->category_id;
-        $product->child_category_id = $request->child_category_id;
+        // $product->child_category_id = $request->child_category_id;
         // $product->size = $request->size;
         $product->color = $request->color;
         $product->price = $request->price;

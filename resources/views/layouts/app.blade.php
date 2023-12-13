@@ -39,15 +39,16 @@
                 </button>
                 <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link ms-5 me-5" href="{{ route('products.index') }}"><b>Men</b></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link ms-5 me-5" href="{{ route('login') }}"><b>Women</b></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link ms-5 me-5" href="{{ route('login') }}"><b>Kids</b></a>
-                        </li>
+                        @foreach ($categories as $category)
+                            <li class="nav-item">
+                                <a class="nav-link ms-5 d-inline-block" href="{{ route('products.index', $category->id) }}"><b>{{ $category->category}}</b></a>
+                                {{-- <span class="bi mt-4 bi-caret-down me-5 show-subcategory d" data-target="#subcategory{{$category->id}}"></span> --}}
+                                <span class="bi mt-4 bi-caret-down me-5 d-none d-md-inline show-subcategory" data-target="#subcategory{{ $category->id }}"></span>
+    
+                                <span class="bi mt-4 bi-caret-right me-5 d-inline-block d-md-none show-subcategory" data-target="#subcategory{{ $category->id }}"></span>
+                            </li> 
+                        @endforeach
+                        
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item ps-xl-2 pe-xl-2">
@@ -103,6 +104,13 @@
                 </div>
             </div>
         </nav>
+        @foreach ($categories as $category)
+            <div class="container-fluid text-center child-categories" style="display: none; max-height " id="subcategory{{$category->id}}">
+                <div class="row bg-white border-2 border-top-0">
+                    {!! $categoryTree->categoryTreeView($category->children, $category->id) !!}
+                </div>
+            </div>
+        @endforeach
         <main class="">
             @yield('content')
         </main>

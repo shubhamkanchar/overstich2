@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        View::composer('layouts.app', function ($view) {
+            $categoryTree = new Category();
+            $categories = Category::with('children')->whereNull('parent_id')->get();
+            $view->with(['categories' => $categories, 'categoryTree' => $categoryTree]);
+        });
     }
 }
