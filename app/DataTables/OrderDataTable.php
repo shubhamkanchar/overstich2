@@ -59,9 +59,8 @@ class OrderDataTable extends DataTable
     {
         $user = auth()->user();
         if($user->user_type == 'seller') {
-            $model->where('seller_id', $user->id);
+           $model = $model->where('seller_id', $user->id);
         }
-
         return $model->with(['seller', 'user', 'payments'])->newQuery();
     }
 

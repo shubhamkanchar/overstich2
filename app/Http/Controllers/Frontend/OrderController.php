@@ -109,9 +109,9 @@ class OrderController extends Controller
             $order->city = $request->city;
             $order->state = $request->state;
             $order->country = 'india';
-            $order->order_number = 'OI'.strtotime('now') . $id . auth()->id() ?? '';
+            $order->order_number = 'OI'.strtotime('now') . $id . $user->id ?? '';
             $order->payment_method = $request->payment_method;
-            $order->payment_transaction_id = $transactionId;
+            $order->payment_transaction_id = $request->payment_method == 'cod' ? $transactionId. $id . $user->id : $transactionId;
             $order->is_order_confirmed = $request->payment_method == 'cod' ? 1 : 0;
             $order->total_amount =  $totalPrice > 2300 ? $totalPrice : $totalPrice + $deliveryCharges;
             $order->delivery_charge = $deliveryCharges;
@@ -130,6 +130,18 @@ class OrderController extends Controller
                     $productSize = new ProductSize();
                     $productSize->updateQuantity($item);
                 }
+
+                $paymentData = [
+                    'batch' => $order->batch,
+                    'user_id' => $order->user_id,
+                    'transaction_id' => $order->payment_transaction_id,
+                    'amount' => $order->total_amount,
+                    'status' => 'unpaid',
+                    'phone_status' => Null, 
+                    'phone_response' => Null, 
+                ];
+                
+                $payment = $this->phonePePaymentGateway->store($paymentData);
             }
         }
         
@@ -147,19 +159,6 @@ class OrderController extends Controller
             return redirect()->to($response->data->instrumentResponse->redirectInfo->url);
         }
 
-
-        $paymentData = [
-            'batch' => $order->batch,
-            'user_id' => $order->user_id,
-            'transaction_id' => $order->payment_transaction_id,
-            'amount' => $order->total_amount,
-            'status' => 'unpaid',
-            'phone_status' => Null, 
-            'phone_response' => Null, 
-        ];
-        
-        $payment = $this->phonePePaymentGateway->store($paymentData);
-
         
         Cart::instance($userIdentifier)->destroy();
         Cart::store($userIdentifier); 
@@ -174,36 +173,40 @@ class OrderController extends Controller
 
         if($request->code == 'PAYMENT_SUCCESS') {
             Order::where('payment_transaction_id', $transactionId)->update(['is_order_confirmed' => 1]);
-            $order = Order::where('payment_transaction_id', $transactionId)->first();
-            $paymentData = [
-                'batch' => $order->batch,
-                'user_id' => $order->user_id,
-                'transaction_id' => $order->payment_transaction_id,
-                'amount' => $order->total_amount,
-                'status' => 'paid', 
-                'phone_status' => 'Success', 
-                'phone_response' => NULL, 
-            ];
 
-            try {
-                $response = $this->phonePePaymentGateway->getStatus($transactionId);
-                $paymentData['phone_response'] = json_encode($response);
-            } catch (\Throwable $th) {
-                Log::channel('daily')->info('Error', ['phone-pay' => $th]);
-            }
-
-            $payment = $this->phonePePaymentGateway->store($paymentData);
-
-            $user = User::where('id', $order->user_id)->first();
-            $userIdentifier = $user->name.$user->id;
             // function to update all product quantity seller wise from above order we are getting one order only we can have multiple order at time.
-            $orders = Order::where(['batch' => $order->batch, 'user_id' => $order->user_id]);
+            $orders = Order::where('payment_transaction_id', $transactionId)->get();
+            $id = 1;
             foreach($orders as $order) {
                 foreach ($order->orderItem as $item) {
                     $productSize = new ProductSize();
                     $productSize->updateQuantity($item);
                 }
+
+                $paymentData = [
+                    'batch' => $order->batch,
+                    'user_id' => $order->user_id,
+                    'transaction_id' => $order->payment_transaction_id,
+                    'amount' => $order->total_amount,
+                    'status' => 'paid', 
+                    'phone_status' => 'Success', 
+                    'phone_response' => NULL, 
+                ];
+
+                try {
+                    $response = $this->phonePePaymentGateway->getStatus($transactionId);
+                    $paymentData['phone_response'] = json_encode($response);
+                } catch (\Throwable $th) {
+                    Log::channel('daily')->info('Error', ['phone-pay' => $th]);
+                }
+                $order->payment_transaction_id = $order->payment_transaction_id.$id.$order->user_id;// updating transaction id to get seperate transaction for each order;
+                $order->update();
+                $payment = $this->phonePePaymentGateway->store($paymentData);
+                $id++;
             }
+
+            $user = User::where('id', $order->user_id)->first();
+            $userIdentifier = $user->name.$user->id;
             \Cart::instance($userIdentifier)->destroy();
             \Cart::store($userIdentifier);
 
@@ -225,38 +228,38 @@ class OrderController extends Controller
 
         if($request->code == 'PAYMENT_SUCCESS') {
             Order::where('payment_transaction_id', $transactionId)->update(['is_order_confirmed' => 1]);
-            $order = Order::where('payment_transaction_id', $transactionId)->first();
-            
-            $paymentData = [
-                'batch' => $order->batch,
-                'user_id' => $order->user_id,
-                'transaction_id' => $order->payment_transaction_id,
-                'amount' => $order->total_amount,
-                'status' => 'paid', 
-                'phone_status' => 'Success', 
-                'phone_response' => NULL, 
-            ];
-
-            try {
-                $response = $this->phonePePaymentGateway->getStatus($transactionId);
-                $paymentData['phone_response'] = json_encode($response);
-            } catch (\Throwable $th) {
-                Log::channel('daily')->info('Error', ['phone-pay' => $th]);
-            }
-
-            $payment = $this->phonePePaymentGateway->store($paymentData);
-
-            $user = User::where('id', $order->user_id)->first();
-            $userIdentifier = $user->name.$user->id;
-            // function to update all product quantity seller wise from above order we are getting one order only we can have multiple order at time.
-            $orders = Order::where(['batch' => $order->batch, 'user_id' => $order->user_id]);
+            $orders = Order::where('payment_transaction_id', $transactionId)->get();
+            $id = 1;
             foreach($orders as $order) {
                 foreach ($order->orderItem as $item) {
                     $productSize = new ProductSize();
                     $productSize->updateQuantity($item);
                 }
+
+                $paymentData = [
+                    'batch' => $order->batch,
+                    'user_id' => $order->user_id,
+                    'transaction_id' => $order->payment_transaction_id,
+                    'amount' => $order->total_amount,
+                    'status' => 'paid', 
+                    'phone_status' => 'Success', 
+                    'phone_response' => NULL, 
+                ];
+
+                try {
+                    $response = $this->phonePePaymentGateway->getStatus($transactionId);
+                    $paymentData['phone_response'] = json_encode($response);
+                } catch (\Throwable $th) {
+                    Log::channel('daily')->info('Error', ['phone-pay' => $th]);
+                }
+                $order->payment_transaction_id = $order->payment_transaction_id.$id.$order->user_id;// updating transaction id to get seperate transaction for each order;
+                $order->update();
+                $payment = $this->phonePePaymentGateway->store($paymentData);
+                $id++;
             }
-            
+
+            $user = User::where('id', $order->user_id)->first();
+            $userIdentifier = $user->name.$user->id;
             \Cart::instance($userIdentifier)->destroy();
             \Cart::store($userIdentifier);
 

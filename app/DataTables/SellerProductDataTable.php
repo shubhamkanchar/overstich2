@@ -26,9 +26,6 @@ class SellerProductDataTable extends DataTable
             ->addColumn('category_id', function ($row) {
                 return $row->category?->category;
             })
-            ->addColumn('child_category_id', function ($row) {
-                return $row->subCategory?->category;
-            })
             ->addColumn('images', function ($row) {
                 $images = $row->images;
                 $imageHtml = '';
@@ -77,7 +74,7 @@ class SellerProductDataTable extends DataTable
     public function query(Product $model): QueryBuilder
     {
         $user = auth()->user();
-        return $model->with(['category', 'subCategory'])->where('seller_id', $user->id)->newQuery();
+        return $model->with(['category'])->where('seller_id', $user->id)->newQuery();
     }
 
     /**
@@ -112,7 +109,6 @@ class SellerProductDataTable extends DataTable
             Column::make('title')->title('Name'),
             Column::make('brand')->title('Brand'),
             Column::make('category_id')->title('Category'),
-            Column::make('child_category_id')->title('Sub Category'),
             Column::make('images')->title('Image')->width(200),
             Column::computed('action')
                   ->exportable(false)

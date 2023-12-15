@@ -24,7 +24,8 @@ class ProductController extends Controller
         $productIds = Wishlist::where('user_id', $userId)->pluck('product_id')->toArray();
         $products = Product::with('images')->where('status', 'active')->get();
         if($categoryId) {
-           $products = Product::where('category_id', $categoryId)->get();
+            $categoryIds = Category::find($categoryId)->allChildrenId();
+            $products = Product::whereIn('category_id', $categoryIds)->get();
         }
 
         return view('frontend.product.index', compact('products', 'productIds'));

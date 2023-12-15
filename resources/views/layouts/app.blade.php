@@ -40,12 +40,12 @@
                 <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">
                         @foreach ($categories as $category)
-                            <li class="nav-item">
-                                <a class="nav-link ms-5 d-inline-block" href="{{ route('products.index', $category->id) }}"><b>{{ $category->category}}</b></a>
+                            <li class="nav-item d-flex justify-content-between">
+                                <a class="nav-link ms-5 d-inline-block" href="{{ route('products.index', $category->id) }}"><b>{{ ucfirst($category->category)}}</b></a>
                                 {{-- <span class="bi mt-4 bi-caret-down me-5 show-subcategory d" data-target="#subcategory{{$category->id}}"></span> --}}
-                                <span class="bi mt-4 bi-caret-down me-5 d-none d-md-inline show-subcategory" data-target="#subcategory{{ $category->id }}"></span>
+                                <span class="bi mt-2 pt-1 bi-caret-down me-5 d-none d-md-inline show-subcategory" data-target="#subcategory{{ $category->id }}"></span>
     
-                                <span class="bi mt-4 bi-caret-right me-5 d-inline-block d-md-none show-subcategory" data-target="#subcategory{{ $category->id }}"></span>
+                                <span class="bi fs-4 text-secondary me-5 d-inline-block d-md-none show-subcategory" data-target="#subcategory{{ $category->id }}">></span>
                             </li> 
                         @endforeach
                         
@@ -104,13 +104,18 @@
                 </div>
             </div>
         </nav>
-        @foreach ($categories as $category)
-            <div class="container-fluid text-center child-categories" style="display: none; max-height " id="subcategory{{$category->id}}">
-                <div class="row bg-white border-2 border-top-0">
-                    {!! $categoryTree->categoryTreeView($category->children, $category->id) !!}
+        <div class="relative">
+            @foreach ($categories as $category)
+                <div class="container-fluid text-start child-categories" style="display: none;position: absolute;
+                left: 0px;
+                top: 0px;
+                z-index: 1;" id="subcategory{{$category->id}}">
+                    <div class="row flex-wrap bg-white border-2 subcategory-row border-top-0">
+                        {!! $categoryTree->categoryTreeView($category->children, $category->id) !!}
+                    </div>
                 </div>
-            </div>
-        @endforeach
+            @endforeach
+        </div>
         <main class="">
             @yield('content')
         </main>

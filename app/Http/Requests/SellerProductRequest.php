@@ -25,7 +25,6 @@ class SellerProductRequest extends FormRequest
             'title' => 'required',
             'brand' => 'required',
             'category_id' => 'required',
-            'child_category_id' => 'required',
             // 'size' => 'required',
             'price' => 'required|numeric|min:1',
             // 'stock' => 'required|min:1',

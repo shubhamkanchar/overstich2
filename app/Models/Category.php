@@ -30,6 +30,25 @@ class Category extends Model
         return $this->hasMany(Product::class, 'category_id', 'id')->where('status', 'active');
     }
 
+    public function allChildrenId()
+    {
+        $ids = $this->getAllIds($this->children);
+        $ids[] = $this->id;
+        return $ids;
+    }
+
+    public function getAllIds($categories) {
+        $ids = [];
+        foreach($categories as $category) {
+            $ids[] = $category->id;
+            if(count($category->children) > 0 ) { 
+                $ids = array_merge($ids, $this->getAllIds($category->children));
+            }
+        }
+
+        return $ids;
+    }
+
     public function categoryTreeView($categories, $id) {
         $html = '';
         $html .= $this->makechildcat($categories, $id);
@@ -45,12 +64,12 @@ class Category extends Model
             $colEnd = '';
             $class = '';
             if($category->parent_id == $id) {
-                $colstart = '<div class="col-sm-12 col-md text-start text-md-center">';            
+                $colstart = '<div class="col-sm-12 col-md text-start">';            
                 $colEnd = '</div>';
                 $class = 'fs-4 fw-bold';
             }         
             $html .= $colstart;
-            $html .= '<a class="nav-link ms-5 me-5 '.$class.'" href="'.route('products.index', $category->id).'">'.$category->category.'</a>';
+            $html .= '<a class="nav-link ms-5 me-5 '.$class.'" href="'.route('products.index', $category->id).'">'.ucfirst($category->category).'</a>';
 
             if(count($category->children) > 0 ) { 
                 $html .= $this->makechildcat($category->children);
