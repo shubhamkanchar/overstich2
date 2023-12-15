@@ -89,7 +89,7 @@
                     <div><b>Order ID: </b>{{ $order->order_number }}</div>
                     <div><b>Transaction ID:</b> {{ $order->payment_transaction_id }}</div>
                     <div><b>Order Date:</b> {{ $order->created_at->format('d-m-Y') }}</div>
-                    <div><b>Invoice Date:</b> {{ $order->invoice_generated_at }}</div>
+                    <div><b>Invoice Date:</b> {{ $order->invoice_generated_at->format('d-m-Y') }}</div>
                 </td>
                 <td class="w-half" style="vertical-align: top">
                     <div><b>Ship To:</b></div>
@@ -173,7 +173,7 @@
         <hr>
         <div class="text-end">
             <span style="margin-right: 20px;"><b>E.&O.E</b></span>
-            <span>| page 1 0f 1</span>
+            <span>| page 1 of 1</span>
         </div>
 
     </div>

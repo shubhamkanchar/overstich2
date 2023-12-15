@@ -9,6 +9,9 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'invoice_generated_at' => 'datetime', 
+    ];
     public function orderItem()
     {
         return $this->hasMany(OrderItem::class, 'order_id', 'id');
