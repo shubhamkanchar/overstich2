@@ -74,6 +74,9 @@
                     </tbody>
                 </table>
             </div>
+            <div class="card-footer">
+                <a class="btn btn-primary" href="{{ route('download.invoice', $order->id)}}">Generate Invoice</a>
+            </div>
         </div>
     </div>
 @endsection

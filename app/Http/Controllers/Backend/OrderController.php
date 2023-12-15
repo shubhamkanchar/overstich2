@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\DataTables\OrderDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -27,5 +28,18 @@ class OrderController extends Controller
             return view('backend.seller.order.view', compact('order'));    
         }
         return view('backend.admin.order.view', compact('order'));
+    }
+
+    public function downloadInvoice($id) {
+        $order = Order::where('id',$id)->with(['orderItem', 'seller', 'seller.sellerInfo'])->withCount('orderItem')->first();
+        if(is_null($order->invoice_number)) {
+            $order->invoice_number = '#'.strtotime('now') . $order->user_id;
+            $order->invoice_generated_at = now();
+            $order->update();
+        }
+        // return view('backend.seller.order.invoice', compact('order'));
+        $pdf = Pdf::loadView('backend.seller.order.invoice', compact('order'));
+ 
+        return $pdf->download($order->order_number.'.pdf');
     }
 }

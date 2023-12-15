@@ -65,6 +65,8 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('orders/list',[BackendOrderController::class,'index'])->name('order.list');
         Route::get('orders/{id}',[BackendOrderController::class,'viewOrder'])->name('order.view');
     });
+
+    Route::get('download-invoice/{id}', [BackendOrderController::class,'downloadInvoice'])->name('download.invoice');
 });
 
 // Route::resource('cart', CartController::class);
