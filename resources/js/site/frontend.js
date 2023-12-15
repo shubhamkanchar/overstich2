@@ -86,10 +86,25 @@ const frontend = () => {
 
     $('.show-subcategory').on('click', function() {
         var targetId = $(this).data('target');
-        console.log(targetId)
+        var targetParentId = $(this).closest('.main-category').attr('id');
+        console.log(targetParentId);
         $('.child-categories').not(targetId).hide();
         $(targetId).toggle();
+        var newWindowWidth = $(window).width();
+        if (newWindowWidth < 576) {
+            $('.nav-right-content').toggle();
+            $('.main-category').not("#"+targetParentId).toggle()
+        }
     })
+
+    $('.show-nested-subcategory').on('click', function() {
+        var targetId = $(this).data('target');
+        console.log(targetId)
+
+        $(this).find('.childs').not(targetId).hide();
+        $(targetId).toggleClass('d-none');
+    })
+
 }
 
 export default frontend;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\DataTables\SellerCategoryTableDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -89,6 +90,17 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        try {
+            if($category->done_by == Auth::user()->id){
+                $category->delete();
+                notify()->success('Category Deleted successfully');
+            }
+            notify()->error("Can't Delete Category Created By Others");
+        } catch(Exception $e) {
+            notify()->error('Category already exists');
+        }
+
+        return redirect()->back();
+
     }
 }

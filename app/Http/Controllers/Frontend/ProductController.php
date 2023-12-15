@@ -24,11 +24,12 @@ class ProductController extends Controller
         $productIds = Wishlist::where('user_id', $userId)->pluck('product_id')->toArray();
         $products = Product::with('images')->where('status', 'active')->get();
         if($categoryId) {
-            $categoryIds = Category::find($categoryId)->allChildrenId();
+            $category = Category::find($categoryId);
+            $categoryIds = $category->allChildrenId();
             $products = Product::whereIn('category_id', $categoryIds)->get();
         }
 
-        return view('frontend.product.index', compact('products', 'productIds'));
+        return view('frontend.product.index', compact('products', 'productIds', 'category'));
     }
 
     /**

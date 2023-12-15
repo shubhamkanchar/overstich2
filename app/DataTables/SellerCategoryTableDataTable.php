@@ -24,7 +24,6 @@ class SellerCategoryTableDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function($row){
-                return '<a href="'.route('categories.edit',$row->id).'" class="btn btn-sm btn-primary m-1">Edit</a><button class="btn btn-sm btn-danger m-1">Delete</button>';
             })
             ->editColumn('parent_id', function($row){
                 return $row->parentCategory?->category ?? '-';
@@ -56,6 +55,7 @@ class SellerCategoryTableDataTable extends DataTable
                     //->dom('Bfrtip')
                     ->orderBy(1)
                     // ->selectStyleSingle()
+                    ->responsive(true)
                     ->buttons([
                         Button::make('excel'),
                         Button::make('csv'),

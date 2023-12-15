@@ -40,17 +40,19 @@
                 <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">
                         @foreach ($categories as $category)
-                            <li class="nav-item d-flex justify-content-between">
-                                <a class="nav-link ms-5 d-inline-block" href="{{ route('products.index', $category->id) }}"><b>{{ ucfirst($category->category)}}</b></a>
-                                {{-- <span class="bi mt-4 bi-caret-down me-5 show-subcategory d" data-target="#subcategory{{$category->id}}"></span> --}}
-                                <span class="bi mt-2 pt-1 bi-caret-down me-5 d-none d-md-inline show-subcategory" data-target="#subcategory{{ $category->id }}"></span>
-    
-                                <span class="bi fs-4 text-secondary me-5 d-inline-block d-md-none show-subcategory" data-target="#subcategory{{ $category->id }}">></span>
-                            </li> 
+                            <div  class="main-category" id="mainCategory{{$category->id}}">
+                                <li class="nav-item d-flex justify-content-between">
+                                    <a class="nav-link ms-5 d-inline-block fs-4" href="{{ route('products.index', $category->id) }}"><b>{{ ucfirst($category->category)}}</b></a>
+                                    {{-- <span class="bi mt-4 bi-caret-down me-5 show-subcategory d" data-target="#subcategory{{$category->id}}"></span> --}}
+                                    <span class="bi bi-caret-down align-self-center me-5 d-none d-md-inline show-subcategory" data-target="#subcategory{{ $category->id }}"></span>
+        
+                                    <span class="bi fs-4 align-self-center text-secondary me-5 d-inline-block d-md-none show-subcategory" data-target="#subcategory{{ $category->id }}">></span>
+                                </li>
+                            </div> 
                         @endforeach
                         
                     </ul>
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav ms-auto nav-right-content">
                         <li class="nav-item ps-xl-2 pe-xl-2">
                             <a class="nav-link" href="{{ route('login') }}"><i class="bi bi-search ms-sm-3 "></i></a>
                         </li>

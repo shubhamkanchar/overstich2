@@ -63,16 +63,19 @@ class Category extends Model
             $colstart = '';            
             $colEnd = '';
             $class = '';
+            $caret = $count > 0 ? '<span class="bi bi fs-4 text-secondary me-5 d-inline-block d-md-none align-self-center show-nested-subcategory" data-target="#subcategories'. $category->id.'"> > </span>' : '';
             if($category->parent_id == $id) {
                 $colstart = '<div class="col-sm-12 col-md text-start">';            
                 $colEnd = '</div>';
-                $class = 'fs-4 fw-bold';
+                $class = 'fs-6 fw-bold';
             }         
             $html .= $colstart;
-            $html .= '<a class="nav-link ms-5 me-5 '.$class.'" href="'.route('products.index', $category->id).'">'.ucfirst($category->category).'</a>';
+            $html .= '<div class="d-flex justify-content-between"> <a class="nav-link ms-5 me-1 d-inline-block '.$class.'" href="'.route('products.index', $category->id).'">'. ucfirst($category->category) .'</a>'.$caret.'</div>';
 
-            if(count($category->children) > 0 ) { 
+            if($count > 0 ) {
+                $html .= '<div id="subcategories'. $category->id.'" class="childs d-none d-md-inline-block">' ;
                 $html .= $this->makechildcat($category->children);
+                $html .= '</div>';
             }
             $html .= $colEnd;
         }        
