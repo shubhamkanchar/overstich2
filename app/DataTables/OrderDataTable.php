@@ -61,7 +61,7 @@ class OrderDataTable extends DataTable
         if($user->user_type == 'seller') {
            $model = $model->where('seller_id', $user->id);
         }
-        return $model->with(['seller', 'user', 'payments'])->newQuery();
+        return $model->where(['is_order_confirmed' => 1])->with(['seller', 'user', 'payments'])->newQuery();
     }
 
     /**

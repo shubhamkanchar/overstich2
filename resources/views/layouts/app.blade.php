@@ -42,7 +42,7 @@
                         @foreach ($categories as $category)
                             <div  class="main-category" id="mainCategory{{$category->id}}">
                                 <li class="nav-item d-flex justify-content-between">
-                                    <a class="nav-link ms-5 d-inline-block fs-4" href="{{ route('products.index', $category->id) }}"><b>{{ ucfirst($category->category)}}</b></a>
+                                    <a class="nav-link ms-5 d-inline-block text-nowrap fs-4" href="{{ route('products.index', $category->id) }}"><b>{{ ucfirst($category->category)}}</b></a>
                                     {{-- <span class="bi mt-4 bi-caret-down me-5 show-subcategory d" data-target="#subcategory{{$category->id}}"></span> --}}
                                     <span class="bi bi-caret-down align-self-center me-5 d-none d-md-inline show-subcategory" data-target="#subcategory{{ $category->id }}"></span>
         
@@ -90,6 +90,9 @@
                                 @else
                                 <a class="dropdown-item" href="{{ route('user.dashboard') }}">
                                     Dashboard
+                                </a>
+                                <a class="dropdown-item" href="{{ route('order.my-order') }}">
+                                    Orders
                                 </a>
                                 @endif
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();

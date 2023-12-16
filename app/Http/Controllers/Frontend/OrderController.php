@@ -52,9 +52,20 @@ class OrderController extends Controller
             notify()->error('Your Cart is Empty');
             return  redirect()->route('cart.index');
         }
-        return view('frontend.product.checkout', compact('cartItems', 'totalPrice', 'totalDiscount', 'totalOriginalPrice', 'deliveryCharge'));
+        return view('frontend.order.checkout', compact('cartItems', 'totalPrice', 'totalDiscount', 'totalOriginalPrice', 'deliveryCharge'));
     }
 
+    public function myOrders() {
+        $orders = Order::where(['user_id' => auth()->id(), 'is_order_confirmed' => 1])->with(['seller', 'seller.sellerInfo', 'orderItem', 'orderItem.product', 'orderItem.product.images'])->get()->groupBy(['batch']);
+        $statusDescriptions = [
+            'new' => 'Your order is new and awaiting processing.',
+            'process' => 'Your order is currently being processed.',
+            'delivered' => 'Your order has been successfully delivered.',
+            'cancelled' => 'Your order has been cancelled.',
+            'returned' => 'Your order has been returned.',
+        ];
+        return view('frontend.order.my-orders', compact('orders', 'statusDescriptions'));
+    }
     public function placeOrder(OrderRequest $request)
     {
 

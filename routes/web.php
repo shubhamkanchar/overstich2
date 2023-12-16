@@ -56,6 +56,7 @@ Route::group(['middleware'=>['auth']],function(){
 
     Route::get('check-out', [OrderController::class, 'index'])->name('checkout');
     Route::post('place-order', [OrderController::class, 'placeOrder'])->name('order.store');
+    Route::get('my-order', [OrderController::class, 'myOrders'])->name('order.my-order');
     
     Route::group(['prefix' => 'sellers','as' => 'seller.', 'middleware' => ['role:seller'] ], function () {
         Route::resource('products',SellerProductController::class);
