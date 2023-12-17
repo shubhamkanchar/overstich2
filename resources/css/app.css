@@ -64,3 +64,32 @@ label{
     border: 1px solid black;
  }
  
+ .bg-image{
+    background-repeat: no-repeat;
+    background-size: cover;
+ }
+
+ .fw-700{
+    font-weight: 700;
+ }
+
+ .fw-900{
+    font-weight: 900;
+ }
+
+ @media screen and (min-width: 769px) {
+    .custom-fs-1 {
+        font-size: 60px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .custom-fs-1 {
+        font-size: 32px;
+    }
+  }
+
+    .center{
+        margin-top: 50px !important;
+        
+    } 

@@ -29,7 +29,7 @@
         <img src="{{ asset('/image/spinner.svg') }}">
     </div>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white mt-2">
+        <nav class="navbar navbar-expand-md navbar-light bg-white">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="{{ asset('image/logo.png') }}" style="width:50px">
@@ -121,7 +121,7 @@
                 </div>
             @endforeach
         </div>
-        <main class="">
+        <main class="" style="min-height: 45vh;">
             @yield('content')
         </main>
     </div>
