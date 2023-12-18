@@ -31,7 +31,9 @@ class OrderController extends Controller
         foreach($cartItems as $item) {
             $rowId = $item->rowId;
             $availableQuantity = ProductSize::where(['product_id' => $item->options?->product_id, 'size' => $item->options?->size ])->first()->quantity;
-            Cart::instance($userIdentifier)->update($rowId, $availableQuantity);
+            if($item->qty > $availableQuantity) {
+                Cart::instance($userIdentifier)->update($rowId, $availableQuantity);
+            }
             Cart::store($userIdentifier);
         }
 
