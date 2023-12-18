@@ -31,14 +31,29 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white mt-2">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand d-flex" href="{{ url('/') }}">
                     <img src="{{ asset('image/logo.png') }}" style="width:50px">
+                    <img class="m-3" src="{{ asset('image/logo1.png') }}" style="height: 20px;">
                 </a>
                 <button class="btn btn-dark">Login</button>
             </div>
         </nav>
-        <main class="">
-            @yield('content')
+        <main class="bg-image" style="background-image:url({{ asset('image/bgcolor.jpg') }})">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 p-5">
+                        <h1 class="fw-700">ONE STOP FASHION</h1>
+                        <p class="fw-900 custom-fs-1">SELL ON OVERSTITCH</p>
+                        <h5>New sellers enjoy Free Registration</h5>
+                        <h5>0% commission charge on first 10 orders</h5>
+                        <h5>1.5% commission charge on next 100 orders</h5>
+                        <h6>*Terms and conditions</h6>
+                        <div class="text-center m-5">
+                            <a href="{{ route('seller.index') }}" class="btn btn-dark">Register</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
     <footer class="mt-5" style="background-color: black;">
