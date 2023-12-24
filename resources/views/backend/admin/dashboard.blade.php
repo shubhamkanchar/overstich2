@@ -63,7 +63,7 @@
                                 <i class="bi bi-bag fs-1"></i>
                             </div>
                             <div class="media-body text-end w-50">
-                                <h3>0</h3>
+                                <h3>{{ App\Models\Order::where(['is_order_confirmed' => 1])->count() }}</h3>
                                 <span>Total Order's</span>
                             </div>
                         </div>

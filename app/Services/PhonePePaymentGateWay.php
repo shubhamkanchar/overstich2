@@ -53,6 +53,7 @@ class PhonePePaymentGateWay implements PaymentGatewayInterface
         $payment = new Payment();
         $payment->batch_id = $data['batch'];
         $payment->user_id = $data['user_id'];
+        $payment->order_id = $data['order_id'];
         $payment->transaction_id = $data['transaction_id'];
         $payment->status = $data['status'];
         $payment->amount = $data['amount'];

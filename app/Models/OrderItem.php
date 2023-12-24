@@ -13,6 +13,8 @@ class OrderItem extends Model
         'order_id',
         'product_id',
         'size',
+        'color',
+        'image',
         'name',
         'price',
         'original_price',
@@ -49,6 +51,8 @@ class OrderItem extends Model
             'total_price' => $item->price * $item->qty,
             'total_original_price' => $item->options?->original_price * $item->qty,
             'size' => $item->options?->size,
+            'image' => $item->options?->image,
+            'color' => $item->options?->color,
         ])->save();
     }
 }

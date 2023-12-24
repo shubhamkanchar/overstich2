@@ -8,7 +8,7 @@
     </div>
     <form method="POST" id="checkoutForm" action="{{ route('order.store')}}">
         <div class="row justify-content-center mt-5 mb-5">
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-8 mb-3">
                 @csrf
                 @php
                     $name = explode(' ', auth()->user()?->name);
@@ -98,7 +98,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-2 col-md-4">
+            <div class="col-12 col-md-4">
                 <div class="card">
                     <div class="card-header bg-light">
                         Order Details
@@ -112,7 +112,7 @@
                             </tr>
                             @foreach ($cartItems as $item)
                                 <tr>
-                                    <td>{{ $item->name }}</td>
+                                    <td>{{ $item->name }}({{ $item->options?->size }})</td>
                                     <td>{{ $item->price }}</td>
                                     <td>{{ $item->qty }}</td>
                                 </tr>

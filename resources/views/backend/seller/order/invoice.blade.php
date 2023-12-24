@@ -108,12 +108,11 @@
                 </td>
             </tr>
             <tr>
-                <th class="text-center">Product(rs)</th>
-                <th class="text-center">Price(rs)</th>
+                <th class="text-center">Product</th>
+                <th class="text-center">Gross Amount(rs)</th>
                 <th class="text-center">Discount(rs)</th>
+                <th class="text-center">Price(rs)</th>
                 <th class="text-center">Quantity</th>
-                <th class="text-center">Overall Discount(rs)</th>
-                <th class="text-center">Overall Amount(rs)</th>
             </tr>
             <tr>
                 <td colspan="6">
@@ -121,32 +120,28 @@
                 </td>
             </tr>
             <tr class="items">
-                @foreach ($order->orderItem as $item)
-                    <tr>
-                        <td class="text-center">{{ ucfirst($item->name) }}</td>
-                        <td class="text-center">{{ number_format($item->price, 2) }} </td>
-                        <td class="text-center">{{ number_format($item->discount, 2) }} </td>
-                        <td class="text-center">{{ $item->quantity }}</td>
-                        <td class="text-center">{{ number_format($item->total_discount, 2) }} </td>
-                        <td class="text-center">{{ number_format($item->total_price, 2) }} </td>
-                    </tr>
-                @endforeach
+                <tr>
+                    <td class="text-center">{{ ucfirst($order->orderItem->name) }}</td>
+                    <td class="text-center">{{ number_format($order->orderItem->original_price, 2) }}</td>
+                    <td class="text-center">{{ number_format($order->orderItem->discount, 2) }} </td>
+                    <td class="text-center">{{ number_format($order->orderItem->price, 2) }} </td>
+                    <td class="text-center">{{ $order->orderItem->quantity }}</td>
+                </tr>
             </tr>
             <tr>
-                <td colspan="2">&nbsp;</td>
+                <td colspan="1">&nbsp;</td>
                 <td colspan="4">
                     <hr style="border: 0.5px solid gray;">
                 </td>
             </tr>
             <tr>
-                <td colspan="2"></td>
+                <td colspan="1"></td>
                 <td class="text-center font-bold">Subtotal(rs) </td>
                 <td class="text-center font-bold">Delivery Charge(rs) </td>
                 <td class="text-center font-bold">Discount(rs) </td>
                 <td class="text-center font-bold">Total Amount(rs) </td>
             </tr>
             <tr>
-                <td></td>
                 <td></td>
                 <td class="text-center">{{ number_format($order->sub_total, 2) }} </td>
                 <td class="text-center">{{ number_format($order->deliver, 2) }}</td>
@@ -161,7 +156,8 @@
         <span class="text-start" style="margin-right: 40px;">Grand Total:</span>
         <span class="text-start" style="margin-left: 10px;"><b> {{ number_format($order->total_amount, 2) }} rs</b> </span>
     </div>
-    <div class="text-end">{{  $order->seller->name }}</div>
+    <div class="text-end" style="margin: 5px;">{{  $order->seller->name }}</div>
+    <br>
     <br>
     <br>
     <div class="text-end">Authorized Signatory</div>

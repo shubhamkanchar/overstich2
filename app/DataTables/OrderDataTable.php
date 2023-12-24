@@ -22,7 +22,7 @@ class OrderDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         $user = auth()->user(); 
-
+        
         $dataTable = (new EloquentDataTable($query))
             ->addColumn('user_name', function($order) {
                 return ucfirst($order->user?->name);
@@ -61,7 +61,10 @@ class OrderDataTable extends DataTable
         if($user->user_type == 'seller') {
            $model = $model->where('seller_id', $user->id);
         }
-        return $model->where(['is_order_confirmed' => 1])->with(['seller', 'user', 'payments'])->newQuery();
+        return $model->where(['is_order_confirmed' => 1])
+            ->leftjoin('users', 'users.id', '=', 'orders.user_id')
+            ->select('users.name as username', 'orders.*')
+            ->with(['seller', 'user', 'payments'])->newQuery();
     }
 
     /**
@@ -94,13 +97,13 @@ class OrderDataTable extends DataTable
     {
         $columns = [
             Column::make('order_number')->title('Order Number'),
-            Column::make('user_name')->title('User'),
+            Column::make('user_name')->title('User')->name('users.name'),
             // Column::make('seller_name')->title('Seller'),
         ];
 
         $user = auth()->user();
         if ($user->user_type == 'admin') {
-            $columns[] = Column::make('seller_name')->title('Seller');
+            $columns[] = Column::make('seller_name')->title('Seller')->orderable(false);
         }
 
         $columns = array_merge($columns, [

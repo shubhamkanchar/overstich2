@@ -75,7 +75,7 @@ class CartController extends Controller
         $sizes = explode(',', $product->size);
         // dd($request->all());
         $size = $request->size ?? (!empty($sizes) ? $sizes[0] : '');
-        Cart::instance($userIdentifier)->add($request->slug . '_' . $request->size, $product->title, 1, $discountedPrice, ['product_id' => $product->id,'size' => $size , 'original_price' => $product->price, 'discount_percentage' => $product->discount, 'discount' => $product->price - $discountedPrice,'image' => $firstImage, 'seller_id' => $product->seller_id ])->associate('App\Models\Product');
+        Cart::instance($userIdentifier)->add($request->slug . '_' . $request->size, $product->title, 1, $discountedPrice, ['product_id' => $product->id,'size' => $size , 'original_price' => $product->price, 'discount_percentage' => $product->discount, 'discount' => $product->price - $discountedPrice,'image' => $firstImage, 'seller_id' => $product->seller_id, 'color' => $product->color ])->associate('App\Models\Product');
         if($user) {
             Cart::store($userIdentifier); 
         }

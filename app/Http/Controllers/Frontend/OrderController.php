@@ -28,6 +28,7 @@ class OrderController extends Controller
         $userIdentifier = $user->name.$user->id;
         Cart::instance($userIdentifier)->restore($userIdentifier);
         $cartItems = Cart::instance($userIdentifier)->content();
+
         foreach($cartItems as $item) {
             $rowId = $item->rowId;
             $availableQuantity = ProductSize::where(['product_id' => $item->options?->product_id, 'size' => $item->options?->size ])->first()->quantity;
@@ -53,21 +54,50 @@ class OrderController extends Controller
         if (Cart::instance($userIdentifier)->count() === 0) {
             notify()->error('Your Cart is Empty');
             return  redirect()->route('cart.index');
-        }
+   }
         return view('frontend.order.checkout', compact('cartItems', 'totalPrice', 'totalDiscount', 'totalOriginalPrice', 'deliveryCharge'));
     }
 
-    public function myOrders() {
-        $orders = Order::where(['user_id' => auth()->id(), 'is_order_confirmed' => 1])->with(['seller', 'seller.sellerInfo', 'orderItem', 'orderItem.product', 'orderItem.product.images'])->get()->groupBy(['batch']);
+    public function myOrders(Request $request) {
+        $query = Order::where(['user_id' => auth()->id(), 'is_order_confirmed' => 1])
+            ->with(['seller', 'seller.sellerInfo', 'orderItem', 'orderItem.product', 'orderItem.product.images']);
+
+        $status = $request->status ?? [];
+        if ($status) {
+            $query->whereIn('status', $status);
+        }
+
+        $date = $request->date ?? [];
+        if ($date) {
+            $query->where(function ($q) use ($date) {
+                $q->whereIn(\DB::raw('YEAR(created_at)'), $date);
+                if (in_array('older', $date)) {
+                    $q->orWhere('created_at', '<', now()->subYears(5));
+                }
+            });
+        }
+    
+        // Apply search filter by product name
+        $search = $request->search ?? '';
+        if ($search) {
+            $query->whereHas('orderItem', function ($subquery) use ($search) {
+                $subquery->where('name', 'like', '%' . $search . '%');
+            });
+        }
+
+        $orders = $query->orderBy('created_at', 'desc')->get()->groupBy('batch');
+        
+        
         $statusDescriptions = [
             'new' => 'Your order is new and awaiting processing.',
-            'process' => 'Your order is currently being processed.',
+            'processed' => 'Your order is currently being processed.',
             'delivered' => 'Your order has been successfully delivered.',
             'cancelled' => 'Your order has been cancelled.',
             'returned' => 'Your order has been returned.',
         ];
-        return view('frontend.order.my-orders', compact('orders', 'statusDescriptions'));
+        return view('frontend.order.my-orders', compact('orders', 'statusDescriptions', 'date', 'status', 'search'));
     }
+
     public function placeOrder(OrderRequest $request)
     {
 
@@ -77,42 +107,35 @@ class OrderController extends Controller
         Cart::instance($userIdentifier)->restore($userIdentifier);
         $cartItems = Cart::instance($userIdentifier)->content();
 
-        $productSellers = [];
-        foreach($cartItems as $item) {
-            $productSellers[$item->options?->seller_id][] = $item;
-        }
+        // $productSellers = [];
+        // foreach($cartItems as $item) {
+        //     $productSellers[$item->options?->product_id.'-'.$item->options?->size][] = $item;
+        // }
 
         $transactionId = 'MT'. strtotime('now') . '' . auth()->id() ?? '';
         $deliveryCharges = 0;
 
         $batch = 1;
         $lastOrder = Order::where('user_id', $user->id)->orderBy('batch', 'desc')->first();
+
         if($lastOrder && $lastOrder->batch) {
             $batch =  ($lastOrder->batch) + 1;
         }
 
         $id = 1;
-        foreach($productSellers as $sellerId => $productSellerItems) {
 
-            $itemsCollection = collect($productSellerItems);
+        foreach($cartItems as $cartItem) {
 
-            $totalOriginalPrice = $itemsCollection->sum(function ($cartItem) {
-                return $cartItem->options->original_price * $cartItem->qty;
-            });
-
-            $totalPrice = $itemsCollection->sum(function ($cartItem) {
-                return $cartItem->price * $cartItem->qty;
-            });
-
-            $totalDiscount = $itemsCollection->sum(function ($cartItem) {
-                return $cartItem->options->discount * $cartItem->qty;
-            });
+            $totalOriginalPrice =  $cartItem->options->original_price * $cartItem->qty;
+            $totalPrice = $cartItem->price * $cartItem->qty;
+            $totalDiscount = $cartItem->options->discount * $cartItem->qty;
 
             $order = new Order();
             $order->first_name = $request->first_name;
             $order->last_name = $request->last_name;
             $order->user_id = auth()->id();
-            $order->seller_id = $sellerId;
+            $order->seller_id = $cartItem->options?->seller_id;
+            $order->product_id = $cartItem->options?->product_id;
             $order->email = $request->email;
             $order->batch = $batch;
             $order->phone = $request->mobile;
@@ -124,7 +147,7 @@ class OrderController extends Controller
             $order->country = 'india';
             $order->order_number = 'OI'.strtotime('now') . $id . $user->id ?? '';
             $order->payment_method = $request->payment_method;
-            $order->payment_transaction_id = $request->payment_method == 'cod' ? $transactionId. $id . $user->id : $transactionId;
+            $order->payment_transaction_id = $transactionId;
             $order->is_order_confirmed = $request->payment_method == 'cod' ? 1 : 0;
             $order->total_amount =  $totalPrice > 2300 ? $totalPrice : $totalPrice + $deliveryCharges;
             $order->delivery_charge = $deliveryCharges;
@@ -133,20 +156,18 @@ class OrderController extends Controller
             $order->total_discount = $totalDiscount;
             $order->save();
             $id++;
-            foreach ($productSellerItems as $cartItem) {
-                $orderItem = new OrderItem();
-                $orderItem->saveFromCart($cartItem, $order->id);
-            }
+
+            $orderItem = new OrderItem();
+            $orderItem->saveFromCart($cartItem, $order->id);
 
             if($order->is_order_confirmed == 1) {
-                foreach ($order->orderItem as $item) {
-                    $productSize = new ProductSize();
-                    $productSize->updateQuantity($item);
-                }
+                $productSize = new ProductSize();
+                $productSize->updateQuantity($orderItem);
 
                 $paymentData = [
                     'batch' => $order->batch,
                     'user_id' => $order->user_id,
+                    'order_id' => $order->id,
                     'transaction_id' => $order->payment_transaction_id,
                     'amount' => $order->total_amount,
                     'status' => 'unpaid',
@@ -160,8 +181,12 @@ class OrderController extends Controller
         
         if($request->payment_method == 'phone_pe') {
 
+            $cartTotalPrice = $cartItems->sum(function ($cartItem) {
+                return $cartItem->price * $cartItem->qty;
+            });
+
             $data = [
-                'amount' => ($totalPrice + $deliveryCharges) *  100,
+                'amount' => ($cartTotalPrice + $deliveryCharges) *  100,
                 'transactionId' => $transactionId,
                 'mobile' => $request->mobile,
                 'email' => $request->email,
@@ -172,12 +197,10 @@ class OrderController extends Controller
             return redirect()->to($response->data->instrumentResponse->redirectInfo->url);
         }
 
-        
         Cart::instance($userIdentifier)->destroy();
         Cart::store($userIdentifier); 
         notify()->success("Order placed successfully");
-        return redirect()->route('cart.index');
-    }
+        return redirect()->route('order.my-order');  }
 
     public function paymentResponse(Request $request) {
 
@@ -189,16 +212,16 @@ class OrderController extends Controller
 
             // function to update all product quantity seller wise from above order we are getting one order only we can have multiple order at time.
             $orders = Order::where('payment_transaction_id', $transactionId)->get();
-            $id = 1;
             foreach($orders as $order) {
-                foreach ($order->orderItem as $item) {
+                // foreach ($order->orderItem as $item) {
                     $productSize = new ProductSize();
-                    $productSize->updateQuantity($item);
-                }
+                    $productSize->updateQuantity($order->orderItem);
+                // }
 
                 $paymentData = [
                     'batch' => $order->batch,
                     'user_id' => $order->user_id,
+                    'order_id' => $order->id,
                     'transaction_id' => $order->payment_transaction_id,
                     'amount' => $order->total_amount,
                     'status' => 'paid', 
@@ -212,10 +235,8 @@ class OrderController extends Controller
                 } catch (\Throwable $th) {
                     Log::channel('daily')->info('Error', ['phone-pay' => $th]);
                 }
-                $order->payment_transaction_id = $order->payment_transaction_id.$id.$order->user_id;// updating transaction id to get seperate transaction for each order;
-                $order->update();
+
                 $payment = $this->phonePePaymentGateway->store($paymentData);
-                $id++;
             }
 
             $user = User::where('id', $order->user_id)->first();
@@ -230,7 +251,7 @@ class OrderController extends Controller
             notify()->success("Payment Failed");
         }
 
-        return redirect()->route('cart.index');
+        return redirect()->route('order.my-order');
 
     }
 
@@ -242,16 +263,17 @@ class OrderController extends Controller
         if($request->code == 'PAYMENT_SUCCESS') {
             Order::where('payment_transaction_id', $transactionId)->update(['is_order_confirmed' => 1]);
             $orders = Order::where('payment_transaction_id', $transactionId)->get();
-            $id = 1;
+
             foreach($orders as $order) {
-                foreach ($order->orderItem as $item) {
+                // foreach ($order->orderItem as $item) {
                     $productSize = new ProductSize();
-                    $productSize->updateQuantity($item);
-                }
+                    $productSize->updateQuantity($order->orderItem);
+                // }
 
                 $paymentData = [
                     'batch' => $order->batch,
                     'user_id' => $order->user_id,
+                    'order_id' => $order->id,
                     'transaction_id' => $order->payment_transaction_id,
                     'amount' => $order->total_amount,
                     'status' => 'paid', 
@@ -265,10 +287,7 @@ class OrderController extends Controller
                 } catch (\Throwable $th) {
                     Log::channel('daily')->info('Error', ['phone-pay' => $th]);
                 }
-                $order->payment_transaction_id = $order->payment_transaction_id.$id.$order->user_id;// updating transaction id to get seperate transaction for each order;
-                $order->update();
                 $payment = $this->phonePePaymentGateway->store($paymentData);
-                $id++;
             }
 
             $user = User::where('id', $order->user_id)->first();

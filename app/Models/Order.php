@@ -12,14 +12,15 @@ class Order extends Model
     protected $casts = [
         'invoice_generated_at' => 'datetime', 
     ];
+
     public function orderItem()
     {
-        return $this->hasMany(OrderItem::class, 'order_id', 'id');
+        return $this->hasOne(OrderItem::class, 'order_id', 'id');
     }
 
     public function payments()
     {
-        return $this->hasOne(Payment::class, 'transaction_id', 'payment_transaction_id');
+        return $this->hasOne(Payment::class);
     }
 
     public function user()
