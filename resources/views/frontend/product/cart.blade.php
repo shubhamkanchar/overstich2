@@ -68,10 +68,18 @@
                 method:"post",
                 url: "{{ route('cart.update')}}",
                 data: data,
+                beforeSend: () => {
+                    $('#popup-overlay').removeClass('d-none')
+                    $('.spinner').removeClass('d-none')
+                },
                 success: (res) =>{
                     $('.cart-contents').html(res.cartContentView)
                 },
                 error: (err) => {
+                },
+                beforeSend: () => {
+                    $('#popup-overlay').addClass('d-none')
+                    $('.spinner').addClass('d-none')
                 }
             });
         }

@@ -13,7 +13,7 @@ const overstich = () => {
             $(element).addClass('is-invalid');
         },
         unhighlight: function (element, errorClass, validClass) {
-            $(element).removeClass('is-invalid').addClass('is-valid');
+            
         }
     });
 

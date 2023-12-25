@@ -19,27 +19,14 @@ class WishlistController extends Controller
         return view('frontend.product.wishlist', compact('products', 'productIds'));
     }
 
-    public function addRemoveWishlist($id) {
+    public function add($id) {
         $userId = auth()->user() ? auth()->user()->id : session()->getId();
-
-        $wishlist = Wishlist::where('user_id', $userId)
-                            ->where('product_id', $id)
-                            ->first();
-
-        $added = false;
-        if ($wishlist) {
-            // Product is already in the wishlist, remove it
-            $wishlist->delete();
-            $message = 'Product removed from Wishlist';
-        } else {
-            // Product is not in the wishlist, add it
-            $wishlist = new Wishlist();
-            $wishlist->product_id = $id;
-            $wishlist->user_id = $userId;
-            $wishlist->save();
-            $message = 'Product added to Wishlist';
-            $added = true;
-        }
+        $wishlist = new Wishlist();
+        $wishlist->product_id = $id;
+        $wishlist->user_id = $userId;
+        $wishlist->save();
+        $message = 'Product added to Wishlist';
+        $added = true;
 
         return response()->json(['message' => $message, 'added' => $added]);
 

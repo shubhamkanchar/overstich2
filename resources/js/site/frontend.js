@@ -2,6 +2,7 @@ const frontend = () => {
     $('.size-label').on('click', function() {
         $('.size-label').removeClass('border-2 border-black');
         $(this).addClass('border-2 border-black');
+        $('input[name="quantity"]').attr('max', $(this).data('max'));
         $('#' + $(this).attr('for')).prop('checked', true);
     })
 
@@ -55,26 +56,34 @@ const frontend = () => {
     });
 
     $('.add-to-wishlist').on('click', function() {
-        let url = $(this).data('route');
-        console.log(url)
         let product = $(this);
-        console.log(product)
+        let url = '';
+        let method = ''
+        if(product.hasClass('bi-heart-fill')) {
+            product.removeClass('bi-heart-fill text-danger');
+            product.addClass('bi-heart');
+            url = $(this).data('remove-route');
+            method = 'DELETE';
+            
+        } else {
+            url = $(this).data('add-route');
+            product.addClass('bi-heart-fill text-danger');
+            product.removeClass('bi-heart');
+            method = 'POST';
+        }
+
         $.ajax({
             url: url,
-            method: 'POST',
+            type: method,
             success: function(response) {
-                if(response.added) {
-                    product.addClass('bi-heart-fill text-danger');
-                    product.removeClass('bi-heart');
-                } else {
-                    product.removeClass('bi-heart-fill text-danger');
-                    product.addClass('bi-heart');
-                }
+                
             },
             error: function(error) {
                 console.log(error);
             }
         });
+
+        
     });
 
     $("#paymentMethod").on('change', function () {

@@ -1,4 +1,19 @@
 @extends('layouts.app')
+@push('styles')
+    <style>
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            margin: 0; 
+        }
+
+        .bg-gray {
+            background-color: rgb(220, 219, 219); 
+        }
+    </style>
+@endpush
 @section('content')
 <div class="container">
     <div class="row mt-5 mb-5 justify-content-center">
@@ -40,20 +55,35 @@
                 <input type="hidden" value="{{ $product->slug }}" name="slug">
                 {{-- <input type="hidden" name="already_exist" value="{{ in_array($product->slug, $addItems) ? '1' : '0' }}"> --}}
                 <div class="p-2">
-                    @php $totalQuantity = 0; $checkFirst = true; @endphp
+                    @php $totalQuantity = 0; $checkFirst = true; $max = 0; @endphp
                     @foreach ($product->sizes as $size)
                         @if($size->quantity > 0)
                             {{-- <div class="form-check form-check-inline"> --}}
                                 <input class="d-none hidden" type="radio" name="size" id="size{{ $loop->index }}" value="{{ $size->size }}" @checked($checkFirst)>
-                                <button type="button" class="border-2 btn border @if ($checkFirst) border-2 border-black @endif m-2 py-2 px-4 size-label" for="size{{ $loop->index }}">{{ $size->size }}</button>
-                                @php $checkFirst = false; @endphp
+                                <button type="button" class="border-2 btn border @if ($checkFirst) border-2 border-black @endif m-2 py-2 px-4 size-label" data-max="{{$size->quantity}}" for="size{{ $loop->index }}">{{ $size->size }}</button>
+                                @php $checkFirst = false; $max=$size->quantity;  @endphp
                             {{-- </div> --}}
                         @else
                             <button class="disabled border-1 btn border m-2 py-2 px-4">{{ $size->size }}</button>
                         @endif
+                            
                         @php $totalQuantity += $size->quantity; @endphp
                     @endforeach
-                    
+                    <div class="col-lg-4 col-md-6 my-4 mb-lg-0 d-flex">
+                        <button type="button" class="border-0 fs-3 d-inline text-center mb-2 me-1" style="width: 40px; height: 40px; border-radius: 50%"
+                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                            <i class="bi bi-dash"></i>
+                        </button>
+
+                        <div class="form-outline">
+                            <input type="number" name="quantity" min="1" max="{{ $max }}" value="1" type="number" class="form-control text-center" style="width: 50px; height: 40px;" />
+                        </div>
+
+                        <button type="button" class="border-0 fs-3 text-center mb-2 me-1" style="width: 40px; height: 40px; border-radius: 50%"
+                            onclick="this.parentNode.querySelector('input[type=number]').stepUp();">
+                            <i class="bi bi-plus"></i>
+                        </button>
+                    </div>
                 </div>
                 {{-- <span class="ps-4 fs-3 mt-3 d-block">Sizes Chart</span> --}}
                 @if ($totalQuantity <= 0)

@@ -61,7 +61,7 @@
                         </a>
                         <div class="card-body">
                             <span class="ps-4 fs-5"><b>{{ ucfirst($product->brand)  }}</b></span>
-                            <i class="bi  @if(in_array($product->id, $productIds)) bi-heart-fill text-danger @else bi-heart  @endif  fs-4 me-4 float-end add-to-wishlist" data-route="{{ route('wishlist.add-remove-wishlist', $product->id) }}"></i>
+                            <i class="bi  @if(in_array($product->id, $productIds)) bi-heart-fill text-danger @else bi-heart  @endif  fs-4 me-4 float-end add-to-wishlist" data-add-route="{{ route('wishlist.add-wishlist', $product->id) }}" data-remove-route="{{ route('wishlist.remove-wishlist', $product->id) }}"></i>
                             <span class="ps-4 fs-6 d-block"> <a href="{{ route('products.show',$product->slug) }}" class="text-decoration-none">{{ ucfirst($product->title) }}</a></span>
                             {{-- <form class="d-inline float-end" action="{{ route('cart.store')}}" method="post">
                                 @csrf
