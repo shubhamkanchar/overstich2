@@ -57,7 +57,15 @@
                             <a class="nav-link" href="{{ route('login') }}"><i class="bi bi-search ms-sm-3 "></i></a>
                         </li>
                         <li class="nav-item ps-xl-2 pe-xl-2">
-                            <a class="nav-link" href="{{ route('cart.index') }}"><i class="bi bi-bag fw-bolder"></i></a>
+                            <a class="nav-link position-relative" href="{{ route('cart.index') }}">
+                                <i class="bi bi-bag fw-bolder"></i>
+                                @if($cartCount > 0)
+                                    <span class="position-absolute top-1 right-1 start-100 translate-middle badge rounded-pill bg-secondary">
+                                        {{ $cartCount }}
+                                        <span class="visually-hidden">Cart Count</span>
+                                    </span>
+                                @endif
+                            </a>
                         </li>
                         <li class="nav-item ps-xl-2 pe-xl-2">
                             <a class="nav-link" href="{{ route('wishlist.index') }}"><i class="bi bi-heart fw-bolder"></i></a>

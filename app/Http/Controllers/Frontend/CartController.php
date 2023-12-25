@@ -22,25 +22,8 @@ class CartController extends Controller
 
         Cart::instance($userIdentifier)->restore($userIdentifier);
         $cartItems = Cart::instance($userIdentifier)->content();
-        $products = [];
-        foreach ($cartItems as $item) {
-            $products[$item->id] = Product::with('images')->where('id', $item->options?->product_id)->first();
-        }
-
-        $totalOriginalPrice = $cartItems->sum(function ($cartItem) {
-            return $cartItem->options->original_price * $cartItem->qty;
-        });
-    
-        $totalPrice = $cartItems->sum(function ($cartItem) {
-            return $cartItem->price * $cartItem->qty;
-        });
-    
-        $totalDiscount = $cartItems->sum(function ($cartItem) {
-            return $cartItem->options->discount * $cartItem->qty;
-        });
-
-        $deliveryCharges = 0;
-        return view('frontend.product.cart', compact( 'cartItems', 'products', 'totalDiscount', 'totalPrice', 'totalOriginalPrice', 'deliveryCharges'));
+        $cartContentView = $this->getCartContentView($cartItems);
+        return view('frontend.product.cart', compact('cartContentView'));
     }
 
     /**
@@ -54,26 +37,11 @@ class CartController extends Controller
 
         if($user) {
             $userIdentifier = $user->name.$user->id;
-        }
-
-        // if($request->already_exist == '1') {
-        //     Cart::instance($userIdentifier)->restore($userIdentifier);
-        //     $cartItems = Cart::instance($userIdentifier)->content();
-
-        //     $rowId = $cartItems->search(function ($cartItem, $rowId) use ($product) {
-        //         return $cartItem->id === $product->slug;
-        //     });
-
-        //     Cart::instance($userIdentifier)->remove($rowId);
-        //     Cart::store($userIdentifier);
-        //     notify()->success('Product Removed From bag');
-        //     return redirect()->back();
-        // } 
+        } 
 
         $firstImage = $product?->images?->first()->image_path;
         $discountedPrice = $product->price - ($product->price * ($product->discount / 100));
         $sizes = explode(',', $product->size);
-        // dd($request->all());
         $size = $request->size ?? (!empty($sizes) ? $sizes[0] : '');
         Cart::instance($userIdentifier)->add($request->slug . '_' . $request->size, $product->title, 1, $discountedPrice, ['product_id' => $product->id,'size' => $size , 'original_price' => $product->price, 'discount_percentage' => $product->discount, 'discount' => $product->price - $discountedPrice,'image' => $firstImage, 'seller_id' => $product->seller_id, 'color' => $product->color ])->associate('App\Models\Product');
         if($user) {
@@ -102,12 +70,15 @@ class CartController extends Controller
         
         $rowId = $request->id;
         $quantity = $request->quantity;
-        $cartItems = Cart::instance($userIdentifier)->update($rowId, $quantity);
+        Cart::instance($userIdentifier)->update($rowId, $quantity);
         if($user) {
             Cart::store($userIdentifier); 
         }
-        notify()->success('Cart Item Updated successfully');
-        return redirect()->back();
+
+        $cartItems = Cart::instance($userIdentifier)->content();
+        $cartContentView = $this->getCartContentView($cartItems);
+
+        return response()->json(['message' => 'Cart Item Updated successfully', 'cartContentView' => $cartContentView->render()]);
 
     }
 
@@ -119,6 +90,30 @@ class CartController extends Controller
      */
     public function destroy(Request $request)
     {
-        //
+        
+    }
+
+    public function getCartContentView($cartItems) {
+        $products = [];
+        foreach ($cartItems as $item) {
+            $products[$item->id] = Product::with('images')->where('id', $item->options?->product_id)->first();
+        }
+
+        $totalOriginalPrice = $cartItems->sum(function ($cartItem) {
+            return $cartItem->options->original_price * $cartItem->qty;
+        });
+    
+        $totalPrice = $cartItems->sum(function ($cartItem) {
+            return $cartItem->price * $cartItem->qty;
+        });
+    
+        $totalDiscount = $cartItems->sum(function ($cartItem) {
+            return $cartItem->options->discount * $cartItem->qty;
+        });
+
+        $deliveryCharges = 0;
+        $cartContentView = view('frontend.product.partials.cart-contents', compact( 'cartItems', 'products', 'totalDiscount', 'totalPrice', 'totalOriginalPrice', 'deliveryCharges'));
+        
+        return $cartContentView;
     }
 }
