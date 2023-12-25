@@ -53,11 +53,16 @@ class ProductController extends Controller
      */
     public function show(string $slug)
     {
+        $user = auth()->user();
+        $userId = session()->getId();
+        if($user = auth()->user()) {
+            $userId = $user->id;
+        }
         $product = Product::with(['images', 'seller', 'seller.sellerInfo', 'sizes'])->where('slug', $slug)->first();
         $seller = $product->seller;
         $sellerInfo = $product->seller?->sellerInfo;
-
-        return view('frontend.product.details', compact('product', 'seller', 'sellerInfo'));
+        $productIds = Wishlist::where('user_id', $userId)->pluck('product_id')->toArray();
+        return view('frontend.product.details', compact('product', 'seller', 'sellerInfo', 'productIds'));
     }
 
     /**
