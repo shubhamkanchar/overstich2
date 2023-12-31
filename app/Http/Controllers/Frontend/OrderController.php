@@ -85,9 +85,9 @@ class OrderController extends Controller
             });
         }
 
-        $orders = $query->orderBy('created_at', 'desc')->get()->groupBy('batch');
-        
-        
+        $orders = $query->orderBy('created_at', 'desc')->paginate(10);
+        $links= $orders->links();
+        $orders = $orders->groupBy('batch');
         $statusDescriptions = [
             'new' => 'Your order is new and awaiting processing.',
             'processed' => 'Your order is currently being processed.',
@@ -95,7 +95,8 @@ class OrderController extends Controller
             'cancelled' => 'Your order has been cancelled.',
             'returned' => 'Your order has been returned.',
         ];
-        return view('frontend.order.my-orders', compact('orders', 'statusDescriptions', 'date', 'status', 'search'));
+
+        return view('frontend.order.my-orders', compact('orders', 'statusDescriptions', 'date', 'status', 'search', 'links'));
     }
 
     public function placeOrder(OrderRequest $request)

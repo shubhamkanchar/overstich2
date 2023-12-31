@@ -251,6 +251,9 @@
                 </div>
             </div>
         </form>
+        <div class="d-flex justify-content-center">
+            {!! $links !!}
+        </div>
     </div>
 @endsection
 
