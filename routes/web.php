@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\OrderController as BackendOrderController;
 use App\Http\Controllers\Backend\SelllerController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\ProductController as SellerProductController;
+use App\Http\Controllers\DelhiveryController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Frontend\ProductController;
@@ -90,3 +91,5 @@ Route::domain('partners.'.env('DOMAIN'))->group(function () {
 
 Route::any('phonepe-response', [OrderController::class, 'paymentResponse'])->name('payment.response');
 Route::any('phonepe-callback', [OrderController::class, 'paymentCallback'])->name('payment.callback');
+
+Route::get('pincode',[DelhiveryController::class,'pincodeCheck'])->name('pinocde-check');
