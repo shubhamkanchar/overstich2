@@ -22,13 +22,14 @@ class ProductController extends Controller
             $userId = $user->id;
         }
         $productIds = Wishlist::where('user_id', $userId)->pluck('product_id')->toArray();
-        $products = Product::with('images')->where('status', 'active')->get();
+        $products = Product::with('images')->where('status', 'active');
         if($categoryId) {
             $category = Category::find($categoryId);
             $categoryIds = $category->allChildrenId();
-            $products = Product::whereIn('category_id', $categoryIds)->get();
+            $products = $products->whereIn('category_id', $categoryIds);
         }
 
+        $products = $products->paginate(20);
         return view('frontend.product.index', compact('products', 'productIds', 'category'));
     }
 
@@ -53,11 +54,16 @@ class ProductController extends Controller
      */
     public function show(string $slug)
     {
+        $user = auth()->user();
+        $userId = session()->getId();
+        if($user = auth()->user()) {
+            $userId = $user->id;
+        }
         $product = Product::with(['images', 'seller', 'seller.sellerInfo', 'sizes'])->where('slug', $slug)->first();
         $seller = $product->seller;
         $sellerInfo = $product->seller?->sellerInfo;
-
-        return view('frontend.product.details', compact('product', 'seller', 'sellerInfo'));
+        $productIds = Wishlist::where('user_id', $userId)->pluck('product_id')->toArray();
+        return view('frontend.product.details', compact('product', 'seller', 'sellerInfo', 'productIds'));
     }
 
     /**

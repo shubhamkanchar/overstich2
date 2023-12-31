@@ -18,6 +18,7 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     @notifyCss
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @stack('styles')
 </head>
 
 <body>
@@ -25,6 +26,7 @@
     <div class="spinner d-none">
         <img src="{{ asset('/image/spinner.svg') }}">
     </div>
+
     <div id="app" class="mb-5">
         @include('backend.admin.layouts.navbar')
         @include('backend.admin.layouts.sidebar')

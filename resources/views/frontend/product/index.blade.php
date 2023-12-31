@@ -82,5 +82,8 @@
             <p class="ms-md-5 fs-md-3 text-center text-md-start">There Are No Product under this category</p>
         @endif
     </div>
+    <div class="d-flex justify-content-center">
+        {!! $products->links()  !!}
+    </div>
 </div>
 @endsection

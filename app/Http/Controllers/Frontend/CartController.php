@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Wishlist;
 use Cart;
 use Illuminate\Http\Request;
 
@@ -15,15 +16,37 @@ class CartController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $userIdentifier = session()->getId();
+        $userIdentifier = $userId = session()->getId();
+
         if($user){
             $userIdentifier = $user->name.$user->id;
+            $userId = $user->id;
         }
 
         Cart::instance($userIdentifier)->restore($userIdentifier);
         $cartItems = Cart::instance($userIdentifier)->content();
-        $cartContentView = $this->getCartContentView($cartItems);
-        return view('frontend.product.cart', compact('cartContentView'));
+
+        $totalOriginalPrice = $cartItems->sum(function ($cartItem) {
+            return $cartItem->options->original_price * $cartItem->qty;
+        });
+    
+        $totalPrice = $cartItems->sum(function ($cartItem) {
+            return $cartItem->price * $cartItem->qty;
+        });
+    
+        $totalDiscount = $cartItems->sum(function ($cartItem) {
+            return $cartItem->options->discount * $cartItem->qty;
+        });
+
+        $deliveryCharges = 0;
+
+        $products = [];
+        foreach ($cartItems as $item) {
+            $products[$item->id] = Product::with('images')->where('id', $item->options?->product_id)->first();
+        }
+        $productIds = Wishlist::where('user_id', $userId)->pluck('product_id')->toArray();
+
+        return view('frontend.product.cart', compact( 'cartItems', 'products', 'totalDiscount', 'totalPrice', 'totalOriginalPrice', 'deliveryCharges', 'productIds'));
     }
 
     /**
@@ -70,15 +93,28 @@ class CartController extends Controller
         
         $rowId = $request->id;
         $quantity = $request->quantity;
-        Cart::instance($userIdentifier)->update($rowId, $quantity);
+        $updatedItem = Cart::instance($userIdentifier)->update($rowId, $quantity);
         if($user) {
             Cart::store($userIdentifier); 
         }
 
         $cartItems = Cart::instance($userIdentifier)->content();
-        $cartContentView = $this->getCartContentView($cartItems);
+        
+        $totalOriginalPrice = $cartItems->sum(function ($cartItem) {
+            return $cartItem->options->original_price * $cartItem->qty;
+        });
+    
+        $totalPrice = $cartItems->sum(function ($cartItem) {
+            return $cartItem->price * $cartItem->qty;
+        });
+    
+        $totalDiscount = $cartItems->sum(function ($cartItem) {
+            return $cartItem->options->discount * $cartItem->qty;
+        });
 
-        return response()->json(['message' => 'Cart Item Updated successfully', 'cartContentView' => $cartContentView->render()]);
+        $deliveryCharges = 0;
+
+        return response()->json(['message' => 'Cart Item Updated successfully', 'updatedItem' => $updatedItem, 'totalDiscount' => $totalDiscount , 'totalPrice' => $totalPrice , 'totalOriginalPrice' => $totalOriginalPrice, 'deliveryCharges' => $deliveryCharges ]);
 
     }
 
@@ -93,27 +129,4 @@ class CartController extends Controller
         
     }
 
-    public function getCartContentView($cartItems) {
-        $products = [];
-        foreach ($cartItems as $item) {
-            $products[$item->id] = Product::with('images')->where('id', $item->options?->product_id)->first();
-        }
-
-        $totalOriginalPrice = $cartItems->sum(function ($cartItem) {
-            return $cartItem->options->original_price * $cartItem->qty;
-        });
-    
-        $totalPrice = $cartItems->sum(function ($cartItem) {
-            return $cartItem->price * $cartItem->qty;
-        });
-    
-        $totalDiscount = $cartItems->sum(function ($cartItem) {
-            return $cartItem->options->discount * $cartItem->qty;
-        });
-
-        $deliveryCharges = 0;
-        $cartContentView = view('frontend.product.partials.cart-contents', compact( 'cartItems', 'products', 'totalDiscount', 'totalPrice', 'totalOriginalPrice', 'deliveryCharges'));
-        
-        return $cartContentView;
-    }
 }

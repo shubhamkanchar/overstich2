@@ -40,7 +40,7 @@
         </div>
         <div class="col-lg-4 col-md-6 pb-5">
             <div class="ps-4 fs-3"><b>{{ $product->brand }}</b></div>
-            <i class="bi bi-heart fs-2 me-4 float-end"></i>
+            <i class="bi @if(in_array($product->id, $productIds)) bi-heart-fill text-danger @else bi-heart  @endif add-to-wishlist fs-2 me-4 float-end" data-add-route="{{ route('wishlist.add-wishlist', $product->id) }}" data-remove-route="{{ route('wishlist.remove-wishlist', $product->id) }}"></i>
             <div class="ps-4 fs-4 d-block">{{ $product->title }}</div>
             <div class="ps-4 fs-4 d-block">
                 <strike>RS. {{ $product->price }}</strike>

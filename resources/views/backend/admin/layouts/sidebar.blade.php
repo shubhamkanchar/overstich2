@@ -7,6 +7,7 @@
             <i class="bi bi-x-square"></i>
         </button>
     </div>
+
     <div class="offcanvas-body">
         <div class="accordion accordion-flush mt-3" id="accordionFlushExample">
             <div class="accordion-item">
@@ -17,15 +18,15 @@
                 </h6>
             </div>
             <div class="accordion-item">
-                <h2 class="accordion-header" id="flush-headingOne">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                <h2 class="accordion-header" id="flush-headingUser">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseuser" aria-expanded="false" aria-controls="flush-collapseuser">
                         Users
                     </button>
                 </h2>
-                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <div id="flush-collapseuser" class="accordion-collapse collapse @if(Route::is('user.*') ) show @endif" aria-labelledby="flush-headingUser" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <ul>
-                            <li><a href="#">View Users</a></li>
+                            <li><a href="{{ route('user.list')}}">View Users</a></li>
                         </ul>
                     </div>
                 </div>
@@ -50,7 +51,7 @@
                         Orders
                     </button>
                 </h2>
-                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                <div id="flush-collapseTwo" class="accordion-collapse collapse @if(Request::is('admin.order.*') ) show @endif" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <ul>
                             <li><a href="{{ route('admin.order.list') }}">View Orders</a></li>
@@ -66,7 +67,9 @@
                 </h2>
                 <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
-
+                        <ul>
+                            <li><a href="{{ route('admin.product.list') }}">View Product</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
