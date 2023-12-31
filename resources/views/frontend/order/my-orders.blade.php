@@ -66,7 +66,7 @@
         @media (max-width: 575.98px) {
             .filters {
                 position: absolute;
-                top: 19%;
+                top: 15%;
                 right: auto;
                 z-index: 999;
             }
@@ -156,7 +156,7 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-md-9">
+                <div class="col-12 col-md-9 all-order">
                     @if (count($orders) == 0)
                         <h1 class="fw-bold ms-md-4 text-center text-md-start">Order</h1>
                         <p class="ms-md-5 fs-md-3 text-center text-md-start">No order Found</p>
@@ -272,10 +272,12 @@
 
         document.querySelector('.show-filter').addEventListener('click', function() {
             document.querySelector('.filters').classList.remove('d-none');
+            document.querySelector('.all-order').classList.add('d-none');
         });
 
         document.querySelector('.close-filter-icon').addEventListener('click', function() {
             document.querySelector('.filters').classList.add('d-none');
+            document.querySelector('.all-order').classList.remove('d-none');
         });
     </script>
 @endsection
