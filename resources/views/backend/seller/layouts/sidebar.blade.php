@@ -18,11 +18,11 @@
             </div>
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingOne">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseProduct" aria-expanded="false" aria-controls="flush-product">
+                    <button class="accordion-button @if(Route::is('seller.products.*') )  @else collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseProduct" aria-expanded="false" aria-controls="flush-product">
                         Product
                     </button>
                 </h2>
-                <div id="flush-collapseProduct" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <div id="flush-collapseProduct" class="accordion-collapse collapse  @if(Route::is('seller.products.*') ) show @endif" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <ul>
                             <li><a href="{{ route('seller.products.create')}}">Add Product</a></li>
@@ -33,7 +33,7 @@
             </div>
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingOne">
-                    <button class="accordion-button @if(Route::is('seller.*') )  @else collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeller" aria-expanded="false" aria-controls="flush-collapseSeller">
+                    <button class="accordion-button @if(Route::is('categories.*') )  @else collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeller" aria-expanded="false" aria-controls="flush-collapseSeller">
                         Category
                     </button>
                 </h2>
@@ -48,11 +48,11 @@
             </div>
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    <button class="accordion-button @if(Route::is('seller.order.*') )  @else collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
                         Orders
                     </button>
                 </h2>
-                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                <div id="flush-collapseTwo" class="accordion-collapse collapse @if(Route::is('seller.order.*') ) show @endif" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <ul>
                             <li><a href="{{ route('seller.order.list') }}">View Orders</a></li>

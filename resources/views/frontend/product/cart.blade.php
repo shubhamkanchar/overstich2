@@ -25,9 +25,10 @@
                     <div class="card mt-4 bg-none border-0">
                         @foreach ($cartItems as $key => $item)
                             @php $product = $products[$item->id]; @endphp
-                            @php $productSize = $product->sizes->where('size', $item->options?->size)->first() @endphp
+                            @php $productSize = $product?->sizes?->where('size', $item->options?->size)->first() @endphp
+                            @php $quantity = $productSize?->quantity @endphp
                             
-                            <div class="card-body cart-items shadow-lg m-2 rounded-lg border border-2 @if ($productSize->quantity <= 0) bg-gray @else bg-light @endif">
+                            <div class="card-body cart-items shadow-lg m-2 rounded-lg border border-2 @if ($quantity <= 0) bg-gray @else bg-light @endif">
                                 <div class="row">
                                     <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
                                         <!-- Image -->
@@ -71,7 +72,7 @@
                                             </button>
             
                                             <div class="form-outline">
-                                                <input type="number" name="quantity" min="1" max="{{ $productSize->quantity}}" value="{{ $item->qty }}" type="number" class="form-control text-center" style="width: 50px; height: 40px;" />
+                                                <input type="number" name="quantity" min="1" max="{{ $quantity}}" value="{{ $item->qty }}" type="number" class="form-control text-center" style="width: 50px; height: 40px;" />
                                             </div>
             
                                             <button type="submit" class="border-0 fs-3 text-center mb-2 me-1" style="width: 40px; height: 40px; border-radius: 50%"
@@ -82,14 +83,14 @@
                                         <p class="text-start text-md-center">
                                             <strong> ₹<span id="itemPrice-{{$item->id}}"> {{ number_format(($item->price * $item->qty), 2) }} </span></strong>
                                         </p>
-                                        @if ($productSize->quantity <= 0)
+                                        @if ($quantity <= 0)
                                             <span class="ps-4 fs-5 mt-3 d-block">Product Not Available</span>
-                                        @elseif ($item->qty > $productSize->quantity)
-                                            <span class="ps-4 fs-5 mt-3 d-block">Only {{ $productSize->quantity }} quantity is left</span>
+                                        @elseif ($item->qty > $quantity)
+                                            <span class="ps-4 fs-5 mt-3 d-block">Only {{ $quantity }} quantity is left</span>
                                         @endif
             
-                                        @if ($productSize->quantity <= 10 and !($item->qty > $productSize->quantity))
-                                            <span class="ps-4 text-danger fs-5 mt-3 d-block text-nowrap">!Hurry Only {{ $productSize->quantity }} quantity is left</span>
+                                        @if ($quantity <= 10 and !($item->qty > $quantity))
+                                            <span class="ps-4 text-danger fs-5 mt-3 d-block text-nowrap">!Hurry Only {{ $quantity }} quantity is left</span>
                                         @endif
                                     </div>
                                 </div>
@@ -100,23 +101,25 @@
             
             </div>
             <div class="col-12 col-md-3 px-4">
+                @php $cartCount = count($cartItems);  @endphp
+
                 <h2 class="fw-bold">Summary</h2>
                 <div class="d-flex justify-content-between">
                     <span>Subtotal</span>
-                    <span id="subTotal">{{ count($cartItems) > 0 ? $totalOriginalPrice : '-' }}</span>
+                    <span id="subTotal">{{ $cartCount > 0 ? $totalOriginalPrice : '-' }}</span>
                 </div>
                 <div class="d-flex justify-content-between">
                     <span>Delivery Charges</span>
-                    <span id="deliveryCharges">{{ count($cartItems) > 0 ? $deliveryCharges : '-' }}</span>
+                    <span id="deliveryCharges">{{ $cartCount > 0 ? $deliveryCharges : '-' }}</span>
                 </div>
                 <div class="d-flex justify-content-between">
                     <span>Discount</span>
-                    <span id="totalDiscount">{{ count($cartItems) > 0 ? $totalDiscount : '-' }}</span>
+                    <span id="totalDiscount">{{ $cartCount > 0 ? $totalDiscount : '-' }}</span>
                 </div>
                 <hr>
                 <div class="d-flex justify-content-between">
                     <span>Total</span>
-                    <span id="totalAmount"> {{ count($cartItems) > 0 ? $totalOriginalPrice - $totalDiscount + $deliveryCharges : '-' }}</span>
+                    <span id="totalAmount"> {{ $cartCount > 0 ? $totalOriginalPrice - $totalDiscount + $deliveryCharges : '-' }}</span>
                 </div>
                 <hr>
                 <form action="{{ route('checkout') }}" class="d-inline" method="get">

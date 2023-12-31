@@ -26,7 +26,6 @@
     <div class="spinner d-none">
         <img src="{{ asset('/image/spinner.svg') }}">
     </div>
-
     <div id="app" class="mb-5">
         @include('backend.admin.layouts.navbar')
         @include('backend.admin.layouts.sidebar')

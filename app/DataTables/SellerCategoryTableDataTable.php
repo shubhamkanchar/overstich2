@@ -24,6 +24,7 @@ class SellerCategoryTableDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function($row){
+                return '<a href="'.route('categories.edit',$row->id).'" class="btn btn-sm btn-primary m-1">Edit</a><button class="btn btn-sm btn-danger m-1 delete-category" data-url="'.route('categories.destroy',$row->id).'">Delete</button>';
             })
             ->editColumn('parent_id', function($row){
                 return $row->parentCategory?->category ?? '-';
@@ -49,7 +50,7 @@ class SellerCategoryTableDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('sellercategorytable-table')
+                    ->setTableId('sellercategorytable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
@@ -75,7 +76,7 @@ class SellerCategoryTableDataTable extends DataTable
             
             Column::make('id'),
             Column::make('category'),
-            Column::make('parent_id'),
+            Column::make('parent_id')->title('Parent'),
             Column::make('created_at'),
             Column::computed('action')
                   ->exportable(false)

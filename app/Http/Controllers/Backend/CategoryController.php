@@ -91,13 +91,15 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         try {
-            if($category->done_by == Auth::user()->id){
-                $category->delete();
-                notify()->success('Category Deleted successfully');
-            }
-            notify()->error("Can't Delete Category Created By Others");
+            // if($category->done_by == Auth::user()->id){
+                $categoryIds = $category->allChildrenId();
+                Category::whereIn('id', $categoryIds)->delete();
+                // $category->delete();
+            // }
+            
+            return response()->json(['message' => 'Category Deleted Successfully'], 200);
         } catch(Exception $e) {
-            notify()->error('Category already exists');
+            return response()->json(['message' => 'Something went wrong'], 400);
         }
 
         return redirect()->back();

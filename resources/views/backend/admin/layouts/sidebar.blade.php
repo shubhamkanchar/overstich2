@@ -19,7 +19,7 @@
             </div>
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingUser">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseuser" aria-expanded="false" aria-controls="flush-collapseuser">
+                    <button class="accordion-button @if(Route::is('user.*') ) @else collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseuser" aria-expanded="false" aria-controls="flush-collapseuser">
                         Users
                     </button>
                 </h2>
@@ -47,11 +47,11 @@
             </div>
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    <button class="accordion-button @if(Request::is('admin.order.*')) @else collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
                         Orders
                     </button>
                 </h2>
-                <div id="flush-collapseTwo" class="accordion-collapse collapse @if(Request::is('admin.order.*') ) show @endif" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                <div id="flush-collapseTwo" class="accordion-collapse collapse @if(Request::is('admin.order.*')) show @endif" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <ul>
                             <li><a href="{{ route('admin.order.list') }}">View Orders</a></li>
@@ -61,11 +61,11 @@
             </div>
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingThree">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                    <button class="accordion-button @if(str_contains(request()->url(), 'admin/product')) @else collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
                         Products
                     </button>
                 </h2>
-                <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                <div id="flush-collapseThree" class="accordion-collapse collapse @if(str_contains(request()->url(), 'admin/product')) show @endif" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <ul>
                             <li><a href="{{ route('admin.product.list') }}">View Product</a></li>
