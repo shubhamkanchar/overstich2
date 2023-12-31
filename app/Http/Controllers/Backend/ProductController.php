@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\DataTables\AdminProductDataTable;
 use App\DataTables\SellerProductDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SellerProductRequest;
@@ -110,7 +111,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        // $this->authorize('update', $product);
+        $this->authorize('update', $product);
         $category = Category::all();
         $subCategory = Category::whereNotNull('parent_id')->get();
         $productSizes = ProductSize::where('product_id', $product->id)->get();
@@ -227,4 +228,24 @@ class ProductController extends Controller
 
         return redirect()->back();
     }
+
+    public function allProductListing(AdminProductDataTable $datatable)
+    {
+        return $datatable->render('backend.admin.product.index');
+    }
+
+    public function view(Product $product)
+    {
+        $category = Category::all();
+        $subCategory = Category::whereNotNull('parent_id')->get();
+        $productSizes = ProductSize::where('product_id', $product->id)->get();
+        return view('backend.admin.product.view',compact('product', 'category', 'subCategory', 'productSizes'));
+    }
+
+    public function viewImages(Product $product){
+        $productImages = $product->images;
+        return view('backend.admin.product.product-images',compact('product', 'productImages'));
+    }
+
+
 }

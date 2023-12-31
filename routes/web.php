@@ -39,9 +39,13 @@ Route::resource('seller',SellerController::class);
 Route::resource('products', ProductController::class)->except(['index']);
 Route::get('category/products/{category?}', [ProductController::class, 'index'])->name('products.index');
 
-Route::group(['middleware'=>['auth','adminMiddleware']],function(){
-    Route::get('admin/dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');
+Route::group(['middleware'=>['auth','adminMiddleware'], 'prefix' => 'admin'],function(){
+    Route::get('dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');
     Route::get('sellers/list',[SelllerController::class,'index'])->name('seller.list');
+    Route::get('users/list',[UserController::class,'index'])->name('user.list');
+    Route::get('products/list',[SellerProductController::class,'allProductListing'])->name('admin.product.list');
+    Route::get('products/{product}',[SellerProductController::class,'view'])->name('admin.product.view');
+    Route::get('products/{product}/images',[SellerProductController::class,'viewImages'])->name('admin.product.images');
     Route::get('sellers/approve/{id}',[SelllerController::class,'approve'])->name('seller.approve');
     Route::get('sellers/reject/{id}',[SelllerController::class,'reject'])->name('seller.reject');
     Route::get('sellers/delete/{id}',[SelllerController::class,'delete'])->name('seller.delete');
