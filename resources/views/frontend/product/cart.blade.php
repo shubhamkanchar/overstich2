@@ -180,18 +180,21 @@
                     $('#popup-overlay').removeClass('d-none')
                     $('.spinner').removeClass('d-none')
                 },
-                success: (res) =>{
+                success: (res) => {
                     let item = res.updatedItem;
                     $('#totalDiscount').text(res.totalDiscount == 0 ? '-' : res.totalDiscount.toFixed(2));
                     $('#deliveryCharges').text(res.deliveryCharges == 0 ? '-' : res.deliveryCharges.toFixed(2));
                     $('#totalAmount').text((res.totalOriginalPrice - res.totalDiscount + res.deliveryCharges) == 0 ? '-' : (res.totalOriginalPrice - res.totalDiscount + res.deliveryCharges).toFixed(2));
                     $('#subTotal').text(res.totalOriginalPrice == 0 ? '-' : res.totalOriginalPrice.toFixed(2));
-                    $('#itemPrice-'+ item.id).text((item.price * item.qty).toFixed(2));
+                    if(item) {
+                        $('#itemPrice-'+ item.id).text((item.price * item.qty).toFixed(2));
+                    }
+                    
                 },
                 error: (err) => {
                     
                 },
-                beforeSend: () => {
+                complete: () => {
                     $('#popup-overlay').addClass('d-none')
                     $('.spinner').addClass('d-none')
                 }
