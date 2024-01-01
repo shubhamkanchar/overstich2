@@ -13,6 +13,8 @@
 
     <!-- The slideshow/carousel -->
     <div class="carousel-inner">
+
+        
         <div class="carousel-item active">
             <img src="https://www.w3schools.com/bootstrap5/la.jpg" alt="Los Angeles" class="d-block" style="width:100%">
             <div class="carousel-caption">

@@ -20,6 +20,14 @@
     <!-- Scripts -->
     @notifyCss
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <style>
+        @media only screen and (min-width: 575px) {
+            .show-md-subcategory:hover {
+                text-decoration: underline;
+            }
+
+        }
+    </style>
     @stack('styles')
 </head>
 
@@ -40,13 +48,13 @@
                 <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">
                         @foreach ($categories as $category)
-                            <div  class="main-category" id="mainCategory{{$category->id}}">
+                            <div  class="main-category show-md-subcategory" id="mainCategory{{$category->id}}" data-target="#subcategory{{ $category->id }}">
                                 <li class="nav-item d-flex justify-content-between">
-                                    <a class="nav-link ms-5 d-inline-block text-nowrap fs-4" href="{{ route('products.index', $category->id) }}"><b>{{ ucfirst($category->category)}}</b></a>
+                                    <span class="nav-link ms-5 d-inline-block text-nowrap fs-6" href="{{ route('products.index', $category->id) }}"><b>{{ strtoupper($category->category)}}</b></span>
                                     {{-- <span class="bi mt-4 bi-caret-down me-5 show-subcategory d" data-target="#subcategory{{$category->id}}"></span> --}}
-                                    <span class="bi bi-caret-down align-self-center me-5 d-none d-md-inline show-subcategory" data-target="#subcategory{{ $category->id }}"></span>
+                                    {{-- <span class="bi bi-caret-down align-self-center me-5 d-none d-md-inline show-subcategory" data-target="#subcategory{{ $category->id }}"></span> --}}
         
-                                    <span class="bi fs-4 align-self-center text-secondary me-5 d-inline-block d-md-none show-subcategory" data-target="#subcategory{{ $category->id }}">></span>
+                                    <span class="bi fs-4 align-self-center text-secondary me-5 d-inline-block d-md-none show-sm-subcategory" data-target="#subcategory{{ $category->id }}">></span>
                                 </li>
                             </div> 
                         @endforeach
@@ -120,16 +128,21 @@
                 </div>
             </div>
         </nav>
-        <div class="relative">
+        <div class="position-relative category-menu w-100" style="z-index: 999">   
             @foreach ($categories as $category)
-                <div class="container-fluid text-start child-categories" style="display: none;position: absolute;
-                left: 0px;
-                top: 0px;
-                z-index: 1;" id="subcategory{{$category->id}}">
-                    <div class="row flex-wrap bg-white border-2 subcategory-row border-top-0">
+                <div class="container-fluid text-start child-categories" data-target="#subcategory{{$category->id}}" style="display: none;" id="subcategory{{$category->id}}">
+                    <div class="row justify-content-end flex-wrap bg-white border-2  border-top-0">
+                        <div class="d-md-none d-flex justify-content-end close-category-menu text-end bg-white">
+                            <span class="fs-1 align-self-center text-secondary d-inline-block d-md-none bi bi-x"></span>
+                        </div>
+                        <div class="d-md-none d-flex justify-content-between text-end bg-white mb-3">
+                            <span class="ms-5 align-self-center d-inline-block d-md-none text-nowrap fs-6"><b>{{ strtoupper($category->category)}}</b></span>
+                            <span class="bi fs-4 align-self-center text-secondary me-5 d-inline-block d-md-none show-sm-subcategory" data-target="#subcategory{{ $category->id }}">></span>
+                        </div>
                         {!! $categoryTree->categoryTreeView($category->children, $category->id) !!}
                     </div>
                 </div>
+
             @endforeach
         </div>
         <main class="" style="min-height: 45vh;">

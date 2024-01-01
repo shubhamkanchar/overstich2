@@ -62,15 +62,17 @@ class Category extends Model
             $count = count($category->children);            
             $colstart = '';            
             $colEnd = '';
-            $class = '';
+            $class = 'fs-6';
             $caret = $count > 0 ? '<span class="bi bi fs-4 text-secondary me-5 d-inline-block d-md-none align-self-center show-nested-subcategory" data-target="#subcategories'. $category->id.'"> > </span>' : '';
+
             if($category->parent_id == $id) {
-                $colstart = '<div class="col-sm-12 col-md text-start">';            
+                $colstart = '<div class="col-sm-12 col-md-2 text-start">';            
                 $colEnd = '</div>';
-                $class = 'fs-6 fw-bold';
+                $class = 'fs-md-4  fs-6 fw-md-bold fw-semibold align-self-center';
             }         
+
             $html .= $colstart;
-            $html .= '<div class="d-flex justify-content-between"> <a class="nav-link ms-5 me-1 d-inline-block '.$class.'" href="'.route('products.index', $category->id).'">'. ucfirst($category->category) .'</a>'.$caret.'</div>';
+            $html .= '<div class="d-flex justify-content-between"> <a class="nav-link ms-5 me-1 mb-1 d-inline-block '.$class.'" href="'.route('products.index', $category->id).'">'. ucfirst($category->category) .'</a>'.$caret.'</div>';
 
             if($count > 0 ) {
                 $html .= '<div id="subcategories'. $category->id.'" class="childs d-none d-md-inline-block">' ;

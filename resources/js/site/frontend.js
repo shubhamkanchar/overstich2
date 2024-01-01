@@ -96,14 +96,57 @@ const frontend = () => {
     $('.show-subcategory').on('click', function() {
         var targetId = $(this).data('target');
         var targetParentId = $(this).closest('.main-category').attr('id');
-        console.log(targetParentId);
         $('.child-categories').not(targetId).hide();
         $(targetId).toggle();
+    })
+
+    $('.show-sm-subcategory').on('click', function() { 
+        $('.category-menu').addClass('position-absolute top-0 left-0');
+        $('.navbar').toggle();
+        var targetId = $(this).data('target');
+        var targetParentId = $(this).closest('.main-category').attr('id');
+        $('.child-categories').not(targetId).hide();
+        $(targetId).toggle();
+    })
+
+    $('.close-category-menu').on('click', function() { 
+        $('.category-menu').removeClass('position-absolute top-0 left-0');
+        $('.child-categories').hide();
+        $('.child-categories childs').addClass('d-none');
+        $('.navbar').show();
+    } )
+
+    let fadeOut = true;
+    $('.show-md-subcategory,.child-categories').hover(function(){
+    var newWindowWidth = $(window).width();
+    if (newWindowWidth > 576) {
+        var targetId = $(this).data('target');
+        fadeOut = false;
+        var targetParentId = $(this).closest('.main-category').attr('id');
+        $('.child-categories').not(targetId).hide();
+        $(targetId).fadeIn();
+    }
+    }, function(){
+        
         var newWindowWidth = $(window).width();
-        if (newWindowWidth < 576) {
-            $('.nav-right-content').toggle();
-            $('.main-category').not("#"+targetParentId).toggle()
+        if (newWindowWidth > 576) {
+            var targetId = $(this).data('target');
+            var targetParentId = $(this).closest('.main-category').attr('id');
+            $('.child-categories').not(targetId).hide();
+            fadeOut = true;
+            setTimeout(function() {
+                if(fadeOut) {
+                    $(targetId).fadeOut(fadeOut);
+                }
+            }, 100)
         }
+    });
+
+    $('.navbar').on('hidden.bs.collapse', function() {
+        $('.child-categories').hide();
+        $('.childs').addClass('d-none');
+        $('.main-category').show();
+        $('.nav-right-content').show();
     })
 
     $('.show-nested-subcategory').on('click', function() {

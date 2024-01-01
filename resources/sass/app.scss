@@ -12,15 +12,19 @@
 
 // Merge the custom font sizes with Bootstrap's font-size utilities
 $utilities: map-merge(
-  map-get($utilities, "font-size"),
+  $utilities,
   (
-    rfs: true,
-    property: font-size,
-    class: fs,
-    values: $font-sizes,
-    responsive: true
+    "font-size": map-merge(
+      map-get($utilities, "font-size"),
+      (
+        responsive: true,
+        values: $font-sizes
+      )
+    )
   )
 );
+
+@import "bootstrap/scss/utilities/api";
 
 @import '../css/app.css';
 @import '/node_modules/bootstrap-icons/font/bootstrap-icons.min.css';
