@@ -14,28 +14,15 @@
     <!-- The slideshow/carousel -->
     <div class="carousel-inner">
 
-        
-        <div class="carousel-item active">
-            <img src="https://www.w3schools.com/bootstrap5/la.jpg" alt="Los Angeles" class="d-block" style="width:100%">
-            <div class="carousel-caption">
-                <h2>Brand Name</h2>
-                <button type="button" class="btn btn-lg btn-secondary">Shop</button>
+        @foreach ($sellers as $seller)
+            <div class="carousel-item {{ $loop->index == 0 ? 'active' : ''}}">
+                <img src="{{ asset('image/seller/' . $seller->sellerInfoImage->first()->file) }}" alt="{{ $seller->sellerInfo->brand}}" class="d-block" style="width:100%">
+                <div class="carousel-caption">
+                    <h2>{{ ucfirst($seller->sellerInfo->products) }}</h2>
+                    <a type="button" href="{{ route('products.brand', $seller->id) }}" class="btn btn-lg btn-secondary">Shop</a>
+                </div>
             </div>
-        </div>
-        <div class="carousel-item">
-            <img src="https://www.w3schools.com/bootstrap5/chicago.jpg" alt="Chicago" class="d-block" style="width:100%">
-            <div class="carousel-caption">
-                <h2>Brand Name</h2>
-                <button type="button" class="btn btn-lg btn-secondary">Shop</button>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <img src="https://www.w3schools.com/bootstrap5/ny.jpg" alt="New York" class="d-block" style="width:100%">
-            <div class="carousel-caption">
-                <h2>Brand Name</h2>
-                <button type="button" class="btn btn-lg btn-secondary">Shop</button>
-            </div>
-        </div>
+        @endforeach
     </div>
 
     <!-- Left and right controls/icons -->
@@ -58,97 +45,32 @@
         </div>
     </div>
     <div class="row mt-md-5 mb-5">
-        <div class="col-md-2 col-3 col-3 ">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/1.jpg') }}">
-        </div>
-        <div class="col-md-2 col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/2.jpg') }}">
-        </div>
-        <div class="col-md-2 col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/3.jpg') }}">
-        </div>
-        <div class="col-md-2 col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/4.jpg') }}">
-        </div>
-        <div class="col-md-2 col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/5.jpg') }}">
-        </div>
-        <div class="col-md-2 col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/6.jpg') }}">
-        </div>
-        <div class="col-md-2 col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/4.jpg') }}">
-        </div>
-        <div class="col-md-2 col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/5.jpg') }}">
-        </div>
-        <div class="col-md-2 col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/6.jpg') }}">
-        </div>
-        <div class="col-md-2 col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/1.jpg') }}">
-        </div>
-        <div class="col-md-2 col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/2.jpg') }}">
-        </div>
-        <div class="col-md-2 col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/3.jpg') }}">
-        </div>
-        <div class="col-md-2 col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/4.jpg') }}">
-        </div>
-        <div class="col-md-2 col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/1.jpg') }}">
-        </div>
-        <div class="col-md-2 col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/2.jpg') }}">
-        </div>
-        <div class="col-md-2 col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/3.jpg') }}">
-        </div>
-        <div class="col-md-2 col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/4.jpg') }}">
-        </div>
-        <div class="col-md-2 col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/5.jpg') }}">
-        </div>
-        <div class="col-md-2 col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/6.jpg') }}">
-        </div>
-        <div class="col-md-2 col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/4.jpg') }}">
-        </div>
-        <div class="col-md-2 col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/5.jpg') }}">
-        </div>
-        <div class="col-md-2 col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/6.jpg') }}">
-        </div>
-        <div class="col-md-2 col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/1.jpg') }}">
-        </div>
-        <div class="col-md-2 col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/2.jpg') }}">
-        </div>
+        @foreach ($newProducts as $newProduct)
+            <div class="col-md-2 col-3 col-3 ">
+                <a href="{{ route('products.show',$newProduct->slug) }}">
+                    <img class="small-banner" width="100%" src="{{ asset($newProduct->images->first()->image_path) }}">
+                </a>
+            </div>
+        @endforeach
     </div>
     <div class="row mt-5 mb-5">
-        <div class="col-5">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/3.jpg') }}">
-        </div>
-        <div class="col-7">
-            <img width="100%" src="{{ asset('image/banner/banner2.jpg') }}">
-        </div>
+        @php $class = ['col-5', 'col-7']; @endphp
+        @foreach ($hotProducts as $hotProduct)
+            <div class="{{ $class[$loop->index % 2] }}">
+                <a href="{{ route('products.show',$hotProduct->slug) }}">
+                    <img class="small-banner" width="100%" src="{{ asset($hotProduct->images->first()->image_path) }}">
+                </a>
+            </div> 
+        @endforeach
     </div>
     <div class="row justify-content-center mt-5 mb-5">
-        <div class="col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/6.jpg') }}">
-        </div>
-        <div class="col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/2.jpg') }}">
-        </div>
-        <div class="col-3">
-            <img class="small-banner" width="100%" src="{{ asset('image/small/1.jpg') }}">
-        </div>
+        @foreach ($products as $product)
+            <div class="col-3">
+                <a href="{{ route('products.show',$product->slug) }}">
+                    <img class="small-banner" width="100%" src="{{ asset($product->images->first()->image_path) }}">
+                </a>
+            </div>
+        @endforeach
     </div>
 </div>
 @endsection

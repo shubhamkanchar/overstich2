@@ -13,6 +13,8 @@ use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\SellerController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\WishlistController;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,7 +30,26 @@ use Illuminate\Support\Facades\Route;
 
 Route::domain(env('DOMAIN'))->group(function () {
     Route::get('/', function () {
-        return view('welcome');
+        $sellers = User::where(['user_type' => 'seller'])
+            ->whereHas('sellerInfo', function($query) {
+                $query->where('is_approved', 1) ;
+            })
+            ->with(['sellerInfo', 'sellerInfoImage'])
+            ->latest()
+            ->take(10)
+            ->get();
+
+        $query = Product::with('images')->where('status', 'active');
+        $newProductsQuery = clone $query;
+        $newProducts = $newProductsQuery->where('condition', 'new')->latest()->take(30)->get();
+        
+        $hotProductsQuery = clone $query;
+        $hotProducts = $hotProductsQuery->where('condition', 'hot')->latest()->take(30)->get();
+
+        $defaultProductsQuery = clone $query;
+        $products = $defaultProductsQuery->where('condition', 'default')->latest()->take(30)->get();
+
+        return view('welcome', compact('sellers', 'products', 'newProducts', 'hotProducts'));
     })->name('welcome');
 });
 
@@ -39,6 +60,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('seller',SellerController::class);
 Route::resource('products', ProductController::class)->except(['index']);
 Route::get('category/products/{category?}', [ProductController::class, 'index'])->name('products.index');
+Route::get('brand/products/{seller?}', [ProductController::class, 'getProductByBrand'])->name('products.brand');
 
 Route::group(['middleware'=>['auth','adminMiddleware'], 'prefix' => 'admin'],function(){
     Route::get('dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');

@@ -95,7 +95,6 @@ const frontend = () => {
 
     $('.show-subcategory').on('click', function() {
         var targetId = $(this).data('target');
-        var targetParentId = $(this).closest('.main-category').attr('id');
         $('.child-categories').not(targetId).hide();
         $(targetId).toggle();
     })
@@ -104,7 +103,6 @@ const frontend = () => {
         $('.category-menu').addClass('position-absolute top-0 left-0');
         $('.navbar').toggle();
         var targetId = $(this).data('target');
-        var targetParentId = $(this).closest('.main-category').attr('id');
         $('.child-categories').not(targetId).hide();
         $(targetId).toggle();
     })

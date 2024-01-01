@@ -48,6 +48,9 @@ class User extends Authenticatable
     public function sellerInfo(){
         return $this->hasOne(SellerInfo::class,'seller_id','id');
     }
+    public function sellerInfoImage(){
+        return $this->hasMany(SellerInfoImage::class,'seller_id','id');
+    }
 
     public function orders() {
         return $this->hasMany(Order::class);

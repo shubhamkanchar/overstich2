@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\User;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Cart;
@@ -80,6 +81,29 @@ class ProductController extends Controller
     public function update(Request $request, string $id)
     {
         //
+    }
+
+    public function getProductByBrand(Request $request, $sellerId = null) {
+        $user = auth()->user();
+        $userId = session()->getId();
+        if($user = auth()->user()) {
+            $userId = $user->id;
+        }
+        $productIds = Wishlist::where('user_id', $userId)->pluck('product_id')->toArray();
+        $products = Product::with('images')->where('status', 'active');
+        
+        if($sellerId) {
+            $products = $products->where('seller_id', $sellerId);
+            $seller = User::find($sellerId)->where(['user_type' => 'seller'])->with(['sellerInfo'])->first();
+        }
+
+        if($seller) {
+            $products = $products->paginate(20);
+            return view('frontend.product.product-brand', compact('products', 'productIds', 'seller')); 
+        } 
+
+        return redirect()->route('products.index');
+        
     }
 
     /**
