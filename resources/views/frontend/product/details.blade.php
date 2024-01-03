@@ -96,8 +96,18 @@
                 <li>Return/Exchange Available for 7 days</li>
             </ul>
             <span class="ps-4 fs-4 mt-3 d-block">DELIVERY CHECK</span>
-            <input class="ms-4 mt-4 w-50" type="text">
-            <a class="text-danger ms-2">CHECK</a>
+            <form class="d-flex ms-4 mt-3" id="pincodeForm" action="{{ route('pinocde-check') }}">
+                <div class="row">
+                    <div class="col-md-8">
+                        <input class="form-control" placeholder="Pincode" type="text" name="pincode" id="pincode">
+                        <span class="text-primary" id="pincodeMsg"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <button role="button" type="submit" class="text-danger ms-2 mt-2" id="checkPincode">CHECK</button>
+                    </div>
+                </div>
+            </form>
+            
             <span class="ps-4 fs-4 mt-3 d-block">PRODUCT DETAILS</span>
             <ul class="ms-4">
                 <li>Colour : {{ $product->color }}</li>

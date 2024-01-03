@@ -50,7 +50,7 @@
                         @foreach ($categories as $category)
                             <div  class="main-category">
                                 <li class="nav-item d-flex justify-content-between">
-                                    <span class="nav-link ms-5 d-inline-block text-nowrap fs-6 show-md-subcategory" href="{{ route('products.index', $category->id) }}" id="mainCategory{{$category->id}}" data-target="#subcategory{{ $category->id }}" role="button"><b>{{ strtoupper($category->category)}}</b></span>
+                                    <a class="nav-link ms-5 d-inline-block text-nowrap fs-6 show-md-subcategory" href="{{ route('products.index', $category->id) }}" id="mainCategory{{$category->id}}" data-target="#subcategory{{ $category->id }}" role="button"><b>{{ strtoupper($category->category)}}</b></a>
                                     {{-- <span class="bi mt-4 bi-caret-down me-5 show-subcategory d" data-target="#subcategory{{$category->id}}"></span> --}}
                                     {{-- <span class="bi bi-caret-down align-self-center me-5 d-none d-md-inline show-subcategory" data-target="#subcategory{{ $category->id }}"></span> --}}
         

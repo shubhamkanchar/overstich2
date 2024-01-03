@@ -14,6 +14,6 @@ class DelhiveryController extends Controller
         ])->get(config('delhivery.test.pincode'), [
             'filter_codes' => $request->pincode,
         ]);
-        dd($response->body());
+        return response($response->body(),200);
     }
 }
