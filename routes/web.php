@@ -114,4 +114,4 @@ Route::domain('partners.'.env('DOMAIN'))->group(function () {
 Route::any('phonepe-response', [OrderController::class, 'paymentResponse'])->name('payment.response');
 Route::any('phonepe-callback', [OrderController::class, 'paymentCallback'])->name('payment.callback');
 
-Route::get('pincode',[DelhiveryController::class,'pincodeCheck'])->name('pinocde-check');
+Route::post('pincode',[DelhiveryController::class,'pincodeCheck'])->name('pinocde-check');
