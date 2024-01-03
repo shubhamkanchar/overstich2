@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::domain(env('DOMAIN'))->group(function () {
+Route::domain('www'.env('DOMAIN'))->group(function () {
     Route::get('/', function () {
         $sellers = User::where(['user_type' => 'seller'])
             ->whereHas('sellerInfo', function($query) {
