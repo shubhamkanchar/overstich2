@@ -15,9 +15,9 @@ const product = () =>{
                 res = JSON.parse(res);
                 let data = res.delivery_codes;
                 if(data.length > 0){
-                    $('#pincodeMsg').html('Service available at this pincode');
+                    $('#pincodeMsg').html('<span class="text-primary">Service available at this pincode</span>');
                 }else{
-                    $('#pincodeMsg').html('Sorry! service not available at this pincode');
+                    $('#pincodeMsg').html('<span class="text-danger">Sorry! service not available at this pincode</span>');
                 }
             },
             error:function(res){

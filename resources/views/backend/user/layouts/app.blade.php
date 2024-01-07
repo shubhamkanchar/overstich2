@@ -26,14 +26,14 @@
         <img src="{{ asset('/image/spinner.svg') }}">
     </div>
     <div id="app" class="mb-5">
-        @include('backend.seller.layouts.navbar')
-        @include('backend.seller.layouts.sidebar')
+        @include('backend.user.layouts.navbar')
+        @include('backend.user.layouts.sidebar')
         <main class="py-4">
             @yield('content')
         </main>
         
     </div>
-    @include('backend.seller.layouts.footer')
+    @include('backend.user.layouts.footer')
     <x-notify::notify />
     @notifyJs
     @stack('scripts')

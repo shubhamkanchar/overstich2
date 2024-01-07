@@ -107,9 +107,9 @@
                                     Dashboard
                                 </a>
                                 @else
-                                <a class="dropdown-item" href="{{ route('user.dashboard') }}">
+                                <!-- <a class="dropdown-item" href="{{ route('user.dashboard') }}">
                                     Dashboard
-                                </a>
+                                </a> -->
                                 <a class="dropdown-item" href="{{ route('order.my-order') }}">
                                     Orders
                                 </a>
