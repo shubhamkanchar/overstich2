@@ -42,12 +42,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 p-5">
-                        <h1 class="fw-700">ONE STOP FASHION</h1>
-                        <p class="fw-900 custom-fs-1">SELL ON OVERSTITCH</p>
-                        <h5>New sellers enjoy Free Registration</h5>
-                        <h5>0% commission charge on first 10 orders</h5>
-                        <h5>1.5% commission charge on next 100 orders</h5>
-                        <h6>*Terms and conditions</h6>
+                        <h1 class="fw-700 mt-4 mb-4">SELL ON OVERSTITCH</h1>
+                        <div class="fw-700 custom-fs-1 m-0 lh-1 mt-5">0% COMMISSION FEE</div>
+                        <div class="fw-700 custom-fs-1 m-0 lh-1">FREE REGISTRATION</div>
+                        <a href="#" class="mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal">*Terms and conditions</a>
                         <div class="text-center m-5">
                             <a href="{{ route('seller.index') }}" class="btn btn-dark">Register</a>
                         </div>
@@ -70,7 +68,7 @@
                     <a class="nav-link fs-1 m-2 d-inline text-white" target="_blank" href="https://wa.me/7066856414?text=Hello%20Overstitch"><img style="width: 35px;" src="{{ asset('image/social/whatsapp.png') }}"></b></a>
                     <a class="nav-link fs-1 m-2 d-inline text-white" target="_blank" href="https://www.instagram.com/overstitch.in/"><img style="width: 35px;" src="{{ asset('image/social/instagram.png') }}"></a>
                     <a class="nav-link fs-1 m-2 d-inline text-white" target="_blank" href=" https://www.facebook.com/profile.php?id=100090246980494"><img style="width: 35px;" src="{{ asset('image/social/facebook.png') }}"></a>
-                    
+
                     <a class="nav-link fs-1 m-2 d-inline text-white" target="_blank" href="https://twitter.com/overstitch_in"><img style="width: 35px;" src="{{ asset('image/social/twitter.png') }}"></a>
                 </div>
             </div>
@@ -78,6 +76,23 @@
     </footer>
     <x-notify::notify />
     @notifyJs
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Terms and Conditions</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Please note that 0% fee is only applicable to commission charges. Other charges, such as GST charges, Shipping charges, Weight discrepancy charge, Payment processing charges will still apply.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>
 @yield('script')

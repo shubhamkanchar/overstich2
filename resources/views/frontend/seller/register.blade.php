@@ -187,31 +187,23 @@
                     <ul>
                         <li class="mt-3">Thank you for considering joining our platform as a seller. Before you proceed with your registration, kindly
                             review and understand the following important guidelines to ensure a smooth and successful partnership:</li>
-                        <li class="mt-3"><b class="d-block">1. Exclusive Brand Ownership and Seller Details -</b> Sellers are required to exclusively offer their own branded products on our platform. Reselling of other brands products is strictly prohibited. Your brand details, including brand name, Legal name, address and email ID, will be visible to customers on the platform. This ensures transparency and trust in the products being offered.
+                        <li class="mt-3"><b class="d-block">1. Exclusive Brand Ownership and Seller Details -</b> Sellers are required to exclusively offer their own branded products on our platform. Reselling of other brands products is strictly prohibited. Your brand details including brand name, Legal name and address, will be visible to customers on the platform. This ensures transparency and trust in the products being offered.
                         </li>
-                        <li class="mt-3"><b class="d-block">2. Intellectual Property and Trademarks -</b> Sellers must make sure that the products they list
-don't violate any intellectual property rights or trademarks owned by others. This includes
-confirming the authenticity of the items.
+                        <li class="mt-3"><b class="d-block">2. Trademarks -</b> Sellers must ensure that the products they list do not violate any intellectual property rights or trademarks owned by others. This includes using unauthorised logos, images, or branding on products or in listings.
+                        <br/>
+                        <b class="d-block">2. NOC -</b>Sellers must have a No Objection Certificate (NOC) from the brand owner in order to sell other brand products on overstitch. This NOC is a legal document that gives the seller permission to sell the brand's products.
                         </li>
                         <li class="mt-3"><b class="d-block">3. GST Registration - </b> Sellers must have a valid GST registration for their business.
                         </li>
-                        <li class="mt-3"><b class="d-block">4. Shipping and Delivery - </b> We handle shipping and delivery of products to customers. Sellers do
-not need to worry about shipping and handling. Delhivery courier service is used.
+                        <li class="mt-3"><b class="d-block">4. Shipping and Delivery - </b> We handle shipping and delivery of products to customers. Sellers do not need to worry about shipping and handling. Delhivery courier service is used.
                         </li>
-                        <li class="mt-3"><b class="d-block">5. Packaging and Labelling - </b>- All products must be packaged in bags suitable for shipping.
-Additionally, each product should have a label sticker with dimensions 6x4 inches, displaying
-relevant information.
+                        <li class="mt-3"><b class="d-block">5. Packaging and Labelling - </b>- All products must be packaged in bags suitable for shipping. Additionally, each product should have a label sticker with dimensions 6x4 inches, displaying relevant information.
                         </li>
-                        <li class="mt-3"><b class="d-block">6. Pricing Policy - </b>Product selling prices listed on our platform should not exceed the Maximum
-Retail Price (M.R.P.) mentioned on the physical product label/tag.
+                        <li class="mt-3"><b class="d-block">6. Pricing Policy - </b>- Product selling prices listed on our platform should not exceed the Maximum Retail Price (M.R.P.) mentioned on the physical product label/tag.
                         </li>
-                        <li class="mt-3"><b class="d-block">7. Product Presentation - </b>For clothing items, provide at least 5 high-quality photos of the
-product, including images with a model wearing the clothing, size chart, and detailed product
-information such as fabric, fit, and occasion. While model images are recommended for other
-products to reduce returns, they are not mandatory.
+                        <li class="mt-3"><b class="d-block">7. Product Presentation - </b>For clothing items, provide at least 5 high-quality photos of the product, including images with a model wearing the clothing, size chart, and detailed product information such as fabric, fit, and occasion. While model images are recommended for other products to reduce returns, they are not mandatory.
                         </li>
-                        <li class="mt-3"><b class="d-block">8. Product Quality and Authenticity - </b>All products listed on our platform must be of high quality
-and authentic. This is crucial to maintain customer satisfaction and the platform's reputation.
+                        <li class="mt-3"><b class="d-block">8. Delivery Charges - </b>Delivery charges will be borne by the seller. Delhivery courier service will be used for all product deliveries.
                         </li>
                     </ul>
                 </div>
@@ -231,57 +223,24 @@ and authentic. This is crucial to maintain customer satisfaction and the platfor
                     <h3 class="text-decoration-underline m-5 text-center"><b>Seller Guidelines</b></h3>
 
                     <ul>
-                        <li class="mt-3"><b class="d-block">9. Delivery Charges - </b>Delivery charges will be borne by the seller if the order value is above
-Rs.500/-. For orders below this amount, the delivery charge will be paid by the customer.
-Delhivery courier service will be used for product deliveries.
+                        <li class="mt-3"><b class="d-block">9. Order Misplacement Responsibility - </b>If the courier company misplaces an order, Overstitch will refund the amount. But if the customer or courier company claims that the product is missing after the package is delivered to the customer, Overstitch is not responsible for that. This is because when the order was shipped, the package was sealed and there is no way for the delivery company to tamper with it.
                         </li>
-                        <li class="mt-3"><b class="d-block">10. Overstitch Commission - </b>Overstitch charges a 5% commission on the sold product amount
-(excluding GST of 18%). This fee covers our efforts in creating custom ad posters to boost your
-brand's sales on our platform. Rest assured, in the event of no sales, no charges will be incurred.
-This makes registering on our platform a risk-free opportunity to give it a try. Furthermore, we take
-the responsibility of ensuring the secure delivery of your packages.
+                        <li class="mt-3"><b class="d-block">10. Shipping & Return/Exchange Charges - </b>Sellers are responsible for bearing the cost of shipment in any case a customer requests a return/exchange or cancels the order. To minimise return or exchange requests, it's recommended to provide detailed information such as size chart, material composition, and high-quality photos to ensure customer satisfaction.
                         </li>
-                        <li class="mt-3"><b class="d-block">11. Order Misplacement Responsibility - </b>- If the courier company misplaces an order, Overstitch
-will refund the amount. But if the customer claims that the product is missing after the package is
-delivered to the customer, Overstitch is not responsible for that. This is because when the order
-was shipped, the package was sealed and there is no way for the delivery company to tamper
-with it. Seller need to refund the total amount.
+                        <li class="mt-3"><b class="d-block">11. Payment Process - </b>We will issue an invoice to the seller after the return/exchange period forthe specific order has ended. Once the invoice is  generated, we will start the payment process to the seller's designated bank account. This payment will be processed within 1-2 business days after deducting any applicable fees such as GST charges, Shipping charges, return/exchange charges, Weight discrepancy charge, Payment processing charges.
                         </li>
-                        <li class="mt-3"><b class="d-block">12. Return and Exchange Charges - </b>Sellers are responsible for bearing the cost of shipment in any case a customer
-                            requests a return or exchange. This policy applies even if the order value is below Rs. 500. To minimise return or
-
-                            exchange requests, it's recommended to provide detailed information such as size chart, material composition, and high-
-                            quality photos to ensure customer satisfaction.
-
+                        <li class="mt-3"><b class="d-block">12. Payment processing and COD charges - </b>A payment processing charge is a fee charged by the payment processor every time a transaction is done to process payments. The amount of the fee varies depending on size of the transaction. The average payment processing fee is 2% excluding GST of 18%. This charge is applicable on receiving payments as well as refunds. We use Phonepay as payment gateway.<br />
+                        A COD (Cash on Delivery) charge is a fixed fee charged for orders that are paid for in cash upon delivery. The amount of the fee is Rs.40. This charge helps cover the higher delivery cost associated with COD orders.
                         </li>
-                        <li class="mt-3"><b class="d-block">13. Payment Process - </b>We will create an invoice for the seller after the return/exchange period for the specific order has
-                            ended. Invoices will be mostly issued between Monday to Friday, excluding holidays. Once the invoice is generated, we
-                            will start the payment process to the seller's designated bank account. This payment will be processed within 48 hours
-                            after deducting any applicable fees such as 5% commission, GST charges, Delivery charge, Return/exchange charge,
-                            Weight discrepancy charge, Payment processing charges.
-
+                        <li class="mt-3"><b class="d-block">13. Weight Discrepancy Responsibility - </b>- Sellers are responsible for accurately providing the weight and dimension information of their products to us. In cases where a weight discrepancy issue arises, and additional charges are incurred due to incorrect weight information provided by the seller, the associated penalties and charges must be paid by the seller. It is essential to ensure accurate weight and dimension details to avoid any financial implications arising from discrepancies.
                         </li>
-                        <li class="mt-3"><b class="d-block">14. Payment processing and COD charges -</b> A payment processing charge is a fee charged by
-                            the payment processor every time a transaction is done to process credit/debit card, net-banking
-                            payments. The amount of the fee varies depending on the payment processor, the type of card
-                            used, and the size of the transaction. The average payment processing fee ranges between 1.5%
-                            to 3.5%. This charge is applicable on receiving payments as well as refunds.
-                            A COD (Cash on Delivery) charge is a fixed fee charged for orders that are paid for in cash upon
-                            delivery. The amount of the fee is Rs.40. This charge helps cover the higher delivery cost
-                            associated with COD orders.</li>
-                        <li class="mt-3"><b class="d-block">15. Weight Discrepancy Responsibility - </b>Sellers are responsible for accurately providing the weight and dimension
-                            information of their products to us. In cases where a weight discrepancy issue arises, and additional charges are incurred
-                            due to incorrect weight information provided by the seller, the associated penalties and charges must be paid by the
-                            seller. It is essential to ensure accurate weight and dimension details to avoid any financial implications arising from
-                            discrepancies.
+                        <li class="mt-3"><b class="d-block">14. Termination of Partnership -</b> The partnership between the platform and the seller may be terminated in case of violations of guidelines, repeated customer complaints, or other valid reasons.
                         </li>
-                        <li class="mt-3"><b class="d-block">16. Termination of Partnership - </b>The partnership between the platform and the seller may be terminated in case of
-                            violations of guidelines, repeated customer complaints, or other valid reasons. Legal action could also result from such
-                            violations.
+                        <li class="mt-3"><b class="d-block">15. Product Availability - </b>Sellers should promptly update the platform if a product is out of stock to prevent customers from placing orders for unavailable items.
                         </li>
-                        <li class="mt-3"><b class="d-block">17. Product Availability - </b>Sellers should promptly update the platform if a product is out of stock to prevent customers
-                            from placing orders for unavailable items.
+                        <li class="mt-3"><b class="d-block">16. Order Fulfilment and Responsiveness - </b>Sellers must actively manage their orders and promptly fulfil customer orders within a timeframe of 48 hours, In cases where orders are not fulfilled or there is repeated unresponsiveness without any valid reason, it may result in the removal of the seller from our platform. If a seller no longer wishes to accept orders from our platform, they have the option to deactivate their seller account.
                         </li>
+                        
                     </ul>
                 </div>
                 <div class="text-center mt-5">
@@ -300,7 +259,7 @@ with it. Seller need to refund the total amount.
                     <h3 class="text-decoration-underline m-5 text-center"><b>Seller Guidelines</b></h3>
 
                     <ul>
-                        <li class="mt-3"><b class="d-block">18. Order Fulfilment and Responsiveness -</b> Sellers must actively manage their orders and promptly fulfil customer
+                        <!-- <li class="mt-3"><b class="d-block">18. Order Fulfilment and Responsiveness -</b> Sellers must actively manage their orders and promptly fulfil customer
                             requests within a timeframe of 48 hours, except on Sundays and holidays. In cases where orders are not fulfilled or there
                             is unresponsiveness without any valid reason, it may result in the removal of the seller from our platform and could
                             potentially lead to legal action. If a seller no longer wishes to accept orders from our platform, they have the option to
@@ -316,9 +275,13 @@ with it. Seller need to refund the total amount.
                             not mandatory to provide us with photos of your product for the ad posters. This is a free service,
                             and we understand that you may not have the necessary photos or the time to provide them.</li>
                         <li class="mt-3"><b class="d-block">21. Modification of Guidelines -</b> These guidelines are subject to updates or modifications as needed to adapt to changing
-                            circumstances. Sellers will be informed of any changes.</li>
-                        <li class="mt-3">Thank you for reviewing and understanding these crucial guidelines before proceeding with your registration. We look
-                            forward to a successful partnership with you on our platform.</li>
+                            circumstances. Sellers will be informed of any changes.</li> -->
+                        <li class="mt-3"><b class="d-block">17. Boost Sales with Coupon Codes - </b>Create your own coupon codes to attract customers and increase sales.
+                        </li>
+                        <li class="mt-3"><b class="d-block">18. Modification of Guidelines - </b>These guidelines are subject to updates or modifications as needed to adapt to changing circumstances. Sellers will be informed of any changes.
+                        </li>
+                        <li class="mt-3">Thank you for reviewing and understanding these crucial guidelines before proceeding with your registration. We look forward to a successful partnership with you on our platform.
+                        </li>
                         <span class="d-block mt-3">If you have any further Questions or Doubts, please feel free to contact us at</span>
                         <span class="d-block">Mail : overstitch.in@gmail.com</span>
                         <span class="d-block">WhatsApp : +917066856414</span>
@@ -349,12 +312,9 @@ with it. Seller need to refund the total amount.
                             <li>Await verification of your submission.</li>
                             <li>Upon approval of your brand, a confirmation email will be sent to your provided email address.</li>
                         </ol>
-                        <span class="d-block mt-2 mb-2">Please note that our website launch is expected in November 2023. Due to this, we may not be
-able to respond to your emails as quickly as usual. It may take us up to one month or more to
-respond. We apologise for any inconvenience this may cause.
-</span>
-                        <span class="d-block mt-2 mb-2">Thank you for choosing Overstitch as your platform for selling. We look forward to the opportunity to work
-                            with you!</span>
+                        <span class="d-block mt-2 mb-2">Please note that our website launch is expected in November 2023. Due to this, we may not be able to respond to your emails as quickly as usual. It may take us up to one month or more to respond. We apologise for any inconvenience this may cause.
+                        </span>
+                        <span class="d-block mt-2 mb-2">Thank you for choosing Overstitch as your platform for selling. We look forward to the opportunity to work with you!</span>
                         </li>
                     </ul>
                 </div>

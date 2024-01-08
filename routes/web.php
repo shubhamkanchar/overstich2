@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\WarehouseController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\OrderController as BackendOrderController;
@@ -88,7 +89,8 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('my-order', [OrderController::class, 'myOrders'])->name('order.my-order');
     Route::get('{product}/add-rating', [RatingController::class, 'addRating'])->name('rating.add-rating');
     Route::post('{product}/rating', [RatingController::class, 'store'])->name('rating.store');
-    
+    Route::resource('warehouses',WarehouseController::class);
+
     Route::group(['prefix' => 'sellers','as' => 'seller.', 'middleware' => ['role:seller'] ], function () {
         Route::resource('products',SellerProductController::class);
         Route::get('products/get-category/{category}', [SellerProductController::class, 'getSubcategory'])->name('get-category');
@@ -97,6 +99,8 @@ Route::group(['middleware'=>['auth']],function(){
         Route::patch('products/{product}/images/{productImage}', [SellerProductController::class, 'replaceImage'])->name('product.replace-image');
         Route::get('orders/list',[BackendOrderController::class,'index'])->name('order.list');
         Route::get('orders/{id}',[BackendOrderController::class,'viewOrder'])->name('order.view');
+        
+    
     });
 
     Route::get('download-invoice/{id}', [BackendOrderController::class,'downloadInvoice'])->name('download.invoice');
