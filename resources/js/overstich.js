@@ -2,6 +2,7 @@ import frontend from "./site/frontend";
 import seller from "./site/seller";
 import sellerProduct from "./site/seller-product";
 import product from "./site/product";
+import category from "./site/category";
 const overstich = () => {
 
     $.validator.setDefaults({
@@ -40,6 +41,10 @@ const overstich = () => {
     product();
     if($('.seller-product').length != 0){
         sellerProduct();
+    }
+
+    if($('.admin-category').length != 0){
+        category();
     }
 }
 export default overstich();

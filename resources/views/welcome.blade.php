@@ -6,20 +6,18 @@
 
     <!-- Indicators/dots -->
     <div class="carousel-indicators">
-        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-        <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-        <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+        @foreach ($sellers as $index => $seller)
+            <button type="button" data-bs-target="#demo" data-bs-slide-to="{{ $index }}" class="{{ $index === 0 ? 'active' : '' }}"></button>
+        @endforeach
     </div>
 
-    <!-- The slideshow/carousel -->
     <div class="carousel-inner">
-
         @foreach ($sellers as $seller)
             <div class="carousel-item {{ $loop->index == 0 ? 'active' : ''}}">
                 <img src="{{ asset('image/seller/' . $seller->sellerInfoImage->first()->file) }}" alt="{{ $seller->sellerInfo->brand}}" class="d-block" style="width:100%">
                 <div class="carousel-caption">
-                    <h2>{{ ucfirst($seller->sellerInfo->products) }}</h2>
-                    <a type="button" href="{{ route('products.brand', $seller->id) }}" class="btn btn-lg btn-secondary">Shop</a>
+                    <h2>{{ ucfirst($seller->sellerInfo->brand) }}</h2>
+                    <a type="button" href="{{ route('products.brand', $seller->sellerInfo->slug) }}" class="btn btn-lg btn-secondary">Shop</a>
                 </div>
             </div>
         @endforeach

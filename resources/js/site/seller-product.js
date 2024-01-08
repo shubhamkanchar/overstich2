@@ -86,7 +86,7 @@ const sellerProduct = () =>{
         }
     });
 
-    $('#productForm #category').on('change', function(){
+    $('#productForm #masterCategory').on('change', function(){
         let category = $(this).val();
         let url = $(this).data('route');
         $.ajax({
@@ -96,6 +96,46 @@ const sellerProduct = () =>{
                 $('#subCategory').empty();
                 $.each(res, function(key, value){
                     $('#subCategory').append($("<option></option>")
+                    .attr("value", key)
+                    .text(value)); 
+                })
+            },
+            error: (err) => {
+
+            }
+        });
+    })
+
+    $('#productForm #masterCategory').on('change', function(){
+        let category = $(this).val();
+        let url = $(this).data('route');
+        $.ajax({
+            method:"get",
+            url: url.replace(':categoryId', category),
+            success: (res) =>{
+                $('#subCategory').empty();
+                $.each(res, function(key, value){
+                    $('#subCategory').append($("<option></option>")
+                    .attr("value", key)
+                    .text(value)); 
+                })
+            },
+            error: (err) => {
+
+            }
+        });
+    })
+
+    $('#productForm #subCategory').on('change', function(){
+        let category = $(this).val();
+        let url = $(this).data('route');
+        $.ajax({
+            method:"get",
+            url: url.replace(':categoryId', category),
+            success: (res) =>{
+                $('#category').empty();
+                $.each(res, function(key, value){
+                    $('#category').append($("<option></option>")
                     .attr("value", key)
                     .text(value)); 
                 })

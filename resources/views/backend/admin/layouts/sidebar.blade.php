@@ -45,6 +45,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingTwo">
                     <button class="accordion-button @if(Request::is('admin.order.*')) @else collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
@@ -69,6 +70,22 @@
                     <div class="accordion-body">
                         <ul>
                             <li><a href="{{ route('admin.product.list') }}">View Product</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingFour">
+                    <button class="accordion-button @if(Route::is('categories.*') )  @else collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseCategory" aria-expanded="false" aria-controls="flush-collapseCategory">
+                        Category
+                    </button>
+                </h2>
+                <div id="flush-collapseCategory" class="accordion-collapse collapse @if(Route::is('categories.*') ) show @endif" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <ul>
+                            <li><a href="{{ route('categories.create') }}">Add Category</a></li>
+                            <li><a href="{{ route('categories.index') }}">View Category</a></li>
                         </ul>
                     </div>
                 </div>

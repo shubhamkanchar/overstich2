@@ -52,6 +52,7 @@ class SellerController extends Controller
 
             $sellerInfo = SellerInfo::create([
                 'seller_id' => $user->id,
+                'brand' => $request->brand,
                 'gst' => $request->gst,
                 'whatsapp' => $request->whatsapp,
                 'category' => $request->category,

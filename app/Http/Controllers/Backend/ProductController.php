@@ -29,9 +29,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $category = Category::all();
-        $subCategory = Category::whereNotNull('parent_id')->get();
-        return view('backend.seller.product.add',compact('category', 'subCategory'));//
+        $category = Category::whereNotNull(['parent_id', 'subcategory_id'])->get();
+        $masterCategory = Category::whereNull('parent_id')->get();
+        $subCategory = Category::whereNull('subcategory_id')->whereNotNull('parent_id')->get();
+        return view('backend.seller.product.add',compact('category', 'subCategory', 'masterCategory'));//
     }
 
     /**
@@ -49,7 +50,8 @@ class ProductController extends Controller
             $product->seller_id = $user->id;
             $product->brand = $request->brand;
             $product->category_id = $request->category_id;
-            // $product->child_category_id = $request->child_category_id;
+            $product->master_category_id = $request->master_category_id;
+            $product->subcategory_id = $request->subcategory_id;
             // $product->size = $request->size;
             $product->color = $request->color;
             $product->price = $request->price;
@@ -113,9 +115,10 @@ class ProductController extends Controller
     {
         $this->authorize('update', $product);
         $category = Category::all();
-        $subCategory = Category::whereNotNull('parent_id')->get();
+        $masterCategory = Category::whereNull('parent_id')->get();
+        $subCategory = Category::where('id', $product->subcategory_id)->whereNull('subcategory_id')->whereNotNull('parent_id')->get();
         $productSizes = ProductSize::where('product_id', $product->id)->get();
-        return view('backend.seller.product.edit',compact('product', 'category', 'subCategory', 'productSizes'));
+        return view('backend.seller.product.edit',compact('product', 'category', 'masterCategory','subCategory', 'productSizes'));
     }
 
     /**
@@ -129,7 +132,8 @@ class ProductController extends Controller
         $product->seller_id = $user->id;
         $product->brand = $request->brand;
         $product->category_id = $request->category_id;
-        $product->category_id = $request->category_id;
+        $product->subcategory_id = $request->subcategory_id;
+        $product->master_category_id = $request->master_category_id;
         // $product->child_category_id = $request->child_category_id;
         // $product->size = $request->size;
         $product->color = $request->color;
@@ -185,7 +189,11 @@ class ProductController extends Controller
 
     public function getSubCategory(Category $category) 
     {
-        return response()->json($category->children->pluck('category', 'id'), 200);
+        return response()->json($category->subCategory->pluck('category', 'id'), 200);
+    }
+    public function getChildCategory(Category $category) 
+    {
+        return response()->json($category->childCategory->pluck('category', 'id'), 200);
     }
 
     public function getImages(Product $product){
