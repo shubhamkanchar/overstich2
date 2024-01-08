@@ -106,20 +106,24 @@
                 <h2 class="fw-bold">Summary</h2>
                 <div class="d-flex justify-content-between">
                     <span>Subtotal</span>
-                    <span id="subTotal">{{ $cartCount > 0 ? $totalOriginalPrice : '-' }}</span>
+                    <span id="subTotal"><i class="bi bi-currency-rupee"></i>{{ $cartCount > 0 ? $totalOriginalPrice : '-' }}</span>
                 </div>
                 <div class="d-flex justify-content-between">
                     <span>Delivery Charges</span>
-                    <span id="deliveryCharges">{{ $cartCount > 0 ? $deliveryCharges : '-' }}</span>
+                    <span id="deliveryCharges"><i class="bi bi-currency-rupee"></i>{{ $cartCount > 0 ? $deliveryCharges : '-' }}</span>
                 </div>
                 <div class="d-flex justify-content-between">
                     <span>Discount</span>
-                    <span id="totalDiscount">{{ $cartCount > 0 ? $totalDiscount : '-' }}</span>
+                    <span id="totalDiscount"><i class="bi bi-currency-rupee"></i>{{ $cartCount > 0 ? $totalDiscount : '-' }}</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span>Platform fee</span>
+                    <span id="totalDiscount"><i class="bi bi-currency-rupee"></i>15</span>
                 </div>
                 <hr>
                 <div class="d-flex justify-content-between">
                     <span>Total</span>
-                    <span id="totalAmount"> {{ $cartCount > 0 ? $totalOriginalPrice - $totalDiscount + $deliveryCharges : '-' }}</span>
+                    <span id="totalAmount"> <i class="bi bi-currency-rupee"></i>{{ $cartCount > 0 ? $totalOriginalPrice - $totalDiscount + $deliveryCharges + 15 : '-' }}</span>
                 </div>
                 <hr>
                 <form action="{{ route('checkout') }}" class="d-inline" method="get">
@@ -185,12 +189,12 @@
                 },
                 success: (res) => {
                     let item = res.updatedItem;
-                    $('#totalDiscount').text(res.totalDiscount == 0 ? '-' : res.totalDiscount.toFixed(2));
-                    $('#deliveryCharges').text(res.deliveryCharges == 0 ? '-' : res.deliveryCharges.toFixed(2));
-                    $('#totalAmount').text((res.totalOriginalPrice - res.totalDiscount + res.deliveryCharges) == 0 ? '-' : (res.totalOriginalPrice - res.totalDiscount + res.deliveryCharges).toFixed(2));
-                    $('#subTotal').text(res.totalOriginalPrice == 0 ? '-' : res.totalOriginalPrice.toFixed(2));
+                    $('#totalDiscount').html('<i class="bi bi-currency-rupee"></i>'+res.totalDiscount == 0 ? '0' : '<i class="bi bi-currency-rupee"></i>'+res.totalDiscount);
+                    $('#deliveryCharges').html('<i class="bi bi-currency-rupee"></i>'+res.deliveryCharges == 0 ? '0' : '<i class="bi bi-currency-rupee"></i>'+res.deliveryCharges);
+                    $('#totalAmount').html((res.totalOriginalPrice - res.totalDiscount + res.deliveryCharges + 15) == 0 ? '0' : '<i class="bi bi-currency-rupee"></i>'+(res.totalOriginalPrice - res.totalDiscount + res.deliveryCharges + 15));
+                    $('#subTotal').html(res.totalOriginalPrice == 0 ? '0' : '<i class="bi bi-currency-rupee"></i>'+res.totalOriginalPrice);
                     if(item) {
-                        $('#itemPrice-'+ item.id).text((item.price * item.qty).toFixed(2));
+                        $('#itemPrice-'+ item.id).html((item.price * item.qty));
                     }
                     
                 },

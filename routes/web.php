@@ -57,6 +57,12 @@ Route::domain('www.'.env('DOMAIN'))->group(function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/terms-and-condition',function(){
+    return view('terms-condition');
+})->name('tc');
+Route::get('/privacy-policy', function(){
+    return view('privacy-policy');
+})->name('pp');
 
 Route::resource('seller',SellerController::class);
 Route::resource('products', ProductController::class)->except(['index']);

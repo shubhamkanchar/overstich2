@@ -21,7 +21,7 @@
             <div class="row">
                 @foreach ($product->images as $image)
                     <div class="col-md-6">
-                        <img class="pb-4" width="100%" src="{{ asset($image->image_path) }}">
+                        <img class="pb-4 product-image" width="100%" src="{{ asset($image->image_path) }}">
                     </div>
                 @endforeach
                 <div class="col-md-12">
@@ -39,28 +39,33 @@
             </div>
         </div>
         <div class="col-lg-4 col-md-6 pb-5">
-            <div class="ps-4 fs-3"><b>{{ $product->brand }}</b></div>
-            <i class="bi @if(in_array($product->id, $productIds)) bi-heart-fill text-danger @else bi-heart  @endif add-to-wishlist fs-2 me-4 float-end" data-add-route="{{ route('wishlist.add-wishlist', $product->id) }}" data-remove-route="{{ route('wishlist.remove-wishlist', $product->id) }}"></i>
-            <div class="ps-4 fs-4 d-block">{{ $product->title }}</div>
-            <div class="ps-4 fs-4 d-block">
-                <strike>RS. {{ $product->price }}</strike>
-                <span class="text-danger ms-2">{{ $product->discount }}% OFF</span>
+            <div class="fs-5"><b>{{ $product->brand }}</b></div>
+            <!-- <i class="bi @if(in_array($product->id, $productIds)) bi-heart-fill text-danger @else bi-heart  @endif add-to-wishlist fs-2 me-4 float-end" data-add-route="{{ route('wishlist.add-wishlist', $product->id) }}" data-remove-route="{{ route('wishlist.remove-wishlist', $product->id) }}"></i> -->
+            <div class="fs-6 d-block">{{ $product->title }}</div>
+            <div class="fs-6 d-block">
+                @php $discountedPrice = $product->price - ($product->price * ($product->discount / 100));@endphp
+                <span class="fs-4">
+                    <strong><i class="bi bi-currency-rupee"></i>{{ $discountedPrice }}
+                    </strong>
+                </span>
+                <small>
+                <strike><i class="bi bi-currency-rupee"></i>{{ $product->price}}</strike>
+                </small>
+                <small class="text-danger">({{ $product->discount}}% OFF)</small>
             </div>
-            @php $discountedPrice = $product->price - ($product->price * ($product->discount / 100));@endphp
-            <div class="ps-4 fs-3 d-block"><b>RS. {{ $discountedPrice }}</b></div>
-            {{-- <div class="ps-4 fs-3 mt-3 d-block"><b>Sizes</b></div> --}}
-            <span class="ps-4 fs-3 mt-3 d-block">Sizes Chart</span>
+            <div class="fs-6 mt-3 d-block"><b>SELECT SIZE</b>
+            <span class="ms-2 text-danger">Sizes Chart</span></div>
             <form class="d-inline" action="{{ route('cart.store')}}" method="post">
                 @csrf
                 <input type="hidden" value="{{ $product->slug }}" name="slug">
                 {{-- <input type="hidden" name="already_exist" value="{{ in_array($product->slug, $addItems) ? '1' : '0' }}"> --}}
-                <div class="p-2">
+                <div class="pt-2">
                     @php $totalQuantity = 0; $checkFirst = true; $max = 0; @endphp
                     @foreach ($product->sizes as $size)
                         @if($size->quantity > 0)
                             {{-- <div class="form-check form-check-inline"> --}}
                                 <input class="d-none hidden" type="radio" name="size" id="size{{ $loop->index }}" value="{{ $size->size }}" @checked($checkFirst)>
-                                <button type="button" class="border-2 btn border @if ($checkFirst) border-2 border-black @endif m-2 py-2 px-4 size-label" data-max="{{$size->quantity}}" for="size{{ $loop->index }}">{{ $size->size }}</button>
+                                <button type="button" class="border-2 btn border @if ($checkFirst) border-2 border-black @endif mt-2 me-2 mb-2  py-2 px-4 size-label" data-max="{{$size->quantity}}" for="size{{ $loop->index }}">{{ $size->size }}</button>
                                 @php $checkFirst = false; $max=$size->quantity;  @endphp
                             {{-- </div> --}}
                         @else
@@ -69,7 +74,7 @@
                             
                         @php $totalQuantity += $size->quantity; @endphp
                     @endforeach
-                    <div class="col-lg-4 col-md-6 my-4 mb-lg-0 d-flex">
+                    <!-- <div class="col-lg-4 col-md-6 my-4 mb-lg-0 d-flex">
                         <button type="button" class="border-0 fs-3 d-inline text-center mb-2 me-1" style="width: 40px; height: 40px; border-radius: 50%"
                             onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
                             <i class="bi bi-dash"></i>
@@ -83,20 +88,23 @@
                             onclick="this.parentNode.querySelector('input[type=number]').stepUp();">
                             <i class="bi bi-plus"></i>
                         </button>
-                    </div>
+                    </div> -->
                 </div>
-                {{-- <span class="ps-4 fs-3 mt-3 d-block">Sizes Chart</span> --}}
                 @if ($totalQuantity <= 0)
-                    <span class="ps-4 fs-4 mt-3 d-block">Product not available now</span>
+                    <span class="fs-4 mt-3 d-block">Product not available now</span>
                 @endif
-                <button class="ms-4 fs-3 mt-5 mb-5 btn btn-dark" style="width:85%" @disabled($totalQuantity <= 0)><i class="bi bi-bag me-1"></i>Add</button>
+                <button class="fs-5 mt-2 mb-2 btn btn-dark col-md-6" @disabled($totalQuantity <= 0)><i class="bi bi-bag me-1"></i>ADD TO BAG</button>
+
+                <button type="button" class="fs-5 mt-2 mb-2 btn col-md-5 " @disabled($totalQuantity <= 0) >
+                    <i class="bi @if(in_array($product->id, $productIds)) bi-heart-fill text-danger @else bi-heart  @endif me-1 add-to-wishlist" data-add-route="{{ route('wishlist.add-wishlist', $product->id) }}" data-remove-route="{{ route('wishlist.remove-wishlist', $product->id) }}"></i>WISHLIST
+                </button>
             </form>
-            <ul class="ms-4">
+            <ul class="p-0 mt-2">
                 <li>Standart Delivery in 5 - 9 days</li>
                 <li>Return/Exchange Available for 7 days</li>
             </ul>
-            <span class="ps-4 fs-4 mt-3 d-block">DELIVERY CHECK</span>
-            <form class="d-flex ms-4 mt-3" id="pincodeForm" action="{{ route('pinocde-check') }}">
+            <span class="fs-4 mt-3 d-block">DELIVERY CHECK</span>
+            <form class="d-flex mt-3" id="pincodeForm" action="{{ route('pinocde-check') }}">
                 <div class="row">
                     <div class="col-md-8">
                         <input class="form-control" placeholder="Pincode" type="text" name="pincode" id="pincode">
@@ -108,7 +116,7 @@
                 </div>
             </form>
             
-            <span class="ps-4 fs-4 mt-3 d-block">PRODUCT DETAILS</span>
+            <span class="fs-4 mt-3 d-block">PRODUCT DETAILS</span>
             <ul class="ms-4">
                 <li>Colour : {{ $product->color }}</li>
                 <li>Round neck</li>
@@ -116,8 +124,8 @@
                 <li>Material : Cotton</li>
                 <li>Sleeveless</li>
             </ul>
-            <span class="ps-4 fs-4 mt-3 d-block">RATINGS</span>
-            <h1 class="ps-4 mt-3 d-block">4.2 <i class="bi bi-star-fill ms-2"></i></h1>
+            <span class="fs-4 mt-3 d-block">RATINGS</span>
+            <h1 class="mt-3 d-block">4.2 <i class="bi bi-star-fill ms-2"></i></h1>
             <ul class="ms-4">
                 <li>102 BUYERS RATING</li>
             </ul>
@@ -133,8 +141,8 @@
             <div class="progress ms-4" style="height:10px">
                 <div class="progress-bar bg-primary" role="progressbar" style="width: 50%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-            <span class="ps-4 fs-4 mt-4 d-block">REVIEWS</span>
-            <div class="ratings ps-4 mt-3">
+            <span class="fs-4 mt-4 d-block">REVIEWS</span>
+            <div class="ratings mt-3">
                 <span class="p-2 bg-primary" style="border-radius: 5px;"><b>5</b> <i class="bi bi-star-fill text-white"></i></span>
                 <span>The material is pure cotton. Very comfortable to wear and looks beautiful❤</span>
             </div>
