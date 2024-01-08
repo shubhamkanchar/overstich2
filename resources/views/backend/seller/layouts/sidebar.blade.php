@@ -32,21 +32,6 @@
                 </div>
             </div>
             <div class="accordion-item">
-                <h2 class="accordion-header" id="flush-headingOne">
-                    <button class="accordion-button @if(Route::is('categories.*') )  @else collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeller" aria-expanded="false" aria-controls="flush-collapseSeller">
-                        Category
-                    </button>
-                </h2>
-                <div id="flush-collapseSeller" class="accordion-collapse collapse @if(Route::is('categories.*') ) show @endif" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body">
-                        <ul>
-                            <li><a href="{{ route('categories.create') }}">Add Category</a></li>
-                            <li><a href="{{ route('categories.index') }}">View Category</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingfour">
                     <button class="accordion-button @if(Route::is('warehouses.*') )  @else collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseWarehouse" aria-expanded="false" aria-controls="flush-collapseWarehouse">
                         Warehouse

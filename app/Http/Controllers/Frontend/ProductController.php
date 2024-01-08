@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\SellerInfo;
 use App\Models\User;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
@@ -24,11 +25,15 @@ class ProductController extends Controller
         }
         $productIds = Wishlist::where('user_id', $userId)->pluck('product_id')->toArray();
         $products = Product::with('images')->where('status', 'active');
+        $category = '';
         if($categoryId) {
             $category = Category::find($categoryId);
-            $categoryIds = [$categoryId];
-            $categoryIds[] = $category->allChildrenId();
-            $products = $products->whereIn('category_id', $categoryIds);
+            $products = $products->where(function($query) use ($categoryId) {
+                $query->where('master_category_id', $categoryId)
+                ->orWhere('subcategory_id', $categoryId)
+                ->orWhere('category_id', $categoryId);
+            });
+            
         }
 
         $products = $products->paginate(20);
@@ -84,7 +89,8 @@ class ProductController extends Controller
         //
     }
 
-    public function getProductByBrand(Request $request, $sellerId = null) {
+    public function getProductByBrand(Request $request,$slug) {
+        
         $user = auth()->user();
         $userId = session()->getId();
         if($user = auth()->user()) {
@@ -93,12 +99,12 @@ class ProductController extends Controller
         $productIds = Wishlist::where('user_id', $userId)->pluck('product_id')->toArray();
         $products = Product::with('images')->where('status', 'active');
         
-        if($sellerId) {
-            $products = $products->where('seller_id', $sellerId);
-            $seller = User::find($sellerId)->where(['user_type' => 'seller'])->with(['sellerInfo'])->first();
-        }
+        $seller = User::whereHas('sellerInfo', function($q) use ($slug) {
+            $q->where('slug', $slug);
+        })->with(['sellerInfo'])->first();
 
         if($seller) {
+            $products = $products->where('seller_id', $seller->id);
             $products = $products->paginate(20);
             return view('frontend.product.product-brand', compact('products', 'productIds', 'seller')); 
         } 

@@ -26,8 +26,7 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrap();
 
         View::composer('layouts.app', function ($view) {
-            $categoryTree = new Category();
-            $categories = Category::with(['subCategory', 'childCategory'])->whereNull('parent_id')->get();
+            $categories = Category::with(['subCategory', 'subCategory.childCategory'])->whereNull('parent_id')->get();
             $user = auth()->user();
             $userIdentifier = session()->getId();
             if($user){
@@ -35,7 +34,7 @@ class AppServiceProvider extends ServiceProvider
             }
             Cart::instance($userIdentifier)->restore($userIdentifier);
             $count = Cart::instance($userIdentifier)->content()->count();
-            $view->with(['categories' => $categories, 'categoryTree' => $categoryTree, 'cartCount' => $count]);
+            $view->with(['categories' => $categories, 'cartCount' => $count]);
         });
     }
 }

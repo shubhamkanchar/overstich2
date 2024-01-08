@@ -18,7 +18,7 @@
                                 </div>
                                 <div class="col-md-6  mt-2">
                                     <label>Master Category</label>
-                                    <select class="form-select" name="parent_id" id="masterCategory" data-route="{{ route('admin.get-sub-categories', ':categoryId') }}">
+                                    <select class="form-select" name="parent_id" id="masterCategory" data-route="{{ route('admin.get-sub-categories', ':categoryId') }}" required>
                                         <option value="">Master Category</option>
                                         @foreach($categories as $cat)
                                             <option value="{{ $cat->id }}" @if($cat->id == $category->parent_id) selected @endif>{{ $cat->category }}</option>

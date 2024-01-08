@@ -25,7 +25,11 @@
             .show-md-subcategory:hover {
                 text-decoration: underline;
             }
-
+        }
+        @media (min-width: 768px) {
+            .position-md-absolute {
+                position: absolute !important;
+            }
         }
     </style>
     @stack('styles')
@@ -128,18 +132,33 @@
                 </div>
             </div>
         </nav>
-        <div class="position-relative category-menu w-100" style="z-index: 999">   
+        <div class="position-md-absolute category-menu w-100" style="z-index: 999">   
+            {{-- @dd($categories); --}}
             @foreach ($categories as $category)
                 <div class="container-fluid text-start child-categories" data-target="#subcategory{{$category->id}}" style="display: none;" id="subcategory{{$category->id}}">
-                    <div class="row justify-content-end flex-wrap bg-white border-2  border-top-0">
+                    <div class="row flex-wrap bg-white border-2 border-top-0">
                         <div class="d-md-none d-flex justify-content-end close-category-menu text-end bg-white">
                             <span class="fs-1 align-self-center text-secondary d-inline-block d-md-none bi bi-x"></span>
                         </div>
                         <div class="d-md-none d-flex justify-content-between text-end bg-white mb-3">
-                            <span class="ms-5 align-self-center d-inline-block d-md-none text-nowrap fs-6"><b>{{ strtoupper($category->category)}}</b></span>
+                            <span class="ms-5 align-self-center d-inline-block d-md-none text-nowrap fs-6 "><b>{{ strtoupper($category->category)}}</b></span>
                             <span class="bi fs-4 align-self-center text-secondary me-5 d-inline-block d-md-none show-sm-subcategory" data-target="#subcategory{{ $category->id }}">></span>
                         </div>
-                        {!! $categoryTree->categoryTreeView($category->children, $category->id) !!}
+                        @foreach ($category->subCategory as $subCategory)
+                            <div class="col-sm-12 col-md-2 text-start"> 
+                                <div class="d-flex justify-content-between"> 
+                                    <a class="nav-link ms-5 me-1 mb-1 d-inline-block fs-md-4  fs-6 fw-md-bold fw-semibold align-self-center" href="{{ route('products.index', $subCategory->id) }}">{{ ucfirst($subCategory->category) }}</a>
+                                    <span class="bi bi fs-4 text-secondary me-5 d-inline-block d-md-none align-self-center show-nested-subcategory" data-target="#subcategories{{ $subCategory->id }}"> > </span>
+                                </div>
+                                <div id="subcategories{{ $subCategory->id }}" class="childs d-none d-md-inline-block">
+                                    @foreach ($subCategory->childCategory as $childCategory)
+                                        <div class="d-flex justify-content-between">
+                                            <a class="nav-link ms-5 me-1 mb-1 d-inline-block align-self-center" href="{{ route('products.index', $childCategory->id) }}">{{ ucfirst($childCategory->category) }}</a>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
 

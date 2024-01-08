@@ -96,7 +96,7 @@ class CategoryController extends Controller
     {
         try {
             $categoryIds = [$category->id];
-            $categoryIds[] = $category->allChildrenId();
+            $categoryIds = array_merge($categoryIds, $category->allChildrenId());
             Category::whereIn('id', $categoryIds)->delete();
             return response()->json(['message' => 'Category Deleted Successfully'], 200);
         } catch(Exception $e) {
