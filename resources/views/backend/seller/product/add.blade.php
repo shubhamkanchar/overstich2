@@ -20,8 +20,34 @@
                                 </div>
 
                                 <div class="col-12 col-md-4 mb-3">
+                                    <label for="category" class="form-label">Master Category</label>
+                                    <select class="form-select @error('master_category_id') is-invalid @enderror" name="master_category_id" id="masterCategory" data-route="{{ route('seller.get-category', [':categoryId']) }}" edi>
+                                        <option value="" selected disabled>Master Category Type</option>
+                                        @foreach($masterCategory as $master)
+                                            <option value="{{ $master->id }}" {{ old('master_category_id') == $master->id ? 'selected' : '' }}>{{ $master->category }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('masterCategory')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 mb-3">
+                                    <label for="category" class="form-label">Sub Category</label>
+                                    <select class="form-select @error('subcategory_id') is-invalid @enderror" name="subcategory_id" id="subCategory" data-route="{{ route('seller.get-child-categories', [':categoryId']) }}">
+                                        <option value="" selected disabled>Sub Category Type</option>
+                                        @foreach($subCategory as $sub)
+                                            <option value="{{ $sub->id }}" {{ old('subcategory_id') == $sub->id ? 'selected' : '' }}>{{ $sub->category }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('subcategory')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 mb-3">
                                     <label for="category" class="form-label">Category</label>
-                                    <select class="form-select @error('category_id') is-invalid @enderror" name="category_id" id="category" data-route="{{ route('seller.get-category', [':categoryId']) }}" edi>
+                                    <select class="form-select @error('category_id') is-invalid @enderror" name="category_id" id="category">
                                         <option value="" selected disabled>Category Type</option>
                                         @foreach($category as $cat)
                                             <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->category }}</option>
@@ -100,7 +126,7 @@
                                     @enderror
                                 </div>
                                   
-                                <div class="col-12 col-md-4 p-3">
+                                <div class="col-12 col-md-4">
                                     <label class="form-label">Upload product images</label>
                                     <input class="form-control @error('product_images') is-invalid @enderror" accept="image/*" type="file" name="product_images[]" placeholder="Minimum 5 images" multiple>
                                     <small>(Note: Please upload file size less than 500KB )</small>
@@ -111,7 +137,7 @@
                                 
                                 <div class="col-12 col-md-8 row p-3 mb-3" id="sizeContainer">
                                     <label for="size" class="form-label">Size and Quantity</label>
-                                    <div class="size-row row mb-2 col-8">
+                                    <div class="size-row row mb-2 col-md-8 col-12">
                                         <div class="col-4">
                                             <input type="text" class="form-control size-input" placeholder="Size" name="size[0]" required>
                                         </div>
@@ -119,7 +145,7 @@
                                             <input type="number" class="form-control quantity-input" placeholder="Quantity" name="quantity[0]" required>
                                         </div>
                                         <div class="col-4 add-size-row">
-                                            <button type="button" class="btn btn-primary add-size-btn">Add More Sizes</button>
+                                            <button type="button" class="btn btn-primary add-size-btn text-nowrap">Add More Sizes</button>
                                         </div>
                                     </div>
                                 

@@ -239,6 +239,9 @@
                                                             {{ $statusDescriptions[$order->status] }}
                                                         </span>
                                                     </div>
+                                                    <div class="ms-2">
+                                                        <a class="text-decoration-none text-primary fw-bold" href="{{ route('rating.add-rating', $order->orderItem->product->slug)}}" role="button"> <i class="bi bi-star-fill"></i> Review & Rate This product</a> 
+                                                    </div>
                                                 </div>
                                             </div>
                                             {{-- @endforeach --}}

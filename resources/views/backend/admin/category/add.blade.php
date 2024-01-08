@@ -1,10 +1,10 @@
-@extends('backend.seller.layouts.app')
+@extends('backend.admin.layouts.app')
 
 @section('content')
-<div class="grey-bg container">
+<div class="grey-bg container admin-category">
     <div class="row">
         <div class="col-xl-12 col-sm-12 col-12">
-            <form method="POST" action="{{ route('categories.store') }}" >
+            <form method="POST" action="{{ route('categories.store') }}" id="categoryForm">
                 <div class="card">
                     <div class="card-content">
                         <div class="card-header">Add Category</div>
@@ -16,11 +16,20 @@
                                     <input class="form-control" name="name" placeholder="Category Name" required>
                                 </div>
                                 <div class="col-md-6  mt-2">
-                                    <label>Category Type</label>
-                                    <select class="form-select" name="parent_id">
-                                        <option value="">Category Type</option>
+                                    <label>Master Category</label>
+                                    <select class="form-select" data-route="{{ route('admin.get-sub-categories', ':categoryId') }}" id="masterCategory" name="parent_id">
+                                        <option value="">Master Category</option>
                                         @foreach($category as $cat)
-                                        <option value="{{ $cat->id }}">{{ $cat->category }}</option>
+                                            <option value="{{ $cat->id }}">{{ $cat->category }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-6  mt-2">
+                                    <label>SubCategory</label>
+                                    <select class="form-select" id="subCategory" name="subcategory_id">
+                                        <option value="">Sub Category</option>
+                                        @foreach($subCategory as $sub)
+                                            <option value="{{ $sub->id }}">{{ $sub->category }}</option>
                                         @endforeach
                                     </select>
                                 </div>

@@ -26,7 +26,8 @@ class ProductController extends Controller
         $products = Product::with('images')->where('status', 'active');
         if($categoryId) {
             $category = Category::find($categoryId);
-            $categoryIds = $category->allChildrenId();
+            $categoryIds = [$categoryId];
+            $categoryIds[] = $category->allChildrenId();
             $products = $products->whereIn('category_id', $categoryIds);
         }
 

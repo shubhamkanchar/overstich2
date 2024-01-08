@@ -1,13 +1,13 @@
-@extends('backend.seller.layouts.app')
+@extends('backend.admin.layouts.app')
 
 @section('content')
-<div class="grey-bg container">
+<div class="grey-bg container admin-category">
     <div class="row">
         <div class="col-xl-12 col-sm-12 col-12">
-            <form method="POST" action="{{ route('categories.update',$category->id) }}" >
+            <form method="POST" action="{{ route('categories.update',$category->id) }}" id="categoryForm">
                 <div class="card">
                     <div class="card-content">
-                        <div class="card-header">Add Category</div>
+                        <div class="card-header">Edit Category</div>
                         <div class="card-body">
                             @csrf
                             @method('PATCH')
@@ -17,11 +17,20 @@
                                     <input class="form-control" name="name" placeholder="Category Name" value="{{ $category->category }}" required>
                                 </div>
                                 <div class="col-md-6  mt-2">
-                                    <label>Category Type</label>
-                                    <select class="form-select" name="parent_id">
-                                        <option value="">Category Type</option>
+                                    <label>Master Category</label>
+                                    <select class="form-select" name="parent_id" id="masterCategory" data-route="{{ route('admin.get-sub-categories', ':categoryId') }}">
+                                        <option value="">Master Category</option>
                                         @foreach($categories as $cat)
-                                        <option value="{{ $cat->id }}" @if($cat->id == $category->parent_id) selected @endif>{{ $cat->category }}</option>
+                                            <option value="{{ $cat->id }}" @if($cat->id == $category->parent_id) selected @endif>{{ $cat->category }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-6  mt-2">
+                                    <label>Sub Category</label>
+                                    <select class="form-select" name="subcategory_id" id="subCategory">
+                                        <option value="">Sub Category</option>
+                                        @foreach($subCategory as $sub)
+                                            <option value="{{ $sub->id }}" @selected($sub->id == $category->subcategory_id)>{{ $sub->category }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -36,7 +45,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-success">Add Category</button>
+                            <button type="submit" class="btn btn-success">Edit Category</button>
                         </div>
                     </div>
                 </div>

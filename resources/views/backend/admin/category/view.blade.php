@@ -1,7 +1,7 @@
-@extends('backend.seller.layouts.app')
+@extends('backend.admin.layouts.app')
 
 @section('content')
-<div class="grey-bg container-fluid">
+<div class="grey-bg container-fluid admin-category">
     <div class="row">
         <div class="col-xl-12 col-sm-12 col-12">
             <div class="card">

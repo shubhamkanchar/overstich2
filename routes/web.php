@@ -12,6 +12,7 @@ use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\SellerController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\WishlistController;
 use App\Models\Product;
 use App\Models\User;
@@ -74,20 +75,24 @@ Route::group(['middleware'=>['auth','adminMiddleware'], 'prefix' => 'admin'],fun
     Route::get('sellers/delete/{id}',[SelllerController::class,'delete'])->name('seller.delete');
     Route::get('orders/list',[BackendOrderController::class,'index'])->name('admin.order.list');
     Route::get('orders/{id}',[BackendOrderController::class,'viewOrder'])->name('admin.order.view');
+    Route::resource('categories',CategoryController::class);
+    Route::get('get-sub-categories/{category}', [CategoryController::class, 'getSubCategory'])->name('admin.get-sub-categories');
 });
 
 Route::group(['middleware'=>['auth']],function(){
     Route::get('sellers/dashboard',[SelllerController::class,'dashboard'])->name('seller.dashboard');
     Route::get('user/dashboard',[UserController::class,'dashboard'])->name('user.dashboard');
-    Route::resource('categories',CategoryController::class);
 
     Route::get('check-out', [OrderController::class, 'index'])->name('checkout');
     Route::post('place-order', [OrderController::class, 'placeOrder'])->name('order.store');
     Route::get('my-order', [OrderController::class, 'myOrders'])->name('order.my-order');
+    Route::get('{product}/add-rating', [RatingController::class, 'addRating'])->name('rating.add-rating');
+    Route::post('{product}/rating', [RatingController::class, 'store'])->name('rating.store');
     
     Route::group(['prefix' => 'sellers','as' => 'seller.', 'middleware' => ['role:seller'] ], function () {
         Route::resource('products',SellerProductController::class);
         Route::get('products/get-category/{category}', [SellerProductController::class, 'getSubcategory'])->name('get-category');
+        Route::get('products/get-child-categories/{category}', [CategoryController::class, 'getChildCategory'])->name('get-child-categories');
         Route::get('products/{product}/images', [SellerProductController::class, 'getImages'])->name('products.images');
         Route::patch('products/{product}/images/{productImage}', [SellerProductController::class, 'replaceImage'])->name('product.replace-image');
         Route::get('orders/list',[BackendOrderController::class,'index'])->name('order.list');

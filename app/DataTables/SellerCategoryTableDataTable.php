@@ -27,7 +27,10 @@ class SellerCategoryTableDataTable extends DataTable
                 return '<a href="'.route('categories.edit',$row->id).'" class="btn btn-sm btn-primary m-1">Edit</a><button class="btn btn-sm btn-danger m-1 delete-category" data-url="'.route('categories.destroy',$row->id).'">Delete</button>';
             })
             ->editColumn('parent_id', function($row){
-                return $row->parentCategory?->category ?? '-';
+                return $row->masterCategory?->category ?? '-';
+            })
+            ->editColumn('subcategory_id', function($row){
+                return $row->parentSubCategory?->category ?? '-';
             })
             ->editColumn('created_at', function($row){
                 return date('d-m-Y',strtotime($row->created_at));
@@ -41,7 +44,7 @@ class SellerCategoryTableDataTable extends DataTable
      */
     public function query(Category $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->with(['masterCategory', 'parentSubCategory'])->whereNotNull('parent_id')->newQuery();
     }
 
     /**
@@ -76,7 +79,8 @@ class SellerCategoryTableDataTable extends DataTable
             
             Column::make('id'),
             Column::make('category'),
-            Column::make('parent_id')->title('Parent'),
+            Column::make('parent_id')->title('Master category'),
+            Column::make('subcategory_id')->title('Sub Category'),
             Column::make('created_at'),
             Column::computed('action')
                   ->exportable(false)

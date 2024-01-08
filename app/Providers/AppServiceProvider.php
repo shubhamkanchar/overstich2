@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('layouts.app', function ($view) {
             $categoryTree = new Category();
-            $categories = Category::with('children')->whereNull('parent_id')->get();
+            $categories = Category::with(['subCategory', 'childCategory'])->whereNull('parent_id')->get();
             $user = auth()->user();
             $userIdentifier = session()->getId();
             if($user){

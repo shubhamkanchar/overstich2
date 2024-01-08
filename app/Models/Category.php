@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
@@ -12,17 +14,34 @@ class Category extends Model
     protected $fillable =[
         'category',
         'parent_id',
+        'subcategory_id',
         'is_active',
         'done_by'
     ];
 
-    public function parentCategory(){
+
+    public function masterCategory(){
         return $this->hasOne(Category::class,'id','parent_id');
+    }
+
+    public function parentSubCategory(){
+        return $this->hasOne(Category::class,'id','subcategory_id');
     }
 
     public function children()
     {
-        return $this->hasMany(Category::class, 'parent_id', 'id')->with('children');
+        if(is_null($this->parent_id)) {
+            return $this->hasMany(Category::class, 'parent_id', 'id')->whereNull('subcategory_id') ?? $this->hasMany(Category::class, 'subcategory_id', 'id');
+        }
+        return $this->hasMany(Category::class, 'subcategory_id', 'id');
+    }
+
+    public function subCategory() {
+        return $this->hasMany(Category::class, 'parent_id', 'id')->whereNull('subcategory_id');
+    }
+
+    public function childCategory() {
+        return $this->hasMany(Category::class, 'subcategory_id', 'id');
     }
 
     public function products()
@@ -32,8 +51,12 @@ class Category extends Model
 
     public function allChildrenId()
     {
-        $ids = $this->getAllIds($this->children);
-        $ids[] = $this->id;
+        if(is_null($this->parent_id)) {
+            $ids = $this->getAllIds($this->subCategory);
+            return $ids;
+        }
+
+        $ids = $this->getAllIds($this->childCategory);
         return $ids;
     }
 
@@ -41,8 +64,8 @@ class Category extends Model
         $ids = [];
         foreach($categories as $category) {
             $ids[] = $category->id;
-            if(count($category->children) > 0 ) { 
-                $ids = array_merge($ids, $this->getAllIds($category->children));
+            if(count($category->childCategory) > 0 ) { 
+                $ids = array_merge($ids, $this->getAllIds($category->childCategory));
             }
         }
 
@@ -59,13 +82,13 @@ class Category extends Model
     {
         $html = '';
         foreach($categories as $category){
-            $count = count($category->children);            
+            $count = count($category->subCategory ?? $category->childCategory);            
             $colstart = '';            
             $colEnd = '';
             $class = 'fs-6';
             $caret = $count > 0 ? '<span class="bi bi fs-4 text-secondary me-5 d-inline-block d-md-none align-self-center show-nested-subcategory" data-target="#subcategories'. $category->id.'"> > </span>' : '';
 
-            if($category->parent_id == $id) {
+            if($category->parent_id == $id && is_null($category->subcategory_id)) {
                 $colstart = '<div class="col-sm-12 col-md-2 text-start">';            
                 $colEnd = '</div>';
                 $class = 'fs-md-4  fs-6 fw-md-bold fw-semibold align-self-center';
@@ -76,7 +99,7 @@ class Category extends Model
 
             if($count > 0 ) {
                 $html .= '<div id="subcategories'. $category->id.'" class="childs d-none d-md-inline-block">' ;
-                $html .= $this->makechildcat($category->children);
+                $html .= $this->makechildcat($category->subCategory ?? $category->childCategory);
                 $html .= '</div>';
             }
             $html .= $colEnd;

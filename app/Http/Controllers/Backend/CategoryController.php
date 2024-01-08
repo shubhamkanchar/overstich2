@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index(SellerCategoryTableDataTable $datatable)
     {
-        return $datatable->render('backend.seller.category.index');
+        return $datatable->render('backend.admin.category.index');
     }
 
     /**
@@ -24,8 +24,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $category = Category::with('children')->get();
-        return view('backend.seller.category.add',compact('category'));
+        $category = Category::whereNull('parent_id')->get();
+        $subCategory = Category::whereNull('subcategory_id')->whereNotNull('parent_id')->get();
+        return view('backend.admin.category.add',compact('category','subCategory'));
     }
 
     /**
@@ -33,18 +34,19 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $category = Category::where('category',$request->name)->get();
-        if( count($category) == 0 ){
+        // $category = Category::where('category',$request->name)->get();
+        // if( count($category) == 0 ){
             $category = Category::create([
                 'category' => $request->name,
                 'parent_id' => $request->parent_id,
+                'subcategory_id' => $request->subcategory_id,
                 'is_active' => (int)$request->is_active,
                 'done_by' => Auth::user()->id
             ]);
             notify()->success('Category added successfully');
-        }else{
-            notify()->error('Category already exists');
-        }
+        // }else{
+        //     notify()->error('Category already exists');
+        // }
         return redirect()->back();
     }
 
@@ -62,8 +64,9 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $categories = Category::all();
-        return view('backend.seller.category.edit',compact('category','categories'));
+        $categories = Category::whereNull('parent_id')->with('subCategory')->get();
+        $subCategory = Category::where('id', $category->subcategory_id)->whereNotNull('parent_id')->whereNull('subcategory_id')->get();
+        return view('backend.admin.category.edit', compact('category','categories', 'subCategory'));
     }
 
     /**
@@ -71,17 +74,18 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $categories = Category::where('id','!=',$category->id)->where('category',$request->name)->get();
-        if( count($categories) == 0 ){
+        // $categories = Category::where('id','!=',$category->id)->where('category',$request->name)->get();
+        // if( count($categories) == 0 ){
                 $category->category = $request->name;
                 $category->parent_id = $request->parent_id;
+                $category->subcategory_id = $request->subcategory_id;
                 $category->is_active = (int)$request->is_active;
                 $category->done_by = Auth::user()->id;
                 $category->save();
             notify()->success('Category updated successfully');
-        }else{
-            notify()->error('Category already exists');
-        }
+        // }else{
+        //     notify()->error('Category already exists');
+        // }
         return redirect()->back();
     }
 
@@ -91,12 +95,9 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         try {
-            // if($category->done_by == Auth::user()->id){
-                $categoryIds = $category->allChildrenId();
-                Category::whereIn('id', $categoryIds)->delete();
-                // $category->delete();
-            // }
-            
+            $categoryIds = [$category->id];
+            $categoryIds[] = $category->allChildrenId();
+            Category::whereIn('id', $categoryIds)->delete();
             return response()->json(['message' => 'Category Deleted Successfully'], 200);
         } catch(Exception $e) {
             return response()->json(['message' => 'Something went wrong'], 400);
@@ -104,5 +105,14 @@ class CategoryController extends Controller
 
         return redirect()->back();
 
+    }
+
+    public function getSubCategory(Category $category) 
+    {
+        return response()->json($category->subCategory->pluck('category', 'id'), 200);
+    }
+    public function getchildCategory(Category $category) 
+    {
+        return response()->json($category->childCategory->pluck('category', 'id'), 200);
     }
 }
