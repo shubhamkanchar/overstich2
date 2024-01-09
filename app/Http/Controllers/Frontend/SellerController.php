@@ -70,7 +70,7 @@ class SellerController extends Controller
 
             foreach ($request->file('product_photos') as $file) {
                 $fileName = $request->brand . '_' . rand(1111, 9999) . '.' . $file->getClientOriginalExtension();
-                $file->move('image/seller', $fileName);
+                $file->move(public_path() .'/image/seller', $fileName);
                 SellerInfoImage::create([
                     'seller_id' => $user->id,
                     'file' => $fileName
