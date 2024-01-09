@@ -64,6 +64,12 @@ Route::get('/terms-and-condition',function(){
 Route::get('/privacy-policy', function(){
     return view('privacy-policy');
 })->name('pp');
+Route::get('/return-and-refund',function(){
+    return view('return-policy');
+})->name('rp');
+Route::get('/shipping-policy', function(){
+    return view('shipping-policy');
+})->name('sp');
 
 Route::resource('seller',SellerController::class);
 Route::resource('products', ProductController::class)->except(['index']);

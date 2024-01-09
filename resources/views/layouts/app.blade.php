@@ -171,11 +171,17 @@
     <footer class="mt-5" style="background-color: black;">
         <div class="container ">
             <div class="row">
-                <div class="col-md-9 mt-4">
+                <div class="col-md-3 col-6 mt-4">
                     <p class="text-white fs-5"><i class="bi bi-geo-alt me-2 mb-2"></i>India</p>
-                    <p class="text-white fs-5">Contact Us</p>
+                    <p class="text-white fs-5"><a href="{{ route('rp') }}" class="text-decoration-none text-white">Return & Refund Policy</a></p>
                     <p class="text-white fs-5"><a href="{{ route('tc') }}" class="text-decoration-none text-white">Terms and Conditions</a></p>
                     <p class="text-white fs-5"><a href="{{ route('pp') }}" class="text-decoration-none text-white">Privacy Policy</a></p>
+                    <p class="text-white fs-5"><a href="{{ route('sp') }}" class="text-decoration-none text-white">Shipping Policy</a></p>
+                </div>
+                <div class="col-md-6 col-6 mt-4">
+                    <p class="text-white fs-5"></p>
+                    <p class="text-white fs-5">Contact Us</p>
+                    <p class="text-white fs-5">About Us</p>
                     <p class="text-white fs-5">Cookie Setting</p>
                 </div>
                 <div class="col-md-3 mt-4 d-flex mb-5">
