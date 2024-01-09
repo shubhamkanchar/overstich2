@@ -62,7 +62,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('seller',SellerController::class);
 Route::resource('products', ProductController::class)->except(['index']);
 Route::get('category/products/{category?}', [ProductController::class, 'index'])->name('products.index');
-Route::get('{seller:slug?}/products/', [ProductController::class, 'getProductByBrand'])->name('products.brand');
+Route::get('products/{seller:slug?}/get-brand', [ProductController::class, 'getProductByBrand'])->name('products.brand');
 
 Route::group(['middleware'=>['auth','adminMiddleware'], 'prefix' => 'admin'],function(){
     Route::get('dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');

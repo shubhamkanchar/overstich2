@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row mt-5 mb-5">
         <div class="col-md-12">
-            <h3 class="ps-4"><b>{{ ucfirst($seller->sellerInfo->products)}}</b></h3>
+            <h3 class="ps-4"><b>{{ ucfirst($seller->sellerInfo->brand)}}</b></h3>
         </div>
         <div class="col-md-12 ms-4">
             <span class="dropdown-toggle me-5" data-bs-toggle="dropdown">

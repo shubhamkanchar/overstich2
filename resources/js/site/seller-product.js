@@ -106,6 +106,7 @@ const sellerProduct = () =>{
         });
     })
 
+    $('#masterCategory').trigger('change')
     $('#productForm #masterCategory').on('change', function(){
         let category = $(this).val();
         let url = $(this).data('route');
@@ -119,6 +120,8 @@ const sellerProduct = () =>{
                     .attr("value", key)
                     .text(value)); 
                 })
+
+                $('#subCategory').trigger('change');
             },
             error: (err) => {
 
@@ -188,8 +191,7 @@ const sellerProduct = () =>{
     });
 
 
-    $("#sizeContainer").on("click", ".add-size-btn", function () {
-        
+    $("#sizeContainer").on("click", ".add-size-btn", function () {    
         var newSizeRow = $(".size-row:first").clone();
         newSizeRow.find('input.quantity-input').val('').attr('name', 'quantity['+sizeNo+']');
         newSizeRow.find('input.size-input').val('').attr('name', 'size['+sizeNo+']');
