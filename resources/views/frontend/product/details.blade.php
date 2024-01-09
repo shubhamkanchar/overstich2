@@ -145,8 +145,19 @@
                 <span class="fs-4 mt-4 d-block">REVIEWS</span>
                 @foreach ($product->ratings as $rating)
                     <div class="ratings mt-3">
-                        <span class="p-2 @if($rating->star <= 2) bg-danger @elseif($rating->star < 4) bg-primary @else bg-success @endif" style="border-radius: 5px;"><b>{{ $rating->star }}</b> <i class="bi bi-star-fill text-white"></i></span>
-                        <span>{{ $rating->review }}</span>
+                        <div class="d-flex">
+                            <div class="d-block mt-2 col-2 fs-6">
+                                <span class="p-2 @if($rating->star <= 2) bg-danger @elseif($rating->star < 4) bg-primary @else bg-success @endif" style="border-radius: 5px;">
+                                    <b>{{ $rating->star }}</b> <i class="bi bi-star-fill text-white"></i>
+                                </span>
+                            </div>
+                            <div class="d-block">
+                                <span>{{ $rating->review }}</span>
+                                <span class="text-secondary d-block mt-2">{{ ucfirst($rating->user->name)}} | {{ $rating->updated_at->format('d/m/Y')}}</span>
+                            </div>
+                        </div>
+                        <hr>
+                        
                     </div>
                 @endforeach
                 

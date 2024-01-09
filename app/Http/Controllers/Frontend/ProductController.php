@@ -66,15 +66,15 @@ class ProductController extends Controller
         if($user = auth()->user()) {
             $userId = $user->id;
         }
-        $product = Product::with(['images', 'seller', 'seller.sellerInfo', 'sizes', 'ratings'])->withCount('ratings')->where('slug', $slug)->first();
+        $product = Product::with(['images', 'seller', 'seller.sellerInfo', 'sizes', 'ratings', 'ratings.user'])->withCount('ratings')->where('slug', $slug)->first();
         $seller = $product->seller;
         $sellerInfo = $product->seller?->sellerInfo;
         $productIds = Wishlist::where('user_id', $userId)->pluck('product_id')->toArray();
-        $averageStarRating = $product->ratings->avg('star');
+        $averageStarRating = round($product->ratings->avg('star'), 2);
         $averageTransparencyRating = $product->ratings->avg('transparency');
         $averageFitRating = $product->ratings->avg('fit');
         $averageLengthRating = $product->ratings->avg('length');
-        return view('frontend.product.details', compact('product', 'seller', 'sellerInfo', 'productIds', 'averageLengthRating', 'averageFitRating', 'averageTransparencyRating', 'averageStarRating'));
+        return view('frontend.product.details', compact('product', 'seller', 'sellerInfo', 'productIds', 'averageLengthRating', 'averageFitRating', 'averageTransparencyRating', 'averageStarRating', 'user'));
     }
 
     /**

@@ -29,7 +29,7 @@ class RatingController extends Controller
     public function addRating(Request $request, $slug) {
         $user = auth()->user();
         $product = Product::where('slug', $slug)->with(['images', 'ratings'])->withCount('ratings')->first();
-        $averageStarRating = $product->ratings->avg('star');
+        $averageStarRating = round($product->ratings->avg('star'), 2);
         $userRating = Rating::where(['user_id' => $user->id, 'product_id' => $product->id])->first();
         return view('frontend.product.add-rating', compact('product', 'userRating', 'averageStarRating'));
     }
