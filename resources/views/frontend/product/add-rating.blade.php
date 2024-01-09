@@ -57,8 +57,13 @@
             <div class="d-flex ms-3 gap-2 me-3">
                 <div class="align-self-center">
                     <span class="fs-5 d-block"> {{ ucfirst($product->title) }}</span>
-                    <span class="badge bg-success p-2 text-white"> <i class="bi bi-star-fill"></i>{{ '4.2' }}</span>
-                    <span class="text-secondary ms-1"> ({{ '112' }}) </span>
+                    @if ($product->ratings_count)    
+                        <span class="badge @if($averageStarRating <= 2) bg-danger @elseif($averageStarRating < 4) bg-primary @else bg-success @endif p-2 text-white"> <i class="bi bi-star-fill"></i>{{ $averageStarRating }}</span>
+                        <span class="text-secondary ms-1"> ({{ $product->ratings_count }}) </span>
+                    @else
+                        <span class="text-muted"> No ratings</span>
+                    @endif
+
                 </div>
                 <div style="height: 50px;">
                     <img src="{{ asset($product->images->first()->image_path) }}" style="height: 100%"
@@ -132,25 +137,25 @@
                     <div class="card-body">
                         <form id="ratingForm" action="{{ route('rating.store', $product->slug) }}" method="post">
                             @csrf
-                            <input type="hidden" name="star">
+                            <input type="hidden" name="star" value="{{ $userRating->star ?? '0'}}">
                             <div class="row">
                                 <div class="form-group mt-3 col-md-4 col-12">
                                     <label for="fit" class="form-label">FIT</label>
-                                    <input type="range" class="form-range range-input" id="fit" name="fit" min="0" max="100" value="0">
+                                    <input type="range" class="form-range range-input" id="fit" name="fit" min="0" max="100" value="{{ $userRating->fit ?? '0' }}">
                                 </div>
                         
                                 <div class="form-group mt-3 col-md-4 col-12">
                                     <label for="transparency" class="form-label">TRANSPARENCY</label>
-                                    <input type="range" class="form-range range-input" id="transparency" name="transparency" min="0" max="100" value="0">
+                                    <input type="range" class="form-range range-input" id="transparency" name="transparency" min="0" max="100" value="{{ $userRating->transparency ?? '0' }}">
                                 </div>
                         
                                 <div class="form-group mt-3 col-md-4 col-12">
                                     <label for="length" class="form-label">LENGTH</label>
-                                    <input type="range" class="form-range range-input" id="length" name="length" min="0" max="100" value="0">
+                                    <input type="range" class="form-range range-input" id="length" name="length" min="0" max="100" value="{{ $userRating->length ?? '0' }}">
                                 </div>
                                 <div class="form-group col-12 mt-2">
                                     <label for="description" class="form-label fs-5">Description</label>
-                                    <textarea name="description" id="description" class="form-control" placeholder="Description" style="height: 30vh;"></textarea>
+                                    <textarea name="description" id="description" class="form-control" placeholder="Description" style="height: 30vh;">{{ $userRating->review ?? ''}}</textarea>
                                 </div>
                                 <div class="col-12 mt-5">
                                     <button class="btn btn-dark fs-4 px-5 float-end">Submit</button>
@@ -167,6 +172,25 @@
 @section('script')
     <script type="module">
         var ratingValue = 0;
+        function changeProgressColor(value, element) {
+            var color;
+            if (value <= 49) {
+                color = 'red';
+            } else if (value <= 79) {
+                color = 'blue';
+            } else {
+                color = 'green';
+            }
+
+            element.css({
+                '--range-color': color,
+            });
+
+            element.css({
+                '--range-background': `linear-gradient(90deg, ${color} 0% ${value}%, #dee2e7 ${value}% 100%)`,
+            });
+        }
+
         $(function() {
             $('#stars li').on('mouseover', function(){
                 var onStar = parseInt($(this).data('value'), 10);
@@ -183,7 +207,7 @@
                 
             }).on('mouseout', function(){
                 $(this).parent().children('li.star').each(function(e){
-                    if(ratingValue == 0) {
+                    if(ratingValue < $(this).data('value')) {
                         $(this).find('.bi-star-fill').addClass('bi-star').removeClass('bi-star-fill text-warning');
                     }
                 });
@@ -217,27 +241,9 @@
             });
         
             $('.range-input').on('input', function () {
-                var value = $(this).val();
-                var color;
-
-                if (value <= 49) {
-                    color = 'red';
-                } else if (value <= 69) {
-                    color = 'blue';
-                } else {
-                    color = 'green';
-                }
-
-                // Apply color to both thumb and track
-                $(this).css({
-                    '--range-color': color,
-                });
-
-                $(this).css({
-                    '--range-background': `linear-gradient(90deg, ${color} 0% ${value}%, #dee2e7 ${value}% 100%)`,
-                });
-
-                
+                let value = $(this).val();
+                let element = $(this)
+                changeProgressColor(value, element);
             });
 
             $('#ratingForm').validate({
@@ -303,6 +309,21 @@
                     form.submit();
                 }
             });
+
+            @if ($userRating)
+                $('.range-input').each(function(){
+                    let value = $(this).val();
+                    let element = $(this);
+                    changeProgressColor(value, element);
+                })
+
+                var n = "{{ $userRating->star }}";
+                var element = document.querySelector("li.star[data-value='" + n + "']");
+                
+                if (element) {
+                    element.click();
+                }
+            @endif
 
         
         });

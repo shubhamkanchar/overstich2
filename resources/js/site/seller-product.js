@@ -106,7 +106,8 @@ const sellerProduct = () =>{
         });
     })
 
-    $('#masterCategory').trigger('change')
+    $('#masterCategory').trigger('change');
+    $('#subCategory').trigger('change');
     $('#productForm #masterCategory').on('change', function(){
         let category = $(this).val();
         let url = $(this).data('route');
@@ -120,6 +121,7 @@ const sellerProduct = () =>{
                     .attr("value", key)
                     .text(value)); 
                 })
+                
 
                 $('#subCategory').trigger('change');
             },

@@ -22,12 +22,15 @@ class RatingController extends Controller
         $rating->review = $request->description; 
 
         $rating->save();
-
+        notify()->success('Rating has been ' . ($rating->wasRecentlyCreated ? 'added' : 'updated') . ' successfully.');
         return redirect()->route('order.my-order');
     }
 
     public function addRating(Request $request, $slug) {
-        $product = Product::where('slug', $slug)->with(['images'])->first();
-        return view('frontend.product.add-rating', compact('product'));
+        $user = auth()->user();
+        $product = Product::where('slug', $slug)->with(['images', 'ratings'])->withCount('ratings')->first();
+        $averageStarRating = $product->ratings->avg('star');
+        $userRating = Rating::where(['user_id' => $user->id, 'product_id' => $product->id])->first();
+        return view('frontend.product.add-rating', compact('product', 'userRating', 'averageStarRating'));
     }
 }
