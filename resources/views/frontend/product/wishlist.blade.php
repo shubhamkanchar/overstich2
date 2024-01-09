@@ -13,12 +13,11 @@
                     <div class="col-md-3">
                         <div class="card shadow rounded mb-5">
                             <a href="{{ route('products.show',$product->slug) }}">
-                                <img class="card-img-top small-banner" src="{{ asset($product->images->first()->image_path) }}" alt="Card image">
+                                <img class="card-img-top product-image" src="{{ asset($product->images->first()->image_path) }}" alt="Card image">
                             </a>
                             <div class="card-body">
-                                <span class="ps-4 fs-5"><b>{{ ucfirst($product->brand)  }}</b></span>
+                                <span class="fs-5"><b>{{ ucfirst($product->brand)  }}</b></span>
                                 <i class="bi  @if(in_array($product->id, $productIds)) bi-heart-fill text-danger @else bi-heart  @endif  fs-4 me-4 float-end add-to-wishlist" data-add-route="{{ route('wishlist.add-wishlist', $product->id) }}" data-remove-route="{{ route('wishlist.remove-wishlist', $product->id) }}"></i>
-                                <span class="ps-4 fs-6 d-block"> <a href="{{ route('products.show',$product->slug) }}" class="text-decoration-none">{{ ucfirst($product->title) }}</a></span>
                                 {{-- <form class="d-inline float-end" action="{{ route('cart.store')}}" method="post">
                                     @csrf
                                     <input type="hidden" value="{{ $product->slug }}" name="slug">
@@ -27,9 +26,17 @@
                                         <i class="bi fs-4 me-4 float-end @if(in_array($product->slug, $addItems)) bi-bag-check-fill @else bi-bag @endif" ></i>
                                     </button>
                                 </form> --}}
-                                <span class="ps-4 fs-6 d-block"><strike>{{ $product->price}}</strike><span class="text-danger ms-2">{{ $product->discount}}% OFF</span></span>
+                                <span class=" d-block"> <a href="{{ route('products.show',$product->slug) }}" class="text-decoration-none">{{ ucfirst($product->title) }}</a></span>
+                            
                                 @php $discountedPrice = $product->price - ($product->price * ($product->discount / 100));@endphp
-                                <span class="ps-4 fs-5"><b>RS. {{ $discountedPrice }}</b></span>
+                                <span>
+                                    <strong><i class="bi bi-currency-rupee"></i>{{ $discountedPrice }}
+                                    </strong>
+                                </span>
+                                <small>
+                                <strike><i class="bi bi-currency-rupee"></i>{{ $product->price}}</strike>
+                                </small>
+                                <small class="text-danger">({{ $product->discount}}% OFF)</small>
                             </div>
                         </div>
                     </div>

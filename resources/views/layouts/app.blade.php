@@ -174,8 +174,8 @@
                 <div class="col-md-9 mt-4">
                     <p class="text-white fs-5"><i class="bi bi-geo-alt me-2 mb-2"></i>India</p>
                     <p class="text-white fs-5">Contact Us</p>
-                    <p class="text-white fs-5">Terms and Conditions</p>
-                    <p class="text-white fs-5">Privacy Policy</p>
+                    <p class="text-white fs-5"><a href="{{ route('tc') }}" class="text-decoration-none text-white">Terms and Conditions</a></p>
+                    <p class="text-white fs-5"><a href="{{ route('pp') }}" class="text-decoration-none text-white">Privacy Policy</a></p>
                     <p class="text-white fs-5">Cookie Setting</p>
                 </div>
                 <div class="col-md-3 mt-4 d-flex mb-5">
