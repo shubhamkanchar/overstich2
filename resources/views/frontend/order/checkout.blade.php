@@ -118,6 +118,11 @@
                                 </tr>
                             @endforeach
                             <tr>
+                                <td>Platform Fee</td>
+                                <td></td>
+                                <td>15</td>
+                            </tr>
+                            <tr>
                                 <td>Total Amount</td>
                                 <td></td>
                                 <td>{{ $totalPrice}}</td>

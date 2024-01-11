@@ -44,7 +44,7 @@ class LoginController extends Controller
         }elseif($user->hasRole('seller')){
             return redirect()->route('seller.dashboard') ;
         }else{
-            return redirect()->route('home') ;
+            return redirect()->route('welcome') ;
         }
     }
 }

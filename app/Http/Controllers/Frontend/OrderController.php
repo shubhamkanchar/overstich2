@@ -51,6 +51,7 @@ class OrderController extends Controller
         });
 
         $deliveryCharge = 0;
+        $totalPrice = $totalPrice + 15 ;
         if (Cart::instance($userIdentifier)->count() === 0) {
             notify()->error('Your Cart is Empty');
             return  redirect()->route('cart.index');
