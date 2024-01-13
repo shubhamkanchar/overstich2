@@ -19,5 +19,24 @@ const category = () =>{
             }
         });
     })
+
+    var index = $('.filter-row').length;
+
+    $('.add-filter').on('click', function () {
+        var newRow = $('.filter-row:first').clone();
+        newRow.find('input').val('');  // Clear input values
+        newRow.find('.filter_id').remove(); 
+        newRow.find('input[name="types[0]"]').attr('name', 'types[' + index + ']');
+        newRow.find('input[name="types[0]"]').attr('placeholder', 'Category Type');
+        newRow.find('input[name="type_values[0]"]').attr('name', 'type_values[' + index + ']');
+        newRow.find('input[name="type_values[0]"]').attr('placeholder', 'Add multiple value by comma separate');
+        newRow.find('button.add-filter').removeClass('add-filter').addClass('remove btn-danger').text('Remove');
+        $('.filter-row:last').after(newRow);
+        index++;
+    });
+
+    $('.container').on('click', '.remove', function () {
+        $(this).closest('.filter-row').remove();
+    });
 }
 export default category;

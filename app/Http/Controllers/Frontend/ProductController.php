@@ -27,7 +27,7 @@ class ProductController extends Controller
         $products = Product::with('images')->where('status', 'active');
         $category = '';
         if($categoryId) {
-            $category = Category::find($categoryId);
+            $category = Category::where('id', $categoryId)->with('filters')->first();
             $products = $products->where(function($query) use ($categoryId) {
                 $query->where('master_category_id', $categoryId)
                 ->orWhere('subcategory_id', $categoryId)

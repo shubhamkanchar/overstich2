@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\DataTables\SellerCategoryTableDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\CategoryFilter;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,6 +44,16 @@ class CategoryController extends Controller
                 'is_active' => (int)$request->is_active,
                 'done_by' => Auth::user()->id
             ]);
+
+            $filterTypes = $request->types;
+            $filterValues = $request->type_values;
+            foreach($filterTypes as $key => $type) {
+                $categoryFilter = new CategoryFilter();
+                $categoryFilter->category_id = $category->id;
+                $categoryFilter->type = $type;
+                $categoryFilter->value = json_encode(explode(',',$filterValues[$key]));
+                $categoryFilter->save();
+            }
             notify()->success('Category added successfully');
         // }else{
         //     notify()->error('Category already exists');
@@ -64,7 +75,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $categories = Category::whereNull('parent_id')->with('subCategory')->get();
+        $categories = Category::whereNull('parent_id')->with('subCategory', 'filters')->get();
         $subCategory = Category::where('id', $category->subcategory_id)->whereNotNull('parent_id')->whereNull('subcategory_id')->get();
         return view('backend.admin.category.edit', compact('category','categories', 'subCategory'));
     }
@@ -82,6 +93,23 @@ class CategoryController extends Controller
                 $category->is_active = (int)$request->is_active;
                 $category->done_by = Auth::user()->id;
                 $category->save();
+                $filterTypes = $request->types;
+                $filterValues = $request->type_values;
+                $filterIds = $request->filter_id;
+                if($filterIds) {
+                    $category->filters()->whereNotIn('id', $filterIds)->delete();
+                }
+                
+                foreach($filterTypes as $key => $type) {
+                    $categoryFilter = new CategoryFilter();
+                    if(isset($filterIds[$key])) {
+                        $categoryFilter = CategoryFilter::find($filterIds[$key]);
+                    }
+                    $categoryFilter->category_id = $category->id;
+                    $categoryFilter->type = $type;
+                    $categoryFilter->value = json_encode(explode(',',$filterValues[$key]));
+                    $categoryFilter->save();
+                }
             notify()->success('Category updated successfully');
         // }else{
         //     notify()->error('Category already exists');

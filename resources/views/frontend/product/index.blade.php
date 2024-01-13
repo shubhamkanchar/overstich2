@@ -5,14 +5,19 @@
         <div class="col-md-12">
             <h3><b>{{ ucfirst($category->category)}}</b></h3>
         </div>
+        
         <div class="col-md-12">
-            <span class="dropdown-toggle me-5" data-bs-toggle="dropdown">
-                SHORT BY
-            </span>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">ASSENDING</a></li>
-                <li><a class="dropdown-item" href="#">DECENDING</a></li>
-            </ul>
+            @foreach ($category->filters as $filter)
+                <span class="dropdown-toggle me-5" data-bs-toggle="dropdown">
+                    {{ $filter->type }}
+                </span>
+                <ul class="dropdown-menu">
+                    @foreach (json_decode($filter->value) as $value )
+                        <li><a class="dropdown-item" href="{{ url()->current().'?'.$filter->type.'='.$value }}">{{$value}}</a></li>
+                    @endforeach
+                </ul>
+            @endforeach
+            
             <span class="dropdown-toggle me-5" data-bs-toggle="dropdown">
                 SIZE
             </span>
@@ -21,7 +26,7 @@
                 <li><a class="dropdown-item" href="#">LARGE</a></li>
                 <li><a class="dropdown-item" href="#">EXTRA LARGE</a></li>
             </ul>
-            <span class="dropdown-toggle me-5" data-bs-toggle="dropdown">
+            {{-- <span class="dropdown-toggle me-5" data-bs-toggle="dropdown">
                 PATTERN
             </span>
             <ul class="dropdown-menu">
@@ -47,7 +52,7 @@
                 <li><a class="dropdown-item" href="#">ROUND</a></li>
                 <li><a class="dropdown-item" href="#">V</a></li>
                 <li><a class="dropdown-item" href="#">DEEP</a></li>
-            </ul>
+            </ul> --}}
             <span class="float-end">{{ $products->count() }} ITEMS</span>
         </div>
     </div>

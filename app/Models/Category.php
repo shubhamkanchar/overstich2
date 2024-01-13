@@ -36,6 +36,10 @@ class Category extends Model
         return $this->hasMany(Category::class, 'subcategory_id', 'id');
     }
 
+    public function filters() {
+        return $this->hasMany(CategoryFilter::class, 'category_id', 'id');
+    }
+
     public function subCategory() {
         return $this->hasMany(Category::class, 'parent_id', 'id')->whereNull('subcategory_id');
     }
