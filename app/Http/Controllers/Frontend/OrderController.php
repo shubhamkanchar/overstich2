@@ -51,7 +51,7 @@ class OrderController extends Controller
         });
 
         $deliveryCharge = 0;
-        $totalPrice = $totalPrice + 15 ;
+        $totalPrice = $totalPrice + env('PLATFORM_FEE') ;
         if (Cart::instance($userIdentifier)->count() === 0) {
             notify()->error('Your Cart is Empty');
             return  redirect()->route('cart.index');
@@ -188,7 +188,7 @@ class OrderController extends Controller
             });
 
             $data = [
-                'amount' => ($cartTotalPrice + $deliveryCharges) *  100,
+                'amount' => ($cartTotalPrice + $deliveryCharges) *  100 + env('PLATFORM_FEE'),
                 'transactionId' => $transactionId,
                 'mobile' => $request->mobile,
                 'email' => $request->email,

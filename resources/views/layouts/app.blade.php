@@ -145,7 +145,7 @@
                             <span class="bi fs-4 align-self-center text-secondary me-5 d-inline-block d-md-none show-sm-subcategory" data-target="#subcategory{{ $category->id }}">></span>
                         </div>
                         @foreach ($category->subCategory as $subCategory)
-                            <div class="col-sm-12 col-md-2 text-start"> 
+                            <div class="col-sm-12 offset-md-1 col-md-2 text-start"> 
                                 <div class="d-flex justify-content-between"> 
                                     <a class="nav-link ms-5 me-1 mb-1 d-inline-block fs-md-4  fs-6 fw-md-bold fw-semibold align-self-center" href="{{ route('products.index', $subCategory->id) }}">{{ ucfirst($subCategory->category) }}</a>
                                     <span class="bi bi fs-4 text-secondary me-5 d-inline-block d-md-none align-self-center show-nested-subcategory" data-target="#subcategories{{ $subCategory->id }}"> > </span>

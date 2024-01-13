@@ -106,24 +106,24 @@
                 <h2 class="fw-bold">Summary</h2>
                 <div class="d-flex justify-content-between">
                     <span>Subtotal</span>
-                    <span id="subTotal"><i class="bi bi-currency-rupee"></i>{{ $cartCount > 0 ? $totalOriginalPrice : '-' }}</span>
+                    <span id="subTotal"><i class="bi bi-currency-rupee"></i>{{ $cartCount > 0 ? $totalOriginalPrice : '0' }}</span>
                 </div>
                 <div class="d-flex justify-content-between">
                     <span>Delivery Charges</span>
-                    <span id="deliveryCharges"><i class="bi bi-currency-rupee"></i>{{ $cartCount > 0 ? $deliveryCharges : '-' }}</span>
+                    <span id="deliveryCharges"><i class="bi bi-currency-rupee"></i>{{ $cartCount > 0 ? $deliveryCharges : '0' }}</span>
                 </div>
                 <div class="d-flex justify-content-between">
                     <span>Discount</span>
-                    <span id="totalDiscount"><i class="bi bi-currency-rupee"></i>{{ $cartCount > 0 ? $totalDiscount : '-' }}</span>
+                    <span id="totalDiscount"><i class="bi bi-currency-rupee"></i>{{ $cartCount > 0 ? $totalDiscount : '0' }}</span>
                 </div>
                 <div class="d-flex justify-content-between">
                     <span>Platform fee</span>
-                    <span id="totalDiscount"><i class="bi bi-currency-rupee"></i>15</span>
+                    <span id="totalDiscount"><i class="bi bi-currency-rupee"></i>{{ env('PLATFORM_FEE') }}</span>
                 </div>
                 <hr>
                 <div class="d-flex justify-content-between">
                     <span>Total</span>
-                    <span id="totalAmount"> <i class="bi bi-currency-rupee"></i>{{ $cartCount > 0 ? $totalOriginalPrice - $totalDiscount + $deliveryCharges + 15 : '-' }}</span>
+                    <span id="totalAmount"> <i class="bi bi-currency-rupee"></i>{{ $cartCount > 0 ? $totalOriginalPrice - $totalDiscount + $deliveryCharges + env('PLATFORM_FEE') : '0' }}</span>
                 </div>
                 <hr>
                 <form action="{{ route('checkout') }}" class="d-inline" method="get">
@@ -191,7 +191,7 @@
                     let item = res.updatedItem;
                     $('#totalDiscount').html('<i class="bi bi-currency-rupee"></i>'+res.totalDiscount == 0 ? '0' : '<i class="bi bi-currency-rupee"></i>'+res.totalDiscount);
                     $('#deliveryCharges').html('<i class="bi bi-currency-rupee"></i>'+res.deliveryCharges == 0 ? '0' : '<i class="bi bi-currency-rupee"></i>'+res.deliveryCharges);
-                    $('#totalAmount').html((res.totalOriginalPrice - res.totalDiscount + res.deliveryCharges + 15) == 0 ? '0' : '<i class="bi bi-currency-rupee"></i>'+(res.totalOriginalPrice - res.totalDiscount + res.deliveryCharges + 15));
+                    $('#totalAmount').html((res.totalOriginalPrice - res.totalDiscount + res.deliveryCharges + res.platformFee) == 0 ? '0' : '<i class="bi bi-currency-rupee"></i>'+(res.totalOriginalPrice - res.totalDiscount + res.deliveryCharges + res.platformFee));
                     $('#subTotal').html(res.totalOriginalPrice == 0 ? '0' : '<i class="bi bi-currency-rupee"></i>'+res.totalOriginalPrice);
                     if(item) {
                         $('#itemPrice-'+ item.id).html((item.price * item.qty));

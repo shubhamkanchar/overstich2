@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::domain('www.'.env('DOMAIN'))->group(function () {
+Route::domain(env('DOMAIN'))->group(function () {
     Route::get('/', function () {
         $sellers = User::where(['user_type' => 'seller'])
             ->whereHas('sellerInfo', function($query) {
@@ -111,22 +111,20 @@ Route::group(['middleware'=>['auth']],function(){
         Route::patch('products/{product}/images/{productImage}', [SellerProductController::class, 'replaceImage'])->name('product.replace-image');
         Route::get('orders/list',[BackendOrderController::class,'index'])->name('order.list');
         Route::get('orders/{id}',[BackendOrderController::class,'viewOrder'])->name('order.view');
-        
-    
     });
 
     Route::get('download-invoice/{id}', [BackendOrderController::class,'downloadInvoice'])->name('download.invoice');
+    // Route::resource('cart', CartController::class);
+    Route::get('cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('add-to-cart', [CartController::class, 'store'])->name('cart.store');
+    Route::post('update-cart-item', [CartController::class, 'update'])->name('cart.update');
+    Route::post('remove-cart-item', [CartController::class, 'remove'])->name('cart.remove-item');
+    Route::post('clear-cart', [CartController::class, 'destroy'])->name('cart.clear-cart');
+    Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+    Route::post('add-to-wishlist/{id}', [WishlistController::class, 'add'])->name('wishlist.add-wishlist');
+    Route::delete('remove-from-wishlist/{id}', [WishlistController::class, 'Remove'])->name('wishlist.remove-wishlist');
 });
 
-// Route::resource('cart', CartController::class);
-Route::get('cart', [CartController::class, 'index'])->name('cart.index');
-Route::post('add-to-cart', [CartController::class, 'store'])->name('cart.store');
-Route::post('update-cart-item', [CartController::class, 'update'])->name('cart.update');
-Route::post('remove-cart-item', [CartController::class, 'remove'])->name('cart.remove-item');
-Route::post('clear-cart', [CartController::class, 'destroy'])->name('cart.clear-cart');
-Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
-Route::post('add-to-wishlist/{id}', [WishlistController::class, 'add'])->name('wishlist.add-wishlist');
-Route::delete('remove-from-wishlist/{id}', [WishlistController::class, 'Remove'])->name('wishlist.remove-wishlist');
 
 Route::domain('partners.'.env('DOMAIN'))->group(function () {
     Route::get('/',[SellerController::class,'homepage']);

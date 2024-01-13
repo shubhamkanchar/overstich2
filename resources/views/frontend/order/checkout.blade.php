@@ -120,7 +120,7 @@
                             <tr>
                                 <td>Platform Fee</td>
                                 <td></td>
-                                <td>15</td>
+                                <td>{{ env('PLATFORM_FEE') }}</td>
                             </tr>
                             <tr>
                                 <td>Total Amount</td>

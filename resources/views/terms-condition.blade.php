@@ -39,7 +39,7 @@
             </p>
             <p>
             <strong>5. Platform Fee:</strong><br/>
-            In addition to the product price and any applicable taxes, a platform fee of Rs.15 will be added to
+            In addition to the product price and any applicable taxes, a platform fee of Rs.{{ env('PLATFORM_FEE') }} will be added to
             each order. This fee covers the costs associated with maintaining and operating our platform,
             ensuring secure transactions, and providing customer support. The platform fee will be clearly
             displayed at checkout before you complete your purchase.
