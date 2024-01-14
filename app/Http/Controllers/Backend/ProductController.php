@@ -7,7 +7,9 @@ use App\DataTables\SellerProductDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SellerProductRequest;
 use App\Models\Category;
+use App\Models\CategoryFilter;
 use App\Models\Product;
+use App\Models\ProductFilter;
 use App\Models\ProductImage;
 use App\Models\ProductSize;
 use Exception;
@@ -191,11 +193,16 @@ class ProductController extends Controller
     {
         return response()->json($category->subCategory->pluck('category', 'id'), 200);
     }
+
     public function getChildCategory(Category $category) 
     {
         return response()->json($category->childCategory->pluck('category', 'id'), 200);
     }
 
+    public function getFilterValues(CategoryFilter $categoryFilter) 
+    {
+        return response()->json(['categoryFilter' => $categoryFilter], 200);
+    }
     public function getImages(Product $product){
         $this->authorize('update', $product);
         $productImages = $product->images;
@@ -253,6 +260,29 @@ class ProductController extends Controller
     public function viewImages(Product $product){
         $productImages = $product->images;
         return view('backend.admin.product.product-images',compact('product', 'productImages'));
+    }
+
+    public function addFilters($product) {
+        $product = Product::where('slug', $product)->with(['filters', 'filters.categoryFilter','category', 'category.filters'])->first();
+        return view('backend.seller.product.filters', compact('product'));
+    }
+
+    public function saveFilters(Request $request) {
+        $product = Product::find($request->product_id);
+        $this->authorize('update', $product);
+
+        $types = $request->types;
+        $type_values = $request->type_values;
+        $product->filters()->whereNotIn('filter_id', $types)->delete();
+        foreach($types as $key => $type) {
+            $productFilter = ProductFilter::updateOrInsert(
+                ['filter_id' => $type, 'product_id' => $product->id],
+                ['value' => $type_values[$key]]
+            );
+        }
+        
+        notify()->success('Filter Updated successfully');
+        return redirect()->back();
     }
 
 
