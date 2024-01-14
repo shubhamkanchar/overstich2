@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::domain(env('DOMAIN'))->group(function () {
+Route::domain('www.'.env('DOMAIN'))->group(function () {
     Route::get('/', function () {
         $sellers = User::where(['user_type' => 'seller'])
             ->whereHas('sellerInfo', function($query) {
@@ -136,6 +136,7 @@ Route::group(['middleware'=>['auth']],function(){
 
 Route::domain('partners.'.env('DOMAIN'))->group(function () {
     Route::get('/',[SellerController::class,'homepage']);
+    Route::resource('seller',SellerController::class);
 });
 
 Route::any('phonepe-response', [OrderController::class, 'paymentResponse'])->name('payment.response');

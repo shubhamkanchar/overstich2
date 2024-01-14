@@ -9,11 +9,11 @@
                 <div class="row">
                     <div class="col-md-6 p-3">
                         <label>GST no.</label>
-                        <input class="form-control" type="text" name="gst" value="{{ old('gst') ?? ''}}">
+                        <input class="form-control" type="text" name="gst" value="{{ old('gst') ?? ''}}" placeholder="GST Number" required>
                     </div>
                     <div class="col-md-6 p-3">
                         <label>Brand Name</label>
-                        <input class="form-control @error('brand') is-invalid @enderror" type="text" name="brand" value="{{ old('brand') ?? ''}}">
+                        <input class="form-control @error('brand') is-invalid @enderror" type="text" name="brand" value="{{ old('brand') ?? ''}}" placeholder="Brand Name"  required>
                         @error('brand')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -22,7 +22,7 @@
                     </div>
                     <div class="col-md-6 p-3">
                         <label>Mail ID</label>
-                        <input class="form-control  @error('email') is-invalid @enderror" type="email" name="email" value="{{ old('email') ?? ''}}">
+                        <input class="form-control  @error('email') is-invalid @enderror" type="email" name="email" value="{{ old('email') ?? ''}}" placeholder="MAIL ID" required>
                         @error('email')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -31,19 +31,19 @@
                     </div>
                     <div class="col-md-6 p-3">
                         <label>WhatsApp No.</label>
-                        <input class="form-control" type="text" name="whatsapp" value="{{ old('whatsapp') ?? '' }}">
+                        <input class="form-control" type="text" name="whatsapp" value="{{ old('whatsapp') ?? '' }}" placeholder="WhatsApp Number" required>
                     </div>
                     <div class="col-md-6 p-3">
                         <label>Category</label>
-                        <input class="form-control" type="text" name="category" placeholder="Clothing, footwear, jewellery etc.*" value="{{ old('category') ?? ''}}">
+                        <input class="form-control" type="text" name="category" placeholder="Clothing, footwear, jewellery etc.*" value="{{ old('category') ?? ''}}" required>
                     </div>
                     <div class="col-md-6 p-3">
                         <label>Products</label>
-                        <input class="form-control" type="text" name="product" placeholder="Casual Men t-shirts, formal shirts" value="{{ old('product') ?? ''}}">
+                        <input class="form-control" type="text" name="product" placeholder="Casual Men t-shirts, formal shirts" value="{{ old('product') ?? ''}}" required>
                     </div>
                     <div class="col-md-6 p-3">
                         <label>Password</label>
-                        <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" placeholder="Password" id="password">
+                        <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" placeholder="Password" id="password" required>
                         @error('password') 
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -52,43 +52,67 @@
                     </div>
                     <div class="col-md-6 p-3">
                         <label>Confirm Password</label>
-                        <input class="form-control" type="password" name="password_confirmation" placeholder="Confirm Password">
+                        <input class="form-control" type="password" name="password_confirmation" placeholder="Confirm Password" required>
                     </div>
                     <div class="col-md-6 p-3">
                         <label>Product price range</label>
-                        <input class="form-control" type="text" name="price_range" placeholder="Rs.500 - 1500, Rs.700 - 3000, etc." value="{{ old('price_range') ?? ''}}">
+                        <input class="form-control" type="text" name="price_range" placeholder="Rs.500 - 1500, Rs.700 - 3000, etc." value="{{ old('price_range') ?? ''}}" required>
                     </div>
                     <div class="col-md-6 p-3">
                         <label>Upload product photos</label>
                         <input class="form-control" accept="image/*" type="file" name="product_photos[]" placeholder="Minimum 5 photos" multiple>
                         <small>(Note: Please upload file size less than 500KB )</small>
                     </div>
+                    <div class="col-md-6 p-3">
+                        <label>Upload GST Document</label>
+                        <input class="form-control" type="file" name="gst_doc" placeholder="GST Document" required>
+                    </div>
+                    <div class="col-md-6 p-3">
+                        <label>Trademark/NOC document </label>
+                        <input class="form-control" type="file" name="noc_doc" placeholder="Trademark/NOC document"  required>
+                    </div>
                     <div class="col-md-12 p-3">
                         <label>Pick Up Address</label>
-                        <input class="form-control" type="text" name="address_line" placeholder="Plot no, Building, street, Area*" value="{{ old('address_line') ?? ''}}">
+                        <input class="form-control" type="text" name="address_line" placeholder="Plot no, Building, street, Area*" value="{{ old('address_line') ?? ''}}" required>
                     </div>
                     <div class="col-md-6 p-3">
-                        <input class="form-control" type="text" name="locality" placeholder="Locality" value="{{ old('locality') ?? ''}}">
+                        <input class="form-control" type="text" name="locality" placeholder="Locality" value="{{ old('locality') ?? ''}}" required>
                     </div>
                     <div class="col-md-6 p-3">
-                        <input class="form-control" type="text" name="city" placeholder="City" value="{{ old('city') ?? ''}}">
+                        <input class="form-control" type="text" name="city" placeholder="City" value="{{ old('city') ?? ''}}" required>
                     </div>
                     <div class="col-md-6 p-3">
-                        <input class="form-control" type="text" name="state" placeholder="State" value="{{ old('state') ?? ''}}">
+                        <input class="form-control" type="text" name="state" placeholder="State" value="{{ old('state') ?? ''}}" required>
                     </div>
                     <div class="col-md-6 p-3">
-                        <input class="form-control" type="text" name="pincode" placeholder="Pincode" value="{{ old('pincode') ?? ''}}">
+                        <input class="form-control" type="text" name="pincode" placeholder="Pincode" value="{{ old('pincode') ?? ''}}" required>
                     </div>
+                    
                     <div class="col-md-12 pt-3 ps-3">
                         <label>Bank A/c Details</label>
                     </div>
                     <div class="col-md-6 p-3">
+                        <span>Account Holder Name</span>
+                        <input class="form-control" type="text" name="account_holder_name" value="{{ old('account') ?? ''}}" placeholder="Account Holder Name" required>
+                    </div>
+                    <div class="col-md-6 p-3">
                         <span>Account No</span>
-                        <input class="form-control" type="text" name="account" value="{{ old('account') ?? ''}}">
+                        <input class="form-control" type="text" name="account" value="{{ old('account') ?? ''}}" placeholder="Account Number" required>
+                    </div>
+                    <div class="col-md-6 p-3">
+                        <span>Bank Name</span>
+                        <input class="form-control" type="text" name="bank_name" value="{{ old('bank_name') ?? ''}}" placeholder="Bank Name" required>
                     </div>
                     <div class="col-md-6 p-3">
                         <span>IFSC Code</span>
-                        <input class="form-control" type="text" name="ifsc" value="{{ old('ifsc') ?? ''}}">
+                        <input class="form-control" type="text" name="ifsc" value="{{ old('ifsc') ?? ''}}" placeholder="IFSC Code"required>
+                    </div>
+                    <div class="col-md-6 p-3">
+                        <span>Account Type</span>
+                        <select class="form-select" name="account_type" id="accountType" required>
+                            <option value="Saving">Saving</option>
+                            <option value="Current">Current</option>
+                        </select>
                     </div>
                     <div class="col-md-12 p-3 text-center">
                         <button type="submit" class="btn border fs-2">Submit For Approval</button>
@@ -259,23 +283,6 @@
                     <h3 class="text-decoration-underline m-5 text-center"><b>Seller Guidelines</b></h3>
 
                     <ul>
-                        <!-- <li class="mt-3"><b class="d-block">18. Order Fulfilment and Responsiveness -</b> Sellers must actively manage their orders and promptly fulfil customer
-                            requests within a timeframe of 48 hours, except on Sundays and holidays. In cases where orders are not fulfilled or there
-                            is unresponsiveness without any valid reason, it may result in the removal of the seller from our platform and could
-                            potentially lead to legal action. If a seller no longer wishes to accept orders from our platform, they have the option to
-                            deactivate their seller account.
-                        </li>
-                        <li class="mt-3"><b class="d-block">19. Boost Sales with Coupon Codes -</b> Sellers, feel free to use your own coupon codes to attract customers and increase
-                            sales. If you let us know about any upcoming discounts or sales you're planning, we can also help promote them to
-                            maximise your sales potential.
-                        </li>
-                        <li class="mt-3"><b class="d-block">20. Photos for Ad Poster -</b> To feature your brand in our ad posters, we will ask you to provide us
-                            with high-quality photos of your product so that we can edit them to our specifications and use
-                            them. You also need to grant us permission to use the photos without any copyright issues. It is
-                            not mandatory to provide us with photos of your product for the ad posters. This is a free service,
-                            and we understand that you may not have the necessary photos or the time to provide them.</li>
-                        <li class="mt-3"><b class="d-block">21. Modification of Guidelines -</b> These guidelines are subject to updates or modifications as needed to adapt to changing
-                            circumstances. Sellers will be informed of any changes.</li> -->
                         <li class="mt-3"><b class="d-block">17. Boost Sales with Coupon Codes - </b>Create your own coupon codes to attract customers and increase sales.
                         </li>
                         <li class="mt-3"><b class="d-block">18. Modification of Guidelines - </b>These guidelines are subject to updates or modifications as needed to adapt to changing circumstances. Sellers will be informed of any changes.

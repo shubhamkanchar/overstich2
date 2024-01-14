@@ -50,6 +50,17 @@ class SellerController extends Controller
             ]);
             $user->assignRole('seller');
 
+            if($request->hasFile('gst_doc')){
+                $gstFile = $request->file('gst_doc');
+                $gstDoc = $request->brand . '_' . rand(1111, 9999) . '.' . $gstFile->getClientOriginalExtension();
+                $gstFile->move(public_path() .'/doc/seller/'.$user->id, $gstDoc);
+            }
+
+            if($request->hasFile('noc_doc')){
+                $nocFile = $request->file('noc_doc');
+                $nocDoc = $request->brand . '_' . rand(1111, 9999) . '.' . $nocFile->getClientOriginalExtension();
+                $nocFile->move(public_path() .'/doc/seller/'.$user->id, $nocDoc);
+            }
             $sellerInfo = SellerInfo::create([
                 'seller_id' => $user->id,
                 'brand' => $request->brand,
@@ -66,6 +77,11 @@ class SellerController extends Controller
                 'account' => $request->account,
                 'is_approved' => 0,
                 'ifsc' => $request->ifsc,
+                'gst_doc' => $gstDoc,
+                'noc_doc' => $nocDoc,
+                'account_holder_name' => $request->account_holder_name,
+                'bank_name' => $request->bank_name,
+                'account_type' => $request->account_type,
             ]);
 
             foreach ($request->file('product_photos') as $file) {

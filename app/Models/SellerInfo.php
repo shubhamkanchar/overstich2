@@ -27,6 +27,11 @@ class SellerInfo extends Model
         'account',
         'is_approved',
         'ifsc',
+        'gst_doc',
+        'noc_doc',
+        'account_holder_name',
+        'bank_name',
+        'account_type',
     ];
 
     protected static function boot()
