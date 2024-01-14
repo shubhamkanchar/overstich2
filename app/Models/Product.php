@@ -36,6 +36,10 @@ class Product extends Model
         return $this->hasMany(Rating::class, 'product_id', 'id');
     }
 
+    public function filters() {
+        return $this->hasMany(ProductFilter::class, 'product_id', 'id');
+    }
+
     public function getRouteKeyName(): string
     {
         return 'slug';

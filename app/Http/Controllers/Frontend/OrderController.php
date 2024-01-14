@@ -208,10 +208,10 @@ class OrderController extends Controller
 
         Log::channel('daily')->info('Request Headers', ['headers' => $request->headers->all()]);
         $transactionId = $request->transactionId;
-
+        Log::channel('daily')->info('failed from phone_pay');
         if($request->code == 'PAYMENT_SUCCESS') {
             Order::where('payment_transaction_id', $transactionId)->update(['is_order_confirmed' => 1]);
-
+            
             // function to update all product quantity seller wise from above order we are getting one order only we can have multiple order at time.
             $orders = Order::where('payment_transaction_id', $transactionId)->get();
             foreach($orders as $order) {
@@ -247,11 +247,11 @@ class OrderController extends Controller
             \Cart::store($userIdentifier);
 
             notify()->success("Order placed successfully");
-        } else if($request->code == 'PAYMENT_SUCCESS') {
+        } else if($request->code == 'PAYMENT_SUCCESS') {   
             $order = Order::where('payment_transaction_id', $transactionId)->first();
             $order->delete();
             notify()->success("Payment Failed");
-        }
+        } 
 
         return redirect()->route('order.my-order');
 

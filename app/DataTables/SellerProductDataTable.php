@@ -60,8 +60,10 @@ class SellerProductDataTable extends DataTable
                 $editUrl = route('seller.products.edit', $row->slug);
                 $deleteUrl = route('seller.products.destroy', $row->slug);
                 $images = route('seller.products.images', $row->slug);
+                $filters = route('seller.products.filters', $row->slug);
                 return '<a href="' . $images . '" class="btn btn-sm btn-primary m-1">Images</a>
                         <a href="' . $editUrl . '" class="btn btn-sm btn-primary m-1">Edit</a>
+                        <a href="' . $filters . '" class="btn btn-sm btn-primary m-1">Filters</a>
                         <button class="btn btn-sm btn-danger m-1 delete-product" data-url="' . $deleteUrl . '">Delete</button>';
             })
             ->rawColumns(['images', 'action'])
@@ -109,7 +111,7 @@ class SellerProductDataTable extends DataTable
             Column::make('title')->title('Name'),
             Column::make('brand')->title('Brand'),
             Column::make('category_id')->title('Category'),
-            Column::make('images')->title('Image')->width(200),
+            Column::make('images')->title('Image')->width(200)->height(100),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)

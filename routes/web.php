@@ -107,7 +107,10 @@ Route::group(['middleware'=>['auth']],function(){
         Route::resource('products',SellerProductController::class);
         Route::get('products/get-category/{category}', [SellerProductController::class, 'getSubcategory'])->name('get-category');
         Route::get('products/get-child-categories/{category}', [CategoryController::class, 'getChildCategory'])->name('get-child-categories');
+        Route::get('products/get-filter-values/{categoryFilter}', [SellerProductController::class, 'getFilterValues'])->name('get-filter-values');
         Route::get('products/{product}/images', [SellerProductController::class, 'getImages'])->name('products.images');
+        Route::get('products/{product}/filters', [SellerProductController::class, 'addFilters'])->name('products.filters');
+        Route::post('products/save-filters', [SellerProductController::class, 'saveFilters'])->name('products.filters.store');
         Route::patch('products/{product}/images/{productImage}', [SellerProductController::class, 'replaceImage'])->name('product.replace-image');
         Route::get('orders/list',[BackendOrderController::class,'index'])->name('order.list');
         Route::get('orders/{id}',[BackendOrderController::class,'viewOrder'])->name('order.view');

@@ -35,8 +35,12 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        // $category = Category::where('category',$request->name)->get();
-        // if( count($category) == 0 ){
+        if(empty($request->subcategory_id)) {
+            $category = Category::where('category',$request->name)->where('parent_id', $request->parent_id)->get();
+        } else  {
+            $category = Category::where('category',$request->name)->where(['parent_id', $request->parent_id, 'subcategory_id' => $request->subcategory_id])->get();
+        }
+        if( count($category) == 0 ){
             $category = Category::create([
                 'category' => $request->name,
                 'parent_id' => $request->parent_id,
@@ -55,9 +59,9 @@ class CategoryController extends Controller
                 $categoryFilter->save();
             }
             notify()->success('Category added successfully');
-        // }else{
-        //     notify()->error('Category already exists');
-        // }
+        } else{
+            notify()->error('Category already exists');
+        }
         return redirect()->back();
     }
 
@@ -76,7 +80,7 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         $categories = Category::whereNull('parent_id')->with('subCategory', 'filters')->get();
-        $subCategory = Category::where('id', $category->subcategory_id)->whereNotNull('parent_id')->whereNull('subcategory_id')->get();
+        $subCategory = Category::where('parent_id', $category->parent_id)->whereNotNull('parent_id')->whereNull('subcategory_id')->get();
         return view('backend.admin.category.edit', compact('category','categories', 'subCategory'));
     }
 
@@ -85,8 +89,12 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        // $categories = Category::where('id','!=',$category->id)->where('category',$request->name)->get();
-        // if( count($categories) == 0 ){
+        if(empty($request->subcategory_id)) {
+            $categories = Category::where('id','!=',$category->id)->where('category',$request->name)->where('parent_id', $request->parent_id)->get();
+        } else  {
+            $categories = Category::where('id','!=',$category->id)->where('category',$request->name)->where(['parent_id' => $request->parent_id, 'subcategory_id' => $request->subcategory_id])->get();
+        }
+        if( count($categories) <= 1 ){
                 $category->category = $request->name;
                 $category->parent_id = $request->parent_id;
                 $category->subcategory_id = $request->subcategory_id;
@@ -111,9 +119,9 @@ class CategoryController extends Controller
                     $categoryFilter->save();
                 }
             notify()->success('Category updated successfully');
-        // }else{
-        //     notify()->error('Category already exists');
-        // }
+        } else{
+            notify()->error('Category already exists');
+        }
         return redirect()->back();
     }
 

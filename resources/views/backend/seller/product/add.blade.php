@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-content">
-                    <div class="card-header">Add Product1</div>
+                    <div class="card-header">Add Product</div>
                     <form id="productForm" method="POST" action="{{ route('seller.products.store') }}" enctype="multipart/form-data">
                         <div class="card-body">
                             @csrf 
