@@ -103,6 +103,6 @@ label {
     object-fit: scale-down;
 }
 
-.carousel-item{
-    height: 700px;
+.home-item{
+    height: 90vh;
 }

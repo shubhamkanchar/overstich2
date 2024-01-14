@@ -101,7 +101,6 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('my-order', [OrderController::class, 'myOrders'])->name('order.my-order');
     Route::get('{product}/add-rating', [RatingController::class, 'addRating'])->name('rating.add-rating');
     Route::post('{product}/rating', [RatingController::class, 'store'])->name('rating.store');
-    Route::resource('warehouses',WarehouseController::class);
 
     Route::group(['prefix' => 'sellers','as' => 'seller.', 'middleware' => ['role:seller'] ], function () {
         Route::resource('products',SellerProductController::class);
@@ -111,6 +110,12 @@ Route::group(['middleware'=>['auth']],function(){
         Route::patch('products/{product}/images/{productImage}', [SellerProductController::class, 'replaceImage'])->name('product.replace-image');
         Route::get('orders/list',[BackendOrderController::class,'index'])->name('order.list');
         Route::get('orders/{id}',[BackendOrderController::class,'viewOrder'])->name('order.view');
+        Route::get('order/shipment/{id}',[DelhiveryController::class,'shipmentCreate'])->name('order.shipment');
+        Route::get('warehouse/create',[DelhiveryController::class,'warehouseCreate'])->name('warehouse.create');
+        Route::post('warehouse/store',[DelhiveryController::class,'warehousestore'])->name('warehouse.store');
+        Route::get('slip/create/{id}',[DelhiveryController::class,'slipDownload'])->name('order.slip');
+        Route::post('pickup',[DelhiveryController::class,'raisePickup'])->name('pickup');
+        Route::resource('warehouses',WarehouseController::class);
     });
 
     Route::get('download-invoice/{id}', [BackendOrderController::class,'downloadInvoice'])->name('download.invoice');
@@ -133,4 +138,6 @@ Route::domain('partners.'.env('DOMAIN'))->group(function () {
 Route::any('phonepe-response', [OrderController::class, 'paymentResponse'])->name('payment.response');
 Route::any('phonepe-callback', [OrderController::class, 'paymentCallback'])->name('payment.callback');
 
+//delhivery routes
 Route::post('pincode',[DelhiveryController::class,'pincodeCheck'])->name('pinocde-check');
+

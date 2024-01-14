@@ -8,6 +8,33 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'user_id',
+        'seller_id',
+        'product_id',
+        'shipping_id',
+        'email',
+        'batch',
+        'phone', 
+        'address', 
+        'locality',
+        'pincode',
+        'city' ,
+        'state' ,
+        'country' ,
+        'order_number',
+        'payment_method',
+        'payment_transaction_id',
+        'is_order_confirmed',
+        'total_amount' ,
+        'delivery_charge' ,
+        'sub_total',
+        'status',
+        'total_discount',
+        'ewaybill'
+    ];
 
     protected $casts = [
         'invoice_generated_at' => 'datetime', 

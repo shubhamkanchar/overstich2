@@ -151,7 +151,7 @@ class OrderController extends Controller
             $order->payment_method = $request->payment_method;
             $order->payment_transaction_id = $transactionId;
             $order->is_order_confirmed = $request->payment_method == 'cod' ? 1 : 0;
-            $order->total_amount =  $totalPrice > 2300 ? $totalPrice : $totalPrice + $deliveryCharges;
+            $order->total_amount =  $totalPrice > 2300 ? $totalPrice + env('PLATFORM_FEE')  : $totalPrice + $deliveryCharges + env('PLATFORM_FEE') ;
             $order->delivery_charge = $deliveryCharges;
             $order->sub_total = $totalOriginalPrice;
             $order->status = 'NEW';

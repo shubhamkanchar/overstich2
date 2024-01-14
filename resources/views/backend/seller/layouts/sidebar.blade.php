@@ -40,8 +40,8 @@
                 <div id="flush-collapseWarehouse" class="accordion-collapse collapse @if(Route::is('warehouses.*') ) show @endif" aria-labelledby="flush-headingfour" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <ul>
-                            <li><a href="{{ route('warehouses.create') }}">Add Category</a></li>
-                            <li><a href="{{ route('warehouses.index') }}">View Category</a></li>
+                            <li><a href="{{ route('seller.warehouse.create') }}">Add Warehouse</a></li>
+                            <li><a href="{{ route('seller.warehouses.index') }}">View Warehouse</a></li>
                         </ul>
                     </div>
                 </div>

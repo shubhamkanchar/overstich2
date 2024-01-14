@@ -35,10 +35,14 @@ class OrderDataTable extends DataTable
             })
             ->addColumn('action', function($order) use ($user) {
                 $route = route('admin.order.view', ['id' => $order->id]);
+                $html = '';
                 if($user->user_type == 'seller') {
                     $route = route('seller.order.view', ['id' => $order->id]);    
+                    $html .= '<a href="' .route('seller.order.shipment',$order->id). '" class="btn btn-sm btn-success m-1" title="Create Shipment"><i class="bi bi-truck fs-5"></i></a>';
                 }
-                return '<a href="' . $route . '" class="btn btn-success mt-2">View</a>';
+                $html .= '<a href="' . route('seller.order.slip',$order->id) . '" class="btn btn-sm btn-danger m-1" title="Generate Shipping Label"><i class="bi bi-filetype-pdf fs-5"></i></a>';
+                $html .= '<a href="' . $route . '" class="btn btn-sm btn-primary m-1" title="View Order"><i class="bi bi-eye-fill fs-5"></i></a>';
+                return $html;
             })
             ->setRowId('id');
 
@@ -81,12 +85,12 @@ class OrderDataTable extends DataTable
                     // ->selectStyleSingle()
                     ->responsive(true)
                     ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
+                        // Button::make('excel'),
+                        // Button::make('csv'),
+                        // Button::make('pdf'),
+                        // Button::make('print'),
+                        // Button::make('reset'),
+                        // Button::make('reload')
                     ]);
     }
 
@@ -116,7 +120,7 @@ class OrderDataTable extends DataTable
             Column::computed('action')
             ->exportable(false)
             ->printable(false)
-            ->width(60)
+            // ->width(60)
             ->addClass('text-center')
             ->title('Action')
         ]);

@@ -13,7 +13,7 @@
 
     <div class="carousel-inner">
         @foreach ($sellers as $seller)
-            <div class="carousel-item {{ $loop->index == 0 ? 'active' : ''}}">
+            <div class="carousel-item home-item {{ $loop->index == 0 ? 'active' : ''}}">
                 <img src="{{ asset('image/seller/' . $seller->sellerInfoImage->first()->file) }}" alt="{{ $seller->sellerInfo->brand}}" class="d-block" style="width:100%">
                 <div class="carousel-caption">
                     <h2>{{ ucfirst($seller->sellerInfo->brand) }}</h2>
