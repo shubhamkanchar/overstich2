@@ -7,7 +7,8 @@ return [
         'warehouse-edit' => 'https://staging-express.delhivery.com/api/backend/clientwarehouse/edit/',
         'shipment-create' => 'https://staging-express.delhivery.com/api/cmu/create.json',
         'slip' => 'https://staging-express.delhivery.com/api/p/packing_slip',
-        'pickup'=>'https://staging-express.delhivery.com/fm/request/new/'
+        'pickup'=>'https://staging-express.delhivery.com/fm/request/new/',
+        'track'=>'https://staging-express.delhivery.com/api/v1/packages/json/?waybill='
     ],
     'live' =>[
         'pincode'=>'https://track.delhivery.com/c/api/pin-codes/json/',
@@ -16,7 +17,8 @@ return [
         'warehouse-edit' => 'https://track.delhivery.com/api/backend/clientwarehouse/edit/',
         'shipment-create' => 'https://track.delhivery.com/api/cmu/create.json',
         'slip' => 'https://track.delhivery.com/api/p/packing_slip',
-        'pickup' => 'https://track.delhivery.com/fm/request/new/'
+        'pickup' => 'https://track.delhivery.com/fm/request/new/',
+        'track'=>'https://track.delhivery.com/api/v1/packages/json/?waybill='
     ]
 ];
 ?>

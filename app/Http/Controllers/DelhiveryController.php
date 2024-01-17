@@ -19,7 +19,7 @@ class DelhiveryController extends Controller
         $response = Http::accept('application/json')
             ->withHeaders([
                 'Authorization' => 'Token ' . env('DELHIVERY_TOKEN'),
-            ])->get(config('delhivery.test.pincode'), [
+            ])->get(config('delhivery.'.env('STRIPE_API_MODE').'.pincode'), [
                 'filter_codes' => $request->pincode,
             ]);
         return response($response->body(), 200);
@@ -35,30 +35,11 @@ class DelhiveryController extends Controller
         if ($request->default_address == 1) {
             Warehouse::where('user_id', Auth::user()->id)->update(['default' => 0]);
         }
-        $data = [
-            'name' => $request->name,
-            'mobile' => $request->mobile,
-            'email' => $request->email,
-            'address' => $request->address,
-            'pincode' => $request->pincode,
-            'city' => $request->city,
-            'state' => $request->state,
-            'country' => $request->country,
-            'return_address' => $request->return_check == 1 ?  $request->address : $request->return_address,
-            'return_pincode' => $request->return_check == 1 ?  $request->pincode : $request->return_pincode,
-            'return_city' => $request->return_check == 1 ?  $request->city : $request->return_city,
-            'return_state' => $request->return_check == 1 ?  $request->state : $request->return_state,
-            'return_country' => $request->return_check == 1 ?  $request->country : $request->return_country,
-            'user_id' => Auth::user()->id,
-            'default' => $request->default_address ?? 0
-        ];
-        $wareHouse = Warehouse::create($data);
-
         $response = Http::accept('application/json')
             ->withHeaders([
                 'Authorization' => 'Token ' . env('DELHIVERY_LIVE_TOKEN'),
                 'Content-Type' => 'application/json'
-            ])->post(config('delhivery.live.warehouse-create'), [
+            ])->post(config('delhivery.'.env('STRIPE_API_MODE').'.warehouse-create'), [
                 'name' => $request->name,
                 'phone' => $request->mobile,
                 'email' => $request->email,
@@ -75,11 +56,29 @@ class DelhiveryController extends Controller
             ]);
         $ewayBill = json_decode($response->body(), true);
         if ($ewayBill['success']) {
-            $wareHouse->update([
-                'client' => $ewayBill['data']['client']
-            ]);
+            $data = [
+                'name' => $request->name,
+                'mobile' => $request->mobile,
+                'email' => $request->email,
+                'address' => $request->address,
+                'pincode' => $request->pincode,
+                'city' => $request->city,
+                'state' => $request->state,
+                'client' => $ewayBill['data']['client'],
+                'country' => $request->country,
+                'return_address' => $request->return_check == 1 ?  $request->address : $request->return_address,
+                'return_pincode' => $request->return_check == 1 ?  $request->pincode : $request->return_pincode,
+                'return_city' => $request->return_check == 1 ?  $request->city : $request->return_city,
+                'return_state' => $request->return_check == 1 ?  $request->state : $request->return_state,
+                'return_country' => $request->return_check == 1 ?  $request->country : $request->return_country,
+                'user_id' => Auth::user()->id,
+                'default' => $request->default_address ?? 0
+            ];
+            Warehouse::create($data);
+            notify()->success('Warehouse created successfully');
+        }else{
+            notify()->error($ewayBill['error'][0]);
         }
-        notify()->success('Warehouse created successfully');
         return redirect()->back();
     }
 
@@ -102,14 +101,6 @@ class DelhiveryController extends Controller
         $data = json_encode($data);
 
         try {
-            $response = Http::accept('application/json')
-                ->withHeaders([
-                    'Authorization' => 'Token ' . env('DELHIVERY_LIVE_TOKEN'),
-                ])->get(config('delhivery.live.waybill'));
-            $ewayBill = $response->body();
-            
-            $order->update(['ewaybill' => $ewayBill]);
-
             $client = new Client();
             $headers = [
                 'Authorization' => 'Token ' . env('DELHIVERY_LIVE_TOKEN'),
@@ -142,11 +133,12 @@ class DelhiveryController extends Controller
                     "seller_add": "",
                     "seller_name": "",
                     "seller_inv": "",
-                    "quantity": "",
-                    "waybill": "'.$ewayBill.'",
-                    "shipment_width": "",
-                    "shipment_height": "",
-                    "weight": "",
+                    "quantity": "'.$orderItem->quantity.'",
+                    "waybill": "",
+                    "shipment_width": "'.$request->width.'",
+                    "shipment_height": "'.$request->height.'",
+                    "shipment_length":"'.$request->length.'",
+                    "weight": "'.$request->weight.'",
                     "seller_gst_tin": "",
                     "shipping_mode": "Surface",
                     "address_type": ""
@@ -161,17 +153,21 @@ class DelhiveryController extends Controller
                     "add": "' . $wareHouse->address . '"
                 }
             }';
-            $request = new Psr7Request('POST', config('delhivery.live.shipment-create'), $headers, $body);
+            $request = new Psr7Request('POST', config('delhivery.'.env('STRIPE_API_MODE').'.shipment-create'), $headers, $body);
             $res = $client->sendAsync($request)->wait();
             $data =  json_decode($res->getBody(),true);
             if($data['success']){
+                $order->update([
+                    'ewaybill' => $data['packages'][0]['waybill']
+                ]);
                 notify()->success('Manifest created successfully');
             }else{
                 notify()->error($data['rmk']);
             }
-            return redirect()->back();
+            return redirect()->route('seller.order.list');
         } catch (Exception $e) {
-            Log::info($e->getMessage());
+            notify()->error($e->getMessage());
+            return redirect()->back();
         }
     }
 
@@ -180,12 +176,19 @@ class DelhiveryController extends Controller
         $order = Order::where('id', $request->id)->first();
         $response = Http::accept('application/json')
             ->withHeaders([
-                'Authorization' => 'Token ' . env('DELHIVERY_TOKEN'),
-            ])->get(config('delhivery.test.slip'), [
+                'Authorization' => 'Token ' . env('DELHIVERY_LIVE_TOKEN'),
+                'Content-Type' => 'application/json',
+            ])->get(config('delhivery.'.env('STRIPE_API_MODE').'.slip'), [
                 'wbns' => $order->ewaybill,
-                'pdf' => true
+                'pdf' => 'true'
             ]);
-        return response($response->body(), 200);
+        $data = json_decode($response->body(),true);
+        if($data['packages_found'] > 0){
+            return redirect()->to($data['packages'][0]['pdf_download_link']);
+        }else{
+            notify()->error('Package not found');
+            return redirect()->back(); 
+        }
     }
 
     public function raisePickup(Request $request)
@@ -197,7 +200,7 @@ class DelhiveryController extends Controller
             ->withHeaders([
                 'Authorization' => 'Token ' . env('DELHIVERY_TOKEN'),
                 'Content-Type' => 'application/json'
-            ])->post(config('delhivery.test.pickup'), [
+            ])->post(config('delhivery.'.env('STRIPE_API_MODE').'.pickup'), [
                 "pickup_time"=> $request->time.":00",
                 "pickup_date"=> $request->date,
                 "pickup_location"=> $wareHouse->name,
@@ -210,5 +213,39 @@ class DelhiveryController extends Controller
             notify()->error('Something went wrong');
         }
         return redirect()->back();
+    }
+
+    public function track(Request $request)
+    {
+        $order = Order::where('id', $request->id)->first();
+        // $response = Http::accept('application/json')
+        //     ->withHeaders([
+        //         'Authorization' => 'Token ' . env('DELHIVERY_LIVE_TOKEN'),
+        //         'Content-Type' => 'application/json',
+        //     ])->get(config('delhivery.'.env('STRIPE_API_MODE').'.track'), [
+        //         'waybill' => $order->ewaybill
+        //     ]);
+        // $data = json_decode($response->body(),true);
+        // dd($data);
+        // return response($response->body(), 200);
+        return redirect()->to('https://www.delhivery.com/track/package/'.$order->ewaybill);
+    }
+
+    public function shipmentForm(Request $request){
+        return view('backend.seller.shipment.create');
+    }
+
+    public function ndrCall(Request $request){
+        $order = Order::where('id', $request->id)->first();
+        $response = Http::accept('application/json')
+            ->withHeaders([
+                'Authorization' => 'Token ' . env('DELHIVERY_LIVE_TOKEN'),
+                'Content-Type' => 'application/json',
+            ])->get(config('delhivery.'.env('STRIPE_API_MODE').'.track'), [
+                'waybill' => $order->ewaybill
+            ]);
+        $data = json_decode($response->body(),true);
+        dd($data);
+        return response($response->body(), 200);
     }
 }

@@ -43,7 +43,7 @@
                     </div>
                     <div class="col-md-6 p-3">
                         <label>Password</label>
-                        <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" placeholder="Password" id="password" required>
+                        <input class="form-control password @error('password') is-invalid @enderror" type="password" name="password" placeholder="Password" id="password" required>
                         @error('password') 
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -52,7 +52,13 @@
                     </div>
                     <div class="col-md-6 p-3">
                         <label>Confirm Password</label>
-                        <input class="form-control" type="password" name="password_confirmation" placeholder="Confirm Password" required>
+                        <input class="form-control password" type="password" name="password_confirmation" placeholder="Confirm Password" required>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-check">
+                            <input class="form-check-input password-show" type="checkbox" id="check1" name="option1">
+                            <label class="form-check-label">Show Password</label>
+                        </div>
                     </div>
                     <div class="col-md-6 p-3">
                         <label>Product price range</label>
@@ -128,7 +134,7 @@
     @endif
 </div>
 
-<div class="modal fade" id="guideline1" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+{{-- <div class="modal fade" id="guideline1" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-body">
@@ -333,5 +339,5 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 @endsection

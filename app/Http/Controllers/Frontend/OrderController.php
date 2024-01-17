@@ -188,7 +188,7 @@ class OrderController extends Controller
             });
 
             $data = [
-                'amount' => ($cartTotalPrice + $deliveryCharges) *  100 + env('PLATFORM_FEE'),
+                'amount' => (($cartTotalPrice + $deliveryCharges) + env('PLATFORM_FEE')) *  100,
                 'transactionId' => $transactionId,
                 'mobile' => $request->mobile,
                 'email' => $request->email,

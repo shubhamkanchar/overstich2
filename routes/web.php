@@ -119,6 +119,9 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('slip/create/{id}',[DelhiveryController::class,'slipDownload'])->name('order.slip');
         Route::post('pickup',[DelhiveryController::class,'raisePickup'])->name('pickup');
         Route::resource('warehouses',WarehouseController::class);
+        Route::get('track/{id}',[DelhiveryController::class,'track'])->name('order.track');
+
+        Route::get('shipment/create/{id}',[DelhiveryController::class,'shipmentForm'])->name('shipment-form');
     });
 
     Route::get('download-invoice/{id}', [BackendOrderController::class,'downloadInvoice'])->name('download.invoice');

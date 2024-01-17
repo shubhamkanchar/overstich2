@@ -191,7 +191,7 @@
                     let item = res.updatedItem;
                     $('#totalDiscount').html('<i class="bi bi-currency-rupee"></i>'+res.totalDiscount == 0 ? '0' : '<i class="bi bi-currency-rupee"></i>'+res.totalDiscount);
                     $('#deliveryCharges').html('<i class="bi bi-currency-rupee"></i>'+res.deliveryCharges == 0 ? '0' : '<i class="bi bi-currency-rupee"></i>'+res.deliveryCharges);
-                    $('#totalAmount').html((res.totalOriginalPrice - res.totalDiscount + res.deliveryCharges + res.platformFee) == 0 ? '0' : '<i class="bi bi-currency-rupee"></i>'+(res.totalOriginalPrice - res.totalDiscount + res.deliveryCharges + res.platformFee));
+                    $('#totalAmount').html((res.totalOriginalPrice - res.totalDiscount + res.deliveryCharges + parseInt(res.platformFee)) == 0 ? '0' : '<i class="bi bi-currency-rupee"></i>'+(res.totalOriginalPrice - res.totalDiscount + res.deliveryCharges + parseInt(res.platformFee)));
                     $('#subTotal').html(res.totalOriginalPrice == 0 ? '0' : '<i class="bi bi-currency-rupee"></i>'+res.totalOriginalPrice);
                     if(item) {
                         $('#itemPrice-'+ item.id).html((item.price * item.qty));

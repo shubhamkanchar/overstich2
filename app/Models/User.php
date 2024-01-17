@@ -55,4 +55,8 @@ class User extends Authenticatable
     public function orders() {
         return $this->hasMany(Order::class);
     }
+
+    public function activeWarehouse(){
+        return $this->hasOne(Warehouse::class,'user_id','id')->where('default',1);
+    }
 }

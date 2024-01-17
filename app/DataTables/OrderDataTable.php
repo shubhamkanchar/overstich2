@@ -38,9 +38,15 @@ class OrderDataTable extends DataTable
                 $html = '';
                 if($user->user_type == 'seller') {
                     $route = route('seller.order.view', ['id' => $order->id]);    
-                    $html .= '<a href="' .route('seller.order.shipment',$order->id). '" class="btn btn-sm btn-success m-1" title="Create Shipment"><i class="bi bi-truck fs-5"></i></a>';
+                    if(!empty($user->activeWarehouse)){
+                        if(!empty($order->ewaybill)){
+                            $html .= '<a href="' . route('seller.order.slip',$order->id) . '" class="btn btn-sm btn-danger m-1" title="Generate Shipping Label"><i class="bi bi-filetype-pdf fs-5"></i></a>';
+                            $html .='<a href="' . route('seller.order.track',$order->id) . '" class="btn btn-sm btn-primary m-1" title="Generate Shipping Label"><i class="bi bi-pin-map fs-5"></i></a>';
+                        }else{
+                            $html .= '<a href="' .route('seller.shipment-form',$order->id). '" class="btn btn-sm btn-success m-1" title="Create Shipment"><i class="bi bi-truck fs-5"></i></a>';
+                        }
+                    }
                 }
-                $html .= '<a href="' . route('seller.order.slip',$order->id) . '" class="btn btn-sm btn-danger m-1" title="Generate Shipping Label"><i class="bi bi-filetype-pdf fs-5"></i></a>';
                 $html .= '<a href="' . $route . '" class="btn btn-sm btn-primary m-1" title="View Order"><i class="bi bi-eye-fill fs-5"></i></a>';
                 return $html;
             })

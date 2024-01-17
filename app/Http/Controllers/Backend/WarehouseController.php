@@ -26,7 +26,7 @@ class WarehouseController extends Controller
         $response = Http::accept('application/json')
         ->withHeaders([
             'Authorization' =>'Token '. env('DELHIVERY_TOKEN'),
-        ])->get(config('delhivery.test.warehouse-create'), [
+        ])->get(config('delhivery.'.env('STRIPE_API_MODE').'.warehouse-create'), [
             "phone" => "8888888888",
             "city" => "Kota",
             "name" => "TS Surface 2",
@@ -98,7 +98,7 @@ class WarehouseController extends Controller
             ->withHeaders([
                 'Authorization' => 'Token ' . env('DELHIVERY_LIVE_TOKEN'),
                 'Content-Type' => 'application/json'
-            ])->post(config('delhivery.live.warehouse-edit'), [
+            ])->post(config('delhivery.'.env('STRIPE_API_MODE').'.warehouse-edit'), [
                 'name' => $request->name,
                 'phone' => $request->mobile,
                 'email' => $request->email,

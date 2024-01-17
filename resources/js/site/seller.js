@@ -164,5 +164,32 @@ const seller = () => {
             }
         })
     }
+
+    // $(document).on('click','.password-show',function(){
+    //     var x = $(this).closest('.col-md-6').find('.password').attr('type');
+    //     if (x == "password") {
+    //         $(this).closest('.col-md-6').find('.password').attr('type','text');
+    //     } else {
+    //         $(this).closest('.col-md-6').find('.password').attr('type','password');
+    //     }
+    // })
+
+    $(document).on('click','.password-show',function(){
+        var x = $('.password').attr('type');
+        if (x == "password") {
+            $('.password').attr('type','text');
+        } else {
+            $('.password').attr('type','password');
+        }
+    })
+
+    function myFunction() {
+        var x = document.getElementById("myInput");
+        if (x.type === "password") {
+          x.type = "text";
+        } else {
+          x.type = "password";
+        }
+    }
 }
 export default seller;
