@@ -45,12 +45,19 @@
             color: #000;
         }
 
+        .image-height {
+            height: 250px;
+        }
+
         @media (max-width: 575.98px) {
             .filters {
                 position: absolute;
                 top: 15%;
                 right: auto;
                 z-index: 999;
+            }
+            .image-height {
+                height: 25vh;
             }
 
         }
@@ -160,11 +167,11 @@
                             <span class="d-md-none ms-4 bi bi-filter fs-3 show-filter"></span>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row justify-content-around">
                         @foreach ($products as $product)
-                            <div class="col-xl-3 col-lg-3 col-md-4 col-6 p-0 p-lg-2 p-md-2 text-sm">
+                            <div class="col-xl-3 col-lg-3 col-md-4 col-5 p-0 p-lg-2 p-md-2 text-sm">
                                 <div class="card rounded mb-5 translate-y-up">
-                                    <img class="card-image-top" src="{{ asset($product->images->first()->image_path) }}" style="height: 250px;" alt="" srcset="">
+                                    <img class="card-image-top image-height" src="{{ asset($product->images->first()->image_path) }}" alt="" srcset="">
                                     <div class="card-body">
                                         <span class=""><b>{{ ucfirst($product->brand)  }}</b></span>
                                         <i class="bi  @if(in_array($product->id, $productIds)) bi-heart-fill text-danger @else bi-heart  @endif float-end add-to-wishlist" data-add-route="{{ route('wishlist.add-wishlist', $product->id) }}" data-remove-route="{{ route('wishlist.remove-wishlist', $product->id) }}"></i>
