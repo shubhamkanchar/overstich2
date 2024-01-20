@@ -38,7 +38,7 @@ class CategoryController extends Controller
         if(empty($request->subcategory_id)) {
             $category = Category::where('category',$request->name)->where('parent_id', $request->parent_id)->get();
         } else  {
-            $category = Category::where('category',$request->name)->where(['parent_id', $request->parent_id, 'subcategory_id' => $request->subcategory_id])->get();
+            $category = Category::where('category',$request->name)->where(['parent_id' => $request->parent_id, 'subcategory_id' => $request->subcategory_id])->get();
         }
         if( count($category) == 0 ){
             $category = Category::create([

@@ -275,9 +275,11 @@ class ProductController extends Controller
         $type_values = $request->type_values;
         $product->filters()->whereNotIn('filter_id', $types)->delete();
         foreach($types as $key => $type) {
+
+            $categoryFilter = CategoryFilter::where('id', $type)->first();
             $productFilter = ProductFilter::updateOrInsert(
                 ['filter_id' => $type, 'product_id' => $product->id],
-                ['value' => $type_values[$key]]
+                ['value' => $type_values[$key], 'type' => $categoryFilter->type ]
             );
         }
         

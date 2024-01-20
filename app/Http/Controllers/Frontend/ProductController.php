@@ -18,16 +18,38 @@ class ProductController extends Controller
      */
     public function index(Request $request, $categoryId = null)
     {
+        $filters = $request->except(['search','size','brand']);
+        $search = $request->search ?? '';
         $user = auth()->user();
         $userId = session()->getId();
         if($user = auth()->user()) {
             $userId = $user->id;
         }
         $productIds = Wishlist::where('user_id', $userId)->pluck('product_id')->toArray();
-        $products = Product::with('images')->where('status', 'active');
+        $products = Product::with(['images'])->where('status', 'active');
+
+        if($filters) {
+            $products = $products->whereHas('filters', function($q) use ($filters) {
+                $q->where(function($query) use ($filters) {
+                    $condition = 'where';
+                    foreach($filters as $key => $filter) {
+                        foreach($filter as $filterValue) {
+                            $query->{$condition}(['value' => $filterValue, 'type' => $key]);
+                            $condition = 'orWhere';
+                        }
+                    }
+                });
+                
+            });
+        }
+
+        if ($search) {
+            $products = $products->where('title', 'like', '%' . $search . '%'); 
+        }
+        
         $category = '';
         if($categoryId) {
-            $category = Category::where('id', $categoryId)->with('filters')->first();
+            $category = Category::where('id', $categoryId)->with(['filters','parentSubCategory', 'masterCategory'])->first();
             $products = $products->where(function($query) use ($categoryId) {
                 $query->where('master_category_id', $categoryId)
                 ->orWhere('subcategory_id', $categoryId)
@@ -35,9 +57,9 @@ class ProductController extends Controller
             });
             
         }
-
+        
         $products = $products->paginate(20);
-        return view('frontend.product.index', compact('products', 'productIds', 'category'));
+        return view('frontend.product.index', compact('products', 'productIds', 'category', 'search', 'filters'));
     }
 
     /**
