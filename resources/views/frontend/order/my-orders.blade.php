@@ -95,8 +95,6 @@
                                     <i class="bi bi-x"></i>
                                 </span>
                             </div>
-                            
-                            
                         </div>
                         <div class="card-body">
                             <h5>Order Status</h5>
@@ -214,7 +212,7 @@
                                                 <div class="d-md-block col-4 col-md-4 text-center text-md-start">
                                                     <div class="ms-2 text-start text-wrap word-wrap overflow-wrap">
                                                         <span class="mb-1 d-block">{{ $order->orderItem->name }} x
-                                                            ({{ $order->orderItem->quantity }})'vsdgffffffffffffffffffffffffffffffdgfsfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffgg'
+                                                            ({{ $order->orderItem->quantity }})
                                                         </span>
                                                         <span class="mb-1 fs-6 text-muted d-block">Color:
                                                             {{ $order->orderItem->color }} </span>

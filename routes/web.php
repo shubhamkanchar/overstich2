@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\Backend\WarehouseController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\AdminController;
@@ -31,7 +32,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::domain('www.'.env('DOMAIN'))->group(function () {
+Route::domain(env('DOMAIN'))->group(function () {
     Route::get('/', function () {
         $sellers = User::where(['user_type' => 'seller'])
             ->whereHas('sellerInfo', function($query) {
@@ -137,6 +138,7 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
     Route::post('add-to-wishlist/{id}', [WishlistController::class, 'add'])->name('wishlist.add-wishlist');
     Route::delete('remove-from-wishlist/{id}', [WishlistController::class, 'Remove'])->name('wishlist.remove-wishlist');
+    Route::resource('addresses',AddressController::class);
 });
 
 
@@ -147,7 +149,9 @@ Route::domain('partners.'.env('DOMAIN'))->group(function () {
 
 Route::any('phonepe-response', [OrderController::class, 'paymentResponse'])->name('payment.response');
 Route::any('phonepe-callback', [OrderController::class, 'paymentCallback'])->name('payment.callback');
-
+Route::get('/success',function(){
+    return view('frontend.order.success');
+})->name('success-page');
 //delhivery routes
 Route::post('pincode',[DelhiveryController::class,'pincodeCheck'])->name('pinocde-check');
 

@@ -59,4 +59,8 @@ class User extends Authenticatable
     public function activeWarehouse(){
         return $this->hasOne(Warehouse::class,'user_id','id')->where('default',1);
     }
+
+    public function defaultAddress(){
+        return $this->hasOne(Address::class,'user_id','id')->where('default',1);
+    }
 }

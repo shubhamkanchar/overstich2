@@ -139,7 +139,7 @@
                             <label>Upload product photos</label>
                             <input class="form-control" accept="image/*" type="file" name="product_photos[]"
                                 placeholder="Minimum 5 photos" multiple>
-                            <small>(Note: Please upload file size less than 500KB )</small>
+                            {{-- <small>(Note: Please upload file size less than 500KB )</small> --}}
                             @error('product_photos')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

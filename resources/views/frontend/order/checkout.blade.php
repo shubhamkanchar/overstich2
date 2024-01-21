@@ -57,7 +57,7 @@
                             <div class="col-md-12 p-3">
                                 <label>Address (House no, building, street, area)</label>
                                 <input type="text" class="form-control @error('address') is-invalid @enderror" name="address"
-                                    value="{{ old('address') }}">
+                                    value="{{ auth()->user()->defaultAddress?->address }}">
                                 @error('address')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -65,7 +65,7 @@
                             <div class="col-12 col-md-6 p-3">
                                 <label>Pin code</label>
                                 <input type="text" class="form-control @error('pincode') is-invalid @enderror" name="pincode"
-                                    value="{{ old('pincode') }}">
+                                    value="{{ auth()->user()->defaultAddress?->pincode }}">
                                 @error('pincode')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -73,7 +73,7 @@
                             <div class="col-12 col-md-6 p-3">
                                 <label>Locality / Town</label>
                                 <input type="text" class="form-control @error('locality') is-invalid @enderror" name="locality"
-                                    value="{{ old('locality') }}">
+                                    value="{{ auth()->user()->defaultAddress?->locality }}">
                                 @error('locality')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -81,7 +81,7 @@
                             <div class="col-12 col-md-6 p-3">
                                 <label>City / district</label>
                                 <input type="text" class="form-control @error('city') is-invalid @enderror" name="city"
-                                    value="{{ old('city') }}">
+                                    value="{{ auth()->user()->defaultAddress?->city }}">
                                 @error('city')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -89,7 +89,7 @@
                             <div class="col-12 col-md-6 p-3">
                                 <label>State</label>
                                 <input type="text" class="form-control @error('state') is-invalid @enderror" name="state"
-                                    value="{{ old('state') }}">
+                                    value="{{ auth()->user()->defaultAddress?->state }}">
                                 @error('state')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
