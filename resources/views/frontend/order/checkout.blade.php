@@ -118,6 +118,17 @@
                                 </tr>
                             @endforeach
                             <tr>
+                                <td colspan="3" class="text-center">Other Charges</td>
+                            </tr>
+                            @if ($appliedCoupons->count())
+                                <tr>
+                                    <td>Coupon Discount</td>
+                                    <td></td>
+                                    <td>{{ $totalCouponDiscounts }}</td>
+                                </tr>
+                            @endif
+                            
+                            <tr>
                                 <td>Platform Fee</td>
                                 <td></td>
                                 <td>{{ env('PLATFORM_FEE') }}</td>
@@ -131,8 +142,8 @@
                         <div class="mb-3">
                             <label for="paymentMethod" class="form-label">Select Payment Method</label>
                             <select class="form-control" id="paymentMethod" name="payment_method" required>
-                                <option value="cod" data-target="#codFields">Cash on Delivery (COD)</option>
-                                <option value="phone_pe" data-target="#PhonePay">PhonePe</option>
+                                <option value="cod" data-target="#codFields">Cash on Delivery</option>
+                                <option value="phone_pe" data-target="#PhonePay">Pay Online(Upi, Card, Netbanking)</option>
                             </select>
                         </div>
         

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Coupon;
 use App\Models\Product;
+use App\Models\UserCoupon;
 use App\Models\Wishlist;
 use Cart;
 use Illuminate\Http\Request;
@@ -38,15 +40,56 @@ class CartController extends Controller
             return $cartItem->options->discount * $cartItem->qty;
         });
 
+        $totalAmountPerSeller = $cartItems->groupBy('options.seller_id')->map(function ($items) {
+            return $items->sum(function ($cartItem) {
+                return $cartItem->price * $cartItem->qty;
+            });
+        });
+        
+        $sellerIds = $totalAmountPerSeller->keys()->all();
+        // for removing coupon if user update cart and when the totalAmount per is less than minimum coupon value 
+        foreach($totalAmountPerSeller as $sellerId => $totalAmountPer) {
+            $userCouponQuery = UserCoupon::where('user_id', $user->id)->with('coupon')
+            ->whereHas('coupon', function($query) use ($sellerId, $totalAmountPer) {
+                $query->where('seller_id', $sellerId);
+                $query->where('minimum', '>', $totalAmountPer);
+            })->update(['is_applied' => 0]);
+
+        }
+
         $deliveryCharges = 0;
 
         $products = [];
+
         foreach ($cartItems as $item) {
             $products[$item->id] = Product::with('images')->where('id', $item->options?->product_id)->first();
         }
-        $productIds = Wishlist::where('user_id', $userId)->pluck('product_id')->toArray();
 
-        return view('frontend.product.cart', compact( 'cartItems', 'products', 'totalDiscount', 'totalPrice', 'totalOriginalPrice', 'deliveryCharges', 'productIds'));
+        $availableCoupons = Coupon::where(function ($query) use ($user) {
+            // Coupons with userCoupon records satisfying the conditions
+            $query->whereHas('userCoupon', function ($subquery) use ($user) {
+                $subquery->where('user_id', $user->id)
+                    ->where('is_used', 0)
+                    ->where('is_applied', 0);
+            });
+            // Coupons without userCoupon records
+            $query->orWhereDoesntHave('userCoupon');
+        })
+        ->with(['brand'])
+        ->whereIn('seller_id', $sellerIds)
+        ->get();
+
+        $appliedCoupons = Coupon::whereHas('userCoupon', function($query) use ($user) {
+            $query->where('user_id', $user->id);
+            $query->where('is_used', 0);
+            $query->where('is_applied', 1);
+        })
+        ->with(['brand', 'userCoupon'])
+        ->whereIn('seller_id', $sellerIds)
+        ->get();
+
+        $productIds = Wishlist::where('user_id', $userId)->pluck('product_id')->toArray();
+        return view('frontend.product.cart', compact( 'cartItems', 'products', 'totalDiscount', 'totalPrice', 'totalOriginalPrice', 'totalAmountPerSeller', 'deliveryCharges', 'productIds', 'availableCoupons', 'appliedCoupons'));
     }
 
     /**
