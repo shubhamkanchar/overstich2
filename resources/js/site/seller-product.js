@@ -38,7 +38,7 @@ const sellerProduct = () =>{
             },
             'product_images[]': {
                 required: true,
-                fileCountRange: [5,5],
+                fileCountRange: [5,7],
             }
         },
         messages: {
@@ -77,7 +77,7 @@ const sellerProduct = () =>{
             },
             'images[]': {
                 required: "Image is required.",
-                fileCountRange: "Please upload exactly 5 file only"
+                fileCountRange: "Please add minimum 5 or maximum 7 file only"
             },
             description: {
                 required: "Description is required.",

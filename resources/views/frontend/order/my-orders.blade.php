@@ -212,9 +212,9 @@
                                             </div>
                                             <div class="col-8 col-md-10 d-flex flex-col flex-md-row">
                                                 <div class="d-md-block col-4 col-md-4 text-center text-md-start">
-                                                    <div class="ms-2 text-start text-nowrap">
+                                                    <div class="ms-2 text-start text-wrap word-wrap overflow-wrap">
                                                         <span class="mb-1 d-block">{{ $order->orderItem->name }} x
-                                                            ({{ $order->orderItem->quantity }})
+                                                            ({{ $order->orderItem->quantity }})'vsdgffffffffffffffffffffffffffffffdgfsfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffgg'
                                                         </span>
                                                         <span class="mb-1 fs-6 text-muted d-block">Color:
                                                             {{ $order->orderItem->color }} </span>

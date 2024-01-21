@@ -12,29 +12,56 @@
         .bg-gray {
             background-color: rgb(220, 219, 219); 
         }
+
+        @media (max-width: 575.98px) {
+            .image-height {
+                height: 35vh;
+            }
+
+        }
     </style>
 @endpush
 @section('content')
 <div class="container">
     <div class="row mt-5 mb-5 justify-content-center">
-        <div class="col-lg-4 col-md-6 pb-5">
+        <div class="col-lg-4 col-md-6">
             <div class="row">
                 @foreach ($product->images as $image)
-                    <div class="col-md-6">
+                    <div class="col-md-6 d-none d-md-block">
                         <img class="pb-4 product-image" width="100%" src="{{ asset($image->image_path) }}">
-                    </div>
+                    </div> 
                 @endforeach
-                <div class="col-md-12">
-                    <p>SELLER INFORMATION :-</p>
-                    <span class="d-block"><b>BRAND :-</b> {{ $product->brand }}</span>
-                    <span class="d-block"><b>LEGAL NAME :-</b> {{ $seller->name }}</span>
-                    @if ($sellerInfo)
-                        <span class="d-block"><b>ADDRESS :-</b> {{ $sellerInfo->address }},</span>
-                        <span class="d-block"><b>LOCALITY :-</b> {{ $sellerInfo->locality }},</span>
-                        <span class="d-block"><b>CITY :-</b> {{ $sellerInfo->city }},</span>
-                        <span class="d-block"><b>STATE :-</b> {{ $sellerInfo->state }},</span>
-                        <span class="d-block"><b>PINCODE :-</b> {{ $sellerInfo->pincode }}</span>
-                    @endif
+                <div id="carouselExample" class="col-12 carousel slide d-block d-md-none" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        @foreach ($product->images as $image)
+                            <div class="carousel-item {{ $loop->index == 0 ? 'active' : '' }}" style="max-height: 35vh;">
+                                <img src="{{ asset($image->image_path) }}" class="d-block w-100" style="width: 100%; height: 100%;" alt="...">
+                            </div> 
+                        @endforeach  
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+
+                <div class="col-md-12 mt-2">
+                    <p>SELLER INFORMATION  <span class="d-md-none d-inline bi bi-info fs-5 seller-info" data-bs-toggle="modal" data-bs-target="#sellerInfoModal"></span> </p>
+                    <div class="seller-information d-md-block d-none">
+                        <span class="d-block"><b>BRAND :-</b> {{ $product->brand }}</span>
+                        <span class="d-block"><b>LEGAL NAME :-</b> {{ $seller->name }}</span>
+                        @if ($sellerInfo)
+                            <span class="d-block"><b>ADDRESS :-</b> {{ $sellerInfo->address }},</span>
+                            <span class="d-block"><b>LOCALITY :-</b> {{ $sellerInfo->locality }},</span>
+                            <span class="d-block"><b>CITY :-</b> {{ $sellerInfo->city }},</span>
+                            <span class="d-block"><b>STATE :-</b> {{ $sellerInfo->state }},</span>
+                            <span class="d-block"><b>PINCODE :-</b> {{ $sellerInfo->pincode }}</span>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
@@ -165,6 +192,37 @@
                 <Span class="fs-4 text-muted">No Ratings & Reviews Found</Span>
             @endif
             
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="sellerInfoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog d-flex align-items-center">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Seller Information</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="seller-info">
+                    <div class="row">
+                        <div class="col">
+                            <p><strong>Brand:</strong> {{ $product->brand }}</p>
+                        </div>
+                        <div class="col">
+                            <p><strong>Legal Name:</strong> {{ $seller->name }}</p>
+                        </div>
+                        <div class="col-12">
+                            @if ($sellerInfo)
+                                <span><strong>Address:</strong> {{ $sellerInfo->address }},</span>
+                                <span><strong>Locality:</strong> {{ $sellerInfo->locality }},</span>
+                                <span><strong>City:</strong> {{ $sellerInfo->city }},</span>
+                                <span><strong>State:</strong> {{ $sellerInfo->state }},</span>
+                                <span><strong>Pincode:</strong> {{ $sellerInfo->pincode }}</span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
