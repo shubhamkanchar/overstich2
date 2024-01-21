@@ -167,7 +167,7 @@
                             <span class="d-md-none ms-4 bi bi-filter fs-3 show-filter"></span>
                         </div>
                     </div>
-                    <div class="row justify-content-around">
+                    <div class="row justify-content-md-start justify-content-around">
                         @foreach ($products as $product)
                             <div class="col-xl-3 col-lg-3 col-md-4 col-5 p-0 p-lg-2 p-md-2 text-sm">
                                 <div class="card rounded mb-5 translate-y-up">

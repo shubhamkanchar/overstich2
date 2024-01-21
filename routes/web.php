@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\WarehouseController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\OrderController as BackendOrderController;
 use App\Http\Controllers\Backend\SelllerController;
 use App\Http\Controllers\Backend\UserController;
@@ -90,6 +91,7 @@ Route::group(['middleware'=>['auth','adminMiddleware'], 'prefix' => 'admin'],fun
     Route::get('orders/{id}',[BackendOrderController::class,'viewOrder'])->name('admin.order.view');
     Route::resource('categories',CategoryController::class);
     Route::get('get-sub-categories/{category}', [CategoryController::class, 'getSubCategory'])->name('admin.get-sub-categories');
+    Route::resource('coupon', CouponController::class);
 });
 
 Route::group(['middleware'=>['auth']],function(){
