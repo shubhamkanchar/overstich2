@@ -31,7 +31,7 @@
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="rounded-pill form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                <input id="password" type="password" class="rounded-pill form-control password @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -49,6 +49,10 @@
                                     <label class="form-check-label" for="remember">
                                         {{ __('Remember Me') }}
                                     </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input password-show" type="checkbox" id="check1" name="option1">
+                                    <label class="form-check-label">Show Password</label>
                                 </div>
                             </div>
                         </div>

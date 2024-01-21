@@ -61,6 +61,12 @@ class SellerController extends Controller
                 $nocDoc = $request->brand . '_' . rand(1111, 9999) . '.' . $nocFile->getClientOriginalExtension();
                 $nocFile->move(public_path() .'/doc/seller/'.$user->id, $nocDoc);
             }
+
+            if($request->hasFile('cancel_cheque')){
+                $cancelChequeFile = $request->file('cancel_cheque');
+                $cancelCheque = $request->brand . '_' . rand(1111, 9999) . '.' . $cancelChequeFile->getClientOriginalExtension();
+                $cancelChequeFile->move(public_path() .'/doc/seller/'.$user->id, $cancelCheque);
+            }
             $sellerInfo = SellerInfo::create([
                 'seller_id' => $user->id,
                 'brand' => $request->brand,
@@ -82,6 +88,10 @@ class SellerController extends Controller
                 'account_holder_name' => $request->account_holder_name,
                 'bank_name' => $request->bank_name,
                 'account_type' => $request->account_type,
+                'owner_name' => $request->owner_name,
+                'owner_contact' => $request->owner_contact,
+                'organization_name' => $request->organization_name,
+                'cancel_cheque' => $cancelCheque
             ]);
 
             foreach ($request->file('product_photos') as $file) {

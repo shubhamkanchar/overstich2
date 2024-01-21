@@ -27,12 +27,13 @@ class SellersDataTable extends DataTable
             ->addColumn('action', function($row){
                 $html = '';
                 if($row->sellerInfo->is_approved == 0){
-                    $html .= '<a href="'.route('seller.approve',$row->id).'" class="btn btn-sm btn-primary m-2">Approve</a>';
+                    $html .= '<a href="'.route('seller.approve',$row->id).'" class="btn btn-sm btn-primary m-2" title="Approve seller"><i class="bi bi-check-lg"></i></a>';
                 }
                 if($row->sellerInfo->is_approved == 1){
-                    $html .= '<a href="'.route('seller.reject',$row->id).'" class="btn btn-sm btn-warning m-2">Reject</a>';
+                    $html .= '<a href="'.route('seller.reject',$row->id).'" class="btn btn-sm btn-warning m-2" title="Reject seller"><i class="bi bi-x"></i></a>';
                 }
-                $html .= '<a href="'.route('seller.delete',$row->id).'" class="btn btn-sm btn-danger m-2">Delete</a>';
+                $html .= '<a href="'.route('seller.delete',$row->id).'" class="btn btn-sm btn-danger m-2" title="Delete seller"><i class="bi bi-trash-fill"></i></a>';
+                $html .= '<a href="'.route('seller.view',$row->id).'" class="btn btn-sm btn-success m-2" title="View seller"><i class="bi bi-eye-fill"></i></a>';
 
                 return $html;
             })

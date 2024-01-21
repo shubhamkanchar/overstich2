@@ -50,9 +50,9 @@ const seller = () => {
     //     }
     // });
 
-    if ($('#guideline1').length > 0 && $('#guidelinesBackend').val() == '0') {
-        let modal = new Modal(document.getElementById('guideline1'));
-        modal.show();
+    if ($('#guideline3').length > 0 && $('#guidelinesBackend').val() == '0') {
+        // let modal = new Modal(document.getElementById('guideline3'));
+        // modal.show();
     }
 
     $(document).on('click', '.modal1', function () {
@@ -75,8 +75,8 @@ const seller = () => {
     $(document).on('click', '.modal2', function () {
         if ($('.guideline5').is(':checked')) {
             Modal.getInstance(document.getElementById('guideline5')).hide();
-            let modal1 = new Modal(document.getElementById('guideline6'));
-            modal1.show();
+            // let modal1 = new Modal(document.getElementById('guideline6'));
+            // modal1.show();
             $('.modal2_noti').addClass('d-none');
         } else {
             $('.modal2_noti').removeClass('d-none');

@@ -71,7 +71,7 @@ Route::get('/shipping-policy', function(){
     return view('shipping-policy');
 })->name('sp');
 
-Route::resource('seller',SellerController::class);
+
 Route::resource('products', ProductController::class)->except(['index']);
 Route::get('category/products/{category?}', [ProductController::class, 'index'])->name('products.index');
 Route::get('products/{seller:slug?}/get-brand', [ProductController::class, 'getProductByBrand'])->name('products.brand');
@@ -86,6 +86,7 @@ Route::group(['middleware'=>['auth','adminMiddleware'], 'prefix' => 'admin'],fun
     Route::get('sellers/approve/{id}',[SelllerController::class,'approve'])->name('seller.approve');
     Route::get('sellers/reject/{id}',[SelllerController::class,'reject'])->name('seller.reject');
     Route::get('sellers/delete/{id}',[SelllerController::class,'delete'])->name('seller.delete');
+    Route::get('sellers/view/{id}',[SelllerController::class,'view'])->name('seller.view');
     Route::get('orders/list',[BackendOrderController::class,'index'])->name('admin.order.list');
     Route::get('orders/{id}',[BackendOrderController::class,'viewOrder'])->name('admin.order.view');
     Route::resource('categories',CategoryController::class);
