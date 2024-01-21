@@ -23,8 +23,8 @@ class CouponDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function($coupon){
-                return '<a href="' . route('coupon.edit', $coupon->id) . '" class="btn btn-primary btn-sm float-left mb-2" data-toggle="tooltip" title="edit" data-placement="bottom">Edit</a>
-                <button class="btn btn-danger btn-sm dltBtn" data-url="' . route('coupon.destroy', $coupon->id) . '" data-toggle="tooltip" data-placement="bottom" title="Delete">Delete</button>';
+                return '<a href="' . route('seller.coupon.edit', $coupon->id) . '" class="btn btn-primary btn-sm float-left mb-2" data-toggle="tooltip" title="edit" data-placement="bottom">Edit</a>
+                <button class="btn btn-danger btn-sm dltBtn" data-url="' . route('seller.coupon.destroy', $coupon->id) . '" data-toggle="tooltip" data-placement="bottom" title="Delete">Delete</button>';
             })
             ->rawColumns(['action'])
             ->setRowId('id');
@@ -35,7 +35,7 @@ class CouponDataTable extends DataTable
      */
     public function query(Coupon $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->where('seller_id', auth()->id())->newQuery();
     }
 
     /**
@@ -69,6 +69,7 @@ class CouponDataTable extends DataTable
             Column::make('code'),
             Column::make('type'),
             Column::make('value'),
+            Column::make('minimum'),
             Column::make('status'),
             Column::computed('action')
                   ->exportable(false)

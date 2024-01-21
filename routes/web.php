@@ -126,6 +126,8 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('track/{id}',[DelhiveryController::class,'track'])->name('order.track');
 
         Route::get('shipment/create/{id}',[DelhiveryController::class,'shipmentForm'])->name('shipment-form');
+        Route::resource('coupon', CouponController::class);
+
     });
 
     Route::get('download-invoice/{id}', [BackendOrderController::class,'downloadInvoice'])->name('download.invoice');
@@ -138,6 +140,8 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
     Route::post('add-to-wishlist/{id}', [WishlistController::class, 'add'])->name('wishlist.add-wishlist');
     Route::delete('remove-from-wishlist/{id}', [WishlistController::class, 'Remove'])->name('wishlist.remove-wishlist');
+    Route::post('apply-coupon/{coupon}', [CouponController::class, 'applyCoupon'])->name('coupon.apply');
+    Route::post('remove-coupon/{coupon}', [CouponController::class, 'removeCoupon'])->name('coupon.remove');
     Route::resource('addresses',AddressController::class);
 });
 

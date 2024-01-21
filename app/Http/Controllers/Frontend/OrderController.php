@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
+use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\ProductSize;
 use App\Models\User;
+use App\Models\UserCoupon;
 use Illuminate\Http\Request;
 use Cart;
 
@@ -50,13 +52,42 @@ class OrderController extends Controller
             return $cartItem->options->discount * $cartItem->qty;
         });
 
+        $totalAmountPerSeller = $cartItems->groupBy('options.seller_id')->map(function ($items) {
+            return $items->sum(function ($cartItem) {
+                return $cartItem->price * $cartItem->qty;
+            });
+        });
+        
+        $sellerIds = $totalAmountPerSeller->keys()->all();
+
+        $appliedCoupons = Coupon::whereHas('userCoupon', function($query) use ($user) {
+            $query->where('user_id', $user->id);
+            $query->where('is_used', 0);
+            $query->where('is_applied', 1);
+        })
+        ->with(['brand', 'userCoupon'])
+        ->whereIn('seller_id', $sellerIds)
+        ->get();
+
+        $totalCouponDiscounts = 0;
+        foreach($appliedCoupons as $aCoupon) {
+            if($aCoupon->type == 'fixed') {
+                $totalCouponDiscounts += $aCoupon->value;
+            } else {
+                $AmountPerSeller = $totalAmountPerSeller[$aCoupon->seller_id];
+                $percentage = $aCoupon->value;
+                $result = ($percentage / 100) * $AmountPerSeller;
+                $totalCouponDiscounts += $result;
+            }
+        }
+        
         $deliveryCharge = 0;
-        $totalPrice = $totalPrice + env('PLATFORM_FEE') ;
+        $totalPrice = $totalPrice + env('PLATFORM_FEE') - $totalCouponDiscounts ;
         if (Cart::instance($userIdentifier)->count() === 0) {
             notify()->error('Your Cart is Empty');
             return  redirect()->route('cart.index');
-   }
-        return view('frontend.order.checkout', compact('cartItems', 'totalPrice', 'totalDiscount', 'totalOriginalPrice', 'deliveryCharge'));
+        }
+        return view('frontend.order.checkout', compact('cartItems', 'totalPrice', 'totalDiscount', 'totalOriginalPrice', 'deliveryCharge', 'appliedCoupons', 'totalCouponDiscounts'));
     }
 
     public function myOrders(Request $request) {
@@ -108,11 +139,60 @@ class OrderController extends Controller
     
         Cart::instance($userIdentifier)->restore($userIdentifier);
         $cartItems = Cart::instance($userIdentifier)->content();
+        $sellerIds = $cartItems->pluck('options.seller_id')->unique()->all();
 
-        // $productSellers = [];
-        // foreach($cartItems as $item) {
-        //     $productSellers[$item->options?->product_id.'-'.$item->options?->size][] = $item;
-        // }
+        // Calculate total amount per seller
+        $totalAmountPerSeller = $cartItems->groupBy('options.seller_id')->map(function ($items) {
+            return $items->sum(function ($cartItem) {
+                return $cartItem->price * $cartItem->qty;
+            });
+        });
+
+        // Get the count of items per seller
+        $itemCountPerSeller = $cartItems->groupBy('options.seller_id')->map(function ($items) {
+            return $items->count();
+        });
+
+        $sellerIds = $totalAmountPerSeller->keys()->all();
+        // Get applied coupons per seller
+        $appliedCoupons = Coupon::whereHas('userCoupon', function($query) use ($user) {
+                $query->where('user_id', $user->id);
+                $query->where('is_used', 0);
+                $query->where('is_applied', 1);
+            })
+            ->with(['brand', 'userCoupon'])
+            ->whereIn('seller_id', $sellerIds)
+            ->get();
+
+        $totalCouponDiscounts = 0;
+        // Calculate coupon discount per item for each seller
+        $couponDiscountPerItemPerSeller = [];
+        $couponIds = [];
+        foreach ($appliedCoupons as $aCoupon) {
+            $sellerId = $aCoupon->seller_id;
+            $couponIds[$aCoupon->seller_id] = $aCoupon->id;
+            if (!isset($couponDiscountPerItemPerSeller[$sellerId])) {
+                $couponDiscountPerItemPerSeller[$sellerId] = 0;
+            }
+
+            $itemCount = $itemCountPerSeller[$sellerId] ?? 0;
+
+            if ($itemCount > 0) {
+
+                if ($aCoupon->type == 'fixed') {
+                    $couponDiscountPerItemPerSeller[$sellerId] += $aCoupon->value / $itemCount;
+                    $totalCouponDiscounts = $aCoupon->value;
+                } else {
+                    $amountPerSeller = $totalAmountPerSeller[$sellerId] ?? 0;
+                    $percentage = $aCoupon->value;
+                    $result = ($percentage / 100) * $amountPerSeller;
+                    $couponDiscountPerItemPerSeller[$sellerId] += $result / $itemCount;
+                    $totalCouponDiscounts = $result;
+                }
+            }
+        }
+
+        // Now $couponDiscountPerItemPerSeller contains the coupon discount per item for each seller
 
         $transactionId = 'MT'. strtotime('now') . '' . auth()->id() ?? '';
         $deliveryCharges = 0;
@@ -127,10 +207,17 @@ class OrderController extends Controller
         $id = 1;
 
         foreach($cartItems as $cartItem) {
-
             $totalOriginalPrice =  $cartItem->options->original_price * $cartItem->qty;
             $totalPrice = $cartItem->price * $cartItem->qty;
             $totalDiscount = $cartItem->options->discount * $cartItem->qty;
+            $couponDiscount = 0;
+            $couponId = 0;
+            if(isset($couponDiscountPerItemPerSeller[$cartItem->options?->seller_id]) && isset($couponIds[$cartItem->options?->seller_id])) {
+                $couponDiscount = $couponDiscountPerItemPerSeller[$cartItem->options?->seller_id];
+                $totalDiscount += $couponDiscount;
+                $totalPrice -= $couponDiscount;
+                $couponId = $couponIds[$cartItem->options?->seller_id];
+            }
 
             $order = new Order();
             $order->first_name = $request->first_name;
@@ -151,11 +238,13 @@ class OrderController extends Controller
             $order->payment_method = $request->payment_method;
             $order->payment_transaction_id = $transactionId;
             $order->is_order_confirmed = $request->payment_method == 'cod' ? 1 : 0;
-            $order->total_amount =  $totalPrice > 2300 ? $totalPrice + env('PLATFORM_FEE')  : $totalPrice + $deliveryCharges + env('PLATFORM_FEE') ;
+            $order->total_amount =  $totalPrice > 2300 ? $totalPrice + env('PLATFORM_FEE')  : $totalPrice + $deliveryCharges + env('PLATFORM_FEE');
             $order->delivery_charge = $deliveryCharges;
             $order->sub_total = $totalOriginalPrice;
             $order->status = 'NEW';
             $order->total_discount = $totalDiscount;
+            $order->coupon_discount = $couponDiscount;
+            $order->coupon_id = $couponId;
             $order->save();
             $id++;
 
@@ -188,7 +277,7 @@ class OrderController extends Controller
             });
 
             $data = [
-                'amount' => (($cartTotalPrice + $deliveryCharges) + env('PLATFORM_FEE')) *  100,
+                'amount' => (($cartTotalPrice + $deliveryCharges) + env('PLATFORM_FEE') - $totalCouponDiscounts) *  100,
                 'transactionId' => $transactionId,
                 'mobile' => $request->mobile,
                 'email' => $request->email,
@@ -199,6 +288,7 @@ class OrderController extends Controller
             return redirect()->to($response->data->instrumentResponse->redirectInfo->url);
         }
 
+        UserCoupon::whereIn('coupon_id', $couponIds)->where('user_id', $user->id)->update(['is_used' => 1]);
         Cart::instance($userIdentifier)->destroy();
         Cart::store($userIdentifier); 
         // notify()->success("Order placed successfully");
@@ -220,7 +310,8 @@ class OrderController extends Controller
                     $productSize = new ProductSize();
                     $productSize->updateQuantity($order->orderItem);
                 // }
-
+                
+                UserCoupon::where('coupon_id', $order->coupon_id)->where('user_id', $order->id)->update(['is_used' => 1]);
                 $paymentData = [
                     'batch' => $order->batch,
                     'user_id' => $order->user_id,
@@ -272,7 +363,8 @@ class OrderController extends Controller
                     $productSize = new ProductSize();
                     $productSize->updateQuantity($order->orderItem);
                 // }
-
+                UserCoupon::where('coupon_id', $order->coupon_id)->where('user_id', $order->id)->update(['is_used' => 1]);
+                
                 $paymentData = [
                     'batch' => $order->batch,
                     'user_id' => $order->user_id,

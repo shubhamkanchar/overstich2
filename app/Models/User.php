@@ -60,6 +60,12 @@ class User extends Authenticatable
         return $this->hasOne(Warehouse::class,'user_id','id')->where('default',1);
     }
 
+
+    public function coupons()
+    {
+        return $this->belongsToMany(Coupon::class, 'user_coupons');
+    }
+    
     public function defaultAddress(){
         return $this->hasOne(Address::class,'user_id','id')->where('default',1);
     }

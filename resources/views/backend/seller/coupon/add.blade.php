@@ -1,4 +1,4 @@
-@extends('backend.admin.layouts.app')
+@extends('backend.seller.layouts.app')
 
 @section('content')
     <div class="grey-bg container admin-category">
@@ -7,10 +7,10 @@
                 <div class="card">
                     <h5 class="card-header">Add Coupon</h5>
                     <div class="card-body">
-                        <form method="post" action="{{ route('coupon.store') }}">
+                        <form method="post" action="{{ route('seller.coupon.store') }}">
                             {{ csrf_field() }}
                             <div class="form-group row">
-                                <div class="col-md-6 col-12 mt-2">
+                                <div class="col-md-4 col-12 mt-2">
                                     <label for="inputTitle" class="col-form-label">Coupon Code <span
                                             class="text-danger">*</span></label>
                                     <input id="inputTitle" type="text" name="code" placeholder="Enter Coupon Code"
@@ -20,10 +20,10 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-md-6 col-12 mt-2">
+                                <div class="col-md-4 col-12 mt-2">
                                     <label for="type" class="col-form-label">Type <span
                                             class="text-danger">*</span></label>
-                                    <select name="type" class="form-control">
+                                    <select name="type" class="form-select">
                                         <option value="fixed">Fixed</option>
                                         <option value="percent">Percent</option>
                                     </select>
@@ -32,9 +32,8 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-md-6 col-12 mt-2">
-                                    <label for="inputTitle" class="col-form-label">Value <span
-                                            class="text-danger">*</span></label>
+                                <div class="col-md-4 col-12 mt-2">
+                                    <label for="inputTitle" class="col-form-label">Value <span class="text-danger">*</span></label>
                                     <input id="inputTitle" type="number" name="value" placeholder="Enter Coupon value"
                                         value="{{ old('value') }}" class="form-control">
                                     @error('value')
@@ -42,7 +41,15 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-md-6 col-12 mt-2">
+                                <div class="col-md-4 col-12 mt-2">
+                                    <label for="minimum" class="col-form-label">Minimum Value Offer Applicable</label>
+                                    <input id="minimum" type="number" name="minimum" min="0" value="{{ old('minimum') }}" class="form-control">
+                                    @error('minimum')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-4 col-12 mt-2">
                                     <label for="status" class="col-form-label">Status <span
                                             class="text-danger">*</span></label>
                                     <select name="status" class="form-control">

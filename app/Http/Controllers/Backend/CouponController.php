@@ -5,14 +5,16 @@ namespace App\Http\Controllers\Backend;
 use App\DataTables\CouponDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Coupon;
+use App\Models\UserCoupon;
 use Illuminate\Http\Request;
 use Cart;
+use Illuminate\Validation\Rule;
 
 class CouponController extends Controller
 {
     public function index(CouponDataTable $datatable)
     {
-        return $datatable->render('backend.admin.coupon.index');
+        return $datatable->render('backend.seller.coupon.index');
     }
 
     /**
@@ -22,7 +24,7 @@ class CouponController extends Controller
      */
     public function create()
     {
-        return view('backend.admin.coupon.add');
+        return view('backend.seller.coupon.add');
     }
 
     /**
@@ -35,12 +37,14 @@ class CouponController extends Controller
     {
         // return $request->all();
         $this->validate($request,[
-            'code'=>'string|required',
+            'code' => 'string|required|unique:coupons',
             'type'=>'required|in:fixed,percent',
+            'minimum'=>'numeric',
             'value'=>'required|numeric',
             'status'=>'required|in:active,inactive'
         ]);
-        $data=$request->all();
+        $data = $request->all();
+        $data['seller_id'] = auth()->id();
         $status=Coupon::create($data);
         if($status){
             notify('success','Coupon Successfully added');
@@ -48,7 +52,7 @@ class CouponController extends Controller
         else{
             notify('error','Please try again!!');
         }
-        return redirect()->route('coupon.index');
+        return redirect()->back();
     }
 
     /**
@@ -71,10 +75,10 @@ class CouponController extends Controller
     {
         $coupon=Coupon::find($id);
         if($coupon){
-            return view('backend.admin.coupon.edit')->with('coupon',$coupon);
+            return view('backend.seller.coupon.edit')->with('coupon',$coupon);
         }
         else{
-            return view('backend.admin.coupon.index')->with('error','Coupon not found');
+            return view('backend.seller.coupon.index')->with('error','Coupon not found');
         }
     }
 
@@ -88,14 +92,15 @@ class CouponController extends Controller
     public function update(Request $request, $id)
     {
         $coupon = Coupon::find($id);
-
         $this->validate($request,[
-            'code'=>'string|required',
             'type'=>'required|in:fixed,percent',
+            'code' => ['string', 'required', Rule::unique('coupons')->ignore($id)],
             'value'=>'required|numeric',
+            'minimum'=>'numeric',
             'status'=>'required|in:active,inactive'
         ]);
-
+        
+        $data['seller_id'] = auth()->id();
         $data = $request->all();
         
         $status=$coupon->fill($data)->save();
@@ -106,7 +111,7 @@ class CouponController extends Controller
         else{
             notify('error','Please try again!!');
         }
-        return redirect()->route('coupon.index');
+        return redirect()->back();
         
     }
 
@@ -132,6 +137,34 @@ class CouponController extends Controller
         else{
             return response()->json(['message' => 'Coupon not found'], 400);
         }
+    }
+
+    public function applyCoupon(Coupon $coupon, Request $request) {
+
+        $user = auth()->user();   
+        $isUsed= UserCoupon::where(['coupon_id' => $coupon->id, 'user_id' => $user->id, 'is_used' => 1 ])->count();
+        if($isUsed == 0) {
+            $userCoupon = UserCoupon::updateOrInsert(
+                ['coupon_id' => $coupon->id, 'user_id' => auth()->id()],
+                ['is_applied' => 1, 'is_used' => 0]
+            );
+
+            notify('success', 'Coupon Applied');
+            return redirect()->back();
+        } else {
+            notify('error', 'Coupon Already Used');
+            return redirect()->back();
+        }
+        
+    }
+
+    public function removeCoupon(Coupon $coupon, Request $request) {
+        $user = auth()->user();
+        $userCoupon = UserCoupon::where(['coupon_id' => $coupon->id, 'user_id' => $user->id ])->first();
+        $userCoupon->is_applied = 0;
+        $userCoupon->update();
+        notify('success', 'Coupon Removed');
+        return redirect()->back();
     }
 
     public function couponStore(Request $request){

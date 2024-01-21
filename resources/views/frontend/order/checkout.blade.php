@@ -118,6 +118,17 @@
                                 </tr>
                             @endforeach
                             <tr>
+                                <td colspan="3" class="text-center">Other Charges</td>
+                            </tr>
+                            @if ($appliedCoupons->count())
+                                <tr>
+                                    <td>Coupon Discount</td>
+                                    <td></td>
+                                    <td>{{ $totalCouponDiscounts }}</td>
+                                </tr>
+                            @endif
+                            
+                            <tr>
                                 <td>Platform Fee</td>
                                 <td></td>
                                 <td>{{ env('PLATFORM_FEE') }}</td>

@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('coupon_id');
-            $table->tinyInteger('is_used');
+            $table->tinyInteger('is_applied')->default(0);
+            $table->tinyInteger('is_used')->default(0);
             $table->timestamps();
         });
     }

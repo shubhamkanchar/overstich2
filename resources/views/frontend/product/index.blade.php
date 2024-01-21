@@ -179,11 +179,11 @@
                                         
                                         @php $discountedPrice = $product->price - ($product->price * ($product->discount / 100));@endphp
                                         <span>
-                                            <strong><i class="bi bi-currency-rupee"></i>{{ $discountedPrice }}
+                                            <strong><i class="bi bi-currency-rupee"></i>{{ round($discountedPrice) }}
                                             </strong>
                                         </span>
                                         <small>
-                                        <strike><i class="bi bi-currency-rupee"></i>{{ $product->price}}</strike>
+                                        <strike><i class="bi bi-currency-rupee"></i>{{ round($product->price) }}</strike>
                                         </small>
                                         <small class="text-danger">({{ $product->discount}}% OFF)</small>
                                         

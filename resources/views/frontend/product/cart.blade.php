@@ -28,7 +28,7 @@
                             @php $productSize = $product?->sizes?->where('size', $item->options?->size)->first() @endphp
                             @php $quantity = $productSize?->quantity @endphp
                             
-                            <div class="card-body cart-items shadow-lg m-2 rounded-lg border border-2 @if ($quantity <= 0) bg-gray @else bg-light @endif">
+                            <div class="card-body cart-items shadow-lg m-2 rounded-lg border border-2 @if ($quantity <= 0) bg-gray @else bg-white @endif">
                                 <div class="row">
                                     <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
                                         <!-- Image -->
@@ -100,38 +100,120 @@
                 @endif
             
             </div>
-            <div class="col-12 col-md-3 px-4">
+            <div class="col-12 col-md-3">
                 @php $cartCount = count($cartItems);  @endphp
 
-                <h2 class="fw-bold">Summary</h2>
-                <div class="d-flex justify-content-between">
-                    <span>Subtotal</span>
-                    <span id="subTotal"><i class="bi bi-currency-rupee"></i>{{ $cartCount > 0 ? $totalOriginalPrice : '0' }}</span>
+                <div class="card shadow bg-white">
+                    <div class="card-header m-1 bg-white d-flex fs-4 align-items-center" style="border: 1px gray dashed ">
+                        <span class="d-flex fs-4 align-items-center" style="width: 50px; height: 50px;"><img src="{{ asset('image/other/percentage.png')}}"></span> 
+                        <span>Apply Coupon<i class="fs-5 bi bi-info" role="button" data-bs-toggle="modal" data-bs-target="#couponModal"></i> </span> 
+                    </div>
+                    <div class="card-body">
+                        <h2 class="fw-bold">Summary</h2>
+                        <div class="d-flex justify-content-between">
+                            <span>Subtotal</span>
+                            <span id="subTotal"><i class="bi bi-currency-rupee"></i>{{ $cartCount > 0 ? $totalOriginalPrice : '0' }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Delivery Charges</span>
+                            <span id="deliveryCharges"><i class="bi bi-currency-rupee"></i>{{ $cartCount > 0 ? $deliveryCharges : '0' }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Discount</span>
+                            <span id="totalDiscount"><i class="bi bi-currency-rupee"></i>{{ $cartCount > 0 ? $totalDiscount : '0' }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Platform fee</span>
+                            <span id="totalDiscount"><i class="bi bi-currency-rupee"></i>{{ env('PLATFORM_FEE') }}</span>
+                        </div>
+                        @php $totalCouponDiscounts = 0; @endphp
+                        @if($appliedCoupons->count() > 0)    
+                        <hr>
+                            <div class="d-flex fw-bold justify-content-between">
+                                <span>Applied Coupon</span>
+                                <span>Discounts</span>
+                            </div>
+                            @foreach ($appliedCoupons as $aCoupon)
+                                @php 
+                                    if($aCoupon->type == 'fixed') {
+                                        $totalCouponDiscounts += $aCoupon->value;
+                                    } else {
+                                        $AmountPerSeller = $totalAmountPerSeller[$aCoupon->seller_id];
+                                        $percentage = $aCoupon->value;
+                                        $result = ($percentage / 100) * $AmountPerSeller;
+                                        $totalCouponDiscounts += $result;
+                                    }
+                                @endphp
+                                <form action="{{route('coupon.remove', $aCoupon->id)}}" class="d-inline" method="post">
+                                    <div class="d-flex justify-content-between">
+                                        @csrf
+                                        <span>{{ $aCoupon->code }} <button class="border-0"><i class="text-danger bi bi-x-circle" role="button" title="Remove Coupon"></i></button></span>
+                                        <span id="totalDiscount">{!! $aCoupon->type == 'fixed' ? '<i class="bi bi-currency-rupee"></i>'.$aCoupon->value : round($aCoupon->value).'%' !!}</span>
+                                    </div>
+                                </form>
+                            @endforeach
+                        @endif
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <span>Total</span>
+                            <span id="totalAmount"> <i class="bi bi-currency-rupee"></i>{{ $cartCount > 0 ? $totalOriginalPrice - $totalDiscount - $totalCouponDiscounts + $deliveryCharges + env('PLATFORM_FEE') : '0' }}</span>
+                        </div>
+                        <hr>
+                        <form action="{{ route('checkout') }}" class="d-inline" method="get">
+                            <input type="submit" value="Place Order" class="bg-dark text-white px-3 py-1 mt-md-4 rounded-5">
+                        </form>
+                    </div>
                 </div>
-                <div class="d-flex justify-content-between">
-                    <span>Delivery Charges</span>
-                    <span id="deliveryCharges"><i class="bi bi-currency-rupee"></i>{{ $cartCount > 0 ? $deliveryCharges : '0' }}</span>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <span>Discount</span>
-                    <span id="totalDiscount"><i class="bi bi-currency-rupee"></i>{{ $cartCount > 0 ? $totalDiscount : '0' }}</span>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <span>Platform fee</span>
-                    <span id="totalDiscount"><i class="bi bi-currency-rupee"></i>{{ env('PLATFORM_FEE') }}</span>
-                </div>
-                <hr>
-                <div class="d-flex justify-content-between">
-                    <span>Total</span>
-                    <span id="totalAmount"> <i class="bi bi-currency-rupee"></i>{{ $cartCount > 0 ? $totalOriginalPrice - $totalDiscount + $deliveryCharges + env('PLATFORM_FEE') : '0' }}</span>
-                </div>
-                <hr>
-                <form action="{{ route('checkout') }}" class="d-inline" method="get">
-                    <input type="submit" value="Place Order" class="bg-dark text-white px-3 py-1 mt-md-4 rounded-5">
-                </form>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="couponModal" tabindex="-1" role="dialog" aria-labelledby="couponModalLabel" aria-hidden="true">
+        <div class="modal-dialog d-flex align-items-center">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Available Coupons</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @if ($availableCoupons->count() > 0)    
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Code</th>
+                                    <th scope="col">Minimum Purchase</th>
+                                    <th scope="col">Discount</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($availableCoupons as $coupon)
+                                    <form method="post">
+                                        @csrf
+                                        <tr>
+                                            <td>{{$coupon->code}}</td>
+                                            <td>{{ $coupon->minimum > 0 ? 'Applicable on minimum '.$coupon->minimum.' on '.$coupon?->brand?->brand : '-'  }}
+                                            </td>
+                                            <td>{!! $coupon->type == 'fixed' ? '<i class="bi bi-currency-rupee"></i>'.$coupon->value : round($coupon->value).'%' !!}</td>
+                                            <td>
+                                                @if($totalAmountPerSeller[$coupon?->brand?->seller_id] >= $coupon->minimum)
+                                                    <button class="btn btn-dark" formaction="{{ route('coupon.apply', $coupon->id)}}">Apply</button>
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </form>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @else
+                        <h5 class="text-center">No coupon found</h5>
+                    @endif
+                </div>
+            </div>
+        </div>
+     </div>
+     
 @endsection
 
 @section('script')
@@ -204,6 +286,7 @@
                 complete: () => {
                     $('#popup-overlay').addClass('d-none')
                     $('.spinner').addClass('d-none')
+                    window.location.reload();
                 }
             });
         }
