@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\Backend\WarehouseController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\AdminController;
@@ -72,7 +73,7 @@ Route::get('/shipping-policy', function(){
     return view('shipping-policy');
 })->name('sp');
 
-Route::resource('seller',SellerController::class);
+
 Route::resource('products', ProductController::class)->except(['index']);
 Route::get('category/products/{category?}', [ProductController::class, 'index'])->name('products.index');
 Route::get('products/{seller:slug?}/get-brand', [ProductController::class, 'getProductByBrand'])->name('products.brand');
@@ -87,6 +88,7 @@ Route::group(['middleware'=>['auth','adminMiddleware'], 'prefix' => 'admin'],fun
     Route::get('sellers/approve/{id}',[SelllerController::class,'approve'])->name('seller.approve');
     Route::get('sellers/reject/{id}',[SelllerController::class,'reject'])->name('seller.reject');
     Route::get('sellers/delete/{id}',[SelllerController::class,'delete'])->name('seller.delete');
+    Route::get('sellers/view/{id}',[SelllerController::class,'view'])->name('seller.view');
     Route::get('orders/list',[BackendOrderController::class,'index'])->name('admin.order.list');
     Route::get('orders/{id}',[BackendOrderController::class,'viewOrder'])->name('admin.order.view');
     Route::resource('categories',CategoryController::class);
@@ -140,6 +142,7 @@ Route::group(['middleware'=>['auth']],function(){
     Route::delete('remove-from-wishlist/{id}', [WishlistController::class, 'Remove'])->name('wishlist.remove-wishlist');
     Route::post('apply-coupon/{coupon}', [CouponController::class, 'applyCoupon'])->name('coupon.apply');
     Route::post('remove-coupon/{coupon}', [CouponController::class, 'removeCoupon'])->name('coupon.remove');
+    Route::resource('addresses',AddressController::class);
 });
 
 
@@ -150,7 +153,9 @@ Route::domain('partners.'.env('DOMAIN'))->group(function () {
 
 Route::any('phonepe-response', [OrderController::class, 'paymentResponse'])->name('payment.response');
 Route::any('phonepe-callback', [OrderController::class, 'paymentCallback'])->name('payment.callback');
-
+Route::get('/success',function(){
+    return view('frontend.order.success');
+})->name('success-page');
 //delhivery routes
 Route::post('pincode',[DelhiveryController::class,'pincodeCheck'])->name('pinocde-check');
 

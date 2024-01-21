@@ -32,7 +32,7 @@
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="rounded-pill form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <input id="password" type="password" class="rounded-pill form-control password @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -46,7 +46,17 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="rounded-pill form-control" name="password_confirmation" required autocomplete="new-password">
+                                <input id="password-confirm" type="password" class="rounded-pill form-control password" name="password_confirmation" required autocomplete="new-password">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end"></label>
+
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input password-show" type="checkbox" id="check1" name="option1">
+                                    <label class="form-check-label">Show Password</label>
+                                </div>
                             </div>
                         </div>
 

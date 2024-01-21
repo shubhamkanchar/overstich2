@@ -32,6 +32,10 @@ class SellerInfo extends Model
         'account_holder_name',
         'bank_name',
         'account_type',
+        'owner_name',
+        'owner_contact',
+        'organization_name',
+        'cancel_cheque',
     ];
 
     protected static function boot()

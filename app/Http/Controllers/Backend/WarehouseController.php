@@ -6,6 +6,7 @@ use App\DataTables\WarehouseDataTable;
 use App\Models\Warehouse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class WarehouseController extends Controller

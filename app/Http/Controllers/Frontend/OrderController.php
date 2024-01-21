@@ -291,8 +291,9 @@ class OrderController extends Controller
         UserCoupon::whereIn('coupon_id', $couponIds)->where('user_id', $user->id)->update(['is_used' => 1]);
         Cart::instance($userIdentifier)->destroy();
         Cart::store($userIdentifier); 
-        notify()->success("Order placed successfully");
-        return redirect()->route('order.my-order');  }
+        // notify()->success("Order placed successfully");
+        return redirect()->route('success-page');  
+    }
 
     public function paymentResponse(Request $request) {
 
@@ -344,7 +345,7 @@ class OrderController extends Controller
             notify()->success("Payment Failed");
         } 
 
-        return redirect()->route('order.my-order');
+        return redirect()->route('success-page');
 
     }
 

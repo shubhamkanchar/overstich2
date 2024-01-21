@@ -84,7 +84,8 @@ class DelhiveryController extends Controller
 
     public function shipmentCreate(Request $request)
     {
-        $wareHouse = Warehouse::where('user_id', Auth::user()->id)
+        $user = Auth::user();
+        $wareHouse = Warehouse::where('user_id', $user->id)
             ->where('default', 1)
             ->first();
         $order = Order::where('id', $request->id)->first();
@@ -131,7 +132,7 @@ class DelhiveryController extends Controller
                     "order_date": null,
                     "total_amount": '.$codAmount.',
                     "seller_add": "",
-                    "seller_name": "",
+                    "seller_name": "'.$user->name.'",
                     "seller_inv": "",
                     "quantity": "'.$orderItem->quantity.'",
                     "waybill": "",
