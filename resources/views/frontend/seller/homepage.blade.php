@@ -35,7 +35,7 @@
                     <img src="{{ asset('image/logo.png') }}" style="width:50px">
                     <img class="m-3" src="{{ asset('image/logo1.png') }}" style="height: 20px;">
                 </a>
-                <a href="{{ 'http://www.'.env('domain').'/login' }}" class="btn btn-dark">Login</a>
+                <a href="{{ 'http://www.'.env('DOMAIN').'/login' }}" class="btn btn-dark">Login</a>
             </div>
         </nav>
         <main class="bg-image" style="background-image:url({{ asset('image/bgcolor.jpg') }})">
