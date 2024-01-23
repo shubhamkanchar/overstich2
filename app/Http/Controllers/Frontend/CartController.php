@@ -65,16 +65,17 @@ class CartController extends Controller
             $products[$item->id] = Product::with('images')->where('id', $item->options?->product_id)->first();
         }
 
-        $availableCoupons = Coupon::where(function ($query) use ($user) {
-            // Coupons with userCoupon records satisfying the conditions
-            $query->whereHas('userCoupon', function ($subquery) use ($user) {
-                $subquery->where('user_id', $user->id)
-                    ->where('is_used', 0)
-                    ->where('is_applied', 0);
-            });
-            // Coupons without userCoupon records
-            $query->orWhereDoesntHave('userCoupon');
+        $availableCoupons = Coupon::leftJoin('user_coupons', 'user_coupons.coupon_id', 'coupons.id')
+        ->where(function($query) {
+            $query->where('user_coupons.is_applied', '==', 0)
+            ->orWhereNull('user_coupons.is_applied');
         })
+        ->where(function($query) {
+            $query->where('user_coupons.is_used', '==', 0)
+            ->orWhereNull('user_coupons.is_used');
+        })
+        ->Where('status', 1)
+        ->select('coupons.*','user_coupons.is_applied','user_coupons.is_used')
         ->with(['brand'])
         ->whereIn('seller_id', $sellerIds)
         ->get();
