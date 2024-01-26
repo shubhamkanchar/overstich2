@@ -99,7 +99,7 @@
                                     <p class="fs-5">Your review should include facts. An honest opinion is always
                                         appreciated. If you
                                         have an issue with the product or service, please contact us from the <a
-                                            href="#" class="text-info">help centre.</a></p>
+                                            href="{{ route('contact_us') }}" class="text-info">help centre.</a></p>
                                 </div>
                             </div>
                         </div>

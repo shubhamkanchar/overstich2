@@ -167,15 +167,7 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="col-md-6 p-3">
-                            <label>Upload Cancelled cheque</label>
-                            <input class="form-control" type="file" name="cancel_cheque" placeholder="Cancel Cheque" required>
-                            @error('cancel_cheque')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                        </div>
+                        
                         <div class="col-md-12 pt-3 ps-3">
                             <h5 class="text-decoration-underline">Pick Up Address</h5>
                         </div>
@@ -274,6 +266,15 @@
                                 <option value="Saving">Saving</option>
                                 <option value="Current">Current</option>
                             </select>
+                        </div>
+                        <div class="col-md-6 p-3">
+                            <label>Upload Cancelled cheque</label>
+                            <input class="form-control" type="file" name="cancel_cheque" placeholder="Cancel Cheque" required>
+                            @error('cancel_cheque')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                         <div class="col-md-12 p-3 text-center">
                             <button type="submit" class="btn border fs-2">Submit For Approval</button>
