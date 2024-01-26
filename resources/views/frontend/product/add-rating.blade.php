@@ -109,7 +109,18 @@
             <div class="col-12 col-md-9">
                 <div class="card bg-white">
                     <div class="card-header bg-white">
-                        <h3 class="card-title fw-bold">Rate This Product</h3>
+                        <div class="d-flex justify-content-between">
+                            <h3 class="card-title fw-bold">Rate This Product</h3>
+                            <div class="div">
+                                @if(!is_null($userRating))
+                                    <form id="deleteRating" class="" action="{{ route('rating.destroy', $product->slug) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <button class="btn btn-danger"  type="submit">Delete</button>
+                                    </form>
+                                @endif
+                            </div>
+                        </div>
                         <section class='rating-widget'>
                             <!-- Rating Stars Box -->
                             <div class='rating-stars'>
