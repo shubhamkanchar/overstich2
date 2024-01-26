@@ -33,4 +33,16 @@ class RatingController extends Controller
         $userRating = Rating::where(['user_id' => $user->id, 'product_id' => $product->id])->first();
         return view('frontend.product.add-rating', compact('product', 'userRating', 'averageStarRating'));
     }
+
+    public function destroy(Request $request,Product $product) {
+        $user = auth()->user();
+        $rating = Rating::firstOrNew([
+            'user_id' => $user->id,
+            'product_id' => $product->id,
+        ]);
+
+        $rating->delete();
+        notify()->success('Rating has been removed');
+        return redirect()->back();
+    }
 }

@@ -180,6 +180,13 @@
                             </div>
                             <div class="d-block">
                                 <span>{{ $rating->review }}</span>
+                                @if ($rating->user_id == auth()->id())
+                                    <form id="deleteRating" class="d-inline" action="{{ route('rating.destroy', $product->slug) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit"><i class="bi bi-trash text-danger"></i></button>
+                                    </form>
+                                @endif
                                 <span class="text-secondary d-block mt-2">{{ ucfirst($rating->user->name)}} | {{ $rating->updated_at->format('d/m/Y')}}</span>
                             </div>
                         </div>
