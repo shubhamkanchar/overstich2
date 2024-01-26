@@ -104,7 +104,7 @@
                 @php $cartCount = count($cartItems);  @endphp
 
                 <div class="card shadow bg-white">
-                    <div class="card-header m-1 bg-white d-flex fs-4 align-items-center" style="border: 1px gray dashed ">
+                    <div class="card-header m-1 bg-white d-flex fs-4 align-items-center" style="border: 1px gray dashed" role="button" data-bs-toggle="modal" data-bs-target="#couponModal">
                         <span class="d-flex fs-4 align-items-center" style="width: 50px; height: 50px;"><img src="{{ asset('image/other/percentage.png')}}"></span> 
                         <span>Apply Coupon<i class="fs-5 bi bi-info" role="button" data-bs-toggle="modal" data-bs-target="#couponModal"></i> </span> 
                     </div>
