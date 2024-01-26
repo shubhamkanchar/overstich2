@@ -55,7 +55,8 @@ class ProductController extends Controller
                 ->orWhere('subcategory_id', $categoryId)
                 ->orWhere('category_id', $categoryId);
             });
-            
+        }else{
+            $category = Category::with(['filters','parentSubCategory', 'masterCategory'])->first();
         }
         
         $products = $products->paginate(20);
