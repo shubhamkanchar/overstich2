@@ -198,7 +198,7 @@
                                                 <i class="bi  @if (in_array($product->id, $productIds)) bi-heart-fill text-danger @else bi-heart @endif float-end add-to-wishlist"
                                                     data-add-route="{{ route('wishlist.add-wishlist', $product->id) }}"
                                                     data-remove-route="{{ route('wishlist.remove-wishlist', $product->id) }}"></i>
-                                                <span class=" d-block"> {{ ucfirst($product->title) }}</span>
+                                                <span class=" d-block"> {{ ucfirst(mb_strimwidth($product->title, 0, 15, "...")) }}</span>
 
                                                 @php $discountedPrice = $product->price - ($product->price * ($product->discount / 100));@endphp
                                                 <span>
