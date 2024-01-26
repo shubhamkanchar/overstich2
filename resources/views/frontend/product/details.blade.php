@@ -131,16 +131,19 @@
                 <li>Return/Exchange Available for 7 days</li>
             </ul>
             <span class="fs-4 mt-3 d-block">DELIVERY CHECK</span>
-            <form class="d-flex mt-3" id="pincodeForm" action="{{ route('pinocde-check') }}">
-                <div class="row">
-                    <div class="col-md-8">
+            <form class="d-flex mt-3 row" id="pincodeForm" action="{{ route('pinocde-check') }}">
+                {{-- <div class="row"> --}}
+                    <div class="col-md-6">
                         <input class="form-control" placeholder="Pincode" type="text" name="pincode" id="pincode">
-                        <span class="text-primary" id="pincodeMsg"></span>
+                        
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <button role="button" type="submit" class="text-danger ms-2 mt-2" id="checkPincode">CHECK</button>
                     </div>
-                </div>
+                    <div class="col-md-12">
+                    <span class="text-primary" id="pincodeMsg"></span>
+                    </div>
+                {{-- </div> --}}
             </form>
             
             <span class="fs-4 mt-3 d-block">PRODUCT DETAILS</span>
