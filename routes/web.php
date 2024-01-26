@@ -72,6 +72,12 @@ Route::get('/return-and-refund',function(){
 Route::get('/shipping-policy', function(){
     return view('shipping-policy');
 })->name('sp');
+Route::get('/about-us', function(){
+    return view('about-us');
+})->name('about_us');
+Route::get('/contact-us', function(){
+    return view('contact-us');
+})->name('contact_us');
 
 
 Route::resource('products', ProductController::class)->except(['index']);

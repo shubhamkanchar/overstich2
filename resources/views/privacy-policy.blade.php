@@ -46,8 +46,8 @@
             </ul>
             <p>
                 <strong>4. Cookies and Tracking:</strong><br />
-                We use cookies and similar technologies to enhance your browsing experience and collect nonpersonal information, such as IP address, browser type, and pages visited. You can manage
-                cookie preferences through your browser settings.
+                We use cookies and similar technologies to enhance your browsing experience and collect nonpersonal information, such as IP address, browser type, and pages visited. 
+                {{-- You can manage cookie preferences through your browser settings. --}}
             </p>
             <p>
                 <strong>5. Third-Party Links:</strong><br />
