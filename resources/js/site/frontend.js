@@ -55,7 +55,8 @@ const frontend = () => {
         },
     });
 
-    $('.add-to-wishlist').on('click', function() {
+    $('.add-to-wishlist').on('click', function(e) {
+        e.preventDefault();
         let product = $(this);
         let url = '';
         let method = ''

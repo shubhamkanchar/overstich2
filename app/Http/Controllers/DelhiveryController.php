@@ -18,7 +18,7 @@ class DelhiveryController extends Controller
     {
         $response = Http::accept('application/json')
             ->withHeaders([
-                'Authorization' => 'Token ' . env('DELHIVERY_TOKEN'),
+                'Authorization' => 'Token ' . env('DELHIVERY_LIVE_TOKEN'),
             ])->get(config('delhivery.'.env('STRIPE_API_MODE').'.pincode'), [
                 'filter_codes' => $request->pincode,
             ]);

@@ -55,7 +55,8 @@ class ProductController extends Controller
                 ->orWhere('subcategory_id', $categoryId)
                 ->orWhere('category_id', $categoryId);
             });
-            
+        }else{
+            $category = Category::with(['filters','parentSubCategory', 'masterCategory'])->first();
         }
         
         $products = $products->paginate(20);
@@ -122,17 +123,20 @@ class ProductController extends Controller
         if($user = auth()->user()) {
             $userId = $user->id;
         }
+        $search = $request->search ?? '';
         $productIds = Wishlist::where('user_id', $userId)->pluck('product_id')->toArray();
         $products = Product::with('images')->where('status', 'active');
         
         $seller = User::whereHas('sellerInfo', function($q) use ($slug) {
             $q->where('slug', $slug);
         })->with(['sellerInfo'])->first();
-
+        
+        $category = Category::with(['filters','parentSubCategory', 'masterCategory'])->first();
+        $filters = [];
         if($seller) {
             $products = $products->where('seller_id', $seller->id);
             $products = $products->paginate(20);
-            return view('frontend.product.product-brand', compact('products', 'productIds', 'seller')); 
+            return view('frontend.product.index', compact('category','search','products', 'productIds', 'seller','filters')); 
         } 
 
         return redirect()->route('products.index');

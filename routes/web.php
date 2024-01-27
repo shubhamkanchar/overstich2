@@ -78,7 +78,7 @@ Route::get('/about-us', function(){
 Route::get('/contact-us', function(){
     return view('contact-us');
 })->name('contact_us');
-
+Route::get('search/products', [ProductController::class,'index'])->name('search-product');
 
 Route::resource('products', ProductController::class)->except(['index']);
 Route::get('category/products/{category?}', [ProductController::class, 'index'])->name('products.index');
