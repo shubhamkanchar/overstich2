@@ -48,9 +48,8 @@ class Product extends Model
     protected static function boot()
     {
         parent::boot();
-
         static::creating(function ($product) {
-            $product->slug = Str::slug($product->title, '-');
+            $product->slug = Str::slug($product->title.'-'.$product->color.'-'.$product->brand, '-', );
         });
     }
 

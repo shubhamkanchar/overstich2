@@ -49,7 +49,7 @@
 
                                 <div class="col-12 col-md-4 mb-3">
                                     <label for="category" class="form-label">Category</label>
-                                    <select class="form-select @error('category_id') is-invalid @enderror" name="category_id" id="category" data-route="{{ route('seller.get-category', [':categoryId']) }}" >
+                                    <select class="form-select @error('category_id') is-invalid @enderror" name="category_id" id="category" data-route="{{ route('seller.get-filter-type', ':categoryId')}}" >
                                         <option value="" selected disabled>Category Type</option>
                                         @foreach($category as $cat)
                                             <option value="{{ $cat->id }}" {{ old('category_id', $product->category_id) == $cat->id ? 'selected' : '' }}>{{ $cat->category }}</option>
@@ -126,7 +126,65 @@
                                     @error('status')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
-                                </div>    
+                                </div>
+                                @if ($product->filters->count() > 0)
+                                    @foreach ($product->filters as $productFilter)
+                                        <div class="mt-2 mb-2 filter-row row justify-content-around" data-max="0" data-route="{{ route('seller.get-filter-values', ':categoryFilter')}}">
+                                            @php $values = json_decode($productFilter?->categoryFilter->value); @endphp
+                                            <div class="col col-md-5">
+                                                <label>Filter Type</label>
+                                                <select class="form-select filter-type" name="types[{{$loop->index}}]" data-target="#filterValue{{$loop->index}}" placeholder="Filter Type" required>
+                                                    <option value="">Select Filter</option>
+                                                    @foreach ($product->category?->filters as $filter)
+                                                        <option value="{{$filter->id}}" @selected($productFilter->filter_id == $filter->id)>{{ $filter->type}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col col-md-5">
+                                                <label>Value</label>
+                                                <select class="form-select filter-values" name="type_values[{{$loop->index}}]" id="filterValue{{$loop->index}}" placeholder="Value" required>
+                                                    <option value="">Select Value</option>
+                                                    @foreach ($values as $value)
+                                                        <option value="{{ $value }}" @selected($productFilter->value == $value)>{{ $value}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            @if ($loop->index == 0)
+                                                <div class="col col-md-2">
+                                                    <label> &nbsp;</label>
+                                                    <button type="button" class="form-control btn btn-primary add-filter">Add Filters</button>
+                                                </div>
+                                            @else
+                                                <div class="col col-md-2">
+                                                    <label> &nbsp;</label>
+                                                    <button type="button" class="form-control btn btn-danger remove">Remove</button>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    @endforeach
+                                @else  
+                                    <div class="mt-2 filter-row row justify-content-around" data-max="0" data-route="{{ route('seller.get-filter-values', ':categoryFilter')}}">
+                                        <div class="col col-md-5">
+                                            <label>Filter Type</label>
+                                            <select class="form-select filter-type" name="types[0]" data-target="#filterValue" placeholder="Filter Type" required>
+                                                <option value="">Select Filter</option>
+                                                @foreach ($product->category?->filters as $filter)
+                                                    <option value="{{$filter->id}}">{{ $filter->type}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col col-md-5">
+                                            <label>Value</label>
+                                            <select class="form-select filter-values" name="type_values[0]" id="filterValue" placeholder="Value" required>
+                                                <option value="">Select Value</option>
+                                            </select>
+                                        </div>
+                                        <div class="col col-md-2">
+                                            <label> &nbsp;</label>
+                                            <button type="button" class="form-control btn btn-primary add-filter">Add Filters</button>
+                                        </div>
+                                    </div>
+                                @endif    
                                 <div class="col-12 col-md-12 row p-3 mb-3" id="sizeContainer">
                                     <label for="size" class="form-label">Size and Quantity</label>
                                     @if (count($productSizes) > 0)

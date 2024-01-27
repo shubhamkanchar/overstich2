@@ -64,15 +64,26 @@ class ProductController extends Controller
             $product->description = $request->description;
         
             $product->save();
-        
             $sizes = $request->size;
             $quantities = $request->quantity;
+            $filters = $request->types;
+            $filterValues = $request->type_values;
+            
             foreach($sizes as $key => $size) {
                 $productSize = new ProductSize();
                 $productSize->product_id = $product->id;
                 $productSize->size = $size;
                 $productSize->quantity = $quantities[$key];
                 $product->sizes()->save($productSize);
+            }
+
+            $categoryFilters = CategoryFilter::whereIn('id', $filters)->get()->keyBy('id');
+
+            foreach($filters as $key => $type) {
+                $productFilter = ProductFilter::updateOrInsert(
+                    ['filter_id' => $type, 'product_id' => $product->id],
+                    ['value' => $filterValues[$key], 'type' => $categoryFilters[$type]->type ]
+                );
             }
 
             if ($request->hasFile('product_images')) {
@@ -96,6 +107,7 @@ class ProductController extends Controller
             notify()->success('Product added successfully');
             return redirect()->back();
         } catch (Exception $e) {
+            dd($e, $request->all());
             DB::rollBack(); 
             notify()->error('An error occurred while adding the product');
             return redirect()->back();
@@ -113,12 +125,13 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit($productId)
     {
+        $product = Product::where('slug', $productId)->with(['category','category.filters'])->first();
         $this->authorize('update', $product);
-        $category = Category::all();
+        $category = Category::where(['parent_id' => $product->master_category_id, 'subcategory_id' => $product->subcategory_id])->get();
         $masterCategory = Category::whereNull('parent_id')->get();
-        $subCategory = Category::where('id', $product->subcategory_id)->whereNull('subcategory_id')->whereNotNull('parent_id')->get();
+        $subCategory = Category::where('parent_id', $product->master_category_id)->whereNull('subcategory_id')->whereNotNull('parent_id')->get();
         $productSizes = ProductSize::where('product_id', $product->id)->get();
         return view('backend.seller.product.edit',compact('product', 'category', 'masterCategory','subCategory', 'productSizes'));
     }
@@ -150,6 +163,9 @@ class ProductController extends Controller
 
         $sizes = $request->size;
         $quantities = $request->quantity;
+        $filters = $request->types;
+        $filterValues = $request->type_values;
+
         $product->sizes()->delete();
         foreach($sizes as $key => $size) {
             $productSize = new ProductSize();
@@ -157,6 +173,16 @@ class ProductController extends Controller
             $productSize->size = $size;
             $productSize->quantity = $quantities[$key];
             $product->sizes()->save($productSize);
+        }
+
+        $product->filters()->whereNotIn('filter_id', $filters)->delete();
+        $categoryFilters = CategoryFilter::whereIn('id', $filters)->get()->keyBy('id');
+
+        foreach($filters as $key => $type) {
+            $productFilter = ProductFilter::updateOrInsert(
+                ['filter_id' => $type, 'product_id' => $product->id],
+                ['value' => $filterValues[$key], 'type' => $categoryFilters[$type]->type ]
+            );
         }
         
         notify()->success('Product updated successfully');
@@ -203,6 +229,12 @@ class ProductController extends Controller
     {
         return response()->json(['categoryFilter' => $categoryFilter], 200);
     }
+
+    public function getCategoryFilter(Category $category) 
+    {
+        return response()->json($category->filters->pluck('type', 'id'), 200);
+    }
+
     public function getImages(Product $product){
         $this->authorize('update', $product);
         $productImages = $product->images;

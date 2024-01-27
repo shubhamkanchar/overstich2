@@ -47,7 +47,7 @@
 
                                 <div class="col-12 col-md-4 mb-3">
                                     <label for="category" class="form-label">Category</label>
-                                    <select class="form-select @error('category_id') is-invalid @enderror" name="category_id" id="category">
+                                    <select class="form-select @error('category_id') is-invalid @enderror" name="category_id" id="category" data-route="{{ route('seller.get-filter-type', ':categoryId')}}">
                                         <option value="" selected disabled>Category Type</option>
                                         @foreach($category as $cat)
                                             <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->category }}</option>
@@ -129,12 +129,30 @@
                                 <div class="col-12 col-md-4">
                                     <label class="form-label">Upload product images</label>
                                     <input class="form-control @error('product_images') is-invalid @enderror" accept="image/*" type="file" name="product_images[]" placeholder="Minimum 5 images" multiple>
-                                    <small>(Note: Please upload file size less than 500KB )</small>
                                     @error('product_images')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 
+                                <div class="mt-2 filter-row row justify-content-around" data-max="0" data-route="{{ route('seller.get-filter-values', ':categoryFilter')}}">
+                                    <div class="col col-md-5">
+                                        <label>Filter Type</label>
+                                        <select class="form-select filter-type" name="types[0]" data-target="#filterValue" placeholder="Filter Type" required>
+                                            <option value="">Select Filter</option>
+                                        </select>
+                                    </div>
+                                    <div class="col col-md-5">
+                                        <label>Value</label>
+                                        <select class="form-select filter-values" name="type_values[0]" id="filterValue" placeholder="Value" required>
+                                            <option value="">Select Value</option>
+                                        </select>
+                                    </div>
+                                    <div class="col col-md-2">
+                                        <label> &nbsp;</label>
+                                        <button type="button" class="form-control btn btn-primary add-filter">Add Filters</button>
+                                    </div>
+                                </div>
+
                                 <div class="col-12 col-md-8 row p-3 mb-3" id="sizeContainer">
                                     <label for="size" class="form-label">Size and Quantity</label>
                                     <div class="size-row row mb-2 col-md-8 col-12">
