@@ -50,6 +50,9 @@
                             <th></th>
                             <th class="text-center">Subtotal</th>
                             <th class="text-center">Delivery Charge</th>
+                            @if ($order->coupon_discount > 0)
+                                <th class="text-center">Coupon Discount</th>
+                            @endif
                             <th class="text-center">Discount</th>
                             <th class="text-center">Total Amount</th>
                         </tr>
@@ -59,6 +62,9 @@
                             <td></td>
                             <td class="text-center">{{ $order->sub_total }}</td>
                             <td class="text-center">{{ $order->shipping_cost ?? '-' }}</td>
+                            @if ($order->coupon_discount > 0)
+                                <td class="text-center">{{ $order->coupon_discount ?? '-' }}</td>
+                            @endif
                             <td class="text-center">{{ $order->total_discount }}</td>
                             <td class="text-center">{{ $order->total_amount }}</td>
                         </tr>

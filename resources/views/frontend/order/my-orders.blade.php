@@ -235,7 +235,7 @@
                                                 <div class="d-md-block col-md-4">
                                                     <div class="ms-2">
                                                         <p class="mb-1">
-                                                            &#8377;{{ number_format($order->orderItem->total_price, 2) }}
+                                                            &#8377;{{ number_format($order->total_amount, 2) }}
                                                         </p>
                                                     </div>
                                                 </div>
