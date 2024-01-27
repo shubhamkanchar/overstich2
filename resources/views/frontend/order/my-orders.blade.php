@@ -31,6 +31,11 @@
             color: #fff;
         }
 
+        .status-rejected {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
         .status-returned {
             background-color: #17a2b8;
             color: #fff;
@@ -124,6 +129,13 @@
                                     id="ReturnedOrder" @checked(in_array('returned', $status))>
                                 <label class="form-check-label" for="ReturnedOrder">
                                     Returned
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="status[]" value="rejected"
+                                    id="RejectedOrder" @checked(in_array('rejected', $status))>
+                                <label class="form-check-label" for="RejectedOrder">
+                                    Rejected
                                 </label>
                             </div>
                             <h5>Order Time</h5>
@@ -235,6 +247,9 @@
                                                         </p>
                                                         <span class="text-secondary d-inline-block mb-2">
                                                             {{ $statusDescriptions[$order->status] }}
+                                                            @if ($order->status == 'rejected')
+                                                                {{ $order->rejection_reason}}
+                                                            @endif
                                                         </span>
                                                     </div>
                                                     <div class="ms-2">

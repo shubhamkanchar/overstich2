@@ -42,4 +42,12 @@ class OrderController extends Controller
  
         return $pdf->download($order->order_number.'.pdf');
     }
+
+    public function rejectOrder(Request $request, Order $order) {
+        $order->status = 'rejected';
+        $order->rejection_reason = $request->reason;
+        $order->update();
+        notify()->success('Order rejected successfully');
+        return redirect()->route('seller.order.list');
+    }
 }

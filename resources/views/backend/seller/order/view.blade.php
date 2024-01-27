@@ -66,8 +66,34 @@
                 </table>
             </div>
             <div class="card-footer">
-                <a class="btn btn-primary" href="{{ route('download.invoice', $order->id)}}">Generate Invoice</a>
+                @if ($order->status != 'rejected')
+                    <a class="btn btn-primary" href="{{ route('download.invoice', $order->id)}}">Generate Invoice</a>
+                    <button class="btn btn-danger reject-order" data-bs-toggle="modal" data-bs-target="#rejectionModal">Reject</button>
+                @else
+                    <p>This Order has been reject by you for reason - {{$order->rejection_reason}}</p>
+                @endif
+                
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="rejectionModal" tabindex="-1" role="dialog" aria-labelledby="rejectionModal" aria-hidden="true">
+        <div class="modal-dialog d-flex align-items-center">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Rejection Reason</h1>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('seller.order.reject', $order->id)}}" method="post" id="rejectOrder">
+                        @csrf
+                        <textarea name="reason" id="reason" class="form-control">
+
+                        </textarea>
+                        <button class="btn btn-dark float-end mt-2">Submit</button>
+                    </form>
+                    <p>Note Once rejected you wont able to revert this</p>
+                </div>
             </div>
         </div>
     </div>
 @endsection
+

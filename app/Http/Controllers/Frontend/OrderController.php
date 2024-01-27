@@ -126,6 +126,7 @@ class OrderController extends Controller
             'delivered' => 'Your order has been successfully delivered.',
             'cancelled' => 'Your order has been cancelled.',
             'returned' => 'Your order has been returned.',
+            'rejected' => 'Your order has been rejected due reason -',
         ];
 
         return view('frontend.order.my-orders', compact('orders', 'statusDescriptions', 'date', 'status', 'search', 'links'));
