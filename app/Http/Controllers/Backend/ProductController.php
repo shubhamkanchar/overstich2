@@ -127,7 +127,7 @@ class ProductController extends Controller
      */
     public function edit($productId)
     {
-        $product = Product::where('slug', $productId)->with(['category','category.filters'])->first();
+        $product = Product::where('slug', $productId)->with(['category','category.filters','filters'])->withCount('filters')->first();
         $this->authorize('update', $product);
         $category = Category::where(['parent_id' => $product->master_category_id, 'subcategory_id' => $product->subcategory_id])->get();
         $masterCategory = Category::whereNull('parent_id')->get();

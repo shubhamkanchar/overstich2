@@ -129,7 +129,7 @@
                                 </div>
                                 @if ($product->filters->count() > 0)
                                     @foreach ($product->filters as $productFilter)
-                                        <div class="mt-2 mb-2 filter-row row justify-content-around" data-max="0" data-route="{{ route('seller.get-filter-values', ':categoryFilter')}}">
+                                        <div class="mt-2 mb-2 filter-row row justify-content-around" data-max="{{ $product->category->filters->count() }}" data-route="{{ route('seller.get-filter-values', ':categoryFilter')}}">
                                             @php $values = json_decode($productFilter?->categoryFilter->value); @endphp
                                             <div class="col col-md-5">
                                                 <label>Filter Type</label>
@@ -163,14 +163,14 @@
                                         </div>
                                     @endforeach
                                 @else  
-                                    <div class="mt-2 filter-row row justify-content-around" data-max="0" data-route="{{ route('seller.get-filter-values', ':categoryFilter')}}">
+                                    <div class="mt-2 filter-row row justify-content-around" data-max="{{ $product->category->filters->count() }}" data-route="{{ route('seller.get-filter-values', ':categoryFilter')}}">
                                         <div class="col col-md-5">
                                             <label>Filter Type</label>
                                             <select class="form-select filter-type" name="types[0]" data-target="#filterValue" placeholder="Filter Type" required>
                                                 <option value="">Select Filter</option>
                                                 @foreach ($product->category?->filters as $filter)
                                                     <option value="{{$filter->id}}">{{ $filter->type}}</option>
-                                                @endforeach
+                                                    @endforeach
                                             </select>
                                         </div>
                                         <div class="col col-md-5">

@@ -60,10 +60,10 @@ class SellerProductDataTable extends DataTable
                 $editUrl = route('seller.products.edit', $row->slug);
                 $deleteUrl = route('seller.products.destroy', $row->slug);
                 $images = route('seller.products.images', $row->slug);
-                $filters = route('seller.products.filters', $row->slug);
+                // $filters = route('seller.products.filters', $row->slug);
+                // <a href="' . $filters . '" class="btn btn-sm btn-primary m-1">Filters</a>
                 return '<a href="' . $images . '" class="btn btn-sm btn-primary m-1">Images</a>
                         <a href="' . $editUrl . '" class="btn btn-sm btn-primary m-1">Edit</a>
-                        <a href="' . $filters . '" class="btn btn-sm btn-primary m-1">Filters</a>
                         <button class="btn btn-sm btn-danger m-1 delete-product" data-url="' . $deleteUrl . '">Delete</button>';
             })
             ->rawColumns(['images', 'action'])

@@ -267,7 +267,6 @@ const sellerProduct = () =>{
     });
 
     $('.add-filter').on('click', function () {
-        console.log(maxFilters);
         if($('.filter-row').length < maxFilters) {
             var newRow = $('.filter-row:first').clone();
             newRow.find('.filter_id').remove(); 
@@ -290,7 +289,7 @@ const sellerProduct = () =>{
     $('.container').on('click', '.remove', function () {
         $(this).closest('.filter-row').remove();
         if($('.add-filter').hasClass('disabled')) {
-            $('.add-filter').prop('disabled', true)
+            $('.add-filter').attr('disabled', false)
             $('.add-filter').removeClass('disabled')
         }
     });
