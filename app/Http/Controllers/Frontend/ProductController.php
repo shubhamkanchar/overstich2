@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductSize;
 use App\Models\SellerInfo;
 use App\Models\User;
 use App\Models\Wishlist;
@@ -20,13 +21,15 @@ class ProductController extends Controller
     {
         $filters = $request->except(['search','size','brand']);
         $search = $request->search ?? '';
+        $selectedBrands = $request->brand ?? [];
+        $selectedSizes = $request->size ?? [];
         $user = auth()->user();
         $userId = session()->getId();
         if($user = auth()->user()) {
             $userId = $user->id;
         }
         $productIds = Wishlist::where('user_id', $userId)->pluck('product_id')->toArray();
-        $products = Product::with(['images'])->where('status', 'active');
+        $products = Product::with(['images','seller'])->where('status', 'active');
 
         if($filters) {
             $products = $products->whereHas('filters', function($q) use ($filters) {
@@ -38,14 +41,23 @@ class ProductController extends Controller
                             $condition = 'orWhere';
                         }
                     }
-                });
-                
+                });  
             });
         }
 
-        if ($search) {
-            $products = $products->where('title', 'like', '%' . $search . '%'); 
-        }
+        $products = $products->when(!empty($search), function($query) use ($search) {
+            $query->where('title', 'like', '%' . $search . '%');
+        })->when(count($selectedSizes) > 0, function ($query) use ($selectedSizes) {
+            $query->whereHas('sizes', function ($subQuery) use ($selectedSizes) {
+                $subQuery->whereIn('size', $selectedSizes);
+            });
+        })
+        ->when(count($selectedBrands) > 0, function ($query) use ($selectedBrands) {
+            $query->whereHas('seller', function($subQuery) use ($selectedBrands) {
+                $subQuery->whereIn('id', $selectedBrands);
+            });
+        }); 
+
         
         $category = '';
         if($categoryId) {
@@ -58,9 +70,11 @@ class ProductController extends Controller
         }else{
             $category = Category::with(['filters','parentSubCategory', 'masterCategory'])->first();
         }
-        
+
+        $sizes = ProductSize::get()->unique('size')->pluck('size', 'id');
+        $brands = SellerInfo::pluck('brand', 'seller_id');
         $products = $products->paginate(20);
-        return view('frontend.product.index', compact('products', 'productIds', 'category', 'search', 'filters'));
+        return view('frontend.product.index', compact('products', 'productIds', 'category', 'search', 'filters', 'sizes', 'brands', 'selectedSizes', 'selectedBrands'));
     }
 
     /**

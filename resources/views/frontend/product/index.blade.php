@@ -109,6 +109,45 @@
                             </div>
                         </div>
                         <div class="accordion m-2" id="accordionExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBrand" aria-expanded="false" aria-controls="collapseBrand">
+                                        Brands
+                                    </button>
+                                </h2>
+                                <div id="collapseBrand" class="accordion-collapse collapse" data-bs-parent="#collapseBrand">
+                                    <div class="accordion-body">
+                                        @foreach ($brands as $brandId => $brand) 
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" multiple type="checkbox" name="brand[{{ $brandId }}]" @checked(isset($selectedBrands[$brandId])) value="{{ $brandId }}">
+                                                <label class="form-check-label" for="newOrder">
+                                                    {{ $brand }}
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSize" aria-expanded="false" aria-controls="collapseSize">
+                                        Size
+                                    </button>
+                                </h2>
+                                <div id="collapseSize" class="accordion-collapse collapse" data-bs-parent="#collapseSize">
+                                    <div class="accordion-body">
+
+                                        @foreach ($sizes as $sizeId => $size) 
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" multiple type="checkbox" name="size[{{ $sizeId }}]" @checked(isset($selectedSizes[$sizeId])) value="{{ $size }}">
+                                                <label class="form-check-label" for="newOrder">
+                                                    {{ $size }}
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
                             @foreach ($category->filters as $filter)
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">

@@ -72,7 +72,7 @@ class ProductController extends Controller
             foreach($sizes as $key => $size) {
                 $productSize = new ProductSize();
                 $productSize->product_id = $product->id;
-                $productSize->size = $size;
+                $productSize->size = strtoupper($size);
                 $productSize->quantity = $quantities[$key];
                 $product->sizes()->save($productSize);
             }
@@ -170,7 +170,7 @@ class ProductController extends Controller
         foreach($sizes as $key => $size) {
             $productSize = new ProductSize();
             $productSize->product_id = $product->id;
-            $productSize->size = $size;
+            $productSize->size = strtoupper($size);
             $productSize->quantity = $quantities[$key];
             $product->sizes()->save($productSize);
         }

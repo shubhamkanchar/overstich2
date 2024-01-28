@@ -36,6 +36,10 @@ class Product extends Model
         return $this->hasMany(Rating::class, 'product_id', 'id');
     }
 
+    public function brand() {
+        return $this->belongsTo(SellerInfo::class, 'seller_id', 'seller_id');
+    }
+
     public function filters() {
         return $this->hasMany(ProductFilter::class, 'product_id', 'id');
     }
