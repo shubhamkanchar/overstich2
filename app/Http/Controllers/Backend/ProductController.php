@@ -56,6 +56,14 @@ class ProductController extends Controller
             $product->subcategory_id = $request->subcategory_id;
             // $product->size = $request->size;
             $product->color = $request->color;
+            if ($request->hasFile('size_chart')) {
+                $sizeChart = $request->file('size_chart');
+                if ($sizeChart->isValid()) {
+                    $sizeChartName = uniqid() . '.' . $sizeChart->getClientOriginalExtension();
+                    $sizeChart->move(public_path('image/seller/' . $user->name . '/' . $product->title), $sizeChartName);
+                    $product->size_chart = 'image/seller/' . $user->name . '/' . $product->title . '/' . $sizeChartName;
+                }
+            }
             $product->price = $request->price;
             // $product->stock = $request->stock;
             $product->discount = $request->discount;
@@ -151,6 +159,7 @@ class ProductController extends Controller
         $product->master_category_id = $request->master_category_id;
         // $product->child_category_id = $request->child_category_id;
         // $product->size = $request->size;
+
         $product->color = $request->color;
         $product->price = $request->price;
         // $product->stock = $request->stock;

@@ -8,7 +8,19 @@
             appearance: none;
             margin: 0; 
         }
-
+        #fullPage {
+            display: none;
+            position: absolute;
+            z-index: 9999;
+            top: 90px;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-size: contain;
+            background-repeat: no-repeat no-repeat;
+            background-position: center center;
+            background-color: black;
+        }
         .bg-gray {
             background-color: rgb(220, 219, 219); 
         }
@@ -81,7 +93,12 @@
                 <small class="text-danger">({{ $product->discount}}% OFF)</small>
             </div>
             <div class="fs-6 mt-3 d-block"><b>SELECT SIZE</b>
-            <span class="ms-2 text-danger">Sizes Chart</span></div>
+            @if (!empty($product->size_chart))
+                <span class="ms-2 text-danger">Sizes Chart></i></span></div>
+                <div class="d-flex">
+                    <img src="{{ asset($product->size_chart) }}" onclick="zoomImage(this)" alt="" srcset="">
+                </div>
+            @endif
             <form class="d-inline" action="{{ route('cart.store')}}" method="post">
                 @csrf
                 <input type="hidden" value="{{ $product->slug }}" name="slug">
@@ -236,4 +253,15 @@
         </div>
     </div>
 </div>
+<div id="fullPage" onclick="this.style.display='none';"></div>
+@endsection
+@section('script')
+    <script>
+        const fullPage = document.querySelector('#fullPage');
+        function zoomImage(element) {
+            console.log(element.src);
+            fullPage.style.backgroundImage = 'url(' + element.src + ')';
+            fullPage.style.display = 'block';
+        }
+    </script>
 @endsection

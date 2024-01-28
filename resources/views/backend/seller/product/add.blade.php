@@ -133,6 +133,11 @@
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
+
+                                <div class="col-12 col-md-4">
+                                    <label class="form-label">Size Chart</label>
+                                    <input class="form-control" accept="image/*" type="file" name="size_chart" placeholder="Size Chart">
+                                </div>
                                 
                                 <div class="mt-2 filter-row row justify-content-around" data-max="0" data-route="{{ route('seller.get-filter-values', ':categoryFilter')}}">
                                     <div class="col col-md-5">
