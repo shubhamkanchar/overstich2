@@ -97,7 +97,7 @@
                                     <h4>Filters</h4>
                                 </div>
 
-                                @if (count($filters))
+                                @if ((count($filters) + count($selectedBrands) + count($selectedSizes)) > 0)
                                     <span class="clear-filter-icon d-none d-md-block fs-5 text-primary"
                                         onclick="clearFilters()">
                                         Clear All

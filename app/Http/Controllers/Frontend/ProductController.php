@@ -53,9 +53,7 @@ class ProductController extends Controller
             });
         })
         ->when(count($selectedBrands) > 0, function ($query) use ($selectedBrands) {
-            $query->whereHas('seller', function($subQuery) use ($selectedBrands) {
-                $subQuery->whereIn('id', $selectedBrands);
-            });
+            $query->whereIn('seller_id', $selectedBrands);
         }); 
 
         
