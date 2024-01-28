@@ -109,6 +109,9 @@
             </tr>
             <tr>
                 <th class="text-center">Product</th>
+                @if ($order->orderItem->product->images)
+                    <th class="text-center">Image</th>
+                @endif
                 <th class="text-center">Gross Amount(rs)</th>
                 <th class="text-center">Discount(rs)</th>
                 <th class="text-center">Price(rs)</th>
@@ -122,6 +125,11 @@
             <tr class="items">
                 <tr>
                     <td class="text-center">{{ ucfirst($order->orderItem->name) }}</td>
+                    @if ($order->orderItem->product->images)
+                        <td class="text-center">
+                            <img src="{{ asset($order->orderItem->product->images->first()->image_path) }}" class="img-fluid" alt="Product Image" style="max-height: 100px; width: 100px;">
+                        </td>
+                    @endif
                     <td class="text-center">{{ number_format($order->orderItem->original_price, 2) }}</td>
                     <td class="text-center">{{ number_format($order->orderItem->discount, 2) }} </td>
                     <td class="text-center">{{ number_format($order->orderItem->price, 2) }} </td>
@@ -154,7 +162,7 @@
     <hr>
     <div class="text-end">
         <span class="text-start" style="margin-right: 40px;">Grand Total:</span>
-        <span class="text-start" style="margin-left: 10px;"><b> {{ number_format($order->total_amount, 2) }} rs</b> </span>
+        <span class="text-start" style="margin-left: 10px;"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span><b> {{ number_format($order->total_amount, 2) }}</b> </span>
     </div>
     <div class="text-end" style="margin: 5px;">{{  $order->seller->name }}</div>
     <br>
