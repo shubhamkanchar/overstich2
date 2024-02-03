@@ -156,6 +156,59 @@ const frontend = () => {
         $(targetId).toggleClass('d-none');
     })
 
+    $(document).on('click','.cancel-order', function() {
+        let route = $(this).data('route');
+        let id = $(this).data('id');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You won\'t be able to revert this!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: route,
+                    data : {'id':id},
+                    beforeSend: () => {
+                        $('#popup-overlay').removeClass('d-none')
+                        $('.spinner').removeClass('d-none')
+                    },
+                    success: (response) => {
+                        Swal.fire({
+                            title: 'Success',
+                            text: response.msg,
+                            icon: 'success',
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'Okay',
+                        }).then((result) => {
+                            window.location.reload();
+                        });
+                    },
+                    error: (error) => {
+                        Swal.fire({
+                            title: 'Error',
+                            text: error.responseJSON.msg,
+                            icon: 'error',
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'Okay',
+                        }).then((result) => {
+                            window.location.reload();
+                        });
+                    },
+                    complete: () => {
+                        $('#popup-overlay').addClass('d-none')
+                        $('.spinner').addClass('d-none')
+                    }
+                });
+            }
+        });
+    })
+
 }
 
 export default frontend;

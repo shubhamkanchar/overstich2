@@ -92,7 +92,8 @@
                                 </div>
 
                                 @if (count($date) || count($status))
-                                    <span class="clear-filter-icon d-none d-md-block fs-5 text-primary" onclick="clearFilters()">
+                                    <span class="clear-filter-icon d-none d-md-block fs-5 text-primary"
+                                        onclick="clearFilters()">
                                         Clear All
                                     </span>
                                 @endif
@@ -172,7 +173,8 @@
                         <p class="ms-md-5 fs-md-3 text-center text-md-start">No order Found</p>
                         <div class="mb-3 d-flex align-items-center justify-content-between translate-y-up">
                             <div class="col-md-10 col-8 position-relative">
-                                <input type="text" name="search" value="{{ $search }}" class="form-control" placeholder="Search Your Order Here" style="border-radius: 0%">
+                                <input type="text" name="search" value="{{ $search }}" class="form-control"
+                                    placeholder="Search Your Order Here" style="border-radius: 0%">
                                 @if (!empty($search))
                                     <span class="clear-icon fs-4" onclick="clearSearch()">
                                         <i class="bi bi-x"></i>
@@ -190,7 +192,8 @@
                     @else
                         <div class="mb-3 d-flex align-items-center justify-content-between translate-y-up">
                             <div class="col-md-10 col-8 position-relative">
-                                <input type="text" name="search" value="{{ $search }}" class="form-control" placeholder="Search Your Order Here" style="border-radius: 0%">
+                                <input type="text" name="search" value="{{ $search }}" class="form-control"
+                                    placeholder="Search Your Order Here" style="border-radius: 0%">
                                 @if (!empty($search))
                                     <span class="clear-icon fs-4" onclick="clearSearch()">
                                         <i class="bi bi-x"></i>
@@ -248,13 +251,27 @@
                                                         <span class="text-secondary d-inline-block mb-2">
                                                             {{ $statusDescriptions[$order->status] }}
                                                             @if ($order->status == 'rejected')
-                                                                {{ $order->rejection_reason}}
+                                                                {{ $order->rejection_reason }}
                                                             @endif
                                                         </span>
                                                     </div>
+                                                    @if($order->status != 'cancelled')
                                                     <div class="ms-2">
-                                                        <a class="text-decoration-none text-primary fw-bold" href="{{ route('rating.add-rating', $order->orderItem->product->slug)}}" role="button"> <i class="bi bi-star-fill"></i> Review & Rate This product</a> 
+                                                        <a class="text-decoration-none text-primary fw-bold"
+                                                            href="{{ route('rating.add-rating', $order->orderItem->product->slug) }}"
+                                                            role="button"> <i class="bi bi-star-fill"></i> Review & Rate
+                                                            This product</a>
+
                                                     </div>
+                                                    <div>
+                                                        <a target="_blank" href="{{ route('user.track', $order->id) }}" class="btn btn-sm btn-primary m-1" title="Track Order">
+                                                            Track
+                                                        </a>
+                                                        <button type="button" data-route="{{ route('cancel-order') }}" data-id="{{ $order->id }}" class="btn btn-sm btn-danger m-1 cancel-order" title="Cancel Order">
+                                                            Cancel
+                                                        </button>
+                                                    </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                             {{-- @endforeach --}}
@@ -275,7 +292,6 @@
 
 @section('script')
     <script>
-
         function clearFilters() {
             document.querySelectorAll('#myOrderForm input[type="checkbox"]').forEach(checkbox => checkbox.checked = false);
             document.getElementById('myOrderForm').submit();

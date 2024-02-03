@@ -249,4 +249,38 @@ class DelhiveryController extends Controller
         dd($data);
         return response($response->body(), 200);
     }
+
+    public function cancelOrder(Request $request){
+        if(Auth::user()->role == 'seller'){
+            $order = Order::where('id', $request->id)->first();
+        }else{
+            $order = Order::where('id', $request->id)->where('user_id',Auth::user()->id)->first();
+        }
+        if(empty($order)){
+            return response()->json([
+                'msg'=>'order not found'
+            ],400);
+        }
+
+        $response = Http::accept('application/json')
+            ->withHeaders([
+                'Authorization' => 'Token ' . env('DELHIVERY_LIVE_TOKEN'),
+                'Content-Type' => 'application/json',
+            ])->post(config('delhivery.'.env('STRIPE_API_MODE').'.order-edit'), [
+                'waybill' => $order->ewaybill,
+                "cancellation"=>true
+            ]);
+        $data = json_decode($response->body(),true);
+        if($data['status']){
+            $order->update([
+                'status'=>'cancelled'
+            ]);
+            return response()->json([
+                'msg'=>'Order cancelled successfully'
+            ],200);
+        }
+        return response()->json([
+            'msg'=>'something went wrong'
+        ],400);
+    }
 }
