@@ -123,9 +123,11 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('products/{product}/filters', [SellerProductController::class, 'addFilters'])->name('products.filters');
         Route::post('products/save-filters', [SellerProductController::class, 'saveFilters'])->name('products.filters.store');
         Route::patch('products/{product}/images/{productImage}', [SellerProductController::class, 'replaceImage'])->name('product.replace-image');
+        Route::patch('products/{product}/size-chart', [SellerProductController::class, 'updateSizeChart'])->name('product.update-size-chart');
         Route::get('orders/list',[BackendOrderController::class,'index'])->name('order.list');
         Route::get('orders/{id}',[BackendOrderController::class,'viewOrder'])->name('order.view');
         Route::post('orders/{order}/reject', [BackendOrderController::class,'rejectOrder'])->name('order.reject');
+
         Route::get('order/shipment/{id}',[DelhiveryController::class,'shipmentCreate'])->name('order.shipment');
         Route::get('warehouse/create',[DelhiveryController::class,'warehouseCreate'])->name('warehouse.create');
         Route::post('warehouse/store',[DelhiveryController::class,'warehousestore'])->name('warehouse.store');

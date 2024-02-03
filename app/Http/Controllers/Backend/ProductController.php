@@ -285,6 +285,36 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
+    public function updateSizeChart(Product $product, Request $request)
+    {
+        $user = auth()->user();
+        DB::beginTransaction();
+        $this->authorize('update', $product);
+
+        $request->validate([
+            'size_chart' => 'required|image|mimes:jpeg,png,jpg',
+        ]);
+        try {
+            if ($request->hasFile('size_chart')) {
+                $sizeChart = $request->file('size_chart');
+                if ($sizeChart->isValid()) {
+                    $sizeChartName = uniqid() . '.' . $sizeChart->getClientOriginalExtension();
+                    $sizeChart->move(public_path('image/seller/' . $user->name . '/' . $product->title), $sizeChartName);
+                    $product->size_chart = 'image/seller/' . $user->name . '/' . $product->title . '/' . $sizeChartName;
+                    $product->save();
+                }
+            }
+            DB::commit();
+            notify()->success('Size Chart updated successfully');
+        } catch (Exception $e) {
+            DB::rollBack(); 
+            notify()->error('An error occurred while replacing old image');
+            return redirect()->back();
+        }
+
+        return redirect()->back();
+    }
+
     public function allProductListing(AdminProductDataTable $datatable)
     {
         return $datatable->render('backend.admin.product.index');

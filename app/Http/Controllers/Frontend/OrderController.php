@@ -340,10 +340,11 @@ class OrderController extends Controller
             \Cart::store($userIdentifier);
 
             notify()->success("Order placed successfully");
-        } else if($request->code == 'PAYMENT_SUCCESS') {   
-            $order = Order::where('payment_transaction_id', $transactionId)->first();
+        } else if($request->code == 'PAYMENT_ERROR') {   
+            $order = Order::where('payment_transaction_id', $transactionId);
             $order->delete();
             notify()->success("Payment Failed");
+            
         } 
 
         return redirect()->route('success-page');
@@ -391,8 +392,8 @@ class OrderController extends Controller
             \Cart::instance($userIdentifier)->destroy();
             \Cart::store($userIdentifier);
 
-        } else if($request->code == 'PAYMENT_SUCCESS') {
-            $order = Order::where('payment_transaction_id', $transactionId)->first();
+        } else if($request->code == 'PAYMENT_ERROR') {
+            $order = Order::where('payment_transaction_id', $transactionId);
             $order->delete();
             notify()->success("Payment Failed");
         }
