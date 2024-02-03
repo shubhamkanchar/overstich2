@@ -164,6 +164,10 @@ Route::any('phonepe-callback', [OrderController::class, 'paymentCallback'])->nam
 Route::get('/success',function(){
     return view('frontend.order.success');
 })->name('success-page');
+
+Route::get('/error',function(){
+    return view('frontend.order.error');
+})->name('error-page');
 //delhivery routes
 Route::post('pincode',[DelhiveryController::class,'pincodeCheck'])->name('pinocde-check');
 

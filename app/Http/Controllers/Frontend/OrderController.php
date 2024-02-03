@@ -340,14 +340,13 @@ class OrderController extends Controller
             \Cart::store($userIdentifier);
 
             notify()->success("Order placed successfully");
+            return redirect()->route('success-page');
         } else if($request->code == 'PAYMENT_SUCCESS') {   
             $order = Order::where('payment_transaction_id', $transactionId)->first();
             $order->delete();
             notify()->success("Payment Failed");
+            return redirect()->route('success-page');
         } 
-
-        return redirect()->route('success-page');
-
     }
 
     public function paymentCallback(Request $request) {
