@@ -111,6 +111,7 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('my-order', [OrderController::class, 'myOrders'])->name('order.my-order');
     Route::get('{product}/add-rating', [RatingController::class, 'addRating'])->name('rating.add-rating');
     Route::post('{product}/rating', [RatingController::class, 'store'])->name('rating.store');
+    Route::delete('{product}/remove-rating', [RatingController::class, 'destroy'])->name('rating.destroy');
 
     Route::group(['prefix' => 'sellers','as' => 'seller.', 'middleware' => ['role:seller'] ], function () {
         Route::resource('products',SellerProductController::class);
