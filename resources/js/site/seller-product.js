@@ -168,9 +168,9 @@ const sellerProduct = () =>{
         });
     })
 
-    $('#productForm #category').on('change', function(){
+    $('#productForm #masterCategory').on('change', function(){
         let category = $(this).val();
-        let url = $(this).data('route');
+        let url = $('#category').data('route');
         if($('.add-filter').hasClass('disabled')) {
             $('.add-filter').attr('disabled', false)
             $('.add-filter').removeClass('disabled')

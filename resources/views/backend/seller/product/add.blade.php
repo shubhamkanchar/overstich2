@@ -21,7 +21,7 @@
 
                                 <div class="col-12 col-md-4 mb-3">
                                     <label for="category" class="form-label">Master Category</label>
-                                    <select class="form-select @error('master_category_id') is-invalid @enderror" name="master_category_id" id="masterCategory" data-route="{{ route('seller.get-category', [':categoryId']) }}" edi>
+                                    <select class="form-select @error('master_category_id') is-invalid @enderror" name="master_category_id" id="masterCategory" data-route="{{ route('seller.get-category', [':categoryId']) }}" >
                                         <option value="" selected disabled>Master Category Type</option>
                                         @foreach($masterCategory as $master)
                                             <option value="{{ $master->id }}" {{ old('master_category_id') == $master->id ? 'selected' : '' }}>{{ $master->category }}</option>

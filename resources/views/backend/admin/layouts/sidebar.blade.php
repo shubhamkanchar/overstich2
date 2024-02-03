@@ -90,6 +90,22 @@
                     </div>
                 </div>
             </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingSix">
+                    <button class="accordion-button @if(Route::is('coupon.*') )  @else collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFilter" aria-expanded="false" aria-controls="flush-collapseFilter">
+                        Filter
+                    </button>
+                </h2>
+                <div id="flush-collapseFilter" class="accordion-collapse collapse @if(Route::is('filters.*') ) show @endif" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <ul>
+                            <li><a href="{{ route('category.filters.add') }}">Add Filter</a></li>
+                            <li><a href="{{ route('category.filters.view') }}">View</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
