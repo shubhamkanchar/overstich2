@@ -32,7 +32,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::domain('www.'.env('DOMAIN'))->group(function () {
+Route::domain(env('DOMAIN'))->group(function () {
     Route::get('/', function () {
         $sellers = User::where(['user_type' => 'seller'])
             ->whereHas('sellerInfo', function($query) {
@@ -83,6 +83,7 @@ Route::get('search/products', [ProductController::class,'index'])->name('search-
 Route::resource('products', ProductController::class)->except(['index']);
 Route::get('category/products/{category?}', [ProductController::class, 'index'])->name('products.index');
 Route::get('products/{seller:slug?}/get-brand', [ProductController::class, 'getProductByBrand'])->name('products.brand');
+Route::get('track/{id}',[DelhiveryController::class,'track'])->name('user.track');
 
 Route::group(['middleware'=>['auth','adminMiddleware'], 'prefix' => 'admin'],function(){
     Route::get('dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');
@@ -167,6 +168,11 @@ Route::any('phonepe-callback', [OrderController::class, 'paymentCallback'])->nam
 Route::get('/success',function(){
     return view('frontend.order.success');
 })->name('success-page');
+
+Route::get('/error',function(){
+    return view('frontend.order.error');
+})->name('error-page');
 //delhivery routes
 Route::post('pincode',[DelhiveryController::class,'pincodeCheck'])->name('pinocde-check');
+Route::post('cancel',[DelhiveryController::class,'cancelOrder'])->name('cancel-order');
 

@@ -340,15 +340,17 @@ class OrderController extends Controller
             \Cart::store($userIdentifier);
 
             notify()->success("Order placed successfully");
+
         } else if($request->code == 'PAYMENT_ERROR') {   
-            $order = Order::where('payment_transaction_id', $transactionId);
-            $order->delete();
+            try {
+                $order = Order::where('payment_transaction_id', $transactionId)->delete();
+            } catch (\Throwable $th) {
+                Log::channel('daily')->info($th);
+            }
             notify()->success("Payment Failed");
             
-        } 
-
-        return redirect()->route('success-page');
-
+            return redirect()->route('error-page');
+        }
     }
 
     public function paymentCallback(Request $request) {
@@ -393,9 +395,11 @@ class OrderController extends Controller
             \Cart::store($userIdentifier);
 
         } else if($request->code == 'PAYMENT_ERROR') {
-            $order = Order::where('payment_transaction_id', $transactionId);
-            $order->delete();
-            notify()->success("Payment Failed");
+            try {
+                $order = Order::where('payment_transaction_id', $transactionId)->delete();
+            } catch (\Throwable $th) {
+                Log::channel('daily')->info($th);
+            }
         }
 
         return response('Succeeded', 200);

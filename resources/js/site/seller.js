@@ -51,8 +51,8 @@ const seller = () => {
     // });
 
     if ($('#guideline3').length > 0 && $('#guidelinesBackend').val() == '0') {
-        // let modal = new Modal(document.getElementById('guideline3'));
-        // modal.show();
+        let modal = new Modal(document.getElementById('guideline3'));
+        modal.show();
     }
 
     $(document).on('click', '.modal1', function () {
