@@ -229,7 +229,7 @@
                                 <div class="col-xl-3 col-lg-3 col-md-4 col-5 p-0 p-lg-2 p-md-2 text-sm">
                                     <a href="{{ route('products.show', $product->slug) }}" class="text-decoration-none">
                                         <div class="card rounded mb-5 translate-y-up">
-                                            <img class="card-image-top image-height"
+                                            <img class="aspect-img"
                                                 src="{{ asset($product->images->first()->image_path) }}" alt=""
                                                 srcset="">
                                             <div class="card-body">

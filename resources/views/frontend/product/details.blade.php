@@ -46,8 +46,8 @@
                     <div id="carouselExample" class="col-12 carousel slide d-block d-md-none" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             @foreach ($product->images as $image)
-                                <div class="carousel-item {{ $loop->index == 0 ? 'active' : '' }}" style="max-height: 35vh;">
-                                    <img src="{{ asset($image->image_path) }}" class="d-block w-100" style="width: 100%; height: 100%;" alt="...">
+                                <div class="carousel-item {{ $loop->index == 0 ? 'active' : '' }}">
+                                    <img src="{{ asset($image->image_path) }}" class="d-block aspect-img" style="width: 100%; height: 100%;" alt="...">
                                 </div> 
                             @endforeach  
                         </div>

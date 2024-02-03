@@ -67,6 +67,10 @@ class ProductController extends Controller
             $product->price = $request->price;
             // $product->stock = $request->stock;
             $product->discount = $request->discount;
+            $product->net_price = $request->net_price;
+            $product->cgst_percentage = $request->cgst;
+            $product->sgst_percentage = $request->sgst;
+            $product->final_price = $request->final_price;
             $product->condition = $request->condition;
             $product->status = $request->status;
             $product->description = $request->description;
@@ -164,6 +168,10 @@ class ProductController extends Controller
         $product->price = $request->price;
         // $product->stock = $request->stock;
         $product->discount = $request->discount;
+        $product->net_price = $request->net_price;
+        $product->cgst_percentage = $request->cgst;
+        $product->sgst_percentage = $request->sgst;
+        $product->final_price = $request->final_price;
         $product->condition = $request->condition;
         $product->status = $request->status;
         $product->description = $request->description;

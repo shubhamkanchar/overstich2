@@ -68,6 +68,7 @@ class SelllerController extends Controller
     public function view(Request $request){
         $user = user::where('id',$request->id)->first();
         $sellerInfo = SellerInfo::where('seller_id',$request->id)->first();
-        return view('backend.admin.seller.view',compact('user','sellerInfo'));
+        $sellerImage = SellerInfoImage::where('seller_id',$request->id)->get();
+        return view('backend.admin.seller.view',compact('user','sellerInfo','sellerImage'));
     }
 }

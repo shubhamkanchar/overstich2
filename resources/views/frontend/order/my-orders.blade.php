@@ -218,8 +218,7 @@
                                                 <div class="ms-2 mt-2">
                                                     @if ($order->orderItem->product->images)
                                                         <img src="{{ asset($order->orderItem->product->images->first()->image_path) }}"
-                                                            class="img-fluid" alt="Product Image"
-                                                            style="max-height: 100px; width: 200px;">
+                                                            class="img-fluid aspect-img" alt="Product Image">
                                                     @endif
                                                 </div>
                                             </div>

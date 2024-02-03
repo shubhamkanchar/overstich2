@@ -24,7 +24,7 @@
                                     <div class="carousel-inner">
                                         @foreach ($order->orderItem->product->images as $index => $image)
                                             <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                                                <img src="{{ asset($image->image_path) }}" class="d-block w-100" alt="{{ $order->orderItem->name }}">
+                                                <img src="{{ asset($image->image_path) }}" class="d-block w-100 aspect-img" alt="{{ $order->orderItem->name }}">
                                             </div>
                                         @endforeach
                                     </div>

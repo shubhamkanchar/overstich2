@@ -17,7 +17,7 @@
                             </tr>
                             <tr>
                                 <td>Contact</td>
-                                <td>{{ $user->owner_contact }}</td>
+                                <td>{{ $sellerInfo->owner_contact }}</td>
                             </tr>
                             <tr>
                                 <td>Brand Name</td>
@@ -36,7 +36,7 @@
                             </tr>
                             <tr>
                                 <td>Name</td>
-                                <td>{{ $user->organization_name }}</td>
+                                <td>{{ $sellerInfo->organization_name }}</td>
                             </tr>
                             <tr>
                                 <td>Email</td>
@@ -110,11 +110,22 @@
                             </tr>
                         </table>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
+                        @if(!empty($sellerInfo->noc_doc))
                         <a class="btn btn-primary" href="{{ asset('doc/seller/'.$user->id.'/'.$sellerInfo->noc_doc) }}" target="_blank">NOC Document</a>
+                        @endif
+                        @if(!empty($sellerInfo->gst_doc))
                         <a class="btn btn-primary" href="{{ asset('doc/seller/'.$user->id.'/'.$sellerInfo->gst_doc) }}" target="_blank">GST Document</a>
+                        @endif
+                        @if(!empty($sellerInfo->cancel_cheque))
                         <a class="btn btn-primary" href="{{ asset('doc/seller/'.$user->id.'/'.$sellerInfo->cancel_cheque) }}" target="_blank">Cancel Cheque</a>
+                        @endif
                     </div>
+                    @foreach($sellerImage as $image)
+                    <div class="col-md-3">
+                        <img src="{{ asset('image/seller/'.$image->file) }}" class="w-100" style="height: 250px">
+                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>

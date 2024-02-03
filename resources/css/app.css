@@ -106,3 +106,9 @@ label {
 .home-item{
     height: 90vh;
 }
+
+.aspect-img {
+    width : 100% !important;
+    aspect-ratio:3/2 !important;
+    object-fit: contain !important;
+}

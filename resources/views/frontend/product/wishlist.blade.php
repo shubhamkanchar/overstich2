@@ -13,7 +13,7 @@
                     <div class="col-md-3">
                         <div class="card shadow rounded mb-5">
                             <a href="{{ route('products.show',$product->slug) }}">
-                                <img class="card-img-top product-image" src="{{ asset($product->images->first()->image_path) }}" alt="Card image">
+                                <img class="aspect-img" src="{{ asset($product->images->first()->image_path) }}" alt="Card image">
                             </a>
                             <div class="card-body">
                                 <span class="fs-5"><b>{{ ucfirst($product->brand)  }}</b></span>

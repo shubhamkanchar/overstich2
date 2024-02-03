@@ -85,20 +85,52 @@
                                     @error('color')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
-                                </div>    
+                                </div> 
+                                
+                                <div class="col-12 col-md-4 mb-3">
+                                    <label for="netPrice" class="form-label">Net Price</label>
+                                    <input type="number" step="0.01" placeholder="Net Price" class="form-control @error('price') is-invalid @enderror" id="netPrice" name="net_price" value="{{ old('net_price') }}" required>
+                                    @error('net_price')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 mb-3">
+                                    <label for="cgst" class="form-label">CGST Percentage (%)</label>
+                                    <input type="number" step="0.01" placeholder="cgst" class="form-control @error('cgst') is-invalid @enderror" id="cgst" name="cgst" value="{{ old('cgst') }}" required>
+                                    @error('cgst')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 mb-3">
+                                    <label for="sgst" class="form-label">SGST Percentage (%)</label>
+                                    <input type="number" step="0.01" placeholder="sgst" class="form-control @error('sgst') is-invalid @enderror" id="sgst" name="sgst" value="{{ old('sgst') }}" required>
+                                    @error('sgst')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
 
                                 <div class="col-12 col-md-4 mb-3">
                                     <label for="price" class="form-label">Price</label>
-                                    <input type="number" step="0.01" placeholder="Price" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price') }}" required>
+                                    <input type="number" step="0.01" placeholder="Price" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price') }}" required readonly>
                                     @error('price')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
 
                                 <div class="col-12 col-md-4 mb-3">
-                                    <label for="discount" class="form-label">Discount</label>
+                                    <label for="discount" class="form-label">Discount Percenatge (%)</label>
                                     <input type="number" step="0.5" min="0" max="100" placeholder="1-100%" class="form-control @error('discount') is-invalid @enderror" id="discount" name="discount" value="{{ old('discount') }}">
                                     @error('discount')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 mb-3">
+                                    <label for="finalPrice" class="form-label">Final selling price</label>
+                                    <input type="number" step="0.5" placeholder="Final selling price" class="form-control @error('final_price') is-invalid @enderror" id="finalPrice" name="final_price" value="{{ old('final_price') }}" readonly>
+                                    @error('final_price')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
