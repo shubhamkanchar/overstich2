@@ -17,6 +17,7 @@ use App\Http\Controllers\Frontend\SellerController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\WishlistController;
+use App\Models\CategoryFilter;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -99,6 +100,9 @@ Route::group(['middleware'=>['auth','adminMiddleware'], 'prefix' => 'admin'],fun
     Route::get('orders/list',[BackendOrderController::class,'index'])->name('admin.order.list');
     Route::get('orders/{id}',[BackendOrderController::class,'viewOrder'])->name('admin.order.view');
     Route::resource('categories',CategoryController::class);
+    Route::get('category-filters', [CategoryController::class, 'viewFilters'])->name('category.filters.view');
+    Route::get('category-filters/add', [CategoryController::class, 'addFilters'])->name('category.filters.add');
+    Route::get('category-filters/{categoryFilter}/edit', [CategoryController::class, 'editFilters'])->name('category.filters.edit');
     Route::get('get-sub-categories/{category}', [CategoryController::class, 'getSubCategory'])->name('admin.get-sub-categories');
     Route::resource('coupon', CouponController::class);
 });
@@ -128,6 +132,7 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('orders/list',[BackendOrderController::class,'index'])->name('order.list');
         Route::get('orders/{id}',[BackendOrderController::class,'viewOrder'])->name('order.view');
         Route::post('orders/{order}/reject', [BackendOrderController::class,'rejectOrder'])->name('order.reject');
+        Route::get('download-invoice/{id}', [BackendOrderController::class,'downloadInvoice'])->name('download.invoice');
 
         Route::get('order/shipment/{id}',[DelhiveryController::class,'shipmentCreate'])->name('order.shipment');
         Route::get('warehouse/create',[DelhiveryController::class,'warehouseCreate'])->name('warehouse.create');
@@ -142,7 +147,7 @@ Route::group(['middleware'=>['auth']],function(){
 
     });
 
-    Route::get('download-invoice/{id}', [BackendOrderController::class,'downloadInvoice'])->name('download.invoice');
+    Route::get('download-invoice/{id}', [OrderController::class,'downloadInvoice'])->name('download.invoice');
     // Route::resource('cart', CartController::class);
     Route::get('cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('add-to-cart', [CartController::class, 'store'])->name('cart.store');

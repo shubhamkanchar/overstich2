@@ -255,26 +255,28 @@
                                                         </span>
                                                     </div>
                                                     @if($order->status != 'cancelled')
-                                                    <div class="ms-2">
-                                                        <a class="text-decoration-none text-primary fw-bold"
-                                                            href="{{ route('rating.add-rating', $order->orderItem->product->slug) }}"
-                                                            role="button"> <i class="bi bi-star-fill"></i> Review & Rate
-                                                            This product</a>
+                                                        <div class="ms-2">
+                                                            <a class="text-decoration-none text-primary fw-bold"
+                                                                href="{{ route('rating.add-rating', $order->orderItem->product->slug) }}"
+                                                                role="button"> <i class="bi bi-star-fill"></i> Review & Rate
+                                                                This product</a>
 
-                                                    </div>
-                                                    <div>
-                                                        <a target="_blank" href="{{ route('user.track', $order->id) }}" class="btn btn-sm btn-primary m-1" title="Track Order">
-                                                            Track
-                                                        </a>
-                                                        <button type="button" data-route="{{ route('cancel-order') }}" data-id="{{ $order->id }}" class="btn btn-sm btn-danger m-1 cancel-order" title="Cancel Order">
-                                                            Cancel
-                                                        </button>
-                                                    </div>
+                                                        </div>
+                                                        <div>
+                                                            <a target="_blank" href="{{ route('user.track', $order->id) }}" class="btn btn-sm btn-primary m-1" title="Track Order">
+                                                                Track
+                                                            </a>
+                                                            <button type="button" data-route="{{ route('cancel-order') }}" data-id="{{ $order->id }}" class="btn btn-sm btn-danger m-1 cancel-order" title="Cancel Order">
+                                                                Cancel
+                                                            </button>
+                                                            <a class="btn btn-sm btn-success" href="{{ route('download.invoice', $order->id)}}"> <i class="bi bi-file-earmark-text"></i> Invoice</a>
+                                                        </div>
                                                     @endif
                                                 </div>
                                             </div>
                                             {{-- @endforeach --}}
                                         </div>
+                                        <hr>
                                     @endforeach
                                 </div>
                             </div>

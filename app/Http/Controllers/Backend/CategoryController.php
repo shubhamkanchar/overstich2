@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\DataTables\CategoryFilterDataTable;
 use App\DataTables\SellerCategoryTableDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
@@ -147,8 +148,21 @@ class CategoryController extends Controller
     {
         return response()->json($category->subCategory->pluck('category', 'id'), 200);
     }
+
     public function getchildCategory(Category $category) 
     {
         return response()->json($category->childCategory->pluck('category', 'id'), 200);
+    }
+
+    public function viewFilters(CategoryFilterDataTable $datatable) {
+        return $datatable->render('backend.admin.filter.index');
+    }
+
+    public function addFilters(Category $category) {
+        return view('backend.admin.filter.add', compact('category'));
+    }
+
+    public function editFilters(Category $category) {
+        return view('backend.admin.filter.edit', compact('category'));
     }
 }
