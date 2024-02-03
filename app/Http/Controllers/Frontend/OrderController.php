@@ -11,6 +11,8 @@ use App\Models\ProductSize;
 use App\Models\User;
 use App\Models\UserCoupon;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 use Cart;
 
 use App\Services\PhonePePaymentGateWay;
@@ -403,5 +405,23 @@ class OrderController extends Controller
         }
 
         return response('Succeeded', 200);
+    }
+
+    public function downloadInvoice($id) {
+        $order = Order::where('id',$id)->with(['orderItem', 'seller', 'seller.sellerInfo'])->first();
+        if($order->user_id == auth()->id())
+        {
+            if(is_null($order->invoice_number)) {
+                $order->invoice_number = '#'.strtotime('now') . $order->user_id;
+                $order->invoice_generated_at = now();
+                $order->update();
+            }
+            $pdf = Pdf::loadView('frontend.order.invoice', compact('order'));
+    
+            return $pdf->download($order->order_number.'.pdf');
+        } else {
+            abort(403);
+        }
+            
     }
 }

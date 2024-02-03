@@ -128,6 +128,7 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('orders/list',[BackendOrderController::class,'index'])->name('order.list');
         Route::get('orders/{id}',[BackendOrderController::class,'viewOrder'])->name('order.view');
         Route::post('orders/{order}/reject', [BackendOrderController::class,'rejectOrder'])->name('order.reject');
+        Route::get('download-invoice/{id}', [BackendOrderController::class,'downloadInvoice'])->name('download.invoice');
 
         Route::get('order/shipment/{id}',[DelhiveryController::class,'shipmentCreate'])->name('order.shipment');
         Route::get('warehouse/create',[DelhiveryController::class,'warehouseCreate'])->name('warehouse.create');
@@ -142,7 +143,7 @@ Route::group(['middleware'=>['auth']],function(){
 
     });
 
-    Route::get('download-invoice/{id}', [BackendOrderController::class,'downloadInvoice'])->name('download.invoice');
+    Route::get('download-invoice/{id}', [OrderController::class,'downloadInvoice'])->name('download.invoice');
     // Route::resource('cart', CartController::class);
     Route::get('cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('add-to-cart', [CartController::class, 'store'])->name('cart.store');
