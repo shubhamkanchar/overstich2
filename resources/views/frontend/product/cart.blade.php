@@ -86,13 +86,13 @@
                                     </div>
                                     <div class="col-12">
                                         @if ($quantity <= 0)
-                                            <span class="ps-4 fs-5 mt-3 d-block">Product Not Available</span>
+                                            <span class="ps-4 fs-5 d-block">Product Not Available</span>
                                         @elseif ($item->qty > $quantity)
-                                            <span class="ps-4 fs-5 mt-3 d-block">Only {{ $quantity }} quantity is left</span>
+                                            <span class="ps-4 fs-5 d-block">Only {{ $quantity }} quantity is left</span>
                                         @endif
             
                                         @if ($quantity <= 10 and !($item->qty > $quantity))
-                                            <span class="ps-4 text-danger fs-5 mt-3 d-block text-nowrap">!Hurry Only {{ $quantity }} quantity is left</span>
+                                            <span class="ps-4 text-danger fs-5 d-block text-nowrap">!Hurry Only {{ $quantity }} quantity is left</span>
                                         @endif
                                     </div>
                                 </div>
