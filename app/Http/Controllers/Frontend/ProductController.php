@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductFilter;
 use App\Models\ProductSize;
 use App\Models\SellerInfo;
 use App\Models\User;
@@ -110,7 +111,8 @@ class ProductController extends Controller
         $averageTransparencyRating = $product->ratings->avg('transparency');
         $averageFitRating = $product->ratings->avg('fit');
         $averageLengthRating = $product->ratings->avg('length');
-        return view('frontend.product.details', compact('product', 'seller', 'sellerInfo', 'productIds', 'averageLengthRating', 'averageFitRating', 'averageTransparencyRating', 'averageStarRating', 'user'));
+        $productFilters = ProductFilter::where('product_id',$product->id)->get();
+        return view('frontend.product.details', compact('product', 'seller', 'sellerInfo', 'productIds', 'averageLengthRating', 'averageFitRating', 'averageTransparencyRating', 'averageStarRating', 'user','productFilters'));
     }
 
     /**

@@ -163,10 +163,9 @@
                 <span class="fs-4 mt-3 d-block">PRODUCT DETAILS</span>
                 <ul class="ms-4">
                     <li>Colour : {{ $product->color }}</li>
-                    <li>Round neck</li>
-                    <li>Slim fit</li>
-                    <li>Material : Cotton</li>
-                    <li>Sleeveless</li>
+                    @foreach($productFilters as $filter)
+                        <li>{{ $filter->type }} : {{ $filter->value }}</li>
+                    @endforeach
                 </ul>
                 <span class="fs-4 mt-3 d-block">RATINGS</span>
                 @if ($product->ratings_count)    

@@ -71,7 +71,7 @@
                 <ol class="breadcrumb fs-5">
                     <li class="breadcrumb-item "><a class="text-decoration-none text-dark" href="{{ url('/') }}">Home</a>
                     </li>
-                    
+
                     @if ($category->masterCategory)
                         <li class="breadcrumb-item"><a
                                 href="{{ route('products.index', $category->masterCategory->id) }}">{{ $category->masterCategory->category }}</a>
@@ -83,7 +83,7 @@
                         </li>
                     @endif
                     <li class="breadcrumb-item active" aria-current="page">{{ $category->category }}</li>
-                    
+
                 </ol>
             </nav>
         </div>
@@ -97,7 +97,7 @@
                                     <h4>Filters</h4>
                                 </div>
 
-                                @if ((count($filters) + count($selectedBrands) + count($selectedSizes)) > 0)
+                                @if (count($filters) + count($selectedBrands) + count($selectedSizes) > 0)
                                     <span class="clear-filter-icon d-none d-md-block fs-5 text-primary"
                                         onclick="clearFilters()">
                                         Clear All
@@ -111,15 +111,18 @@
                         <div class="accordion m-2" id="accordionExample">
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBrand" aria-expanded="false" aria-controls="collapseBrand">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseBrand" aria-expanded="false" aria-controls="collapseBrand">
                                         Brands
                                     </button>
                                 </h2>
                                 <div id="collapseBrand" class="accordion-collapse collapse" data-bs-parent="#collapseBrand">
                                     <div class="accordion-body">
-                                        @foreach ($brands as $brandId => $brand) 
+                                        @foreach ($brands as $brandId => $brand)
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" multiple type="checkbox" name="brand[{{ $brandId }}]" @checked(isset($selectedBrands[$brandId])) value="{{ $brandId }}">
+                                                <input class="form-check-input" multiple type="checkbox"
+                                                    name="brand[{{ $brandId }}]" @checked(isset($selectedBrands[$brandId]))
+                                                    value="{{ $brandId }}">
                                                 <label class="form-check-label" for="newOrder">
                                                     {{ $brand }}
                                                 </label>
@@ -130,16 +133,19 @@
                             </div>
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSize" aria-expanded="false" aria-controls="collapseSize">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSize" aria-expanded="false" aria-controls="collapseSize">
                                         Size
                                     </button>
                                 </h2>
                                 <div id="collapseSize" class="accordion-collapse collapse" data-bs-parent="#collapseSize">
                                     <div class="accordion-body">
 
-                                        @foreach ($sizes as $sizeId => $size) 
+                                        @foreach ($sizes as $sizeId => $size)
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" multiple type="checkbox" name="size[{{ $sizeId }}]" @checked(isset($selectedSizes[$sizeId])) value="{{ $size }}">
+                                                <input class="form-check-input" multiple type="checkbox"
+                                                    name="size[{{ $sizeId }}]" @checked(isset($selectedSizes[$sizeId]))
+                                                    value="{{ $size }}">
                                                 <label class="form-check-label" for="newOrder">
                                                     {{ $size }}
                                                 </label>
@@ -207,7 +213,7 @@
                         </div>
                     @else
                         <div class="mb-3 d-flex align-items-center justify-content-between translate-y-up">
-                            <div class="col-md-10 col-8 position-relative">
+                            <div class="col-md-10 col-7 position-relative">
                                 <input type="text" name="search" value="{{ $search }}" class="form-control"
                                     placeholder="Search Your Product Here" style="border-radius: 0%">
                                 @if (!empty($search))
@@ -216,7 +222,7 @@
                                     </span>
                                 @endif
                             </div>
-                            <div class="col-md-2 col-2">
+                            <div class="col-md-2 col-3">
                                 <button type="submit" class="btn btn-dark ml-2 w-100"
                                     style="border-radius: 0%">Search</button>
                             </div>
@@ -224,9 +230,9 @@
                                 <span class="d-md-none ms-4 bi bi-filter fs-3 show-filter"></span>
                             </div>
                         </div>
-                        <div class="row justify-content-md-start justify-content-around">
+                        <div class="row ">
                             @foreach ($products as $product)
-                                <div class="col-xl-3 col-lg-3 col-md-4 col-5 p-0 p-lg-2 p-md-2 text-sm">
+                                <div class="col-xl-3 col-lg-3 col-md-4 col-6 text-sm">
                                     <a href="{{ route('products.show', $product->slug) }}" class="text-decoration-none">
                                         <div class="card rounded mb-5 translate-y-up">
                                             <img class="aspect-img"
@@ -237,7 +243,8 @@
                                                 <i class="bi  @if (in_array($product->id, $productIds)) bi-heart-fill text-danger @else bi-heart @endif float-end add-to-wishlist"
                                                     data-add-route="{{ route('wishlist.add-wishlist', $product->id) }}"
                                                     data-remove-route="{{ route('wishlist.remove-wishlist', $product->id) }}"></i>
-                                                <span class=" d-block"> {{ ucfirst(mb_strimwidth($product->title, 0, 15, "...")) }}</span>
+                                                <span class=" d-block">
+                                                    {{ ucfirst(mb_strimwidth($product->title, 0, 15, '...')) }}</span>
 
                                                 @php $discountedPrice = $product->price - ($product->price * ($product->discount / 100));@endphp
                                                 <span>

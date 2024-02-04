@@ -82,6 +82,9 @@
                                         <p class="text-start">
                                             <strong> ₹<span id="itemPrice-{{$item->id}}"> {{ number_format(($item->price * $item->qty), 2) }} </span></strong>
                                         </p>
+                                        
+                                    </div>
+                                    <div class="col-12">
                                         @if ($quantity <= 0)
                                             <span class="ps-4 fs-5 mt-3 d-block">Product Not Available</span>
                                         @elseif ($item->qty > $quantity)

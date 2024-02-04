@@ -12,6 +12,7 @@ class ProductFilter extends Model
         'value',
         'filter_id',
         'product_id',
+        'type'
     ];
 
     public function product()
