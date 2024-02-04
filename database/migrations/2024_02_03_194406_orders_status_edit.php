@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->enum('status', ['new','processed','delivered','cancelled','returned','in-transit','processing','out-for-delivery','refund-initializing','refund-initialized','refunded'])->change();
+            $table->enum('status', ['new','processed','delivered','cancelled','returned','rejected','in-transit','processing','out-for-delivery','refund-initializing','refund-initialized','refunded'])->change();
             if(!Schema::hasColumn('orders','platform_fee')){
                 $table->float('platform_fee')->default(00.00)->after('total_discount');
             }
@@ -59,7 +59,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->enum('status', ['new','processed','delivered','cancelled','returned'])->change();
+            $table->enum('status', ['new','processed','delivered','cancelled','returned','rejected'])->change();
             if(Schema::hasColumn('orders','platform_fee')){
                 $table->dropColumn('platform_fee');
             }
