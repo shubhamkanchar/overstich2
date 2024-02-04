@@ -43,7 +43,7 @@
                                         <!-- Image -->
                                     </div>
             
-                                    <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                    <div class="col-lg-5 col-6 mb-4 mb-lg-0">
                                         <!-- Data -->
                                         <p><strong>{{ $item->name }}</strong></p>
                                         @if (!empty($product->color))
@@ -54,7 +54,7 @@
                                             @csrf
                                             <input type="hidden" value="{{ $key }}" name="id">
                                             <input type="hidden" name="quantity" value="0"/>
-                                            <button type="submit" class="border-0 fs-3" data-mdb-toggle="tooltip" title="Remove item"> 
+                                            <button type="submit" class="border-0 fs-3 me-3" data-mdb-toggle="tooltip" title="Remove item"> 
                                                 <i class="bi bi-trash text-danger"></i>
                                             </button>
                                         </form>
@@ -62,25 +62,24 @@
                                         <i class="bi  @if(in_array($product->id, $productIds)) bi-heart-fill text-danger @else bi-heart  @endif  fs-3 me-4 add-to-wishlist" data-add-route="{{ route('wishlist.add-wishlist', $product->id) }}" data-remove-route="{{ route('wishlist.remove-wishlist', $product->id) }}"></i>
                                     </div>
             
-                                    <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                                        <form class="cart-update-form d-flex my-4" action="{{ route('cart.update') }}" method="POST">
+                                    <div class="col-lg-4 col-6 mb-4 mb-lg-0">
+                                        <form class="cart-update-form d-flex" action="{{ route('cart.update') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $key}}">
-                                            <button type="submit" class="border-0 fs-3 text-center mb-2 me-1" style="width: 40px; height: 40px; border-radius: 50%"
+                                            <button type="submit" class="border-0 fs-3 text-center mb-2 me-1" 
                                                 onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                <i class="bi bi-dash"></i>
+                                                <i class="bi bi-dash-square-fill"></i>
                                             </button>
             
                                             <div class="form-outline">
-                                                <input type="number" name="quantity" min="1" max="{{ $quantity}}" value="{{ $item->qty }}" type="number" class="form-control text-center" style="width: 50px; height: 40px;" />
+                                                <input type="number" name="quantity" min="1" max="{{ $quantity}}" value="{{ $item->qty }}" type="number" class="form-control text-center"/>
                                             </div>
             
-                                            <button type="submit" class="border-0 fs-3 text-center mb-2 me-1" style="width: 40px; height: 40px; border-radius: 50%"
-                                                onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                                <i class="bi bi-plus"></i>
+                                            <button type="submit" class="border-0 fs-3 text-center mb-2 ms-1" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                                <i class="bi bi-plus-square-fill"></i>
                                             </button>
                                         </form>
-                                        <p class="text-start text-md-center">
+                                        <p class="text-start">
                                             <strong> ₹<span id="itemPrice-{{$item->id}}"> {{ number_format(($item->price * $item->qty), 2) }} </span></strong>
                                         </p>
                                         @if ($quantity <= 0)

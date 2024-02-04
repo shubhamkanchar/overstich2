@@ -46,7 +46,7 @@
         @foreach ($newProducts as $newProduct)
             <div class="col-md-2 col-3 col-3 ">
                 <a href="{{ route('products.show',$newProduct->slug) }}">
-                    <img class="small-banner" width="100%" src="{{ asset($newProduct->images->first()->image_path) }}">
+                    <img class="aspect-img" src="{{ asset($newProduct->images->first()->image_path) }}">
                 </a>
             </div>
         @endforeach
@@ -56,7 +56,7 @@
         @foreach ($hotProducts as $hotProduct)
             <div class="{{ $class[$loop->index % 2] }}">
                 <a href="{{ route('products.show',$hotProduct->slug) }}">
-                    <img class="small-banner" width="100%" src="{{ asset($hotProduct->images->first()->image_path) }}">
+                    <img class="aspect-img" src="{{ asset($hotProduct->images->first()->image_path) }}">
                 </a>
             </div> 
         @endforeach
@@ -65,7 +65,7 @@
         @foreach ($products as $product)
             <div class="col-3">
                 <a href="{{ route('products.show',$product->slug) }}">
-                    <img class="small-banner" width="100%" src="{{ asset($product->images->first()->image_path) }}">
+                    <img class="aspect-img" src="{{ asset($product->images->first()->image_path) }}">
                 </a>
             </div>
         @endforeach

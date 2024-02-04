@@ -62,7 +62,7 @@
                     </div>
 
                     <div class="col-md-12 mt-2">
-                        <p>SELLER INFORMATION  <span class="d-md-none d-inline bi bi-info fs-5 seller-info" data-bs-toggle="modal" data-bs-target="#sellerInfoModal"></span> </p>
+                        <p>SELLER INFORMATION  <span class="d-md-none d-inline bi bi-info-circle-fill fs-5 seller-info" data-bs-toggle="modal" data-bs-target="#sellerInfoModal"></span> </p>
                         <div class="seller-information d-md-block d-none">
                             <span class="d-block"><b>BRAND :-</b> {{ $product->brand }}</span>
                             <span class="d-block"><b>LEGAL NAME :-</b> {{ $seller->name }}</span>
@@ -136,7 +136,7 @@
                     @endif
                     <button class="fs-5 mt-2 mb-2 btn btn-dark col-md-6" @disabled($totalQuantity <= 0)><i class="bi bi-bag me-1"></i>ADD TO BAG</button>
 
-                    <button type="button" class="fs-5 mt-2 mb-2 btn col-md-5 " @disabled($totalQuantity <= 0) >
+                    <button type="button" class="fs-5 mt-2 mb-2 btn btn-outline-dark col-md-5 " @disabled($totalQuantity <= 0) >
                         <i class="bi @if(in_array($product->id, $productIds)) bi-heart-fill text-danger @else bi-heart  @endif me-1 add-to-wishlist" data-add-route="{{ route('wishlist.add-wishlist', $product->id) }}" data-remove-route="{{ route('wishlist.remove-wishlist', $product->id) }}"></i>WISHLIST
                     </button>
                 </form>
@@ -147,12 +147,12 @@
                 <span class="fs-4 mt-3 d-block">DELIVERY CHECK</span>
                 <form class="d-flex mt-3 row" id="pincodeForm" action="{{ route('pinocde-check') }}">
                     {{-- <div class="row"> --}}
-                        <div class="col-md-6">
+                        <div class="col-8">
                             <input class="form-control" placeholder="Pincode" type="text" name="pincode" id="pincode">
                             
                         </div>
-                        <div class="col-md-6">
-                            <button role="button" type="submit" class="text-danger ms-2 mt-2" id="checkPincode">CHECK</button>
+                        <div class="col-4">
+                            <button role="button" type="submit" class="btn btn-outline-danger" id="checkPincode">CHECK</button>
                         </div>
                         <div class="col-md-12">
                         <span class="text-primary" id="pincodeMsg"></span>
@@ -171,19 +171,19 @@
                 <span class="fs-4 mt-3 d-block">RATINGS</span>
                 @if ($product->ratings_count)    
                     <h1 class="mt-3 d-block">{{ $averageStarRating ?? '0'}} <i class="bi bi-star-fill ms-2"></i></h1>
-                    <ul class="ms-4">
+                    <ul class="">
                         <li>{{ $product->ratings_count }} BUYERS RATING</li>
                     </ul>
-                    <label class="mt-3 ms-4">FIT</label>
-                    <div class="progress ms-4" style="height:10px">
+                    <label class="mt-3 ">FIT</label>
+                    <div class="progress " style="height:10px">
                         <div class="progress-bar @if($averageFitRating < 49) bg-danger @elseif($averageFitRating < 79) bg-primary @else bg-success @endif" role="progressbar" style="width: {{ $averageFitRating ?? '0'}}%" aria-valuenow="{{ $averageFitRating ?? '0'}}" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                    <label class="mt-3 ms-4">TRANSPARENCY</label>
-                    <div class="progress ms-4" style="height:10px">
+                    <label class="mt-3 ">TRANSPARENCY</label>
+                    <div class="progress " style="height:10px">
                         <div class="progress-bar @if($averageTransparencyRating < 49) bg-danger @elseif($averageTransparencyRating < 79) bg-primary @else bg-success @endif" role="progressbar" style="width: {{ $averageTransparencyRating ?? '0'}}%" aria-valuenow="{{ $averageTransparencyRating ?? '0'}}" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                    <label class="mt-3 ms-4">LENGTH</label>
-                    <div class="progress ms-4" style="height:10px">
+                    <label class="mt-3 ">LENGTH</label>
+                    <div class="progress " style="height:10px">
                         <div class="progress-bar @if($averageLengthRating < 49) bg-danger @elseif($averageLengthRating < 79) bg-primary @else bg-success @endif" role="progressbar" style="width: {{ $averageLengthRating ?? '0'}}%" aria-valuenow="{{ $averageLengthRating ?? '0'}}" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                     <span class="fs-4 mt-4 d-block">REVIEWS</span>
@@ -229,19 +229,19 @@
                 <div class="modal-body">
                     <div class="seller-info">
                         <div class="row">
-                            <div class="col">
-                                <p><strong>Brand:</strong> {{ $product->brand }}</p>
+                            <div class="col=12">
+                                <span><strong>Brand:</strong> {{ $product->brand }}</span>
                             </div>
-                            <div class="col">
-                                <p><strong>Legal Name:</strong> {{ $seller->name }}</p>
+                            <div class="col-12">
+                                <span><strong>Legal Name:</strong> {{ $seller->name }}</span>
                             </div>
                             <div class="col-12">
                                 @if ($sellerInfo)
-                                    <span><strong>Address:</strong> {{ $sellerInfo->address }},</span>
-                                    <span><strong>Locality:</strong> {{ $sellerInfo->locality }},</span>
-                                    <span><strong>City:</strong> {{ $sellerInfo->city }},</span>
-                                    <span><strong>State:</strong> {{ $sellerInfo->state }},</span>
-                                    <span><strong>Pincode:</strong> {{ $sellerInfo->pincode }}</span>
+                                    <span class="d-block"><strong>Address:</strong> {{ $sellerInfo->address }},</span>
+                                    <span class="d-block"><strong>Locality:</strong> {{ $sellerInfo->locality }},</span>
+                                    <span class="d-block"><strong>City:</strong> {{ $sellerInfo->city }},</span>
+                                    <span class="d-block"><strong>State:</strong> {{ $sellerInfo->state }},</span>
+                                    <span class="d-block"><strong>Pincode:</strong> {{ $sellerInfo->pincode }}</span>
                                 @endif
                             </div>
                         </div>
