@@ -99,7 +99,7 @@
 
                                 <div class="col-12 col-md-4 mb-3">
                                     <label for="cgst" class="form-label">CGST Percentage (%)</label>
-                                    <input type="number" step="0.01" placeholder="cgst" class="form-control @error('cgst') is-invalid @enderror" id="cgst" name="cgst"  required value="{{ old('cgst', $product->cgst_percentage) }}">
+                                    <input type="number" step="0.01" placeholder="cgst" class="form-control @error('cgst') is-invalid @enderror" id="cgst" name="cgst"  required value="{{ old('cgst', $product->cgst_percent) }}">
                                     @error('cgst')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -107,7 +107,7 @@
 
                                 <div class="col-12 col-md-4 mb-3">
                                     <label for="sgst" class="form-label">SGST Percentage (%)</label>
-                                    <input type="number" step="0.01" placeholder="sgst" class="form-control @error('sgst') is-invalid @enderror" id="sgst" name="sgst"  required value="{{ old('sgst', $product->sgst_percentage) }}">
+                                    <input type="number" step="0.01" placeholder="sgst" class="form-control @error('sgst') is-invalid @enderror" id="sgst" name="sgst"  required value="{{ old('sgst', $product->sgst_percent) }}">
                                     @error('sgst')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -167,7 +167,7 @@
                                                 <label>Filter Type</label>
                                                 <select class="form-select filter-type" name="types[{{$loop->index}}]" data-target="#filterValue{{$loop->index}}" placeholder="Filter Type" required>
                                                     <option value="">Select Filter</option>
-                                                    @foreach ($product->category?->filters as $filter)
+                                                    @foreach ($product->masterCategory?->filters as $filter)
                                                         <option value="{{$filter->id}}" @selected($productFilter->filter_id == $filter->id)>{{ $filter->type}}</option>
                                                     @endforeach
                                                 </select>

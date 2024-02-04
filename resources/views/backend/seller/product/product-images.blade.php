@@ -2,15 +2,7 @@
 
 @push('styles')
     <style>
-        .img-container {
-            height: 400px; 
-        }
-
-        .card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; 
-        }   
+        
     </style>
 @endpush
 @section('content')
@@ -19,9 +11,9 @@
         @foreach ($productImages as $image)
             <div class="col-12 col-md-4 mb-4">
                 <div class="card border-0 shadow">
-                    <div class="img-container">
-                        <img src="{{ asset($image->image_path) }}" class="card-img-top" alt="Product Image">
-                    </div>
+                    {{-- <div class="img-container"> --}}
+                        <img src="{{ asset($image->image_path) }}" class="aspect-img card-img-top" alt="Product Image">
+                    {{-- </div> --}}
                     <div class="card-body text-center">
                         <form id="imageForm{{$image->id}}" class="image-form" action="{{ route('seller.product.replace-image', ['product' => $product->slug, 'productImage' => $image->id]) }}" method="post" enctype="multipart/form-data">
                             @csrf
@@ -42,7 +34,7 @@
                 <div class="card-header bg-white mt-2 text-center">
                    <h5>Size Chart</h5>
                 </div>
-                <img src="{{ asset($product->size_chart) }}" style="width: 100%; height: 100%;" class="card-img-top p-2" alt="Product Image">
+                <img src="{{ asset($product->size_chart) }}" class="aspect-img card-img-top" alt="Product Image">
                 <div class="card-body text-center">
                     <form id="sizeChart" class="image-form" action="{{ route('seller.product.update-size-chart', ['product' => $product->slug]) }}" method="post" enctype="multipart/form-data">
                         @csrf

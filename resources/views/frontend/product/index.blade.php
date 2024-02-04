@@ -148,7 +148,7 @@
                                     </div>
                                 </div>
                             </div>
-                            @foreach ($category->filters as $filter)
+                            @foreach ($categoryFilters as $filter)
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"

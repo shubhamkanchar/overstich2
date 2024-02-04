@@ -27,6 +27,11 @@ class Product extends Model
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
+    public function masterCategory()
+    {
+        return $this->belongsTo(Category::class, 'master_category_id', 'id');
+    }
+
     public function seller()
     {
         return $this->belongsTo(User::class, 'seller_id', 'id');

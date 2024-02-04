@@ -179,13 +179,13 @@ class CategoryController extends Controller
             $categoryFilter->save();
             return redirect()->back()->with('success', 'Filter added success');
         } else {
-            return redirect()->back()->with('error', 'Filter added success');
+            return redirect()->back()->with('error', 'Filter Already Exists');
         }
     }
 
     public function updateFilter(CategoryFilter $categoryFilter,Request $request) {
-        $categoryFilter = CategoryFilter::where('id', '!=', $categoryFilter->id)->where('type', $request->type)->where('category_id', $request->category_id)->get();
-        if(count($categoryFilter) == 0 ){
+        $alreadyExists = CategoryFilter::where('id', '!=', $categoryFilter->id)->where('type', $request->type)->where('category_id', $request->category_id)->get();
+        if(count($alreadyExists) == 0 ){
             $categoryFilter->category_id = $request->category_id;
             $categoryFilter->type = $request->type;
             $categoryFilter->value = json_encode(explode(',', $request->type_values));
@@ -193,7 +193,7 @@ class CategoryController extends Controller
             return redirect()->back()->with('success', 'Filter updated success');
 
         } else {
-            return redirect()->back()->with('error', 'Filter updated success');
+            return redirect()->back()->with('error', 'Filter Already Exists');
         }
     }
 

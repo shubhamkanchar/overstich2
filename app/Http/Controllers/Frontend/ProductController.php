@@ -71,8 +71,9 @@ class ProductController extends Controller
 
         $sizes = ProductSize::get()->unique('size')->pluck('size', 'id');
         $brands = SellerInfo::pluck('brand', 'seller_id');
+        $categoryFilters = is_null($category->parent_id) ? $category->filters : $category->masterCategory->filters;
         $products = $products->paginate(20);
-        return view('frontend.product.index', compact('products', 'productIds', 'category', 'search', 'filters', 'sizes', 'brands', 'selectedSizes', 'selectedBrands'));
+        return view('frontend.product.index', compact('products', 'productIds', 'category', 'search', 'filters', 'sizes', 'brands', 'selectedSizes', 'selectedBrands','categoryFilters'));
     }
 
     /**
