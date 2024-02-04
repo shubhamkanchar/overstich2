@@ -25,7 +25,7 @@
                                     <div class="carousel-inner">
                                         @foreach ($order->orderItem->product->images as $index => $image)
                                             <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                                                <img src="{{ asset($image->image_path) }}" class="d-block w-100" alt="{{ $order->orderItem->name }}">
+                                                <img src="{{ asset($image->image_path) }}" class="d-block aspect-img" alt="{{ $order->orderItem->name }}">
                                             </div>
                                         @endforeach
                                     </div>
@@ -53,6 +53,7 @@
                             <th class="text-center">Delivery Charge</th>
                             <th class="text-center">Discount</th>
                             <th class="text-center">Total Amount</th>
+                            <th class="text-center">Created At</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -62,6 +63,7 @@
                             <td class="text-center">{{ $order->shipping_cost ?? '-' }}</td>
                             <td class="text-center">{{ $order->total_discount }}</td>
                             <td class="text-center">{{ $order->total_amount }}</td>
+                            <td class="text-center">{{ $order->created_at }}</td>
                         </tr>
                     </tbody>
                 </table>

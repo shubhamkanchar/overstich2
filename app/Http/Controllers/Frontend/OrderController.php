@@ -125,6 +125,7 @@ class OrderController extends Controller
         $statusDescriptions = [
             'new' => 'Your order is new and awaiting processing.',
             'processed' => 'Your order is currently being processed.',
+            'processing' => 'Your order is currently being processing.',
             'delivered' => 'Your order has been successfully delivered.',
             'cancelled' => 'Your order has been cancelled.',
             'returned' => 'Your order has been returned.',

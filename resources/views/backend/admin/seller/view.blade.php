@@ -122,8 +122,8 @@
                         @endif
                     </div>
                     @foreach($sellerImage as $image)
-                    <div class="col-md-3">
-                        <img src="{{ asset('image/seller/'.$image->file) }}" class="w-100" style="height: 250px">
+                    <div class="col-md-3 justify-content-center d-flex">
+                        <img src="{{ asset('image/seller/'.$image->file) }}" class="aspect-img">
                     </div>
                     @endforeach
                 </div>

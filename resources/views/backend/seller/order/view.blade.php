@@ -55,6 +55,7 @@
                             @endif
                             <th class="text-center">Discount</th>
                             <th class="text-center">Total Amount</th>
+                            <th class="text-center">Created At</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,14 +68,20 @@
                             @endif
                             <td class="text-center">{{ $order->total_discount }}</td>
                             <td class="text-center">{{ $order->total_amount }}</td>
+                            <td class="text-center">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s',$order->created_at)->format('d/m/Y H:i:s') }}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="card-footer">
                 @if ($order->status != 'rejected')
+                    @if($order->status != 'cancelled')
                     <a class="btn btn-primary" href="{{ route('download.invoice', $order->id)}}">Generate Invoice</a>
-                    <button class="btn btn-danger reject-order" data-bs-toggle="modal" data-bs-target="#rejectionModal">Reject</button>
+                        @if($order->status == 'new')
+                        <a class="btn btn-success" href="{{ route('seller.order.accept', $order->id)}}">Accept</a>
+                        <button class="btn btn-danger reject-order" data-bs-toggle="modal" data-bs-target="#rejectionModal">Reject</button>
+                        @endif
+                    @endif
                 @else
                     <p>This Order has been reject by you for reason - {{$order->rejection_reason}}</p>
                 @endif
