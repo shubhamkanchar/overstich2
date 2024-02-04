@@ -36,9 +36,9 @@ class OrderDataTable extends DataTable
             ->addColumn('action', function($order) use ($user) {
                 $route = route('admin.order.view', ['id' => $order->id]);
                 $html = '';
-                if($user->user_type == 'seller') {
+                if($user->user_type == 'seller' ) {
                     $route = route('seller.order.view', ['id' => $order->id]);    
-                    if($order->status != 'rejected') {
+                    if($order->status != 'rejected' && $order->status != 'new' && $order->status != 'cancelled') {
                         if(!empty($user->activeWarehouse)){
                             if(!empty($order->ewaybill)){
                                 $html .= '<a href="' . route('seller.order.slip',$order->id) . '" class="btn btn-sm btn-danger m-1" title="Generate Shipping Label"><i class="bi bi-filetype-pdf fs-5"></i></a>';

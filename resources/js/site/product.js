@@ -25,5 +25,27 @@ const product = () =>{
             }
         })
     })
+    $(document).on('keyup','#netPrice , #cgst, #sgst',function(){
+        priceCal();
+    })
+    function priceCal(){
+        let netPrice = $('#netPrice').val();
+        let cgst = $('#cgst').val();
+        let sgst = $('#sgst').val();
+        let totalGst = (parseFloat(netPrice) /100) * (parseFloat(cgst) + parseFloat(sgst));
+        let total = parseFloat(totalGst) + parseFloat(netPrice);
+        $('#price').val(total);
+    }
+
+    $(document).on('keyup','#discount',function(){
+        finalSellinPrice();
+    })
+    function finalSellinPrice(){
+        let price = $('#price').val();
+        let discount = $('#discount').val();
+        let totalDiscount = (parseFloat(price) /100) * parseFloat(discount);
+        let total = parseFloat(price) - parseFloat(totalDiscount);
+        $('#finalPrice').val(total);
+    }
 }
 export default product;

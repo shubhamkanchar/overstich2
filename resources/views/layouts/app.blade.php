@@ -42,7 +42,8 @@
         <img src="{{ asset('/image/spinner.svg') }}">
     </div>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white">
+        
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="{{ asset('image/logo.png') }}" style="width:50px">
@@ -206,6 +207,7 @@
         <main class="" style="min-height: 45vh;">
             @yield('content')
         </main>
+        <div id="snackbar">Some text some message..</div>
     </div>
     <footer class="mt-5" style="background-color: black;">
         <div class="container ">
@@ -246,6 +248,17 @@
     </footer>
     <x-notify::notify />
     @notifyJs
+    @if(!empty(session('msg')))
+        <script>
+                var x = document.getElementById("snackbar");
+                x.className = "show";
+                x.innerHTML = "{{ session('msg') }}"
+                setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        </script>
+        @php
+        request()->session()->forget('msg');
+        @endphp
+    @endif
 </body>
 
 </html>

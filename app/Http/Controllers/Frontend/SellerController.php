@@ -102,11 +102,14 @@ class SellerController extends Controller
                     'file' => $fileName
                 ]);
             }
-            notify()->success('Registration successful');
+            // notify()->success('Registration successful');
+            request()->session()->put('msg', 'Registration successful');
+
             DB::commit();
         } catch (Exception $e) {
             Log::info($e->getMessage());
-            notify()->error('Something went wrong! Please try again');
+            // notify()->error('Something went wrong! Please try again');
+            request()->session()->put('msg', 'Something went wrong');
             DB::rollBack();
         }
         return redirect()->back()->withErrors(['formSubmit'=>1]);

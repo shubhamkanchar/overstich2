@@ -33,7 +33,7 @@ class SellerProductDataTable extends DataTable
                 foreach ($images as $key => $image) {
                     $activeClass = $key === 0 ? 'active' : '';
                     $imageHtml .= '<div class="carousel-item ' . $activeClass . '">
-                        <img src="' . asset($image->image_path) . '" class="d-block w-100" alt="image">
+                        <img src="' . asset($image->image_path) . '" class="d-block w-100 aspect-img" alt="image">
                         <div class="carousel-caption d-none d-md-block">
                         </div>
                     </div>';

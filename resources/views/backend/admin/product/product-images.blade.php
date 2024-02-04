@@ -21,7 +21,7 @@
             <div class="col-12 col-md-4 mb-4">
                 <div class="card border-0 shadow">
                     <div class="img-container">
-                        <img src="{{ asset($image->image_path) }}" class="card-img-top" alt="Product Image">
+                        <img src="{{ asset($image->image_path) }}" class="aspect-img" alt="Product Image">
                     </div>
                 </div>
             </div>

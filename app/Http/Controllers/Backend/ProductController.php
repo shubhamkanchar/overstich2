@@ -67,6 +67,10 @@ class ProductController extends Controller
             $product->price = $request->price;
             // $product->stock = $request->stock;
             $product->discount = $request->discount;
+            $product->net_price = $request->net_price;
+            $product->cgst_percentage = $request->cgst;
+            $product->sgst_percentage = $request->sgst;
+            $product->final_price = $request->final_price;
             $product->condition = $request->condition;
             $product->status = $request->status;
             $product->description = $request->description;
@@ -106,18 +110,18 @@ class ProductController extends Controller
                         $product->images()->save($productImage);
                     } else {
                         DB::rollBack();
-                        notify()->error('Please add valid images');
+                        request()->session()->put('error','Please add valid images');
                         return redirect()->back();
                     }
                 }
             } 
             DB::commit(); 
-            notify()->success('Product added successfully');
+            request()->session()->put('success','Product added successfully');
             return redirect()->back();
         } catch (Exception $e) {
             dd($e, $request->all());
             DB::rollBack(); 
-            notify()->error('An error occurred while adding the product');
+            request()->session()->put('error','An error occurred while adding the product');
             return redirect()->back();
         }
     }
@@ -164,6 +168,10 @@ class ProductController extends Controller
         $product->price = $request->price;
         // $product->stock = $request->stock;
         $product->discount = $request->discount;
+        $product->net_price = $request->net_price;
+        $product->cgst_percentage = $request->cgst;
+        $product->sgst_percentage = $request->sgst;
+        $product->final_price = $request->final_price;
         $product->condition = $request->condition;
         $product->status = $request->status;
         $product->description = $request->description;
@@ -194,7 +202,7 @@ class ProductController extends Controller
             );
         }
         
-        notify()->success('Product updated successfully');
+        request()->session()->put('success','Product updated successfully');
         return redirect()->back();
     }
 
@@ -206,7 +214,7 @@ class ProductController extends Controller
         $this->authorize('update', $product);
         $user = auth()->user();
         if (!$product) {
-            notify()->error('Product not found.');
+            request()->session()->put('error','Product not found.');
             return redirect()->back()->with('error', 'Product not found.');
         }
 
@@ -220,7 +228,7 @@ class ProductController extends Controller
         rmdir(public_path('image/seller/'.$user->name.'/'.$product->title));
         $product->images()->delete();
         $product->delete();
-        notify()->success('Product deleted successfully.');
+        request()->session()->put('success','Product deleted successfully.');
         return redirect()->route('seller.products.index');
     }
 
@@ -275,10 +283,10 @@ class ProductController extends Controller
             if (file_exists($oldImagePath)) {
                 unlink($oldImagePath);
             }
-            notify()->success('Image replaced successfully');
+            request()->session()->put('success','Image replaced successfully');
         } catch (Exception $e) {
             DB::rollBack(); 
-            notify()->error('An error occurred while replacing old image');
+            request()->session()->put('error','An error occurred while replacing old image');
             return redirect()->back();
         }
 
@@ -305,10 +313,10 @@ class ProductController extends Controller
                 }
             }
             DB::commit();
-            notify()->success('Size Chart updated successfully');
+            request()->session()->put('success','Size Chart updated successfully');
         } catch (Exception $e) {
             DB::rollBack(); 
-            notify()->error('An error occurred while replacing old image');
+            request()->session()->put('error','An error occurred while replacing old image');
             return redirect()->back();
         }
 
@@ -354,7 +362,7 @@ class ProductController extends Controller
             );
         }
         
-        notify()->success('Filter Updated successfully');
+        request()->session()->put('success','Filter Updated successfully');
         return redirect()->back();
     }
 

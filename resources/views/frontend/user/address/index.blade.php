@@ -2,8 +2,11 @@
 @section('content')
 <div class="container">
     <div class="row mt-5 mb-2">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <h3><b>Addresses</b></h3>
+        </div>
+        <div class="col-md-6 text-end">
+            <a class="btn btn-dark" href="{{ route('addresses.create') }}">Add</a>
         </div>
     </div>
     <div class="row mt-4 mb-5">

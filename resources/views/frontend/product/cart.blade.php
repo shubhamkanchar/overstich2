@@ -35,7 +35,7 @@
                                         <div class="bg-image hover-overlay hover-zoom ripple rounded"
                                             data-mdb-ripple-color="light">
                                             <img src="{{ asset($item?->options?->image) }}"
-                                                class="w-100" alt="Blue Jeans Jacket" style="height: 150px"/>
+                                                class="aspect-img" alt="Blue Jeans Jacket" style="height: 150px"/>
                                             <a href="#!">
                                                 <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
                                             </a>
