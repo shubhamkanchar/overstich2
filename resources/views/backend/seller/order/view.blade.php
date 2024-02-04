@@ -2,7 +2,7 @@
 @section('content')
     <div class="container">
         <div class="card">
-            <div class="card-body">
+            <div class="card-body table-responsive">
                 <table class="table">
                     <thead>
                         <tr>
@@ -42,12 +42,9 @@
                             <td class="text-center">{{ $order->orderItem->discount }}</td>
                             <td class="text-center">{{ $order->orderItem->quantity }}</td>
                         </tr>
-                    </tbody>
-                </table>
-                <table class="table float-end text-end">
-                    <thead>
+                    
                         <tr>
-                            <th></th>
+                            
                             <th class="text-center">Subtotal</th>
                             <th class="text-center">Delivery Charge</th>
                             @if ($order->coupon_discount > 0)
@@ -57,10 +54,7 @@
                             <th class="text-center">Total Amount</th>
                             <th class="text-center">Created At</th>
                         </tr>
-                    </thead>
-                    <tbody>
                         <tr>
-                            <td></td>
                             <td class="text-center">{{ $order->sub_total }}</td>
                             <td class="text-center">{{ $order->shipping_cost ?? '-' }}</td>
                             @if ($order->coupon_discount > 0)
