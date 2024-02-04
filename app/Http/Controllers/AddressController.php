@@ -45,9 +45,9 @@ class AddressController extends Controller
         ]);
 
         if($address){
-            notify()->success("Address added successfully");
+            request()->session()->put('success',"Address added successfully");
         }else{
-            notify()->error("Something went wrong");
+            request()->session()->put('error',"Something went wrong");
         }
         return redirect()->route('addresses.index');
     }
@@ -88,9 +88,9 @@ class AddressController extends Controller
         ]);
 
         if($address){
-            notify()->success("Address updated successfully");
+            request()->session()->put('success',"Address updated successfully");
         }else{
-            notify()->error("Something went wrong");
+            request()->session()->put('error',"Something went wrong");
         }
         return redirect()->route('addresses.index');
     }
@@ -103,9 +103,9 @@ class AddressController extends Controller
         $address = Address::where('uuid',$request->address)->delete();
 
         if($address){
-            notify()->success("Address deleted successfully");
+            request()->session()->put('success',"Address deleted successfully");
         }else{
-            notify()->error("Something went wrong");
+            request()->session()->put('error',"Something went wrong");
         }
         return redirect()->route('addresses.index');
     }

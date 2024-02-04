@@ -47,14 +47,14 @@ class OrderController extends Controller
         $order->status = 'rejected';
         $order->rejection_reason = $request->reason;
         $order->update();
-        notify()->success('Order rejected successfully');
+        request()->session()->put('success','Order rejected successfully');
         return redirect()->route('seller.order.list');
     }
 
     public function acceptOrder(Request $request, Order $order) {
         $order->status = 'processing';
         $order->update();
-        notify()->success('Order accepted successfully');
+        request()->session()->put('success','Order accepted successfully');
         return redirect()->route('seller.order.list');
     }
 }

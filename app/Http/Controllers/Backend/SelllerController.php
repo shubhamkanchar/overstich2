@@ -27,9 +27,9 @@ class SelllerController extends Controller
         ]);
 
         if($seller){
-            notify()->success('Seller approved');
+            request()->session()->put('success','Seller approved');
         }else{
-            notify()->success('Something went wrong');
+            request()->session()->put('success','Something went wrong');
         }
         return redirect()->back();
     }
@@ -40,9 +40,9 @@ class SelllerController extends Controller
         ]);
 
         if($seller){
-            notify()->success('Seller rejected');
+            request()->session()->put('success','Seller rejected');
         }else{
-            notify()->success('Something went wrong');
+            request()->session()->put('success','Something went wrong');
         }
         return redirect()->back();
     }
@@ -58,9 +58,9 @@ class SelllerController extends Controller
         $SellerInfoImage = SellerInfoImage::where('seller_id',$request->id)->delete();
         $seller= User::where('id',$request->id)->delete();
         if($seller){
-            notify()->success('Seller deleted');
+            request()->session()->put('success','Seller deleted');
         }else{
-            notify()->success('Something went wrong');
+            request()->session()->put('success','Something went wrong');
         }
         return redirect()->back();
     }

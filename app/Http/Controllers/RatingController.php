@@ -22,7 +22,7 @@ class RatingController extends Controller
         $rating->review = $request->description; 
 
         $rating->save();
-        notify()->success('Rating has been ' . ($rating->wasRecentlyCreated ? 'added' : 'updated') . ' successfully.');
+        request()->session()->put('success','Rating has been ' . ($rating->wasRecentlyCreated ? 'added' : 'updated') . ' successfully.');
         return redirect()->route('order.my-order');
     }
 
@@ -42,7 +42,7 @@ class RatingController extends Controller
         ]);
 
         $rating->delete();
-        notify()->success('Rating has been removed');
+        request()->session()->put('success','Rating has been removed');
         return redirect()->back();
     }
 }

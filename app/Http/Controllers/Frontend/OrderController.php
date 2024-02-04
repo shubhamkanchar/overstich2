@@ -86,7 +86,8 @@ class OrderController extends Controller
         $deliveryCharge = 0;
         $totalPrice = $totalPrice + env('PLATFORM_FEE') - $totalCouponDiscounts ;
         if (Cart::instance($userIdentifier)->count() === 0) {
-            notify()->error('Your Cart is Empty');
+            // notify()->error('Your Cart is Empty');
+            request()->session()->put('msg', 'Your Cart is Empty');
             return  redirect()->route('cart.index');
         }
         return view('frontend.order.checkout', compact('cartItems', 'totalPrice', 'totalDiscount', 'totalOriginalPrice', 'deliveryCharge', 'appliedCoupons', 'totalCouponDiscounts'));
@@ -342,7 +343,8 @@ class OrderController extends Controller
             \Cart::instance($userIdentifier)->destroy();
             \Cart::store($userIdentifier);
 
-            notify()->success("Order placed successfully");
+            // notify()->success("Order placed successfully");
+            request()->session()->put('msg', 'Order placed');
 
         } else if($request->code == 'PAYMENT_ERROR') {   
             try {
@@ -350,8 +352,8 @@ class OrderController extends Controller
             } catch (\Throwable $th) {
                 Log::channel('daily')->info($th);
             }
-            notify()->success("Payment Failed");
-            
+            // notify()->success("Payment Failed");
+            request()->session()->put('msg', 'Payment Failed');
             return redirect()->route('error-page');
         }
     }

@@ -59,9 +59,11 @@ class CategoryController extends Controller
                 $categoryFilter->value = json_encode(explode(',',$filterValues[$key]));
                 $categoryFilter->save();
             }
-            notify()->success('Category added successfully');
+            // request()->session()->put('success','Category added successfully');
+            request()->session()->put('success','Category added successfully');
         } else{
-            notify()->error('Category already exists');
+            // request()->session()->put('error','Category already exists');
+            request()->session()->put('error','Category already exists');
         }
         return redirect()->back();
     }
@@ -119,9 +121,10 @@ class CategoryController extends Controller
                     $categoryFilter->value = json_encode(explode(',',$filterValues[$key]));
                     $categoryFilter->save();
                 }
-            notify()->success('Category updated successfully');
+            // request()->session()->put('success','Category updated successfully');
+            request()->session()->put('success','category updated');
         } else{
-            notify()->error('Category already exists');
+            request()->session()->put('error','Category already exists');
         }
         return redirect()->back();
     }

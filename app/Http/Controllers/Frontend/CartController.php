@@ -114,8 +114,8 @@ class CartController extends Controller
         if($user) {
             Cart::store($userIdentifier); 
         }
-        
-        notify()->success('Product Added to bag successfully');
+        $request->session()->put('msg', 'Added to bag');
+        // notify()->success('Product Added to bag successfully');
         return redirect()->back();
     }
 

@@ -38,6 +38,22 @@
     <x-notify::notify />
     @notifyJs
     @stack('scripts')
+    @if(!empty(session('success')))
+        <script type="module">
+                Swal.fire('Success',"{{ session('success') }}",'success')
+        </script>
+        @php
+        request()->session()->forget('success');
+        @endphp
+    @endif
+    @if(!empty(session('error')))
+        <script type="module">
+                Swal.fire('Error',"{{ session('error') }}",'error')
+        </script>
+        @php
+        request()->session()->forget('error');
+        @endphp
+    @endif
 </body>
 
 </html>

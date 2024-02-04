@@ -120,7 +120,7 @@ class WarehouseController extends Controller
                 'client' => $ewayBill['data']['client']
             ]);
         }
-        notify()->success('Warehouse updated successfully');
+        request()->session()->put('success','Warehouse updated successfully');
         return redirect()->back();
     }
 

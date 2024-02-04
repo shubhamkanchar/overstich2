@@ -75,9 +75,9 @@ class DelhiveryController extends Controller
                 'default' => $request->default_address ?? 0
             ];
             Warehouse::create($data);
-            notify()->success('Warehouse created successfully');
+            request()->session()->put('success','Warehouse created successfully');
         }else{
-            notify()->error($ewayBill['error'][0]);
+            request()->session()->put('error',$ewayBill['error'][0]);
         }
         return redirect()->back();
     }
@@ -161,13 +161,13 @@ class DelhiveryController extends Controller
                 $order->update([
                     'ewaybill' => $data['packages'][0]['waybill']
                 ]);
-                notify()->success('Manifest created successfully');
+                request()->session()->put('success','Manifest created successfully');
             }else{
-                notify()->error($data['rmk']);
+                request()->session()->put('error',$data['rmk']);
             }
             return redirect()->route('seller.order.list');
         } catch (Exception $e) {
-            notify()->error($e->getMessage());
+            request()->session()->put('error',$e->getMessage());
             return redirect()->back();
         }
     }
@@ -187,7 +187,7 @@ class DelhiveryController extends Controller
         if($data['packages_found'] > 0){
             return redirect()->to($data['packages'][0]['pdf_download_link']);
         }else{
-            notify()->error('Package not found');
+            request()->session()->put('error','Package not found');
             return redirect()->back(); 
         }
     }
@@ -209,9 +209,9 @@ class DelhiveryController extends Controller
             ]);
         $data = json_decode($response->body(),true);
         if(!empty($data)){
-            notify()->success($data['prepaid']);
+            request()->session()->put('success',$data['prepaid']);
         }else{
-            notify()->error('Something went wrong');
+            request()->session()->put('error','Something went wrong');
         }
         return redirect()->back();
     }
