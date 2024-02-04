@@ -42,7 +42,7 @@
         <img src="{{ asset('/image/spinner.svg') }}">
     </div>
     <div id="app">
-        
+
         <nav class="navbar navbar-expand-lg navbar-light bg-white">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -77,10 +77,13 @@
                     <ul class="navbar-nav ms-auto nav-right-content">
                         <li class="nav-item ps-xl-2 pe-xl-2">
                             <a class="nav-link" href="javascript:void(0)">
-                                <form id="searchForm" class="d-flex" action="{{ route('search-product') }}" method="GET">
-                                    <input class="form-control rounded-pill pe-4" type="text" id="example-search-input" name="search" value="{{ request()->search ?? ''}}">
+                                <form id="searchForm" class="d-flex" action="{{ route('search-product') }}"
+                                    method="GET">
+                                    <input class="form-control rounded-pill pe-4" type="text"
+                                        id="example-search-input" name="search" value="{{ request()->search ?? '' }}">
                                     <button type="submit" class="btn d-none"></button>
-                                    <i role="button" onclick="document.getElementById('searchForm').submit()" class="bi bi-search mt-1" style="margin-left:-25px"></i>
+                                    <i role="button" onclick="document.getElementById('searchForm').submit()"
+                                        class="bi bi-search mt-1" style="margin-left:-25px"></i>
                                 </form>
                             </a>
                         </li>
@@ -117,8 +120,8 @@
                             @endif
                             @if (Route::has('register'))
                                 <!-- <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                    </li> -->
+                                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                        </li> -->
                             @endif
                         @else
                             <li class="nav-item dropdown">
@@ -137,8 +140,8 @@
                                         </a>
                                     @else
                                         <!-- <a class="dropdown-item" href="{{ route('user.dashboard') }}">
-                                        Dashboard
-                                    </a> -->
+                                            Dashboard
+                                        </a> -->
                                         <a class="dropdown-item" href="{{ route('order.my-order') }}">
                                             Orders
                                         </a>
@@ -248,15 +251,39 @@
     </footer>
     <x-notify::notify />
     @notifyJs
-    @if(!empty(session('msg')))
-        <script>
-                var x = document.getElementById("snackbar");
-                x.className = "show";
-                x.innerHTML = "{{ session('msg') }}"
-                setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    @if (!empty(session('msg')))
+        <script type="module">
+            var x = document.getElementById("snackbar");
+            x.className = "show";
+            x.innerHTML = "{{ session('msg') }}"
+            setTimeout(function() {
+                x.className = x.className.replace("show", "");
+            }, 3000);
         </script>
         @php
-        request()->session()->forget('msg');
+            request()
+                ->session()
+                ->forget('msg');
+        @endphp
+    @endif
+    @if (!empty(session('success')))
+        <script type="module">
+            Swal.fire('Success', "{{ session('success') }}", 'success')
+        </script>
+        @php
+            request()
+                ->session()
+                ->forget('success');
+        @endphp
+    @endif
+    @if (!empty(session('error')))
+        <script type="module">
+            Swal.fire('Error', "{{ session('error') }}", 'error')
+        </script>
+        @php
+            request()
+                ->session()
+                ->forget('error');
         @endphp
     @endif
 </body>
