@@ -41,21 +41,6 @@
                                         <option value="0">In-Active</option>
                                     </select>
                                 </div>
-
-                                <div class="col-12 mt-2 filter-row row">
-                                    <div class="col col-md-2">
-                                        <label>Filter Type</label>
-                                        <input class="form-control" name="types[0]" placeholder="Category Type" required>
-                                    </div>
-                                    <div class="col col-md-8">
-                                        <label>Values</label>
-                                        <input class="form-control" name="type_values[0]" placeholder="Add multiple value by comma seperate" required>
-                                    </div>
-                                    <div class="col col-md-2">
-                                        <label> &nbsp;</label>
-                                        <button type="button" class="form-control btn btn-primary add-filter">Add Filters</button>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="card-footer">

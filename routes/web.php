@@ -101,8 +101,11 @@ Route::group(['middleware'=>['auth','adminMiddleware'], 'prefix' => 'admin'],fun
     Route::get('orders/{id}',[BackendOrderController::class,'viewOrder'])->name('admin.order.view');
     Route::resource('categories',CategoryController::class);
     Route::get('category-filters', [CategoryController::class, 'viewFilters'])->name('category.filters.view');
-    Route::get('category-filters/add', [CategoryController::class, 'addFilters'])->name('category.filters.add');
-    Route::get('category-filters/{categoryFilter}/edit', [CategoryController::class, 'editFilters'])->name('category.filters.edit');
+    Route::get('category-filters/add', [CategoryController::class, 'addFilter'])->name('category.filters.add');
+    Route::post('category-filters/add', [CategoryController::class, 'storeFilter'])->name('category.filters.store');
+    Route::get('category-filters/{categoryFilter}/edit', [CategoryController::class, 'editFilter'])->name('category.filters.edit');
+    Route::put('category-filters/{categoryFilter}/update', [CategoryController::class, 'updateFilter'])->name('category.filters.update');
+    Route::delete('category-filters/{categoryFilter}/delete', [CategoryController::class, 'destroyFilter'])->name('category.filters.destroy');
     Route::get('get-sub-categories/{category}', [CategoryController::class, 'getSubCategory'])->name('admin.get-sub-categories');
     Route::resource('coupon', CouponController::class);
 });

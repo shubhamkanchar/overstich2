@@ -34,7 +34,7 @@ class SellerProductRequest extends FormRequest
         ];
 
         if ($this->has('product_images')) {
-            $rules['product_images'] = 'required|array|size:5'; 
+            $rules['product_images'] = 'required|array'; 
             $rules['size'] = 'required|array'; 
             $rules['quantity'] = 'required|array'; 
             $rules['product_images.*'] = 'image'; 

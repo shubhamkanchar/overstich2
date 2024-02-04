@@ -31,9 +31,9 @@ class CategoryFilterDataTable extends DataTable
             ->addColumn('value', function($row) {
                 return implode(",", json_decode($row->value));
             })
-            ->addColumn('action', function(){
-                return '<a href="' . '' . '" class="btn btn-sm btn-primary m-1">Edit</a>
-                <button class="btn btn-sm btn-danger m-1 delete-product" data-url="' . '' . '">Delete</button>';
+            ->addColumn('action', function($row){
+                return '<a href="' . route('category.filters.edit', $row->id) . '" class="btn btn-sm btn-primary m-1">Edit</a>
+                <button class="btn btn-sm btn-danger m-1 delete-filter" data-url="' . route('category.filters.destroy', $row->id) . '">Delete</button>';
             })
             ->setRowId('id');
     }
@@ -59,7 +59,6 @@ class CategoryFilterDataTable extends DataTable
                     ->minifiedAjax()
                     //->dom('Bfrtip')
                     ->orderBy(1)
-                    ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
                         Button::make('csv'),

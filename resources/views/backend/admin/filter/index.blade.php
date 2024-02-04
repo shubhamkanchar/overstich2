@@ -14,7 +14,7 @@
 @push('scripts')
     {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
     <script type="module">
-        $('#sellercategorytable').on('click', '.delete-category',function () {
+        $('#categoryfilter-table').on('click', '.delete-filter',function () {
             const deleteUrl = $(this).data('url');
             Swal.fire({
                 title: 'Are you sure?',
@@ -35,7 +35,7 @@
                             // $('.spinner').removeClass('d-none')
                         },
                         success: (response) => {
-                            LaravelDataTables["sellercategorytable"].draw();
+                            LaravelDataTables["categoryfilter-table"].draw();
                             Swal.fire({
                                 text: response.message,
                                 icon: "success"

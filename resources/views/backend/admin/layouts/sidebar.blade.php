@@ -97,11 +97,11 @@
                         Filter
                     </button>
                 </h2>
-                <div id="flush-collapseFilter" class="accordion-collapse collapse @if(Route::is('filters.*') ) show @endif" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushExample">
+                <div id="flush-collapseFilter" class="accordion-collapse collapse @if(Route::is('category-filters.*') ) show @endif" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <ul>
                             <li><a href="{{ route('category.filters.add') }}">Add Filter</a></li>
-                            <li><a href="{{ route('category.filters.view') }}">View</a></li>
+                            <li><a href="{{ route('category.filters.view') }}">View Filters</a></li>
                         </ul>
                     </div>
                 </div>

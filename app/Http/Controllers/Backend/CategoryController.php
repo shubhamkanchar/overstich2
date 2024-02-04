@@ -50,15 +50,15 @@ class CategoryController extends Controller
                 'done_by' => Auth::user()->id
             ]);
 
-            $filterTypes = $request->types;
-            $filterValues = $request->type_values;
-            foreach($filterTypes as $key => $type) {
-                $categoryFilter = new CategoryFilter();
-                $categoryFilter->category_id = $category->id;
-                $categoryFilter->type = $type;
-                $categoryFilter->value = json_encode(explode(',',$filterValues[$key]));
-                $categoryFilter->save();
-            }
+            // $filterTypes = $request->types;
+            // $filterValues = $request->type_values;
+            // foreach($filterTypes as $key => $type) {
+            //     $categoryFilter = new CategoryFilter();
+            //     $categoryFilter->category_id = $category->id;
+            //     $categoryFilter->type = $type;
+            //     $categoryFilter->value = json_encode(explode(',',$filterValues[$key]));
+            //     $categoryFilter->save();
+            // }
             notify()->success('Category added successfully');
         } else{
             notify()->error('Category already exists');
@@ -102,23 +102,23 @@ class CategoryController extends Controller
                 $category->is_active = (int)$request->is_active;
                 $category->done_by = Auth::user()->id;
                 $category->save();
-                $filterTypes = $request->types;
-                $filterValues = $request->type_values;
-                $filterIds = $request->filter_id;
-                if($filterIds) {
-                    $category->filters()->whereNotIn('id', $filterIds)->delete();
-                }
+                // $filterTypes = $request->types;
+                // $filterValues = $request->type_values;
+                // $filterIds = $request->filter_id;
+                // if($filterIds) {
+                //     $category->filters()->whereNotIn('id', $filterIds)->delete();
+                // }
                 
-                foreach($filterTypes as $key => $type) {
-                    $categoryFilter = new CategoryFilter();
-                    if(isset($filterIds[$key])) {
-                        $categoryFilter = CategoryFilter::find($filterIds[$key]);
-                    }
-                    $categoryFilter->category_id = $category->id;
-                    $categoryFilter->type = $type;
-                    $categoryFilter->value = json_encode(explode(',',$filterValues[$key]));
-                    $categoryFilter->save();
-                }
+                // foreach($filterTypes as $key => $type) {
+                //     $categoryFilter = new CategoryFilter();
+                //     if(isset($filterIds[$key])) {
+                //         $categoryFilter = CategoryFilter::find($filterIds[$key]);
+                //     }
+                //     $categoryFilter->category_id = $category->id;
+                //     $categoryFilter->type = $type;
+                //     $categoryFilter->value = json_encode(explode(',',$filterValues[$key]));
+                //     $categoryFilter->save();
+                // }
             notify()->success('Category updated successfully');
         } else{
             notify()->error('Category already exists');
@@ -158,11 +158,54 @@ class CategoryController extends Controller
         return $datatable->render('backend.admin.filter.index');
     }
 
-    public function addFilters(Category $category) {
-        return view('backend.admin.filter.add', compact('category'));
+    public function addFilter() {
+        $categories = Category::whereNull('parent_id')->get();
+        return view('backend.admin.filter.add', compact('categories'));
     }
 
-    public function editFilters(Category $category) {
-        return view('backend.admin.filter.edit', compact('category'));
+    public function editFilter(CategoryFilter $categoryFilter) {
+        $categories = Category::whereNull('parent_id')->get();
+        return view('backend.admin.filter.edit', compact('categories','categoryFilter'));
+    }
+
+    public function storeFilter(Request $request) {
+        $categoryFilter = CategoryFilter::where('type', $request->type)->where('category_id', $request->category_id)->get();
+        if(count($categoryFilter) == 0 ){
+            $categoryFilter = new CategoryFilter();
+            $categoryFilter->category_id = $request->category_id;
+            $categoryFilter->type = $request->type;
+            $categoryFilter->value = json_encode(explode(',',$request->type_values));
+            $categoryFilter->save();
+            return redirect()->back()->with('success', 'Filter added success');
+        } else {
+            return redirect()->back()->with('error', 'Filter added success');
+        }
+    }
+
+    public function updateFilter(CategoryFilter $categoryFilter,Request $request) {
+        $categoryFilter = CategoryFilter::where('id', '!=', $categoryFilter->id)->where('type', $request->type)->where('category_id', $request->category_id)->get();
+        if(count($categoryFilter) == 0 ){
+            $categoryFilter->category_id = $request->category_id;
+            $categoryFilter->type = $request->type;
+            $categoryFilter->value = json_encode(explode(',', $request->type_values));
+            $categoryFilter->update();
+            return redirect()->back()->with('success', 'Filter updated success');
+
+        } else {
+            return redirect()->back()->with('error', 'Filter updated success');
+        }
+    }
+
+    public function destroyFilter(CategoryFilter $categoryFilter)
+    {
+        try {
+            $categoryFilter->delete();
+            return response()->json(['message' => 'Filter Deleted Successfully'], 200);
+        } catch(Exception $e) {
+            return response()->json(['message' => 'Something went wrong'], 400);
+        }
+
+        return redirect()->back();
+
     }
 }
