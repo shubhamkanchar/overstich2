@@ -143,7 +143,7 @@
                             <label for="paymentMethod" class="form-label">Select Payment Method</label>
                             <select class="form-control" id="paymentMethod" name="payment_method" required>
                                 <option value="cod" data-target="#codFields">Cash on Delivery (COD)</option>
-                                <option value="phone_pe" data-target="#PhonePay">Pay online (UPI, Card, netbaking)</option>
+                                <option value="phone_pe" data-target="#PhonePay">Pay online (UPI, Card, netbanking)</option>
                             </select>
                         </div>
         

@@ -304,7 +304,6 @@ class OrderController extends Controller
 
         Log::channel('daily')->info('Request Headers', ['headers' => $request->headers->all()]);
         $transactionId = $request->transactionId;
-        Log::channel('daily')->info('failed from phone_pay');
         if($request->code == 'PAYMENT_SUCCESS') {
             Order::where('payment_transaction_id', $transactionId)->update(['is_order_confirmed' => 1]);
             
@@ -345,7 +344,7 @@ class OrderController extends Controller
 
             // notify()->success("Order placed successfully");
             request()->session()->put('msg', 'Order placed');
-
+            return redirect()->route('success-page');//
         } else if($request->code == 'PAYMENT_ERROR') {   
             try {
                 $order = Order::where('payment_transaction_id', $transactionId)->delete();
@@ -355,7 +354,7 @@ class OrderController extends Controller
             // notify()->success("Payment Failed");
             request()->session()->put('msg', 'Payment Failed');
             return redirect()->route('error-page');
-        }
+        } 
     }
 
     public function paymentCallback(Request $request) {
