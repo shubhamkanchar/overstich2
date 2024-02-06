@@ -234,30 +234,43 @@
                             @foreach ($products as $product)
                                 <div class="col-xl-3 col-lg-3 col-md-4 col-6 text-sm">
                                     <a href="{{ route('products.show', $product->slug) }}" class="text-decoration-none">
-                                        <div class="card rounded mb-5 translate-y-up">
+                                        <div class="card rounded mb-2 translate-y-up shadow">
                                             <img class="aspect-img"
                                                 src="{{ asset($product->images->first()->image_path) }}" alt=""
                                                 srcset="">
                                             <div class="card-body">
-                                                <span class=""><b>{{ ucfirst($product->brand) }}</b></span>
-                                                <i class="bi  @if (in_array($product->id, $productIds)) bi-heart-fill text-danger @else bi-heart @endif float-end add-to-wishlist"
+                                                <i class="bi  
+                                                    @if (in_array($product->id, $productIds)) bi-heart-fill text-danger 
+                                                    @else bi-heart 
+                                                    @endif 
+                                                    float-end add-to-wishlist"
                                                     data-add-route="{{ route('wishlist.add-wishlist', $product->id) }}"
-                                                    data-remove-route="{{ route('wishlist.remove-wishlist', $product->id) }}"></i>
-                                                <span class=" d-block">
-                                                    {{ ucfirst(mb_strimwidth($product->title, 0, 15, '...')) }}</span>
+                                                    data-remove-route="{{ route('wishlist.remove-wishlist', $product->id) }}">
+                                                </i>
+                                                <div class="text-primary" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;max-width: 100ch;">
+                                                    {{ ucfirst($product->brand) }}
+                                                </div>
+                                                
+                                                <div style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;max-width: 100ch;">
+                                                    {{ ucfirst($product->title) }}
+                                                </div>
 
                                                 @php $discountedPrice = $product->price - ($product->price * ($product->discount / 100));@endphp
-                                                <span>
+
+                                                <small>
+                                                    <strike>
+                                                        <i class="bi bi-currency-rupee"></i>
+                                                        {{ round($product->price) }}
+                                                    </strike>
+                                                </small>
+                                                <small class="text-danger">
+                                                    ({{ $product->discount }}% OFF)
+                                                </small>
+                                                <p>
                                                     <strong><i
                                                             class="bi bi-currency-rupee"></i>{{ round($discountedPrice) }}
                                                     </strong>
-                                                </span>
-                                                <small>
-                                                    <strike><i
-                                                            class="bi bi-currency-rupee"></i>{{ round($product->price) }}</strike>
-                                                </small>
-                                                <small class="text-danger">({{ $product->discount }}% OFF)</small>
-
+                                                </p>
                                             </div>
                                         </div>
                                     </a>
