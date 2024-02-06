@@ -234,7 +234,7 @@
                             @foreach ($products as $product)
                                 <div class="col-xl-3 col-lg-3 col-md-4 col-6 text-sm">
                                     <a href="{{ route('products.show', $product->slug) }}" class="text-decoration-none">
-                                        <div class="card rounded mb-2 translate-y-up shadow">
+                                        <div class="card rounded mb-3 translate-y-up shadow">
                                             <img class="aspect-img"
                                                 src="{{ asset($product->images->first()->image_path) }}" alt=""
                                                 srcset="">
@@ -247,12 +247,12 @@
                                                     data-add-route="{{ route('wishlist.add-wishlist', $product->id) }}"
                                                     data-remove-route="{{ route('wishlist.remove-wishlist', $product->id) }}">
                                                 </i>
-                                                <div class="text-primary" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;max-width: 100ch;">
+                                                <div class="text-dark" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;max-width: 100ch;">
                                                     {{ ucfirst($product->brand) }}
                                                 </div>
                                                 
                                                 <div style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;max-width: 100ch;">
-                                                    {{ ucfirst($product->title) }}
+                                                    <b>{{ ucfirst($product->title) }}</b>
                                                 </div>
 
                                                 @php $discountedPrice = $product->price - ($product->price * ($product->discount / 100));@endphp

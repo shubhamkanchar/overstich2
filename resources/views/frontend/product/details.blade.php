@@ -78,9 +78,8 @@
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 pb-5">
-                <div class="fs-5"><b>{{ $product->brand }}</b></div>
-                <!-- <i class="bi @if(in_array($product->id, $productIds)) bi-heart-fill text-danger @else bi-heart  @endif add-to-wishlist fs-2 me-4 float-end" data-add-route="{{ route('wishlist.add-wishlist', $product->id) }}" data-remove-route="{{ route('wishlist.remove-wishlist', $product->id) }}"></i> -->
-                <div class="fs-6 d-block">{{ $product->title }}</div>
+                <div class="fs-5" style="word-wrap: break-word;"><b>{{ $product->brand }}</b></div>
+                <div class="fs-6 d-block" style="word-wrap: break-word;">{{ $product->title }}</div>
                 <div class="fs-6 d-block">
                     @php $discountedPrice = $product->price - ($product->price * ($product->discount / 100));@endphp
                     <span class="fs-4">

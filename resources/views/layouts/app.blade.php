@@ -42,12 +42,78 @@
         <img src="{{ asset('/image/spinner.svg') }}">
     </div>
     <div id="app">
-
         <nav class="navbar navbar-expand-lg navbar-light bg-white">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a title="Cart" class="navbar-brand" href="{{ url('/') }}">
                     <img src="{{ asset('image/logo.png') }}" style="width:50px">
                 </a>
+                <li class="nav-item ps-xl-2 pe-xl-2 d-block d-lg-none">
+                    <a class="nav-link" href="{{ route('cart.index') }}">
+                        <span class="position-relative p-1">
+                            {{-- <i class="bi bi-bag fw-bolder"></i> --}}
+                            <i class="bi bi-cart-check-fill fs-4"></i>
+                            @if ($cartCount > 0)
+                                <span
+                                    class="position-absolute top-1 start-100 translate-middle badge rounded-pill bg-secondary">
+                                    {{ $cartCount }}
+                                    <span class="visually-hidden">Cart Count</span>
+                                </span>
+                            @endif
+                        </span>
+
+                    </a>
+                </li>
+                <li class="nav-item ps-xl-2 pe-xl-2 d-block d-lg-none">
+                    <a title="Wishlist" class="nav-link" href="{{ route('wishlist.index') }}">
+                        {{-- <i class="bi bi-heart fw-bolder"></i> --}}
+                        <i class="bi bi-heart-fill fs-4"></i>
+                    </a>
+                </li>
+                @guest
+                    @if (Route::has('login'))
+                        <li  class="nav-item ps-xl-2 pe-xl-2 d-block d-lg-none">
+                            <a title="Login or Signup" class="nav-link" href="{{ route('login') }}">
+                                <i class="bi bi-person-fill fs-4"></i>
+                            </a>
+                        </li>
+                    @endif
+                @else
+                    <li class="nav-item dropdown d-block d-lg-none">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            {{ ucwords(explode(' ',Auth::user()->name)[0]) }}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            @if (Auth::user()->user_type == 'admin')
+                                <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
+                                    Dashboard
+                                </a>
+                            @elseif(Auth::user()->user_type == 'seller')
+                                <a class="dropdown-item" href="{{ route('seller.dashboard') }}">
+                                    Dashboard
+                                </a>
+                            @else
+                                <!-- <a class="dropdown-item" href="{{ route('user.dashboard') }}">
+                                                Dashboard
+                                            </a> -->
+                                <a class="dropdown-item" href="{{ route('order.my-order') }}">
+                                    Orders
+                                </a>
+                                <a class="dropdown-item" href="{{ route('addresses.index') }}">
+                                    Address
+                                </a>
+                            @endif
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
+                @endguest
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -58,37 +124,31 @@
                         @foreach ($categories as $category)
                             <div class="main-category">
                                 <li class="nav-item d-flex justify-content-between">
-                                    <a class="nav-link ms-5 d-inline-block text-nowrap fs-6 show-md-subcategory"
-                                        href="{{ route('products.index', $category->id) }}"
-                                        id="mainCategory{{ $category->id }}"
-                                        data-target="#subcategory{{ $category->id }}"
-                                        role="button"><b>{{ strtoupper($category->category) }}</b></a>
+                                    <a class="nav-link ms-5 d-inline-block text-nowrap show-md-subcategory" href="{{ route('products.index', $category->id) }}" id="mainCategory{{ $category->id }}" data-target="#subcategory{{ $category->id }}" role="button"><b>{{ strtoupper($category->category) }}</b></a>
                                     {{-- <span class="bi mt-4 bi-caret-down me-5 show-subcategory d" data-target="#subcategory{{$category->id}}"></span> --}}
                                     {{-- <span class="bi bi-caret-down align-self-center me-5 d-none d-md-inline show-subcategory" data-target="#subcategory{{ $category->id }}"></span> --}}
 
-                                    <span
-                                        class="bi fs-4 align-self-center text-secondary me-5 d-inline-block d-md-none show-sm-subcategory"
-                                        data-target="#subcategory{{ $category->id }}">></span>
+                                    <span class="bi fs-4 align-self-center text-secondary me-5 d-inline-block d-md-none show-sm-subcategory" data-target="#subcategory{{ $category->id }}">></span>
                                 </li>
                             </div>
                         @endforeach
-
                     </ul>
                     <ul class="navbar-nav ms-auto nav-right-content">
-                        <li class="nav-item ps-xl-2 pe-xl-2">
+                        <li class="nav-item ps-xl-2 pe-xl-2 ">
                             <a class="nav-link" href="javascript:void(0)">
                                 <form id="searchForm" class="d-flex" action="{{ route('search-product') }}"
                                     method="GET">
                                     <input class="form-control rounded-pill pe-4" type="text"
-                                        id="example-search-input" name="search" value="{{ request()->search ?? '' }}">
+                                        id="example-search-input" name="search"
+                                        value="{{ request()->search ?? '' }}">
                                     <button type="submit" class="btn d-none"></button>
                                     <i role="button" onclick="document.getElementById('searchForm').submit()"
                                         class="bi bi-search mt-1" style="margin-left:-25px"></i>
                                 </form>
                             </a>
                         </li>
-                        <li class="nav-item ps-xl-2 pe-xl-2">
-                            <a class="nav-link" href="{{ route('cart.index') }}">
+                        <li class="nav-item ps-xl-2 pe-xl-2 d-none d-lg-block">
+                            <a title="Cart" class="nav-link" href="{{ route('cart.index') }}">
                                 <span class="position-relative p-1">
                                     {{-- <i class="bi bi-bag fw-bolder"></i> --}}
                                     <i class="bi bi-cart-check-fill fs-4"></i>
@@ -103,31 +163,23 @@
 
                             </a>
                         </li>
-                        <li class="nav-item ps-xl-2 pe-xl-2">
-                            <a class="nav-link" href="{{ route('wishlist.index') }}">
-                                {{-- <i class="bi bi-heart fw-bolder"></i> --}}
+                        <li class="nav-item ps-xl-2 pe-xl-2 d-none d-lg-block">
+                            <a title="Wishlist" class="nav-link" href="{{ route('wishlist.index') }}">
                                 <i class="bi bi-heart-fill fs-4"></i>
                             </a>
                         </li>
                         @guest
                             @if (Route::has('login'))
-                                <li class="nav-item ps-xl-2 pe-xl-2">
-                                    <a class="nav-link" href="{{ route('login') }}">
-                                        {{-- <i class="bi bi-person fs-5"></i> --}}
+                                <li class="nav-item ps-xl-2 pe-xl-2 d-none d-lg-block">
+                                    <a title="Login or Signup" class="nav-link" href="{{ route('login') }}">
                                         <i class="bi bi-person-fill fs-4"></i>
                                     </a>
                                 </li>
                             @endif
-                            @if (Route::has('register'))
-                                <!-- <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                        </li> -->
-                            @endif
                         @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ ucwords(Auth::user()->name) }}
+                            <li class="nav-item dropdown  d-none d-lg-block">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;max-width: 100ch;">
+                                    {{ ucwords(explode(' ',Auth::user()->name)[0]) }}
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     @if (Auth::user()->user_type == 'admin')
@@ -140,8 +192,8 @@
                                         </a>
                                     @else
                                         <!-- <a class="dropdown-item" href="{{ route('user.dashboard') }}">
-                                            Dashboard
-                                        </a> -->
+                                                Dashboard
+                                            </a> -->
                                         <a class="dropdown-item" href="{{ route('order.my-order') }}">
                                             Orders
                                         </a>
