@@ -141,7 +141,7 @@
                 </form>
                 <ul class="p-0 mt-2">
                     <li>Standart Delivery in 5 - 9 days</li>
-                    <li>Return/Exchange Available for 7 days</li>
+                    <li>Exchange Available for 7 days</li>
                 </ul>
                 <span class="fs-4 mt-3 d-block">DELIVERY CHECK</span>
                 <form class="d-flex mt-3 row" id="pincodeForm" action="{{ route('pinocde-check') }}">
@@ -160,6 +160,7 @@
                 </form>
                 
                 <span class="fs-4 mt-3 d-block">PRODUCT DETAILS</span>
+                <p>{{ $product->description }}</p>
                 <ul class="ms-4">
                     <li>Colour : {{ $product->color }}</li>
                     @foreach($productFilters as $filter)

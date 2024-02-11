@@ -58,15 +58,15 @@ class CategoryFilterDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+                    ->orderBy(1);
+                    // ->buttons([
+                    //     // Button::make('excel'),
+                    //     // Button::make('csv'),
+                    //     // Button::make('pdf'),
+                    //     // Button::make('print'),
+                    //     // Button::make('reset'),
+                    //     // Button::make('reload')
+                    // ]);
     }
 
     /**
