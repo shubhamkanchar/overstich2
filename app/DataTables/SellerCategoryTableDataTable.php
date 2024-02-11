@@ -61,12 +61,12 @@ class SellerCategoryTableDataTable extends DataTable
                     // ->selectStyleSingle()
                     ->responsive(true)
                     ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
+                        // Button::make('excel'),
+                        // Button::make('csv'),
+                        // Button::make('pdf'),
+                        // Button::make('print'),
+                        // Button::make('reset'),
+                        // Button::make('reload')
                     ]);
     }
 

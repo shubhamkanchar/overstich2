@@ -19,7 +19,7 @@
 
     <!-- Scripts -->
     @notifyCss
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/sass/app.scss', 'resources/js/front.js'])
     <style>
         @media only screen and (min-width: 575px) {
             .show-md-subcategory:hover {
