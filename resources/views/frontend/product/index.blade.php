@@ -255,20 +255,17 @@
                                                     <b>{{ ucfirst($product->title) }}</b>
                                                 </div>
 
-                                                @php $discountedPrice = $product->price - ($product->price * ($product->discount / 100));@endphp
-
                                                 <small>
                                                     <strike>
                                                         <i class="bi bi-currency-rupee"></i>
-                                                        {{ round($product->price) }}
+                                                        {{ round($product->striked_price) }}
                                                     </strike>
                                                 </small>
                                                 <small class="text-danger">
                                                     ({{ $product->discount }}% OFF)
                                                 </small>
                                                 <p>
-                                                    <strong><i
-                                                            class="bi bi-currency-rupee"></i>{{ round($discountedPrice) }}
+                                                    <strong><i class="bi bi-currency-rupee"></i>{{ round($product->final_price) }}
                                                     </strong>
                                                 </p>
                                             </div>

@@ -25,6 +25,9 @@ const sellerProduct = () =>{
                 required: true,
                 number: true
             },
+            hsn: {
+                required: true,
+            },
             'quantity[]': {
                 required: true,
                 min: 1
@@ -91,7 +94,9 @@ const sellerProduct = () =>{
             },
             description: {
                 required: "Description is required.",
-                
+            },
+            hsn: {
+                required: "Description is required.",
             },
             'types[]': {
                 required: "Please select a filter type",

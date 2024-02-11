@@ -64,13 +64,19 @@ class ProductController extends Controller
                     $product->size_chart = 'image/seller/' . $user->name . '/' . $product->title . '/' . $sizeChartName;
                 }
             }
-            $product->price = $request->price;
             // $product->stock = $request->stock;
             $product->discount = $request->discount;
-            $product->net_price = $request->net_price;
+            $product->net_price = $request->net_price;//Actually it is gross amount 
+            $product->price = $request->price;//Actually it is taxable amount 
+            $product->hsn = $request->hsn;
             $product->cgst_percent = $request->cgst;
             $product->sgst_percent = $request->sgst;
-            $product->final_price = $request->final_price;
+            $product->cgst_amount = (((float)$request->net_price) /100) * (((float)$request->cgst));
+            $product->sgst_amount = (((float)$request->net_price) /100) * (((float)$request->sgst));
+            $totalGst = (((float)$request->net_price) /100) * (((float)$request->cgst) + ((float)$request->sgst));
+            $strikedPrice = (float)$request->net_price + (float)$totalGst;
+            $product->striked_price = $strikedPrice;
+            $product->final_price = $request->final_price;//Actually it is net amount
             $product->condition = $request->condition;
             $product->status = $request->status;
             $product->description = $request->description;
@@ -169,8 +175,14 @@ class ProductController extends Controller
         // $product->stock = $request->stock;
         $product->discount = $request->discount;
         $product->net_price = $request->net_price;
+        $product->hsn = $request->hsn;
         $product->cgst_percent = $request->cgst;
         $product->sgst_percent = $request->sgst;
+        $product->cgst_amount = (((float)$request->net_price) /100) * (((float)$request->cgst));
+        $product->sgst_amount = (((float)$request->net_price) /100) * (((float)$request->sgst));
+        $totalGst = (((float)$request->net_price) /100) * (((float)$request->cgst) + ((float)$request->sgst));
+        $strikedPrice = (float)$request->net_price + (float)$totalGst;
+        $product->striked_price = $strikedPrice;
         $product->final_price = $request->final_price;
         $product->condition = $request->condition;
         $product->status = $request->status;
