@@ -30,6 +30,8 @@ const frontend = () => {
             new Splide('.second-two').mount();
             new Splide('.bottom').mount();
         }
+
+        Zoom(".zoomable");
     })
 
     $('#checkoutForm').validate({

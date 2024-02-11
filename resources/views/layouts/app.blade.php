@@ -20,6 +20,8 @@
     <!-- Scripts -->
     @notifyCss
     @vite(['resources/sass/app.scss', 'resources/js/front.js'])
+    {{-- <script src="https://cdn.jsdelivr.net/npm/smooth-zoom/dist/zoom.browser.js"></script> --}}
+    <script src="{{ asset('js/TinyZoom.js') }}"></script>
     <style>
         @media only screen and (min-width: 575px) {
             .show-md-subcategory:hover {

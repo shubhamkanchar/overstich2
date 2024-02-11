@@ -7,7 +7,7 @@
                 @foreach ($sellers as $seller)
                     <li class="splide__slide">
                         <img src="{{ asset('image/seller/' . $seller->sellerInfoImage->first()->file) }}"
-                            alt="{{ $seller->sellerInfo->brand }}" class="aspect-img">
+                            alt="{{ $seller->sellerInfo->brand }}" class="aspect-img" style="aspect-ratio: 3/2 !important;">
                     </li>
                 @endforeach
             </ul>
@@ -83,7 +83,7 @@
                 @foreach ($sellers as $seller)
                     <li class="splide__slide">
                         <img src="{{ asset('image/seller/' . $seller->sellerInfoImage->first()->file) }}"
-                            alt="{{ $seller->sellerInfo->brand }}" class="aspect-img" style="width:100%">
+                            alt="{{ $seller->sellerInfo->brand }}" class="aspect-img" style="width:100%;aspect-ratio: 3/2 !important;">
                     </li>
                 @endforeach
             </ul>

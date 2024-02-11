@@ -109,7 +109,7 @@ label {
 
 .aspect-img {
     width: 100% !important;
-    aspect-ratio: 3/2 !important;
+    aspect-ratio: 2/2 !important;
     object-fit: contain !important;
 }
 
@@ -160,3 +160,17 @@ label {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
   } */
+
+  .fullscreen-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    backdrop-filter: blur(5px);
+  }
