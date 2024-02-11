@@ -31,7 +31,7 @@ const frontend = () => {
             new Splide('.bottom').mount();
         }
 
-        Zoom(".zoomable");
+        // Zoom(".zoomable");
     })
 
     $('#checkoutForm').validate({

@@ -34,6 +34,26 @@
                 position: absolute !important;
             }
         }
+
+        .aspect-img {
+            width: 100% !important;
+            aspect-ratio: 2/2 !important;
+            object-fit: contain !important;
+        }
+
+        .fullscreen-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            backdrop-filter: blur(5px);
+        }
     </style>
     @stack('styles')
 </head>
@@ -73,7 +93,7 @@
                 </li>
                 @guest
                     @if (Route::has('login'))
-                        <li  class="nav-item ps-xl-2 pe-xl-2 d-block d-lg-none">
+                        <li class="nav-item ps-xl-2 pe-xl-2 d-block d-lg-none">
                             <a title="Login or Signup" class="nav-link" href="{{ route('login') }}">
                                 <i class="bi bi-person-fill fs-4"></i>
                             </a>
@@ -83,7 +103,7 @@
                     <li class="nav-item dropdown d-block d-lg-none">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ ucwords(explode(' ',Auth::user()->name)[0]) }}
+                            {{ ucwords(explode(' ', Auth::user()->name)[0]) }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             @if (Auth::user()->user_type == 'admin')
@@ -96,8 +116,8 @@
                                 </a>
                             @else
                                 <!-- <a class="dropdown-item" href="{{ route('user.dashboard') }}">
-                                                Dashboard
-                                            </a> -->
+                                                    Dashboard
+                                                </a> -->
                                 <a class="dropdown-item" href="{{ route('order.my-order') }}">
                                     Orders
                                 </a>
@@ -126,11 +146,17 @@
                         @foreach ($categories as $category)
                             <div class="main-category">
                                 <li class="nav-item d-flex justify-content-between">
-                                    <a class="nav-link ms-5 d-inline-block text-nowrap show-md-subcategory" href="{{ route('products.index', $category->id) }}" id="mainCategory{{ $category->id }}" data-target="#subcategory{{ $category->id }}" role="button"><b>{{ strtoupper($category->category) }}</b></a>
+                                    <a class="nav-link ms-5 d-inline-block text-nowrap show-md-subcategory"
+                                        href="{{ route('products.index', $category->id) }}"
+                                        id="mainCategory{{ $category->id }}"
+                                        data-target="#subcategory{{ $category->id }}"
+                                        role="button"><b>{{ strtoupper($category->category) }}</b></a>
                                     {{-- <span class="bi mt-4 bi-caret-down me-5 show-subcategory d" data-target="#subcategory{{$category->id}}"></span> --}}
                                     {{-- <span class="bi bi-caret-down align-self-center me-5 d-none d-md-inline show-subcategory" data-target="#subcategory{{ $category->id }}"></span> --}}
 
-                                    <span class="bi fs-4 align-self-center text-secondary me-5 d-inline-block d-md-none show-sm-subcategory" data-target="#subcategory{{ $category->id }}">></span>
+                                    <span
+                                        class="bi fs-4 align-self-center text-secondary me-5 d-inline-block d-md-none show-sm-subcategory"
+                                        data-target="#subcategory{{ $category->id }}">></span>
                                 </li>
                             </div>
                         @endforeach
@@ -180,8 +206,10 @@
                             @endif
                         @else
                             <li class="nav-item dropdown  d-none d-lg-block">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;max-width: 100ch;">
-                                    {{ ucwords(explode(' ',Auth::user()->name)[0]) }}
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre
+                                    style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;max-width: 100ch;">
+                                    {{ ucwords(explode(' ', Auth::user()->name)[0]) }}
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     @if (Auth::user()->user_type == 'admin')
@@ -194,8 +222,8 @@
                                         </a>
                                     @else
                                         <!-- <a class="dropdown-item" href="{{ route('user.dashboard') }}">
-                                                Dashboard
-                                            </a> -->
+                                                    Dashboard
+                                                </a> -->
                                         <a class="dropdown-item" href="{{ route('order.my-order') }}">
                                             Orders
                                         </a>
@@ -315,9 +343,7 @@
             }, 3000);
         </script>
         @php
-            request()
-                ->session()
-                ->forget('msg');
+            request()->session()->forget('msg');
         @endphp
     @endif
     @if (!empty(session('success')))
@@ -325,9 +351,7 @@
             Swal.fire('Success', "{{ session('success') }}", 'success')
         </script>
         @php
-            request()
-                ->session()
-                ->forget('success');
+            request()->session()->forget('success');
         @endphp
     @endif
     @if (!empty(session('error')))
@@ -335,9 +359,7 @@
             Swal.fire('Error', "{{ session('error') }}", 'error')
         </script>
         @php
-            request()
-                ->session()
-                ->forget('error');
+            request()->session()->forget('error');
         @endphp
     @endif
 </body>

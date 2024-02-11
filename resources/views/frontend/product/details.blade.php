@@ -61,10 +61,42 @@
                         </button>
                     </div>
 
-                    <div class="col-md-12 mt-2">
-                        <p>SELLER INFORMATION  <span class="d-md-none d-inline bi bi-info-circle-fill fs-5 seller-info" data-bs-toggle="modal" data-bs-target="#sellerInfoModal"></span> </p>
+                    <div class="offset-lg-2 col-md-6 mt-2">
+                        <h5>SELLER INFORMATION  <span class="d-md-none d-inline bi bi-info-circle-fill fs-5 seller-info" data-bs-toggle="modal" data-bs-target="#sellerInfoModal"></span> </h5>
                         <div class="seller-information d-md-block d-none">
-                            <span class="d-block"><b>BRAND :-</b> {{ $product->brand }}</span>
+                            <table class="table border">
+                                <tr>
+                                    <td><b>BRAND</b></td>
+                                    <td>{{ $product->brand }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>LEGAL NAME</b></td>
+                                    <td>{{ $seller->name }}</td>
+                                </tr>
+                                @if ($sellerInfo)
+                                <tr>
+                                    <td><b>ADDRESS </b></td>
+                                    <td>{{ $sellerInfo->address }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>LOCALITY </b></td>
+                                    <td>{{ $sellerInfo->locality }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>CITY </b></td>
+                                    <td>{{ $sellerInfo->city }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>STATE </b></td>
+                                    <td>{{ $sellerInfo->state }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>PINCODE </b></td>
+                                    <td>{{ $sellerInfo->pincode }}</td>
+                                </tr>
+                                @endif
+                            </table>
+                            {{-- <span class="d-block"><b>BRAND :-</b> {{ $product->brand }}</span>
                             <span class="d-block"><b>LEGAL NAME :-</b> {{ $seller->name }}</span>
                             @if ($sellerInfo)
                                 <span class="d-block"><b>ADDRESS :-</b> {{ $sellerInfo->address }},</span>
@@ -72,7 +104,7 @@
                                 <span class="d-block"><b>CITY :-</b> {{ $sellerInfo->city }},</span>
                                 <span class="d-block"><b>STATE :-</b> {{ $sellerInfo->state }},</span>
                                 <span class="d-block"><b>PINCODE :-</b> {{ $sellerInfo->pincode }}</span>
-                            @endif
+                            @endif --}}
                         </div>
                     </div>
                 </div>
@@ -228,21 +260,38 @@
                 <div class="modal-body">
                     <div class="seller-info">
                         <div class="row">
-                            <div class="col=12">
-                                <span><strong>Brand:</strong> {{ $product->brand }}</span>
-                            </div>
-                            <div class="col-12">
-                                <span><strong>Legal Name:</strong> {{ $seller->name }}</span>
-                            </div>
-                            <div class="col-12">
+                            <table class="table border">
+                                <tr>
+                                    <td><b>BRAND</b></td>
+                                    <td>{{ $product->brand }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>LEGAL NAME</b></td>
+                                    <td>{{ $seller->name }}</td>
+                                </tr>
                                 @if ($sellerInfo)
-                                    <span class="d-block"><strong>Address:</strong> {{ $sellerInfo->address }},</span>
-                                    <span class="d-block"><strong>Locality:</strong> {{ $sellerInfo->locality }},</span>
-                                    <span class="d-block"><strong>City:</strong> {{ $sellerInfo->city }},</span>
-                                    <span class="d-block"><strong>State:</strong> {{ $sellerInfo->state }},</span>
-                                    <span class="d-block"><strong>Pincode:</strong> {{ $sellerInfo->pincode }}</span>
+                                <tr>
+                                    <td><b>ADDRESS </b></td>
+                                    <td>{{ $sellerInfo->address }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>LOCALITY </b></td>
+                                    <td>{{ $sellerInfo->locality }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>CITY </b></td>
+                                    <td>{{ $sellerInfo->city }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>STATE </b></td>
+                                    <td>{{ $sellerInfo->state }}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>PINCODE </b></td>
+                                    <td>{{ $sellerInfo->pincode }}</td>
+                                </tr>
                                 @endif
-                            </div>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -268,5 +317,4 @@
   
 @endsection
 @section('script')
-    
 @endsection
