@@ -1,74 +1,93 @@
 @extends('layouts.app')
 
 @section('content')
-<!-- <div class="container-fluid"> -->
-<div id="demo" class="carousel slide" data-bs-ride="carousel">
-
-    <!-- Indicators/dots -->
-    <div class="carousel-indicators">
-        @foreach ($sellers as $index => $seller)
-            <button type="button" data-bs-target="#demo" data-bs-slide-to="{{ $index }}" class="{{ $index === 0 ? 'active' : '' }}"></button>
-        @endforeach
-    </div>
-
-    <div class="carousel-inner">
-        @foreach ($sellers as $seller)
-            <div class="carousel-item home-item {{ $loop->index == 0 ? 'active' : ''}}">
-                <img src="{{ asset('image/seller/' . $seller->sellerInfoImage->first()->file) }}" alt="{{ $seller->sellerInfo->brand}}" class="d-block" style="width:100%">
-                <div class="carousel-caption">
-                    <h2>{{ ucfirst($seller->sellerInfo->brand) }}</h2>
-                    <a type="button" href="{{ route('products.brand', $seller->sellerInfo->slug) }}" class="btn btn-lg btn-secondary">Shop</a>
-                </div>
-            </div>
-        @endforeach
-    </div>
-
-    <!-- Left and right controls/icons -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-        <span class="carousel-control-next-icon"></span>
-    </button>
-</div>
-
-<!-- </div> -->
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12 mt-5 mb-5">
-            <img width="100%" src="{{ asset('image/banner/banner1.jpg') }}">
+    <section class="splide mb-5" aria-label="Splide Basic HTML Example" >
+        <div class="splide__track">
+            <ul class="splide__list">
+                @foreach ($sellers as $seller)
+                    <li class="splide__slide">
+                        <img src="{{ asset('image/seller/' . $seller->sellerInfoImage->first()->file) }}"
+                            alt="{{ $seller->sellerInfo->brand }}" class="aspect-img">
+                    </li>
+                @endforeach
+            </ul>
         </div>
-        <div class="col-md-12 mt-5 mb-5">
-            <img width="100%" src="{{ asset('image/banner/banner2.jpg') }}">
+    </section>
+
+    <h4 class="mt-5 mb-3 text-center"  style="font-weight: 900">IN THE SPOTLIGHT</h4>
+    <section class="splide recent" aria-label="Splide Basic HTML Example">
+        <div class="splide__track">
+            <ul class="splide__list">
+                @foreach ($newProducts as $newProduct)
+                    <li class="splide__slide">
+                        <a class="card m-lg-3 shadow" href="{{ route('products.show', $newProduct->slug) }}">
+                            <img class="aspect-img" src="{{ asset($newProduct->images->first()->image_path) }}">
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </section>
+
+    <h4 class="mt-5 mb-3 text-center" style="font-weight: 900">TOP RATED</h4>
+    <section class="splide top" aria-label="Splide Basic HTML Example">
+        <div class="splide__track">
+            <ul class="splide__list">
+                @foreach ($newProducts as $newProduct)
+                    <li class="splide__slide">
+                        <a class="card m-lg-3 shadow" href="{{ route('products.show', $newProduct->slug) }}">
+                            <img class="aspect-img" src="{{ asset($newProduct->images->first()->image_path) }}">
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </section>
+
+    <div class="container-fluid mt-5 mb-5">
+        <div class="row">
+            <div class="col-6">
+                <section class="splide second-one" aria-label="Splide Basic HTML Example">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+                            @foreach ($sellers as $seller)
+                                <li class="splide__slide">
+                                    <img src="{{ asset('image/seller/' . $seller->sellerInfoImage->first()->file) }}"
+                                        alt="{{ $seller->sellerInfo->brand }}" class="aspect-img" style="width:100%">
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </section>
+            </div>
+            <div class="col-6">
+                <section class="splide second-two" aria-label="Splide Basic HTML Example">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+                            @foreach ($sellers as $seller)
+                                <li class="splide__slide">
+                                    <img src="{{ asset('image/seller/' . $seller->sellerInfoImage->first()->file) }}"
+                                        alt="{{ $seller->sellerInfo->brand }}" class="aspect-img" style="width:100%">
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </section>
+            </div>
         </div>
     </div>
-    <div class="row mt-md-5 mb-5">
-        @foreach ($newProducts as $newProduct)
-            <div class="col-md-2 col-3 col-3 ">
-                <a href="{{ route('products.show',$newProduct->slug) }}">
-                    <img class="aspect-img" src="{{ asset($newProduct->images->first()->image_path) }}">
-                </a>
-            </div>
-        @endforeach
-    </div>
-    <div class="row mt-5 mb-5">
-        @php $class = ['col-5', 'col-7']; @endphp
-        @foreach ($hotProducts as $hotProduct)
-            <div class="{{ $class[$loop->index % 2] }}">
-                <a href="{{ route('products.show',$hotProduct->slug) }}">
-                    <img class="aspect-img" src="{{ asset($hotProduct->images->first()->image_path) }}">
-                </a>
-            </div> 
-        @endforeach
-    </div>
-    <div class="row justify-content-center mt-5 mb-5">
-        @foreach ($products as $product)
-            <div class="col-3">
-                <a href="{{ route('products.show',$product->slug) }}">
-                    <img class="aspect-img" src="{{ asset($product->images->first()->image_path) }}">
-                </a>
-            </div>
-        @endforeach
-    </div>
-</div>
+
+    <section class="splide bottom" aria-label="Splide Basic HTML Example">
+        <div class="splide__track">
+            <ul class="splide__list">
+                @foreach ($sellers as $seller)
+                    <li class="splide__slide">
+                        <img src="{{ asset('image/seller/' . $seller->sellerInfoImage->first()->file) }}"
+                            alt="{{ $seller->sellerInfo->brand }}" class="aspect-img" style="width:100%">
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </section>
+    
 @endsection

@@ -15,6 +15,9 @@ window.Modal = Modal;
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 window.Swal = Swal;
 
+import Splide from '@splidejs/splide';
+window.Splide = Splide;
+
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 window.Snackbar = () => {

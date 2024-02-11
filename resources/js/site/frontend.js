@@ -6,6 +6,30 @@ const frontend = () => {
         $('#' + $(this).attr('for')).prop('checked', true);
     })
 
+    $(document).ready(function(){
+        new Splide( '.splide' ).mount();
+
+        var recent = new Splide( '.recent', {
+            type   : 'loop',
+            perPage: 4,
+            focus  : 'center',
+        });
+          
+        recent.mount();
+
+        var top = new Splide( '.top', {
+            type   : 'loop',
+            perPage: 4,
+            focus  : 'center',
+        });
+          
+        top.mount();
+
+        new Splide( '.second-one').mount();
+        new Splide( '.second-two').mount();
+        new Splide( '.bottom').mount();
+    })
+
     $('#checkoutForm').validate({
         rules: {
             first_name: 'required',
@@ -208,7 +232,7 @@ const frontend = () => {
             }
         });
     })
-
+    
 }
 
 export default frontend;
