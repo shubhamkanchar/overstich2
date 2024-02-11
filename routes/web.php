@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\Backend\AdsModelController;
 use App\Http\Controllers\Backend\WarehouseController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\AdminController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\Frontend\SellerController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\WishlistController;
+use App\Models\AdsModel;
 use App\Models\CategoryFilter;
 use App\Models\Product;
 use App\Models\User;
@@ -35,14 +37,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::domain('www.'.env('DOMAIN'))->group(function () {
     Route::get('/', function () {
-        $sellers = User::where(['user_type' => 'seller'])
-            ->whereHas('sellerInfo', function($query) {
-                $query->where('is_approved', 1) ;
-            })
-            ->with(['sellerInfo', 'sellerInfoImage'])
-            ->latest()
-            ->take(10)
-            ->get();
+        $ads = AdsModel::where('status' ,'1')->get();
 
         $query = Product::with('images')->where('status', 'active');
         $newProductsQuery = clone $query;
@@ -54,7 +49,7 @@ Route::domain('www.'.env('DOMAIN'))->group(function () {
         $defaultProductsQuery = clone $query;
         $products = $defaultProductsQuery->where('condition', 'default')->latest()->take(30)->get();
 
-        return view('welcome', compact('sellers', 'products', 'newProducts', 'hotProducts'));
+        return view('welcome', compact('ads', 'products', 'newProducts', 'hotProducts'));
     })->name('welcome');
 });
 
@@ -108,6 +103,7 @@ Route::group(['middleware'=>['auth','adminMiddleware'], 'prefix' => 'admin'],fun
     Route::delete('category-filters/{categoryFilter}/delete', [CategoryController::class, 'destroyFilter'])->name('category.filters.destroy');
     Route::get('get-sub-categories/{category}', [CategoryController::class, 'getSubCategory'])->name('admin.get-sub-categories');
     Route::resource('coupon', CouponController::class);
+    Route::resource('ads',AdsModelController::class);
 });
 
 Route::group(['middleware'=>['auth']],function(){

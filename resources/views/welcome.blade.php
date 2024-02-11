@@ -4,10 +4,10 @@
     <section class="splide mb-5" aria-label="Splide Basic HTML Example" >
         <div class="splide__track">
             <ul class="splide__list">
-                @foreach ($sellers as $seller)
+                @foreach ($ads as $ad)
                     <li class="splide__slide">
-                        <img src="{{ asset('image/seller/' . $seller->sellerInfoImage->first()->file) }}"
-                            alt="{{ $seller->sellerInfo->brand }}" class="aspect-img" style="aspect-ratio: 3/2 !important;">
+                        <img src="{{ asset('image/banner/'. $ad->file) }}"
+                            alt="" class="aspect-img" style="aspect-ratio: 3/2 !important;">
                     </li>
                 @endforeach
             </ul>
@@ -50,10 +50,10 @@
                 <section class="splide second-one" aria-label="Splide Basic HTML Example">
                     <div class="splide__track">
                         <ul class="splide__list">
-                            @foreach ($sellers as $seller)
+                            @foreach ($ads as $ad)
                                 <li class="splide__slide">
-                                    <img src="{{ asset('image/seller/' . $seller->sellerInfoImage->first()->file) }}"
-                                        alt="{{ $seller->sellerInfo->brand }}" class="aspect-img" style="width:100%">
+                                    <img src="{{ asset('image/banner/'. $ad->file) }}"
+                                        alt="" class="aspect-img" style="width:100%">
                                 </li>
                             @endforeach
                         </ul>
@@ -64,10 +64,10 @@
                 <section class="splide second-two" aria-label="Splide Basic HTML Example">
                     <div class="splide__track">
                         <ul class="splide__list">
-                            @foreach ($sellers as $seller)
+                            @foreach ($ads as $ad)
                                 <li class="splide__slide">
-                                    <img src="{{ asset('image/seller/' . $seller->sellerInfoImage->first()->file) }}"
-                                        alt="{{ $seller->sellerInfo->brand }}" class="aspect-img" style="width:100%">
+                                    <img src="{{ asset('image/banner/'. $ad->file) }}"
+                                        alt="" class="aspect-img" style="width:100%">
                                 </li>
                             @endforeach
                         </ul>
@@ -80,10 +80,10 @@
     <section class="splide bottom" aria-label="Splide Basic HTML Example">
         <div class="splide__track">
             <ul class="splide__list">
-                @foreach ($sellers as $seller)
+                @foreach ($ads as $ad)
                     <li class="splide__slide">
-                        <img src="{{ asset('image/seller/' . $seller->sellerInfoImage->first()->file) }}"
-                            alt="{{ $seller->sellerInfo->brand }}" class="aspect-img" style="width:100%;aspect-ratio: 3/2 !important;">
+                        <img src="{{ asset('image/banner/'. $ad->file) }}"
+                            alt="" class="aspect-img" style="width:100%;aspect-ratio: 3/2 !important;">
                     </li>
                 @endforeach
             </ul>
