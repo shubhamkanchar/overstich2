@@ -65,7 +65,13 @@ class CartController extends Controller
             $products[$item->id] = Product::with('images')->where('id', $item->options?->product_id)->first();
         }
 
-        $usedCouponIds = UserCoupon::where(['is_used' => 0, 'is_applied' => 0, 'user_id' => $user->id])->pluck('coupon_id');
+        $usedCouponIds = UserCoupon::where(function($query) {
+            $query->where('is_used', 1)
+            ->orWhere('is_applied', 1);
+        })
+        ->where('user_id' , $user->id)
+        ->pluck('coupon_id');
+    
         $availableCoupons = Coupon::whereNotIn('id', $usedCouponIds)
         ->Where('status', 1)
         ->with(['brand'])
