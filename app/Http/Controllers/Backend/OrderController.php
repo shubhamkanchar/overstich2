@@ -32,11 +32,7 @@ class OrderController extends Controller
 
     public function downloadInvoice($id) {
         $order = Order::where('id',$id)->with(['orderItem', 'seller', 'seller.sellerInfo'])->withCount('orderItem')->first();
-        if(is_null($order->invoice_number)) {
-            $order->invoice_number = '#'.strtotime('now') . $order->user_id;
-            $order->invoice_generated_at = now();
-            $order->update();
-        }
+        
         // return view('backend.seller.order.invoice', compact('order'));
         $pdf = Pdf::loadView('backend.seller.order.invoice', compact('order'));
  
@@ -53,6 +49,11 @@ class OrderController extends Controller
 
     public function acceptOrder(Request $request, Order $order) {
         $order->status = 'processing';
+        if(is_null($order->invoice_number)) {
+            $order->invoice_number = '#'.strtotime('now') . $order->user_id;
+            $order->invoice_generated_at = now();
+            $order->update();
+        }
         $order->update();
         request()->session()->put('success','Order accepted successfully');
         return redirect()->route('seller.order.list');

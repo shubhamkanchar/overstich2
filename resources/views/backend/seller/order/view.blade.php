@@ -70,10 +70,12 @@
             <div class="card-footer">
                 @if ($order->status != 'rejected')
                     @if($order->status != 'cancelled')
-                    <a class="btn btn-primary" href="{{ route('download.invoice', $order->id)}}">Generate Invoice</a>
                         @if($order->status == 'new')
-                        <a class="btn btn-success" href="{{ route('seller.order.accept', $order->id)}}">Accept</a>
-                        <button class="btn btn-danger reject-order" data-bs-toggle="modal" data-bs-target="#rejectionModal">Reject</button>
+                            <a class="btn btn-success" href="{{ route('seller.order.accept', $order->id)}}">Accept</a>
+                            <button class="btn btn-danger reject-order" data-bs-toggle="modal" data-bs-target="#rejectionModal">Reject</button>
+                        @endif
+                        @if (!empty($order->invoice_generated_at))
+                            <a class="btn btn-primary" href="{{ route('seller.download.invoice', $order->id)}}">Download Invoice</a>
                         @endif
                     @endif
                 @else
