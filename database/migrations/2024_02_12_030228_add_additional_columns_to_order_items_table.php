@@ -65,9 +65,6 @@ return new class extends Migration
             if (Schema::hasColumn('order_items', 'taxable_amount')) {
                 $table->dropColumn('taxable_amount');
             }
-            if (Schema::hasColumn('order_items', 'taxable_amount')) {
-                $table->dropColumn('taxable_amount');
-            }
             if (Schema::hasColumn('order_items', 'striked_price')) {
                 $table->dropColumn('striked_price');
             }
