@@ -23,7 +23,13 @@ class OrderItem extends Model
         'quantity',
         'total_discount',
         'total_original_price',
-        'total_price'
+        'total_price',
+        'taxable_amount',
+        'striked_price',
+        'cgst_percent',
+        'sgst_percent',
+        'cgst_amount',
+        'sgst_amount',
     ];
 
     public function order()
@@ -42,11 +48,17 @@ class OrderItem extends Model
             'order_id' => $orderId,
             'product_id' => $item->options?->product_id,
             'name' => $item->name,
+            'original_price' => $item->options?->original_price,//
+            'striked_price' => $item->options?->striked_price,//
             'price' => $item->price,
-            'original_price' => $item->options?->original_price,
             'discount_percentage' => $item->options?->discount_percentage,
             'discount' => $item->options?->discount,
             'quantity' => $item->qty,
+            'taxable_amount' => $item->options?->taxable_amount,
+            'cgst_percent' => $item->options?->cgst_percent,
+            'sgst_percent' => $item->options?->sgst_percent,
+            'cgst_amount' => $item->options?->cgst_amount,
+            'sgst_amount' => $item->options?->sgst_amount,
             'total_discount' => $item->options?->discount * $item->qty,
             'total_price' => $item->price * $item->qty,
             'total_original_price' => $item->options?->original_price * $item->qty,
