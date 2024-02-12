@@ -30,6 +30,7 @@ class OrderItem extends Model
         'sgst_percent',
         'cgst_amount',
         'sgst_amount',
+        'hsn'
     ];
 
     public function order()
@@ -65,6 +66,7 @@ class OrderItem extends Model
             'size' => $item->options?->size,
             'image' => $item->options?->image,
             'color' => $item->options?->color,
+            'hsn' => $item->options?->hsn,
         ])->save();
     }
 }

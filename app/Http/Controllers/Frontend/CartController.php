@@ -131,7 +131,8 @@ class CartController extends Controller
                 'discount' => $discountedPrice,
                 'image' => $firstImage,
                 'seller_id' => $product->seller_id,
-                'color' => $product->color
+                'color' => $product->color,
+                'hsn' => $product->hsn,
             ]
         )->associate('App\Models\Product');
 

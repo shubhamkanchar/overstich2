@@ -31,6 +31,9 @@ return new class extends Migration
             if (!Schema::hasColumn('order_items', 'sgst_amount')) {
                 $table->decimal('sgst_amount', 10, 2)->after('cgst_amount')->nullable();
             }
+            if(!Schema::hasColumn('order_items','hsn')){
+                $table->string('hsn')->after('cgst_amount');
+            }
         });
 
         Schema::table('orders', function (Blueprint $table) {
@@ -79,6 +82,9 @@ return new class extends Migration
             }
             if (!Schema::hasColumn('order_items', 'sgst_amount')) {
                 $table->dropColumn('sgst_amount');
+            }
+            if(Schema::hasColumn('order_items','hsn')){
+                $table->dropColumn('hsn');
             }
         });
 
