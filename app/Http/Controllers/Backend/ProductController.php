@@ -80,6 +80,8 @@ class ProductController extends Controller
             $product->condition = $request->condition;
             $product->status = $request->status;
             $product->description = $request->description;
+            $product->return = $request->return ?? 0;
+            $product->replace = $request->replace ?? 0;
         
             $product->save();
             $sizes = $request->size;
@@ -187,7 +189,8 @@ class ProductController extends Controller
         $product->condition = $request->condition;
         $product->status = $request->status;
         $product->description = $request->description;
-    
+        $product->return = $request->return ?? 0;
+        $product->replace = $request->replace ?? 0;
         $product->update();
 
         $sizes = $request->size;

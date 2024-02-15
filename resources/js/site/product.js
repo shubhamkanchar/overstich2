@@ -26,7 +26,7 @@ const product = () =>{
         })
     })
 
-    $(document).on('keyup','#cgst, #sgst',function(){
+    $(document).on('keyup','#cgst, #sgst, #gst',function(){
         finalSellinPrice();
     })
 
@@ -37,6 +37,12 @@ const product = () =>{
 
     $(document).on('keyup','#discount',function() {
         priceCal();
+        finalSellinPrice();
+    })
+
+    $(document).on('keyup','#gst',function(){
+        $('#cgst').val($('#gst').val()/2);
+        $('#sgst').val($('#gst').val()/2);
     })
 
     function priceCal(){
@@ -53,8 +59,9 @@ const product = () =>{
         let price = $('#price').val();
         let cgst = $('#cgst').val();
         let sgst = $('#sgst').val();
-        if(parseInt(price)>=0 && (parseInt(cgst)>=0 || parseInt(sgst)>=0)) {
-            let totalGst = (parseFloat(price) /100) * (parseFloat(cgst) + parseFloat(sgst));
+        let gst = $('#gst').val();
+        if(parseInt(price)>=0 && (parseInt(gst)>=0)) {
+            let totalGst = (parseFloat(price) /100) * (parseFloat(gst));
             let total = parseFloat(totalGst) + parseFloat(price);
             $('#finalPrice').val(total);
         }

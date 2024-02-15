@@ -79,13 +79,13 @@
                                     @enderror
                                 </div>
                                 
-                                <div class="col-12 col-md-4 mb-3">
+                                {{-- <div class="col-12 col-md-4 mb-3">
                                     <label for="color" class="form-label">Color</label>
                                     <input type="text" class="form-control @error('color') is-invalid @enderror" placeholder="Color" id="color" name="color" value="{{ old('color') }}">
                                     @error('color')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
-                                </div> 
+                                </div>  --}}
                                 
                                 <div class="col-12 col-md-4 mb-3">
                                     <label for="hsn" class="form-label">Hsn Code</label>
@@ -120,16 +120,24 @@
                                 </div>
 
                                 <div class="col-12 col-md-4 mb-3">
+                                    <label for="gst" class="form-label">GST Percentage (%)</label>
+                                    <input type="number" placeholder="GST" class="form-control @error('gst') is-invalid @enderror" id="gst" value="{{ old('gst') }}" required>
+                                    @error('gst')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 mb-3 d-none">
                                     <label for="cgst" class="form-label">CGST Percentage (%)</label>
-                                    <input type="number" placeholder="cgst" class="form-control @error('cgst') is-invalid @enderror" id="cgst" name="cgst" value="{{ old('cgst') }}" required>
+                                    <input type="number" placeholder="CGST" class="form-control @error('cgst') is-invalid @enderror" id="cgst" name="cgst" value="{{ old('cgst') }}" required>
                                     @error('cgst')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-4 mb-3">
+                                <div class="col-12 col-md-4 mb-3 d-none">
                                     <label for="sgst" class="form-label">SGST Percentage (%)</label>
-                                    <input type="number" placeholder="sgst" class="form-control @error('sgst') is-invalid @enderror" id="sgst" name="sgst" value="{{ old('sgst') }}" required>
+                                    <input type="number" placeholder="CGST" class="form-control @error('sgst') is-invalid @enderror" id="sgst" name="sgst" value="{{ old('sgst') }}" required>
                                     @error('sgst')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -165,7 +173,22 @@
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                  
+                                <div class="col-12 col-md-6 mt-4 mb-3">
+                                    <div class="form-check form-check-inline">
+                                        <input name="return" class="form-check-input" type="checkbox" value="1"
+                                            id="flexCheckDefault" checked>
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Return Available
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input name="replace" class="form-check-input" type="checkbox" value="1"
+                                            id="flexCheckChecked" checked>
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            Replace Available
+                                        </label>
+                                    </div>
+                                </div>
                                 <div class="col-12 col-md-4">
                                     <label class="form-label">Upload product images</label>
                                     <input class="form-control @error('product_images') is-invalid @enderror" accept="image/*" type="file" name="product_images[]" placeholder="Minimum 5 images" multiple>
@@ -178,8 +201,24 @@
                                     <label class="form-label">Size Chart</label>
                                     <input class="form-control" accept="image/*" type="file" name="size_chart" placeholder="Size Chart">
                                 </div>
-                                
+                                <div class="mt-2 row justify-content-around">
+                                    <div class="col col-md-5">
+                                        <label>Filter Type</label>
+                                        <input type="text" class="form-control filter-type" data-target="#filterValue" placeholder="Filter Type" required value="Color" readonly>
+                                    </div>
+                                    <div class="col col-md-5">
+                                        <label>Value</label>
+                                        <input type="text" class="form-control filter-values" placeholder="Value" id="color" name="color" value="{{ old('color') }}" required >
+                                        @error('color')
+                                            <span class="invalid-feedback">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="col col-md-2">
+                                        
+                                    </div>
+                                </div>
                                 <div class="mt-2 filter-row row justify-content-around" data-max="0" data-route="{{ route('seller.get-filter-values', ':categoryFilter')}}">
+                                    
                                     <div class="col col-md-5">
                                         <label>Filter Type</label>
                                         <select class="form-select filter-type" name="types[0]" data-target="#filterValue" placeholder="Filter Type" required>
