@@ -11,23 +11,30 @@ const frontend = () => {
             new Splide('.splide').mount();
 
             var recent = new Splide('.recent', {
-                type: 'loop',
+                // type: 'loop',
                 perPage: 4,
                 focus: 'center',
+                autoplay:true,
             });
 
             recent.mount();
 
             var top = new Splide('.top', {
-                type: 'loop',
+                // type: 'loop',
                 perPage: 4,
                 focus: 'center',
+                autoplay:true
             });
 
             top.mount();
 
-            new Splide('.second-one').mount();
-            new Splide('.second-two').mount();
+            new Splide('.second-one',{
+                // heightRatio : 1.0,
+                autoplay:true,
+            }).mount();
+            new Splide('.second-two',{
+                // heightRatio : 1.0,
+            }).mount();
             new Splide('.bottom').mount();
         }
 

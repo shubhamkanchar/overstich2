@@ -193,7 +193,7 @@
                     @if (count($products) == 0)
                         <h1 class="fw-bold ms-md-4 text-center text-md-start">Product</h1>
                         <p class="ms-md-5 fs-md-3 text-center text-md-start">No Product Found</p>
-                        <div class="mb-3 d-flex align-items-center justify-content-between translate-y-up">
+                        <div class="mb-3 d-flex align-items-center translate-y-up">
                             <div class="col-md-10 col-8 position-relative">
                                 <input type="text" name="search" value="{{ $search }}" class="form-control"
                                     placeholder="Search Your Product Here" style="border-radius: 0%">
@@ -203,12 +203,12 @@
                                     </span>
                                 @endif
                             </div>
-                            <div class="col-md-2 col-2">
+                            <div class="col-md-2 col-lg-2">
                                 <button type="submit" class="btn btn-dark ml-2 w-100"
                                     style="border-radius: 0%">Search</button>
                             </div>
-                            <div class="col-md-2 col-2">
-                                <span class="d-md-none ms-4 bi bi-filter fs-3 show-filter"></span>
+                            <div class="col-md-2 col-lg-2">
+                                <span class="d-md-none ms-2 bi bi-filter fs-3 show-filter"></span>
                             </div>
                         </div>
                     @else

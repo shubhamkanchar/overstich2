@@ -62,6 +62,12 @@
                                 <input id="password-confirm" type="password" class="rounded-pill password form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
+                        <div class="row mb-2">
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end"></label>
+                            <div class="col-md-6">
+                                <p>By creating an account, you agree to our <a target="_blank" href="{{ route('tc') }}">Terms & Conditions</a> & <a target="_blank" href="{{ route('pp') }}">Privacy policy</a>.</p>
+                            </div>
+                        </div>
                         <div class="row mb-3">
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-end"></label>
 
@@ -72,7 +78,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-dark">

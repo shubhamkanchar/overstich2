@@ -54,6 +54,14 @@
             z-index: 999;
             backdrop-filter: blur(5px);
         }
+
+        .br {
+            border-radius: 20px !important
+        }
+
+        .br-none {
+            border-radius: 0px !important
+        }
     </style>
     @stack('styles')
 </head>
@@ -69,78 +77,94 @@
                 <a title="Cart" class="navbar-brand" href="{{ url('/') }}">
                     <img src="{{ asset('image/logo.png') }}" style="width:50px">
                 </a>
-                <li class="nav-item ps-xl-2 pe-xl-2 d-block d-lg-none">
-                    <a class="nav-link" href="{{ route('cart.index') }}">
-                        <span class="position-relative p-1">
-                            {{-- <i class="bi bi-bag fw-bolder"></i> --}}
-                            <i class="bi bi-cart-check-fill fs-4"></i>
-                            @if ($cartCount > 0)
-                                <span
-                                    class="position-absolute top-1 start-100 translate-middle badge rounded-pill bg-secondary">
-                                    {{ $cartCount }}
-                                    <span class="visually-hidden">Cart Count</span>
-                                </span>
-                            @endif
-                        </span>
-
-                    </a>
-                </li>
-                <li class="nav-item ps-xl-2 pe-xl-2 d-block d-lg-none">
-                    <a title="Wishlist" class="nav-link" href="{{ route('wishlist.index') }}">
-                        {{-- <i class="bi bi-heart fw-bolder"></i> --}}
-                        <i class="bi bi-heart-fill fs-4"></i>
-                    </a>
-                </li>
-                @guest
-                    @if (Route::has('login'))
-                        <li class="nav-item ps-xl-2 pe-xl-2 d-block d-lg-none">
-                            <a title="Login or Signup" class="nav-link" href="{{ route('login') }}">
-                                <i class="bi bi-person-fill fs-4"></i>
-                            </a>
-                        </li>
-                    @endif
-                @else
-                    <li class="nav-item dropdown d-block d-lg-none">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ ucwords(explode(' ', Auth::user()->name)[0]) }}
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            @if (Auth::user()->user_type == 'admin')
-                                <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
-                                    Dashboard
-                                </a>
-                            @elseif(Auth::user()->user_type == 'seller')
-                                <a class="dropdown-item" href="{{ route('seller.dashboard') }}">
-                                    Dashboard
-                                </a>
-                            @else
-                                <!-- <a class="dropdown-item" href="{{ route('user.dashboard') }}">
-                                                    Dashboard
-                                                </a> -->
-                                <a class="dropdown-item" href="{{ route('order.my-order') }}">
-                                    Orders
-                                </a>
-                                <a class="dropdown-item" href="{{ route('addresses.index') }}">
-                                    Address
-                                </a>
-                            @endif
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
+                <ul class="mt-3 p-0" style="display: inline-flex;
+                align-items: flex-end;">
+                    <li class="nav-item ps-xl-2 pe-xl-2 d-block d-lg-none" style="width: 100px">
+                        <a class="nav-link" href="javascript:void(0)">
+                            <form id="searchForm" class="d-flex" action="{{ route('search-product') }}" method="GET">
+                                <input class="form-control rounded-pill pe-4" type="text" id="example-search-input"
+                                    name="search" value="{{ request()->search ?? '' }}">
+                                <button type="submit" class="btn d-none"></button>
+                                <i role="button" onclick="document.getElementById('searchForm').submit()"
+                                    class="bi bi-search mt-1" style="margin-left:-25px"></i>
                             </form>
-                        </div>
+                        </a>
                     </li>
-                @endguest
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                    <li class="nav-item ps-xl-2 pe-xl-2 d-block d-lg-none">
+                        <a class="nav-link" href="{{ route('cart.index') }}">
+                            <span class="position-relative p-1">
+                                {{-- <i class="bi bi-bag fw-bolder"></i> --}}
+                                <i class="bi bi-cart-check-fill fs-4"></i>
+                                @if ($cartCount > 0)
+                                    <span
+                                        class="position-absolute top-1 start-100 translate-middle badge rounded-pill bg-secondary">
+                                        {{ $cartCount }}
+                                        <span class="visually-hidden">Cart Count</span>
+                                    </span>
+                                @endif
+                            </span>
+
+                        </a>
+                    </li>
+                    <li class="nav-item ps-xl-2 pe-xl-2 d-block d-lg-none">
+                        <a title="Wishlist" class="nav-link" href="{{ route('wishlist.index') }}">
+                            {{-- <i class="bi bi-heart fw-bolder"></i> --}}
+                            <i class="bi bi-heart-fill fs-4"></i>
+                        </a>
+                    </li>
+                    @guest
+                        @if (Route::has('login'))
+                            <li class="nav-item ps-xl-2 pe-xl-2 d-block d-lg-none">
+                                <a title="Login or Signup" class="nav-link" href="{{ route('login') }}">
+                                    <i class="bi bi-person-fill fs-4"></i>
+                                </a>
+                            </li>
+                        @endif
+                    @else
+                        <li class="nav-item dropdown d-block d-lg-none">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ ucwords(explode(' ', Auth::user()->name)[0]) }}
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                @if (Auth::user()->user_type == 'admin')
+                                    <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
+                                        Dashboard
+                                    </a>
+                                @elseif(Auth::user()->user_type == 'seller')
+                                    <a class="dropdown-item" href="{{ route('seller.dashboard') }}">
+                                        Dashboard
+                                    </a>
+                                @else
+                                    <!-- <a class="dropdown-item" href="{{ route('user.dashboard') }}">
+                                                            Dashboard
+                                                        </a> -->
+                                    <a class="dropdown-item" href="{{ route('order.my-order') }}">
+                                        Orders
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('addresses.index') }}">
+                                        Address
+                                    </a>
+                                @endif
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
+                    @endguest
+                    <li class="nav-item ps-xl-2 pe-xl-2 d-block d-lg-none">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </li>
+                </ul>
                 <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">
                         @foreach ($categories as $category)
@@ -162,7 +186,7 @@
                         @endforeach
                     </ul>
                     <ul class="navbar-nav ms-auto nav-right-content">
-                        <li class="nav-item ps-xl-2 pe-xl-2 ">
+                        <li class="nav-item ps-xl-2 pe-xl-2 d-none d-lg-block">
                             <a class="nav-link" href="javascript:void(0)">
                                 <form id="searchForm" class="d-flex" action="{{ route('search-product') }}"
                                     method="GET">
@@ -222,8 +246,8 @@
                                         </a>
                                     @else
                                         <!-- <a class="dropdown-item" href="{{ route('user.dashboard') }}">
-                                                    Dashboard
-                                                </a> -->
+                                                            Dashboard
+                                                        </a> -->
                                         <a class="dropdown-item" href="{{ route('order.my-order') }}">
                                             Orders
                                         </a>
