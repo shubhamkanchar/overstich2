@@ -12,7 +12,4 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-    build: {
-        minify: false
-    }
 });
