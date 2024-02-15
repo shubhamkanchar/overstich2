@@ -90,16 +90,40 @@
                                 </div>  
                                 
                                 <div class="col-12 col-md-4 mb-3">
-                                    <label for="netPrice" class="form-label">Net Price</label>
-                                    <input type="number" step="0.01" placeholder="Net Price" class="form-control @error('price') is-invalid @enderror" id="netPrice" name="net_price" required value="{{ old('net_price', $product->net_price) }}">
+                                    <label for="hsn" class="form-label">Hsn Code</label>
+                                    <input type="text" placeholder="hsn" class="form-control @error('hsn') is-invalid @enderror" id="hsn" name="hsn"  required value="{{ old('hsn', $product->hsn) }}">
+                                    @error('hsn')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 mb-3">
+                                    <label for="netPrice" class="form-label">Gross Amount</label>
+                                    <input type="number" placeholder="Gross Amount" class="form-control @error('price') is-invalid @enderror" id="netPrice" name="net_price" required value="{{ old('net_price', $product->net_price) }}">
                                     @error('net_price')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
 
                                 <div class="col-12 col-md-4 mb-3">
+                                    <label for="discount" class="form-label">Discount</label>
+                                    <input type="number" min="0" max="100" placeholder="1-100%" class="form-control @error('discount') is-invalid @enderror" id="discount" name="discount" value="{{ old('discount', $product->discount) }}">
+                                    @error('discount')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-4 mb-3">
+                                    <label for="price" class="form-label">Taxable Amount</label>
+                                    <input type="number" placeholder="Price" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price', $product->price) }}" required>
+                                    @error('price')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                               
+                                <div class="col-12 col-md-4 mb-3">
                                     <label for="cgst" class="form-label">CGST Percentage (%)</label>
-                                    <input type="number" step="0.01" placeholder="cgst" class="form-control @error('cgst') is-invalid @enderror" id="cgst" name="cgst"  required value="{{ old('cgst', $product->cgst_percent) }}">
+                                    <input type="number" placeholder="cgst" class="form-control @error('cgst') is-invalid @enderror" id="cgst" name="cgst"  required value="{{ old('cgst', $product->cgst_percent) }}">
                                     @error('cgst')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -107,24 +131,8 @@
 
                                 <div class="col-12 col-md-4 mb-3">
                                     <label for="sgst" class="form-label">SGST Percentage (%)</label>
-                                    <input type="number" step="0.01" placeholder="sgst" class="form-control @error('sgst') is-invalid @enderror" id="sgst" name="sgst"  required value="{{ old('sgst', $product->sgst_percent) }}">
+                                    <input type="number" placeholder="sgst" class="form-control @error('sgst') is-invalid @enderror" id="sgst" name="sgst"  required value="{{ old('sgst', $product->sgst_percent) }}">
                                     @error('sgst')
-                                        <span class="invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-4 mb-3">
-                                    <label for="price" class="form-label">Price</label>
-                                    <input type="number" step="0.01" placeholder="Price" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price', $product->price) }}" required>
-                                    @error('price')
-                                        <span class="invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-4 mb-3">
-                                    <label for="discount" class="form-label">Discount</label>
-                                    <input type="number" step="0.5" min="0" max="100" placeholder="1-100%" class="form-control @error('discount') is-invalid @enderror" id="discount" name="discount" value="{{ old('discount', $product->discount) }}">
-                                    @error('discount')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>

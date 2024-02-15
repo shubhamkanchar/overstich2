@@ -114,7 +114,7 @@
                         <h2 class="fw-bold">Summary</h2>
                         <div class="d-flex justify-content-between">
                             <span>Subtotal</span>
-                            <span id="subTotal"><i class="bi bi-currency-rupee"></i>{{ $cartCount > 0 ? $totalOriginalPrice : '0' }}</span>
+                            <span id="subTotal"><i class="bi bi-currency-rupee"></i>{{ $cartCount > 0 ? $totalStrikedPrice : '0' }}</span>
                         </div>
                         <div class="d-flex justify-content-between">
                             <span>Delivery Charges</span>
@@ -158,7 +158,7 @@
                         <hr>
                         <div class="d-flex justify-content-between">
                             <span>Total</span>
-                            <span id="totalAmount"> <i class="bi bi-currency-rupee"></i>{{ $cartCount > 0 ? $totalOriginalPrice - $totalDiscount - $totalCouponDiscounts + $deliveryCharges + env('PLATFORM_FEE') : '0' }}</span>
+                            <span id="totalAmount"> <i class="bi bi-currency-rupee"></i>{{ $cartCount > 0 ? $totalPrice - $totalCouponDiscounts + $deliveryCharges + env('PLATFORM_FEE') : '0' }}</span>
                         </div>
                         <hr>
                         <form action="{{ route('checkout') }}" class="d-inline" method="get">
@@ -274,8 +274,8 @@
                     let item = res.updatedItem;
                     $('#totalDiscount').html('<i class="bi bi-currency-rupee"></i>'+res.totalDiscount == 0 ? '0' : '<i class="bi bi-currency-rupee"></i>'+res.totalDiscount);
                     $('#deliveryCharges').html('<i class="bi bi-currency-rupee"></i>'+res.deliveryCharges == 0 ? '0' : '<i class="bi bi-currency-rupee"></i>'+res.deliveryCharges);
-                    $('#totalAmount').html((res.totalOriginalPrice - res.totalDiscount + res.deliveryCharges + parseInt(res.platformFee)) == 0 ? '0' : '<i class="bi bi-currency-rupee"></i>'+(res.totalOriginalPrice - res.totalDiscount + res.deliveryCharges + parseInt(res.platformFee)));
-                    $('#subTotal').html(res.totalOriginalPrice == 0 ? '0' : '<i class="bi bi-currency-rupee"></i>'+res.totalOriginalPrice);
+                    $('#totalAmount').html((res.totalPrice - res.totalDiscount + res.deliveryCharges + parseInt(res.platformFee)) == 0 ? '0' : '<i class="bi bi-currency-rupee"></i>'+(res.totalPrice + res.deliveryCharges + parseInt(res.platformFee)));
+                    $('#subTotal').html(res.totalStrikedPrice == 0 ? '0' : '<i class="bi bi-currency-rupee"></i>'+res.totalStrikedPrice);
                     if(item) {
                         $('#itemPrice-'+ item.id).html((item.price * item.qty));
                     }

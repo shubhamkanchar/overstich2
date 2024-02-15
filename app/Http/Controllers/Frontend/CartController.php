@@ -29,7 +29,11 @@ class CartController extends Controller
         $cartItems = Cart::instance($userIdentifier)->content();
 
         $totalOriginalPrice = $cartItems->sum(function ($cartItem) {
-            return $cartItem->options->original_price * $cartItem->qty;
+            return $cartItem->options?->original_price * $cartItem->qty;
+        });
+
+        $totalStrikedPrice = $cartItems->sum(function ($cartItem) {
+            return $cartItem->options?->striked_price * $cartItem->qty;
         });
     
         $totalPrice = $cartItems->sum(function ($cartItem) {
@@ -37,7 +41,7 @@ class CartController extends Controller
         });
     
         $totalDiscount = $cartItems->sum(function ($cartItem) {
-            return $cartItem->options->discount * $cartItem->qty;
+            return $cartItem->options?->discount * $cartItem->qty;
         });
 
         $totalAmountPerSeller = $cartItems->groupBy('options.seller_id')->map(function ($items) {
@@ -88,7 +92,7 @@ class CartController extends Controller
         ->get();
 
         $productIds = Wishlist::where('user_id', $userId)->pluck('product_id')->toArray();
-        return view('frontend.product.cart', compact( 'cartItems', 'products', 'totalDiscount', 'totalPrice', 'totalOriginalPrice', 'totalAmountPerSeller', 'deliveryCharges', 'productIds', 'availableCoupons', 'appliedCoupons'));
+        return view('frontend.product.cart', compact( 'cartItems', 'products', 'totalDiscount', 'totalPrice', 'totalStrikedPrice', 'totalOriginalPrice', 'totalAmountPerSeller', 'deliveryCharges', 'productIds', 'availableCoupons', 'appliedCoupons'));
     }
 
     /**
@@ -105,10 +109,33 @@ class CartController extends Controller
         } 
 
         $firstImage = $product?->images?->first()->image_path;
-        $discountedPrice = $product->price - ($product->price * ($product->discount / 100));
+        $discountedPrice = $product->striked_price - $product->final_price;
         $sizes = explode(',', $product->size);
-        $size = $request->size ?? (!empty($sizes) ? $sizes[0] : '');
-        Cart::instance($userIdentifier)->add($request->slug . '_' . $request->size, $product->title, 1, $discountedPrice, ['product_id' => $product->id,'size' => $size , 'original_price' => $product->price, 'discount_percentage' => $product->discount, 'discount' => $product->price - $discountedPrice,'image' => $firstImage, 'seller_id' => $product->seller_id, 'color' => $product->color ])->associate('App\Models\Product');
+        $size = $request->size ?? (!empty($sizes) ? $sizes[0] : '');                                                                                                                                                                                                       
+        Cart::instance($userIdentifier)->add(
+            $request->slug . '_' . $request->size, 
+            $product->title, 
+            1, 
+            $product->final_price, 
+            [
+                'product_id' => $product->id,
+                'size' => $size,
+                'original_price' => $product->net_price,
+                'striked_price' => $product->striked_price,
+                'taxable_amount' => $product->price,
+                'cgst_percent' => $product->cgst_percent,
+                'sgst_percent' => $product->sgst_percent,
+                'sgst_amount' => $product->sgst_amount,
+                'cgst_amount' => $product->cgst_amount,
+                'discount_percentage' => $product->discount,
+                'discount' => $discountedPrice,
+                'image' => $firstImage,
+                'seller_id' => $product->seller_id,
+                'color' => $product->color,
+                'hsn' => $product->hsn,
+            ]
+        )->associate('App\Models\Product');
+
         if($user) {
             Cart::store($userIdentifier); 
         }
@@ -143,7 +170,11 @@ class CartController extends Controller
         $cartItems = Cart::instance($userIdentifier)->content();
         
         $totalOriginalPrice = $cartItems->sum(function ($cartItem) {
-            return $cartItem->options->original_price * $cartItem->qty;
+            return $cartItem->options?->original_price * $cartItem->qty;
+        });
+
+        $totalStrikedPrice = $cartItems->sum(function ($cartItem) {
+            return $cartItem->options?->striked_price * $cartItem->qty;
         });
     
         $totalPrice = $cartItems->sum(function ($cartItem) {
@@ -151,12 +182,13 @@ class CartController extends Controller
         });
     
         $totalDiscount = $cartItems->sum(function ($cartItem) {
-            return $cartItem->options->discount * $cartItem->qty;
+            return $cartItem->options?->discount * $cartItem->qty;
         });
 
         $deliveryCharges = 0;
         $platformFee = env('PLATFORM_FEE');
-        return response()->json(['message' => 'Cart Item Updated successfully', 'updatedItem' => $updatedItem, 'totalDiscount' => $totalDiscount , 'totalPrice' => $totalPrice , 'totalOriginalPrice' => $totalOriginalPrice, 'deliveryCharges' => $deliveryCharges, 'platformFee' => $platformFee ]);
+        $request->session()->put('msg', 'Cart Item Updated successfully');
+        return response()->json(['message' => 'Cart Item Updated successfully', 'updatedItem' => $updatedItem, 'totalDiscount' => $totalDiscount,'totalStrikedPrice' => $totalStrikedPrice , 'totalPrice' => $totalPrice , 'totalOriginalPrice' => $totalOriginalPrice, 'deliveryCharges' => $deliveryCharges, 'platformFee' => $platformFee ]);
 
     }
 

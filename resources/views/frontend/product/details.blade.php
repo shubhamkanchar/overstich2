@@ -113,13 +113,12 @@
                 <div class="fs-5" style="word-wrap: break-word;"><b>{{ $product->brand }}</b></div>
                 <div class="fs-6 d-block" style="word-wrap: break-word;">{{ $product->title }}</div>
                 <div class="fs-6 d-block">
-                    @php $discountedPrice = $product->price - ($product->price * ($product->discount / 100));@endphp
                     <span class="fs-4">
-                        <strong><i class="bi bi-currency-rupee"></i>{{ $discountedPrice }}
+                        <strong><i class="bi bi-currency-rupee"></i>{{ $product->final_price }}
                         </strong>
                     </span>
                     <small>
-                    <strike><i class="bi bi-currency-rupee"></i>{{ $product->price}}</strike>
+                    <strike><i class="bi bi-currency-rupee"></i>{{ $product->striked_price}}</strike>
                     </small>
                     <small class="text-danger">({{ $product->discount}}% OFF)</small>
                 </div>

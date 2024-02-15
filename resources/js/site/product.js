@@ -25,27 +25,39 @@ const product = () =>{
             }
         })
     })
-    $(document).on('keyup','#netPrice , #cgst, #sgst',function(){
-        priceCal();
-    })
-    function priceCal(){
-        let netPrice = $('#netPrice').val();
-        let cgst = $('#cgst').val();
-        let sgst = $('#sgst').val();
-        let totalGst = (parseFloat(netPrice) /100) * (parseFloat(cgst) + parseFloat(sgst));
-        let total = parseFloat(totalGst) + parseFloat(netPrice);
-        $('#price').val(total);
-    }
 
-    $(document).on('keyup','#discount',function(){
+    $(document).on('keyup','#cgst, #sgst',function(){
         finalSellinPrice();
     })
+
+    $(document).on('keyup','#netPrice',function(){
+        priceCal();
+        finalSellinPrice();
+    })
+
+    $(document).on('keyup','#discount',function() {
+        priceCal();
+    })
+
+    function priceCal(){
+        let price = $('#netPrice').val();
+        let discount = $('#discount').val();
+        if(parseInt(price)>=0 && parseInt(discount)>=0) {
+            let totalDiscount = (parseFloat(price) /100) * parseFloat(discount);
+            let total = parseFloat(price) - parseFloat(totalDiscount);
+            $('#price').val(total);
+        }
+    }
+
     function finalSellinPrice(){
         let price = $('#price').val();
-        let discount = $('#discount').val();
-        let totalDiscount = (parseFloat(price) /100) * parseFloat(discount);
-        let total = parseFloat(price) - parseFloat(totalDiscount);
-        $('#finalPrice').val(total);
+        let cgst = $('#cgst').val();
+        let sgst = $('#sgst').val();
+        if(parseInt(price)>=0 && (parseInt(cgst)>=0 || parseInt(sgst)>=0)) {
+            let totalGst = (parseFloat(price) /100) * (parseFloat(cgst) + parseFloat(sgst));
+            let total = parseFloat(totalGst) + parseFloat(price);
+            $('#finalPrice').val(total);
+        }
     }
 }
 export default product;
