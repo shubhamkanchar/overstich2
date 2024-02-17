@@ -139,6 +139,7 @@
                                 <td>{{ $totalPrice}}</td>
                             </tr>
                         </table>
+                        <span class="text-success">You saved Rs.{{$totalStrikedPrice - $totalPrice}} on this order</span>
                         <div class="mb-3">
                             <label for="paymentMethod" class="form-label">Select Payment Method</label>
                             <select class="form-control" id="paymentMethod" name="payment_method" required>

@@ -150,13 +150,21 @@
                 <tr class="items">
                     <tr>
                         <td class="text-center">{{ $order->orderItem->quantity }}</td>
-                        <td class="text-center">{{ ucfirst($order->orderItem->name) }}</td>
+                        <td class="text-center text-wrap">
+                            {{ ucfirst($order->orderItem->name) }}
+                            <br>
+                            HSN: {{ $order->orderItem?->hsn}}
+                            <br> 
+                            {{ $order->orderItem?->sgst_percent}} % SGST
+                            <br>
+                            {{ $order->orderItem?->cgst_amount}} % CGST
+                        </td>
                         <td class="text-center">Rs.{{ number_format($order->orderItem->original_price, 2) }}</td>
                         <td class="text-center">Rs.{{ number_format($order->orderItem->discount, 2) }}</td>
-                        <td class="text-center">Rs.{{ number_format($order->orderItem->price, 2) }} </td>
-                        <td class="text-center">Rs.{{ number_format($order->igst_percent, 2) }} </td>
-                        <td class="text-center">Rs.{{ number_format($order->cgst_percent, 2) }} </td>
-                        <td class="text-center">Rs.{{ number_format($order->sgst_percent, 2) }} </td>
+                        <td class="text-center">Rs.{{ number_format($order->orderItem->taxable_amount, 2) }} </td>
+                        <td class="text-center">Rs.{{ number_format(($order->orderItem?->igst_amount ?? 0), 2) }}</td>
+                        <td class="text-center">Rs.{{ number_format(($order->orderItem?->cgst_amount ?? 0), 2) }}</td>
+                        <td class="text-center">Rs.{{ number_format(($order->orderItem?->sgst_amount ?? 0), 2) }}</td>
                         <td class="text-center">Rs.{{ number_format($order->orderItem->price, 2) }} </td>
                     </tr>
                 </tr>
@@ -180,10 +188,10 @@
                     <td colspan="1"> </td>
                     <td class="text-center"><b>Rs.{{ number_format($order->sub_total, 2) }}</b></td>
                     <td class="text-center"><b>Rs.{{ number_format($order->total_discount, 2) }}</b></td>
-                    <td class="text-center"><b>Rs.{{ number_format($order->total_amount, 2) }}</b> </td>
-                    <td class="text-center"><b>Rs.{{ number_format($order->igst_percent, 2) }}</b> </td>
-                    <td class="text-center"><b>Rs.{{ number_format($order->cgst_percent, 2) }}</b> </td>
-                    <td class="text-center"><b>Rs.{{ number_format($order->sgst_percent, 2) }}</b> </td>
+                    <td class="text-center"><b>Rs.{{ number_format($order->total_taxable_amount, 2) }}</b> </td>
+                    <td class="text-center"><b>Rs.{{ number_format($order->total_igst_amount, 2) }}</b> </td>
+                    <td class="text-center"><b>Rs.{{ number_format($order->total_cgst_amount, 2) }}</b> </td>
+                    <td class="text-center"><b>Rs.{{ number_format($order->total_sgst_amount, 2) }}</b> </td>
                     <td class="text-center"><b>Rs.{{ number_format($order->total_amount, 2) }}</b> </td>
                 </tr>
             </table>
@@ -288,13 +296,24 @@
                 <tr class="items">
                     <tr>
                         <td class="text-center">1</td>
-                        <td class="text-center">Platform fee HSN:999799, 9% CGST 9% SGST</td>
-                        <td class="text-center">Rs.{{number_format($order->platform_fee)}}</td>
+                        <td class="text-center">Platform fee 
+                            <br>
+                            HSN:999799,
+                            <br>
+                            9% CGST, 
+                            <br>
+                            9% SGST
+                        </td>
+                        @php
+                            $tax = (18/100) * $order->platform_fee;
+                            $gst = $tax/2;
+                        @endphp
+                        <td class="text-center">Rs.{{ number_format($order->platform_fee, 2) }}</td>
                         <td class="text-center">Rs.0.00</td>
+                        <td class="text-center">Rs.{{ number_format(($order->platform_fee - $tax), 2) }}</td>
                         <td class="text-center">Rs.0.00</td>
-                        <td class="text-center">Rs.0.00</td>
-                        <td class="text-center">Rs.0.00</td>
-                        <td class="text-center">Rs.0.00</td>
+                        <td class="text-center">Rs.{{ number_format(($gst), 2) }}</td>
+                        <td class="text-center">Rs.{{ number_format(($gst), 2) }}</td>
                         <td class="text-center">Rs.{{$order->platform_fee}}</td>
                     </tr>
                 </tr>
@@ -306,13 +325,13 @@
                 <tr>
                     <td class="text-center"><b>Total</b></td>
                     <td class="text-center"></td>
-                    <td class="text-center">Rs.{{number_format($order->platform_fee)}}</td>
-                    <td class="text-center">Rs.0.00</td>
-                    <td class="text-center">Rs.0.00</td>
-                    <td class="text-center">Rs.0.00</td>
-                    <td class="text-center">Rs.0.00</td>
-                    <td class="text-center">Rs.0.00</td>
-                    <td class="text-center">Rs.{{$order->platform_fee}}</td>
+                    <td class="text-center"><b>Rs.{{number_format($order->platform_fee)}}</b></td>
+                    <td class="text-center"><b>Rs.0.00</b></td>
+                    <td class="text-center"><b>Rs.{{ number_format(($order->platform_fee - $tax), 2) }}</b></td>
+                    <td class="text-center"><b>Rs.0.00</b></td>
+                    <td class="text-center"><b>Rs.{{ number_format(($gst), 2) }}</b></td>
+                    <td class="text-center"><b>Rs.{{ number_format(($gst), 2) }}</b></td>
+                    <td class="text-center"><b>Rs.{{$order->platform_fee}}</b></td>
                 </tr>
             </table>
         </div>

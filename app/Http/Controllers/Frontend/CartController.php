@@ -129,6 +129,8 @@ class CartController extends Controller
                 'cgst_amount' => $product->cgst_amount,
                 'discount_percentage' => $product->discount,
                 'discount' => $discountedPrice,
+                'return' => $product->return,
+                'replace' => $product->replace,
                 'image' => $firstImage,
                 'seller_id' => $product->seller_id,
                 'color' => $product->color,

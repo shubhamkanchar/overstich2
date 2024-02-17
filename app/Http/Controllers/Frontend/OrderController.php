@@ -43,7 +43,11 @@ class OrderController extends Controller
         }
 
         $totalOriginalPrice = $cartItems->sum(function ($cartItem) {
-            return $cartItem->options->original_price * $cartItem->qty;
+            return $cartItem->options?->original_price * $cartItem->qty;
+        });
+        
+        $totalStrikedPrice = $cartItems->sum(function ($cartItem) {
+            return $cartItem->options?->striked_price * $cartItem->qty;
         });
     
         $totalPrice = $cartItems->sum(function ($cartItem) {
@@ -90,7 +94,7 @@ class OrderController extends Controller
             request()->session()->put('msg', 'Your Cart is Empty');
             return  redirect()->route('cart.index');
         }
-        return view('frontend.order.checkout', compact('cartItems', 'totalPrice', 'totalDiscount', 'totalOriginalPrice', 'deliveryCharge', 'appliedCoupons', 'totalCouponDiscounts'));
+        return view('frontend.order.checkout', compact('cartItems', 'totalPrice', 'totalDiscount', 'totalOriginalPrice', 'totalStrikedPrice','deliveryCharge', 'appliedCoupons', 'totalCouponDiscounts'));
     }
 
     public function myOrders(Request $request) {
@@ -214,6 +218,10 @@ class OrderController extends Controller
         foreach($cartItems as $cartItem) {
             $totalOriginalPrice =  $cartItem->options->original_price * $cartItem->qty;
             $totalPrice = $cartItem->price * $cartItem->qty;
+            $totalStrikedPrice = $cartItem->price * $cartItem->qty;
+            $totalTaxableAmount = $cartItem->options?->taxable_amount * $cartItem->qty;
+            $totalSgstAmount = $cartItem->options?->sgst_amount * $cartItem->qty;
+            $totalCgstAmount = $cartItem->options?->cgst_amount * $cartItem->qty;
             $totalDiscount = $cartItem->options->discount * $cartItem->qty;
             $couponDiscount = 0;
             $couponId = 0;
@@ -230,6 +238,8 @@ class OrderController extends Controller
             $order->user_id = auth()->id();
             $order->seller_id = $cartItem->options?->seller_id;
             $order->product_id = $cartItem->options?->product_id;
+            $order->return = $cartItem->options?->return;
+            $order->replace = $cartItem->options?->replace;
             $order->email = $request->email;
             $order->batch = $batch;
             $order->phone = $request->mobile;
@@ -243,11 +253,16 @@ class OrderController extends Controller
             $order->payment_method = $request->payment_method;
             $order->payment_transaction_id = $transactionId;
             $order->is_order_confirmed = $request->payment_method == 'cod' ? 1 : 0;
-            $order->total_amount =  $totalPrice > 2300 ? $totalPrice + env('PLATFORM_FEE')  : $totalPrice + $deliveryCharges + env('PLATFORM_FEE');
+            $order->total_amount =  $totalPrice > 2300 ? $totalPrice + env('PLATFORM_FEE')  : $totalPrice + $deliveryCharges + env('PLATFORM_FEE');// final price
             $order->delivery_charge = $deliveryCharges;
-            $order->sub_total = $totalOriginalPrice;
+            $order->sub_total = $totalOriginalPrice; //gross amount
+            $order->total_sgst_amount = $totalSgstAmount;
+            $order->total_cgst_amount = $totalCgstAmount;
+            $order->total_taxable_amount = $totalTaxableAmount;
+            $order->total_striked_price = $totalStrikedPrice;
             $order->status = 'NEW';
             $order->total_discount = $totalDiscount;
+            $order->platform_fee = env('PLATFORM_FEE');
             $order->coupon_discount = $couponDiscount;
             $order->coupon_id = $couponId;
             $order->save();
