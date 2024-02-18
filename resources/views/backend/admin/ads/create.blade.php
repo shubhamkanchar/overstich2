@@ -22,7 +22,7 @@
                                         <option value="top">Top</option>
                                         <option value="left">Middle Left</option>
                                         <option value="right">Middle Right</option>
-                                        <option value="bootm">Bottom</option>
+                                        <option value="bottom">Bottom</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6  mt-2">

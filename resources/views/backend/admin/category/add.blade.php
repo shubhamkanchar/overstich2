@@ -17,7 +17,7 @@
                                 </div>
                                 <div class="col-md-6  mt-2">
                                     <label>Master Category</label>
-                                    <select class="form-select" data-route="{{ route('admin.get-sub-categories', ':categoryId') }}" id="masterCategory" name="parent_id" required>
+                                    <select class="form-select" data-route="{{ route('admin.get-sub-categories', ':categoryId') }}" id="masterCategory" name="parent_id">
                                         <option value="">Master Category</option>
                                         @foreach($category as $cat)
                                             <option value="{{ $cat->id }}">{{ $cat->category }}</option>
@@ -36,7 +36,7 @@
                                 <div class="col-md-6  mt-2">
                                     <label>Category Status</label>
                                     <select class="form-select" name="is_active" required>
-                                        <option value="">Category Status</option>
+                                        {{-- <option value="">Category Status</option> --}}
                                         <option value="1">Active</option>
                                         <option value="0">In-Active</option>
                                     </select>

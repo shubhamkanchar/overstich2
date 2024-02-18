@@ -8,37 +8,24 @@ const frontend = () => {
 
     $(document).ready(function () {
         if ($('.splide').length > 0) {
-            new Splide('.splide').mount();
 
-            var recent = new Splide('.recent', {
-                // type: 'loop',
-                perPage: 4,
-                focus: 'center',
-                autoplay:true,
-            });
+            // var recent = new Splide('.recent', {
+            //     // type: 'loop',
+            //     perPage: 4,
+            //     focus: 'center',
+            //     autoplay:true,
+            // });
 
-            recent.mount();
+            // recent.mount();
 
-            var top = new Splide('.top', {
-                // type: 'loop',
-                perPage: 4,
-                focus: 'center',
-                autoplay:true
-            });
-
-            top.mount();
-
-            new Splide('.second-one',{
-                // heightRatio : 1.0,
-                autoplay:true,
-            }).mount();
-            new Splide('.second-two',{
-                // heightRatio : 1.0,
-            }).mount();
-            new Splide('.bottom').mount();
+            // var top = new Splide('.top', {
+            //     // type: 'loop',
+            //     perPage: 4,
+            //     focus: 'center',
+            //     autoplay:true
+            // });
+            // top.mount();
         }
-
-        // Zoom(".zoomable");
     })
 
     $('#checkoutForm').validate({

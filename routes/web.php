@@ -179,7 +179,7 @@ Route::domain('partners.'.env('DOMAIN'))->group(function () {
     Route::get('/',[SellerController::class,'homepage']);
     Route::resource('seller',SellerController::class);
 });
-
+Route::resource('seller',SellerController::class);
 Route::any('phonepe-response', [OrderController::class, 'paymentResponse'])->name('payment.response');
 Route::any('phonepe-callback', [OrderController::class, 'paymentCallback'])->name('payment.callback');
 Route::get('/success',function(){
