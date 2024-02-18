@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\ReturnOrderModel;
+use App\Models\UserAccount;
 use App\Models\Warehouse;
 use Exception;
 use GuzzleHttp\Client;
@@ -282,5 +284,55 @@ class DelhiveryController extends Controller
         return response()->json([
             'msg'=>'something went wrong'
         ],400);
+    }
+
+    public function returnReplaceOrderGet(Request $request){
+        if(Auth::user()->role == 'seller'){
+            $order = Order::where('order_number', $request->order_number)->first();
+        }else{
+            $order = Order::where('order_number', $request->order_number)->where('user_id',Auth::user()->id)->first();
+        }
+        if(empty($order)){
+            return view('error.400');
+        }
+        return view('frontend.order.return',compact('order'));
+    }
+
+    public function returnReplaceOrder(Request $request){
+        if(Auth::user()->role == 'seller'){
+            $order = Order::where('order_number', $request->order_number)->first();
+        }else{
+            $order = Order::where('order_number', $request->order_number)->where('user_id',Auth::user()->id)->first();
+        }
+        if(empty($order)){
+            if(empty($order)){
+                return view('error.400');
+            }
+        }
+
+        UserAccount::updateOrCreate([
+            'user_id'=>Auth::user()->id
+        ],[
+            'holder_name' => $request->account_holder_name,
+            'account_number'=>$request->account,
+            'bank_name'=>$request->bank_name,
+            'ifsc'=>$request->ifsc
+        ]);
+
+        $data = ReturnOrderModel::create([
+            'order_id' => $order->id,
+            'seller_id' => $order->seller_id,
+            'status'=> $request->order_status,
+            'return_reason'=> $request-> return_reason,
+            'other_reason' => $request->other_reason,
+            'status_condition' => 'requested'
+        ]);
+
+        if(!empty($data)){
+            request()->session()->put('success',$data['prepaid']);
+        }else{
+            request()->session()->put('error','Something went wrong');
+        }
+        return redirect()->route('order.my-order');
     }
 }

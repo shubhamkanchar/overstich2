@@ -14,11 +14,15 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin = User::create([
-            'name'=>'admin',
-            'email' => 'admin@overstitch.com',
-            'password'=> Hash::make('123456'),
-        ]);
-        $admin->assignRole('admin');
+        $count = User::where('email', 'admin@overstitch.com')->count();
+        if ($count == 0) {
+            $admin = User::create([
+                'name' => 'admin',
+                'email' => 'admin@overstitch.com',
+                'password' => Hash::make('123456'),
+                'user_type' => 'admin'
+            ]);
+            $admin->assignRole('admin');
+        }
     }
 }

@@ -60,4 +60,7 @@ class Order extends Model
         return $this->belongsTo(User::class, 'seller_id', 'id');
     }
 
+    public function orderReturn(){
+        return $this->hasOne(ReturnOrderModel::class,'order_id','id');
+    }
 }

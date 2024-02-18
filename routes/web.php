@@ -35,7 +35,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::domain('www.'.env('DOMAIN'))->group(function () {
+Route::domain(env('WWW').env('DOMAIN'))->group(function () {
     Route::get('/', function () {
         $ads = AdsModel::where('status' ,'1')->get();
 
@@ -80,6 +80,8 @@ Route::resource('products', ProductController::class)->except(['index']);
 Route::get('category/products/{category?}', [ProductController::class, 'index'])->name('products.index');
 Route::get('products/{seller:slug?}/get-brand', [ProductController::class, 'getProductByBrand'])->name('products.brand');
 Route::get('track/{id}',[DelhiveryController::class,'track'])->name('user.track');
+Route::get('return_replace/{order_number}',[DelhiveryController::class,'returnReplaceOrderGet'])->name('user.replaceGet');
+Route::post('return_replace/{order_number}',[DelhiveryController::class,'returnReplaceOrder'])->name('user.replacePost');
 
 Route::group(['middleware'=>['auth','adminMiddleware'], 'prefix' => 'admin'],function(){
     Route::get('dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');
@@ -132,7 +134,8 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('orders/{id}',[BackendOrderController::class,'viewOrder'])->name('order.view');
         Route::post('orders/{order}/reject', [BackendOrderController::class,'rejectOrder'])->name('order.reject');
         Route::get('download-invoice/{id}', [BackendOrderController::class,'downloadInvoice'])->name('download.invoice');
-
+        Route::get('order/return',[BackendOrderController::class,'orderReturnTable'])->name('order.return');
+        Route::get('order/return/{order_number}',[BackendOrderController::class,'orderReturnView'])->name('order.return-view');
         Route::get('order/shipment/{id}',[DelhiveryController::class,'shipmentCreate'])->name('order.shipment');
         Route::get('warehouse/create',[DelhiveryController::class,'warehouseCreate'])->name('warehouse.create');
         Route::post('warehouse/store',[DelhiveryController::class,'warehousestore'])->name('warehouse.store');
@@ -140,10 +143,14 @@ Route::group(['middleware'=>['auth']],function(){
         Route::post('pickup',[DelhiveryController::class,'raisePickup'])->name('pickup');
         Route::resource('warehouses',WarehouseController::class);
         Route::get('track/{id}',[DelhiveryController::class,'track'])->name('order.track');
+        
 
         Route::get('shipment/create/{id}',[DelhiveryController::class,'shipmentForm'])->name('shipment-form');
         Route::resource('coupon', CouponController::class);
         Route::get('accept/{order}',[BackendOrderController::class,'acceptOrder'])->name('order.accept');
+
+        Route::get('return/accept/{id}',[BackendOrderController::class,'acceptReturnOrder'])->name('order.return-accept');
+        Route::post('return/orders/{id}/reject', [BackendOrderController::class,'rejectReturnOrder'])->name('order.return-reject');
 
     });
 

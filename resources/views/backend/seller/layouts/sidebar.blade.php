@@ -56,6 +56,7 @@
                     <div class="accordion-body">
                         <ul>
                             <li><a href="{{ route('seller.order.list') }}">View Orders</a></li>
+                            <li><a href="{{ route('seller.order.return') }}">View returned Orders</a></li>
                         </ul>
                     </div>
                 </div>

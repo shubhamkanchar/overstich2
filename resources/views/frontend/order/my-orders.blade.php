@@ -242,10 +242,45 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-md-4">
-                                                    <div class="ms-2">
-                                                        <p
-                                                            class="mb-1 d-inline-block status-label status-{{ strtolower($order->status) }}">
-                                                            {{ ucfirst($order->status) }}
+                                                    @if(empty($order->orderReturn))
+                                                        <div class="ms-2">
+                                                            <p class="mb-1 d-inline-block status-label status-{{ strtolower($order->status) }}">
+                                                                {{ ucfirst($order->status) }}
+                                                            </p>
+                                                            <span class="text-secondary d-inline-block mb-2">
+                                                                {{ $statusDescriptions[$order->status] }}
+                                                                @if ($order->status == 'rejected')
+                                                                    {{ $order->rejection_reason }}
+                                                                @endif
+                                                            </span>
+                                                        </div>
+                                                        @if($order->status != 'cancelled')
+                                                            <div class="ms-2">
+                                                                <a class="text-decoration-none text-primary fw-bold"
+                                                                    href="{{ route('rating.add-rating', $order->orderItem->product->slug) }}"
+                                                                    role="button"> <i class="bi bi-star-fill"></i> Review & Rate
+                                                                    This product</a>
+
+                                                            </div>
+                                                            <div>
+                                                                @if($order->status != 'delivered')
+                                                                    <a target="_blank" href="{{ route('user.track', $order->id) }}" class="btn btn-sm btn-primary m-1" title="Track Order">
+                                                                        Track
+                                                                    </a>
+                                                                    <button type="button" data-route="{{ route('cancel-order') }}" data-id="{{ $order->id }}" class="btn btn-sm btn-danger m-1 cancel-order" title="Cancel Order">
+                                                                        Cancel
+                                                                    </button>
+                                                                @elseif($order->status == 'delivered' && ($order->return || $order->replace))
+                                                                    <a href="{{ route('user.replaceGet', $order->order_number) }}" class="btn btn-sm btn-primary m-1" title="Return / Replace Order">
+                                                                        Return / Replace
+                                                                    </a>
+                                                                @endif
+                                                                <a class="btn btn-sm btn-success" href="{{ route('download.invoice', $order->id)}}"> <i class="bi bi-file-earmark-text"></i> Invoice</a>
+                                                            </div>
+                                                        @endif
+                                                    @else
+                                                        <p class="mb-1 d-inline-block status-label status-{{ strtolower($order->status) }}">
+                                                            {{ ucfirst($order->orderReturn?->status).' '.$order->orderReturn?->status_condition }}
                                                         </p>
                                                         <span class="text-secondary d-inline-block mb-2">
                                                             {{ $statusDescriptions[$order->status] }}
@@ -253,24 +288,6 @@
                                                                 {{ $order->rejection_reason }}
                                                             @endif
                                                         </span>
-                                                    </div>
-                                                    @if($order->status != 'cancelled')
-                                                        <div class="ms-2">
-                                                            <a class="text-decoration-none text-primary fw-bold"
-                                                                href="{{ route('rating.add-rating', $order->orderItem->product->slug) }}"
-                                                                role="button"> <i class="bi bi-star-fill"></i> Review & Rate
-                                                                This product</a>
-
-                                                        </div>
-                                                        <div>
-                                                            <a target="_blank" href="{{ route('user.track', $order->id) }}" class="btn btn-sm btn-primary m-1" title="Track Order">
-                                                                Track
-                                                            </a>
-                                                            <button type="button" data-route="{{ route('cancel-order') }}" data-id="{{ $order->id }}" class="btn btn-sm btn-danger m-1 cancel-order" title="Cancel Order">
-                                                                Cancel
-                                                            </button>
-                                                            <a class="btn btn-sm btn-success" href="{{ route('download.invoice', $order->id)}}"> <i class="bi bi-file-earmark-text"></i> Invoice</a>
-                                                        </div>
                                                     @endif
                                                 </div>
                                             </div>

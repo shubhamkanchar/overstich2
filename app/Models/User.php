@@ -52,6 +52,10 @@ class User extends Authenticatable
         return $this->hasMany(SellerInfoImage::class,'seller_id','id');
     }
 
+    public function userAccount(){
+        return $this->hasOne(UserAccount::class,'user_id','id');
+    }
+
     public function orders() {
         return $this->hasMany(Order::class);
     }
