@@ -6,7 +6,7 @@
             <section class="splide mb-5" aria-label="Splide Basic HTML Example">
                 <div class="splide__track">
                     <ul class="splide__list">
-                        @foreach ($ads as $ad)
+                        @foreach ($topAds as $ad)
                             <li class="splide__slide">
                                 <a target="_blank" href="{{ $ad->link }}">
                                 <img src="{{ asset('image/banner/' . $ad->file) }}" alt="" class="aspect-img br"
@@ -68,7 +68,7 @@
                 <section class="splide second-one" aria-label="Splide Basic HTML Example">
                     <div class="splide__track">
                         <ul class="splide__list">
-                            @foreach ($ads as $ad)
+                            @foreach ($leftAds as $ad)
                                 <li class="splide__slide">
                                     <a target="_blank" href="{{ $ad->link }}">
                                     <img src="{{ asset('image/banner/' . $ad->file) }}" alt=""
@@ -84,7 +84,7 @@
                 <section class="splide second-two" aria-label="Splide Basic HTML Example">
                     <div class="splide__track">
                         <ul class="splide__list">
-                            @foreach ($ads as $ad)
+                            @foreach ($rightAds as $ad)
                                 <li class="splide__slide">
                                     <a target="_blank" href="{{ $ad->link }}">
                                     <img src="{{ asset('image/banner/' . $ad->file) }}" alt=""
@@ -104,7 +104,7 @@
             <section class="splide bottom" aria-label="Splide Basic HTML Example">
                 <div class="splide__track">
                     <ul class="splide__list">
-                        @foreach ($ads as $ad)
+                        @foreach ($bottomAds as $ad)
                             <li class="splide__slide">
                                 <a target="_blank" href="{{ $ad->link }}">
                                 <img src="{{ asset('image/banner/' . $ad->file) }}" alt="" class="aspect-img br"

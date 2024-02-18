@@ -77,14 +77,13 @@
                 <a title="Cart" class="navbar-brand" href="{{ url('/') }}">
                     <img src="{{ asset('image/logo.png') }}" style="width:50px">
                 </a>
-                <ul class="mt-3 p-0" style="display: inline-flex;
-                align-items: flex-end;">
+                <ul class="mt-3 p-0" style="display: inline-flex;align-items: flex-end;min-width: 270px;justify-content: space-between;">
                     <li class="nav-item ps-xl-2 pe-xl-2 d-block d-lg-none" style="width: 100px">
                         <a class="nav-link" href="javascript:void(0)">
                             <form id="searchForm" class="d-flex" action="{{ route('search-product') }}" method="GET">
                                 <input class="form-control rounded-pill pe-4" type="text" id="example-search-input"
                                     name="search" value="{{ request()->search ?? '' }}">
-                                <button type="submit" class="btn d-none"></button>
+                                <button type="submit" class="btn d-none fw-bold"></button>
                                 <i role="button" onclick="document.getElementById('searchForm').submit()"
                                     class="bi bi-search mt-1" style="margin-left:-25px"></i>
                             </form>
@@ -93,7 +92,6 @@
                     <li class="nav-item ps-xl-2 pe-xl-2 d-block d-lg-none">
                         <a class="nav-link" href="{{ route('cart.index') }}">
                             <span class="position-relative p-1">
-                                {{-- <i class="bi bi-bag fw-bolder"></i> --}}
                                 <i class="bi bi-cart-check-fill fs-4"></i>
                                 @if ($cartCount > 0)
                                     <span
@@ -108,7 +106,6 @@
                     </li>
                     <li class="nav-item ps-xl-2 pe-xl-2 d-block d-lg-none">
                         <a title="Wishlist" class="nav-link" href="{{ route('wishlist.index') }}">
-                            {{-- <i class="bi bi-heart fw-bolder"></i> --}}
                             <i class="bi bi-heart-fill fs-4"></i>
                         </a>
                     </li>
@@ -124,32 +121,32 @@
                         <li class="nav-item dropdown d-block d-lg-none">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ ucwords(explode(' ', Auth::user()->name)[0]) }}
+                                <i class="bi bi-person-fill fs-2"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
+                                    Welcome {{ ucwords(explode(' ', Auth::user()->name)[0]) }}
+                                </a>
                                 @if (Auth::user()->user_type == 'admin')
                                     <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
-                                        Dashboard
+                                        <i class="bi bi-speedometer me-2"></i>Dashboard
                                     </a>
                                 @elseif(Auth::user()->user_type == 'seller')
                                     <a class="dropdown-item" href="{{ route('seller.dashboard') }}">
-                                        Dashboard
+                                        <i class="bi bi-speedometer me-2"></i>Dashboard
                                     </a>
                                 @else
-                                    <!-- <a class="dropdown-item" href="{{ route('user.dashboard') }}">
-                                                            Dashboard
-                                                        </a> -->
                                     <a class="dropdown-item" href="{{ route('order.my-order') }}">
-                                        Orders
+                                        <i class="bi bi-basket-fill me-2"></i>Orders
                                     </a>
                                     <a class="dropdown-item" href="{{ route('addresses.index') }}">
-                                        Address
+                                        <i class="bi bi-building-fill-add me-2"></i>Address
                                     </a>
                                 @endif
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                                    <i class="bi bi-box-arrow-left me-2"></i>{{ __('Logout') }}
                                 </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
@@ -193,16 +190,15 @@
                                     <input class="form-control rounded-pill pe-4" type="text"
                                         id="example-search-input" name="search"
                                         value="{{ request()->search ?? '' }}">
-                                    <button type="submit" class="btn d-none"></button>
+                                    <button type="submit" class="btn d-none fw-bold"></button>
                                     <i role="button" onclick="document.getElementById('searchForm').submit()"
-                                        class="bi bi-search mt-1" style="margin-left:-25px"></i>
+                                        class="bi bi-search mt-1 fw-bold" style="margin-left:-25px"></i>
                                 </form>
                             </a>
                         </li>
                         <li class="nav-item ps-xl-2 pe-xl-2 d-none d-lg-block">
                             <a title="Cart" class="nav-link" href="{{ route('cart.index') }}">
                                 <span class="position-relative p-1">
-                                    {{-- <i class="bi bi-bag fw-bolder"></i> --}}
                                     <i class="bi bi-cart-check-fill fs-4"></i>
                                     @if ($cartCount > 0)
                                         <span
@@ -238,27 +234,23 @@
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     @if (Auth::user()->user_type == 'admin')
                                         <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
-                                            Dashboard
+                                            <i class="bi bi-speedometer me-2"></i>Dashboard
                                         </a>
                                     @elseif(Auth::user()->user_type == 'seller')
                                         <a class="dropdown-item" href="{{ route('seller.dashboard') }}">
-                                            Dashboard
+                                            <i class="bi bi-speedometer me-2"></i>Dashboard
                                         </a>
                                     @else
-                                        <!-- <a class="dropdown-item" href="{{ route('user.dashboard') }}">
-                                                            Dashboard
-                                                        </a> -->
                                         <a class="dropdown-item" href="{{ route('order.my-order') }}">
-                                            Orders
+                                            <i class="bi bi-basket-fill me-2"></i>Orders
                                         </a>
                                         <a class="dropdown-item" href="{{ route('addresses.index') }}">
-                                            Address
+                                            <i class="bi bi-building-fill-add me-2"></i>Address
                                         </a>
                                     @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        <i class="bi bi-box-arrow-left me-2"></i>{{ __('Logout') }}
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                         class="d-none">

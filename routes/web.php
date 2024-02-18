@@ -37,7 +37,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::domain(env('WWW').env('DOMAIN'))->group(function () {
     Route::get('/', function () {
-        $ads = AdsModel::where('status' ,'1')->get();
+        $topAds = AdsModel::where('status' ,'1')->where('location' ,'top')->limit(10)->get();
+        $bottomAds = AdsModel::where('status' ,'1')->where('location' ,'bottom')->limit(10)->get();
+        $leftAds = AdsModel::where('status' ,'1')->where('location' ,'left')->limit(10)->get();
+        $rightAds = AdsModel::where('status' ,'1')->where('location' ,'right')->limit(10)->get();
 
         $query = Product::with('images')->where('status', 'active');
         $newProductsQuery = clone $query;
@@ -49,7 +52,7 @@ Route::domain(env('WWW').env('DOMAIN'))->group(function () {
         $defaultProductsQuery = clone $query;
         $products = $defaultProductsQuery->where('condition', 'default')->latest()->take(30)->get();
 
-        return view('welcome', compact('ads', 'products', 'newProducts', 'hotProducts'));
+        return view('welcome', compact('topAds', 'products', 'newProducts', 'hotProducts','bottomAds','leftAds','rightAds'));
     })->name('welcome');
 });
 
