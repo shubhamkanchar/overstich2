@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
+use App\Models\Address;
 use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\OrderPlatformFee;
 use App\Models\ProductSize;
 use App\Models\User;
 use App\Models\UserCoupon;
@@ -16,6 +18,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Cart;
 
 use App\Services\PhonePePaymentGateWay;
+use Exception;
 use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
@@ -27,7 +30,7 @@ class OrderController extends Controller
         $this->phonePePaymentGateway = $phonePePaymentGateway;
     }
 
-    public function index() {
+    public function index(Request $request) {
         $user = auth()->user();
         $userIdentifier = $user->name.$user->id;
         Cart::instance($userIdentifier)->restore($userIdentifier);
@@ -89,12 +92,18 @@ class OrderController extends Controller
         
         $deliveryCharge = 0;
         $totalPrice = $totalPrice + env('PLATFORM_FEE') - $totalCouponDiscounts ;
+        if(isset($request->address)){
+            $address = Address::where(['user_id' => $user->id])->where('id', $request->address)->first();
+        } else {
+            $address = Address::where(['user_id' => $user->id])->where('default', 1)->first();
+        }
+
         if (Cart::instance($userIdentifier)->count() === 0) {
             // notify()->error('Your Cart is Empty');
             request()->session()->put('msg', 'Your Cart is Empty');
             return  redirect()->route('cart.index');
         }
-        return view('frontend.order.checkout', compact('cartItems', 'totalPrice', 'totalDiscount', 'totalOriginalPrice', 'totalStrikedPrice','deliveryCharge', 'appliedCoupons', 'totalCouponDiscounts'));
+        return view('frontend.order.checkout', compact('cartItems', 'totalPrice', 'totalDiscount', 'totalOriginalPrice', 'totalStrikedPrice','deliveryCharge', 'appliedCoupons', 'address', 'totalCouponDiscounts'));
     }
 
     public function myOrders(Request $request) {
@@ -124,7 +133,7 @@ class OrderController extends Controller
             });
         }
 
-        $orders = $query->orderBy('created_at', 'desc')->paginate(10);
+        $orders = $query->orderBy('updated_at', 'desc')->paginate(5);
         $links= $orders->links();
         $orders = $orders->groupBy('batch');
         $statusDescriptions = [
@@ -289,6 +298,32 @@ class OrderController extends Controller
                 $payment = $this->phonePePaymentGateway->store($paymentData);
             }
         }
+
+        $platformFee = env('PLATFORM_FEE');
+        $platformGST = env('PLATFORM_FEE_GST');
+        $taxAmount = ($platformGST/100) * $platformFee;
+        $gstAmount = $taxAmount/2;
+
+        $orderPlatformFee = new OrderPlatformFee();
+
+        $orderPlatformFee->batch = $batch;
+        $orderPlatformFee->order_number = 'OI'.strtotime('now') . $id . $user->id ?? '';
+        $orderPlatformFee->user_id = $user->id;
+        $orderPlatformFee->payment_transaction_id = $transactionId;
+        $orderPlatformFee->payment_method = $request->payment_method;
+        $orderPlatformFee->is_order_confirmed = $request->payment_method == 'cod' ? 1 : 0;
+        $orderPlatformFee->amount = $platformFee;
+        $orderPlatformFee->taxable_amount = $platformFee - $taxAmount;
+        $orderPlatformFee->gst_percent = $platformGST;
+        $orderPlatformFee->gst_amount = $gstAmount;
+        $orderPlatformFee->invoice_number = '#'.strtotime('now') . $order->user_id;
+        $orderPlatformFee->invoice_generated_at = now();
+
+        $orderPlatformFee->save();
+
+        if(isset($request->save_address) && $request->save_address == 1) {
+            $this->saveDeliveryAddress($request, $user);
+        }
         
         if($request->payment_method == 'phone_pe') {
 
@@ -315,13 +350,33 @@ class OrderController extends Controller
         return redirect()->route('success-page');  
     }
 
+    public function saveDeliveryAddress($request, $user) {
+
+        if($request->default_address){
+            Address::where('user_id', $user->id)->update(['default' => 0]);
+        }
+
+        $address = Address::create([
+            'address' => $request->address,
+            'pincode' => $request->pincode,
+            'state' => $request->state,
+            'locality' => $request->locality,
+            'city' => $request->city,
+            'user_id' => $user->id,
+            'default' => $request->default_address ?? 0,
+            'phone' => $request->mobile,
+        ]);
+
+        return $address;
+    }
+
     public function paymentResponse(Request $request) {
 
         Log::channel('daily')->info('Request Headers', ['headers' => $request->headers->all()]);
         $transactionId = $request->transactionId;
         if($request->code == 'PAYMENT_SUCCESS') {
             Order::where('payment_transaction_id', $transactionId)->update(['is_order_confirmed' => 1]);
-            
+            OrderPlatformFee::where('payment_transaction_id', $transactionId)->update(['is_order_confirmed' => 1]);
             // function to update all product quantity seller wise from above order we are getting one order only we can have multiple order at time.
             $orders = Order::where('payment_transaction_id', $transactionId)->get();
             foreach($orders as $order) {
@@ -379,6 +434,7 @@ class OrderController extends Controller
 
         if($request->code == 'PAYMENT_SUCCESS') {
             Order::where('payment_transaction_id', $transactionId)->update(['is_order_confirmed' => 1]);
+            OrderPlatformFee::where('payment_transaction_id', $transactionId)->update(['is_order_confirmed' => 1]);
             $orders = Order::where('payment_transaction_id', $transactionId)->get();
 
             foreach($orders as $order) {
@@ -425,20 +481,17 @@ class OrderController extends Controller
     }
 
     public function downloadInvoice($id) {
-        $order = Order::where('id',$id)->with(['orderItem', 'seller', 'seller.sellerInfo'])->first();
-        if($order->user_id == auth()->id())
-        {
-            if(is_null($order->invoice_number)) {
-                $order->invoice_number = '#'.strtotime('now') . $order->user_id;
-                $order->invoice_generated_at = now();
-                $order->update();
-            }
-            $pdf = Pdf::loadView('frontend.order.invoice', compact('order'));
-    
-            return $pdf->download($order->order_number.'.pdf');
-        } else {
-            abort(403);
+        try {
+            $batchOrders = Order::where(['user_id' => auth()->id(), 'is_order_confirmed' => 1, 'batch' => $id])
+            ->whereNotNull('invoice_number')
+            ->whereNotIn('status', ['cancelled','returned','rejected','refund-initializing','refund-initialized','refunded'])
+            ->get();
+            $orderPlatformFee = OrderPlatformFee::where(['user_id' => auth()->id(), 'is_order_confirmed' => 1, 'batch' => $id])->first();
+            $pdf = Pdf::loadView('frontend.order.invoice', compact('batchOrders', 'orderPlatformFee'));
+            return $pdf->download($orderPlatformFee->order_number.'.pdf');
+        } catch(Exception $e) {
+            request()->session()->put('msg', 'Something Went wrong');
+            return redirect()->back();
         }
-            
     }
 }

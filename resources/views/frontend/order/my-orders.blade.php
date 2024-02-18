@@ -77,6 +77,7 @@
             }
 
         }
+        
     </style>
 @endpush
 @section('content')
@@ -208,17 +209,22 @@
                                 <span class="d-md-none ms-4 bi bi-filter fs-3 show-filter"></span>
                             </div>
                         </div>
-                        @foreach ($orders as $batch)
+                        @foreach ($orders as $batchId => $batch)
                             <div class="card mb-3 bg-white translate-y-up">
                                 <div class="card-body">
+                                    @php $hasInvoice = false; @endphp
                                     @foreach ($batch as $order)
+                                        @php
+                                            if ($order->invoice_number !== null && !in_array($order->status, ['cancelled', 'returned', 'rejected', 'refund-initializing', 'refund-initialized', 'refunded'])) {
+                                                $hasInvoice = true;
+                                            }
+                                        @endphp
                                         <div class="row justify-content-between">
                                             {{-- @foreach ($order->orderItem as $order->orderItem) --}}
                                             <div class="col-4 col-md-2 col-md-2">
                                                 <div class="ms-2 mt-2">
                                                     @if ($order->orderItem->product->images)
-                                                        <img src="{{ asset($order->orderItem->product->images->first()->image_path) }}"
-                                                            class="img-fluid aspect-img" alt="Product Image">
+                                                        <img src="{{ asset($order->orderItem->product->images->first()->image_path) }}" class="img-fluid aspect-img" alt="Product Image">
                                                     @endif
                                                 </div>
                                             </div>
@@ -295,6 +301,11 @@
                                         </div>
                                         <hr>
                                     @endforeach
+                                    @if ($hasInvoice)    
+                                        <div class="card-footer border-0 bg-white">
+                                            <a class="btn btn-sm btn-success" href="{{ route('download.invoice', $batchId)}}"> <i class="bi bi-file-earmark-text"></i> Invoice</a>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         @endforeach

@@ -113,6 +113,7 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('user/dashboard',[UserController::class,'dashboard'])->name('user.dashboard');
 
     Route::get('check-out', [OrderController::class, 'index'])->name('checkout');
+    Route::get('change-address', [AddressController::class, 'changeAddress'])->name('change-address');
     Route::post('place-order', [OrderController::class, 'placeOrder'])->name('order.store');
     Route::get('my-order', [OrderController::class, 'myOrders'])->name('order.my-order');
     Route::get('{product}/add-rating', [RatingController::class, 'addRating'])->name('rating.add-rating');
@@ -152,6 +153,7 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('return/accept/{id}',[BackendOrderController::class,'acceptReturnOrder'])->name('order.return-accept');
         Route::post('return/orders/{id}/reject', [BackendOrderController::class,'rejectReturnOrder'])->name('order.return-reject');
 
+        Route::post('upload-signature',[SelllerController::class,'uploadSignature'])->name('upload-signature');
     });
 
     Route::get('download-invoice/{id}', [OrderController::class,'downloadInvoice'])->name('download.invoice');

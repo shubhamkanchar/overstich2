@@ -16,6 +16,7 @@ class Address extends Model
         'pincode',
         'locality',
         'user_id',
+        'phone',
         'default'
     ];
 

@@ -68,18 +68,23 @@
                 </table>
             </div>
             <div class="card-footer">
-                @if ($order->status != 'rejected')
-                    @if($order->status != 'cancelled')
-                        @if($order->status == 'new')
-                            <a class="btn btn-success" href="{{ route('seller.order.accept', $order->id)}}">Accept</a>
-                            <button class="btn btn-danger reject-order" data-bs-toggle="modal" data-bs-target="#rejectionModal">Reject</button>
+                @if (!empty($user->sellerInfo->signature))
+                    @if ($order->status != 'rejected')
+                        @if($order->status != 'cancelled')
+                            @if($order->status == 'new')
+                                <a class="btn btn-success" href="{{ route('seller.order.accept', $order->id)}}">Accept</a>
+                                <button class="btn btn-danger reject-order" data-bs-toggle="modal" data-bs-target="#rejectionModal">Reject</button>
+                            @endif
+                            @if (!empty($order->invoice_generated_at))
+                                <a class="btn btn-primary" href="{{ route('seller.download.invoice', $order->id)}}">Download Invoice</a>
+                            @endif
                         @endif
-                        @if (!empty($order->invoice_generated_at))
-                            <a class="btn btn-primary" href="{{ route('seller.download.invoice', $order->id)}}">Download Invoice</a>
-                        @endif
+                    @else
+                        <p>This Order has been reject by you for reason - {{$order->rejection_reason}}</p>
                     @endif
                 @else
-                    <p>This Order has been reject by you for reason - {{$order->rejection_reason}}</p>
+                    <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#uploadSignatureModal">Upload</button>
+                    <p>Please Upload Authorize Signature to further proceed with orders </p>
                 @endif
                 
             </div>
@@ -100,6 +105,22 @@
                         <button class="btn btn-dark float-end mt-2">Submit</button>
                     </form>
                     <p>Note Once rejected you wont able to revert this</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="uploadSignatureModal" tabindex="-1" role="dialog" aria-labelledby="rejectionModal" aria-hidden="true">
+        <div class="modal-dialog d-flex align-items-center">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Upload Signature</h1>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('seller.upload-signature')}}" method="post" id="UploadSignature" enctype="multipart/form-data">
+                        <input type="file" class="form-control mb-2" name="signature">
+                        @csrf
+                        <button class="float-end btn btn-dark">Upload</button>
+                    </form>
                 </div>
             </div>
         </div>

@@ -17,12 +17,19 @@ class AddressController extends Controller
         return view('frontend.user.address.index',compact('addresses'));
     }
 
+    public function changeAddress()
+    {
+        $addresses = Address::where('user_id',Auth::user()->id)->paginate(6);
+        return view('frontend.user.address.change-address',compact('addresses'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('frontend.user.address.add');
+        $changeAddress = $request->change_address ?? 0;
+        return view('frontend.user.address.add', compact('changeAddress'));
     }
 
     /**
@@ -42,6 +49,7 @@ class AddressController extends Controller
             'city' => $request->city,
             'user_id' => Auth::user()->id,
             'default' => $request->default_address ?? 0,
+            'phone' => $request->phone,
         ]);
 
         if($address){
@@ -49,6 +57,11 @@ class AddressController extends Controller
         }else{
             request()->session()->put('error',"Something went wrong");
         }
+
+        if(isset($request->change_address)) {
+            return redirect()->route('change-address');
+        }
+
         return redirect()->route('addresses.index');
     }
 
@@ -85,6 +98,7 @@ class AddressController extends Controller
             'locality' => $request->locality,
             'city' => $request->city,
             'default' => $request->default_address ?? 0,
+            'phone' => $request->phone,
         ]);
 
         if($address){

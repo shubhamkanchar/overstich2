@@ -50,6 +50,14 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+                            <div class="col-12 col-md-6 p-3">
+                                <label>Phone Number</label>
+                                <input type="number" class="form-control @error('phone') is-invalid @enderror" name="phone"
+                                    value="{{ $address->phone }}" maxlength="10">
+                                @error('phone')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
                             <div class="col-12 mb-3">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="1" id="defaultAddress" @if($address->default) checked @endif name="default_address">

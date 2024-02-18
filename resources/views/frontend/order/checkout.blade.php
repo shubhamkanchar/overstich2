@@ -6,6 +6,7 @@
             <h3 class="ps-4"><b>Checkout</b></h3>
         </div>
     </div>
+    
     <form method="POST" id="checkoutForm" action="{{ route('order.store')}}">
         <div class="row justify-content-center mt-5 mb-5">
             <div class="col-12 col-md-8 mb-3">
@@ -38,15 +39,8 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 p-3">
-                                <label>Mobile</label>
-                                <input type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile"
-                                    value="{{ old('mobile',auth()->user()->number ?? '') }}">
-                                @error('mobile')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="col-12 col-md-6 p-3">
+                            
+                            <div class="col-12 col-md-12 p-3">
                                 <label>Email</label>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror" name="email"
                                     value="{{ old('email', auth()->user()->email ?? '') }}">
@@ -54,10 +48,23 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+                            
+                            <div class="col-12 col-md-6 p-3">
+                                <label>Mobile</label>
+                                <input type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile"
+                                    value="{{ old('mobile', $address->phone ?? '') }}">
+                                @error('mobile')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-12 col-md-6 align-self-center">
+                                <br>
+                                <a href="{{ route('change-address')}}" class="btn btn-primary">Change Address</a href="{{ route('change-address')}}">
+                            </div>
                             <div class="col-md-12 p-3">
                                 <label>Address (House no, building, street, area)</label>
                                 <input type="text" class="form-control @error('address') is-invalid @enderror" name="address"
-                                    value="{{ auth()->user()->defaultAddress?->address }}">
+                                    value="{{ $address?->address }}">
                                 @error('address')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -65,7 +72,7 @@
                             <div class="col-12 col-md-6 p-3">
                                 <label>Pin code</label>
                                 <input type="text" class="form-control @error('pincode') is-invalid @enderror" name="pincode"
-                                    value="{{ auth()->user()->defaultAddress?->pincode }}">
+                                    value="{{ $address?->pincode }}">
                                 @error('pincode')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -73,7 +80,7 @@
                             <div class="col-12 col-md-6 p-3">
                                 <label>Locality / Town</label>
                                 <input type="text" class="form-control @error('locality') is-invalid @enderror" name="locality"
-                                    value="{{ auth()->user()->defaultAddress?->locality }}">
+                                    value="{{ $address?->locality }}">
                                 @error('locality')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -81,7 +88,7 @@
                             <div class="col-12 col-md-6 p-3">
                                 <label>City / district</label>
                                 <input type="text" class="form-control @error('city') is-invalid @enderror" name="city"
-                                    value="{{ auth()->user()->defaultAddress?->city }}">
+                                    value="{{ $address?->city }}">
                                 @error('city')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -89,16 +96,32 @@
                             <div class="col-12 col-md-6 p-3">
                                 <label>State</label>
                                 <input type="text" class="form-control @error('state') is-invalid @enderror" name="state"
-                                    value="{{ auth()->user()->defaultAddress?->state }}">
+                                    value="{{ $address?->state }}">
                                 @error('state')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
+                            </div>
+                            <div class="col-12 mb-3">
+                                <div class="form-check-inline">
+                                    <input class="form-check-input" type="checkbox" value="1" id="saveAddress" name="save_address">
+                                    <label class="form-check-label" for="saveAddress">
+                                        Save Address
+                                    </label>
+                                </div>
+
+                                <div class="form-check-inline">
+                                    <input class="form-check-input" type="checkbox" value="1" @checked($address?->default == 1) id="defaultAddress" name="default_address">
+                                    <label class="form-check-label" for="defaultAddress">
+                                        Default Address
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-12 col-md-4">
+
                 <div class="card">
                     <div class="card-header bg-light">
                         Order Details
