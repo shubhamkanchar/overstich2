@@ -10,6 +10,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12 p-3">
+                                <input type="hidden" name="change_address" value="{{ $changeAddress ?? 0}}">
                                 <label>Address (House no, building, street, area)</label>
                                 <input type="text" class="form-control @error('address') is-invalid @enderror" name="address"
                                     value="{{ old('address') }}">
@@ -47,6 +48,14 @@
                                 <input type="text" class="form-control @error('pincode') is-invalid @enderror" name="pincode"
                                     value="{{ old('pincode') }}">
                                 @error('pincode')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-12 col-md-6 p-3">
+                                <label>Phone Number</label>
+                                <input type="number" class="form-control @error('phone') is-invalid @enderror" name="phone"
+                                    value="{{ old('phone') }}" maxlength="10" data-msg="please enter valid number">
+                                @error('phone')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>

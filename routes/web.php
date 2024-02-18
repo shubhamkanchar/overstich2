@@ -111,6 +111,7 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('user/dashboard',[UserController::class,'dashboard'])->name('user.dashboard');
 
     Route::get('check-out', [OrderController::class, 'index'])->name('checkout');
+    Route::get('change-address', [AddressController::class, 'changeAddress'])->name('change-address');
     Route::post('place-order', [OrderController::class, 'placeOrder'])->name('order.store');
     Route::get('my-order', [OrderController::class, 'myOrders'])->name('order.my-order');
     Route::get('{product}/add-rating', [RatingController::class, 'addRating'])->name('rating.add-rating');

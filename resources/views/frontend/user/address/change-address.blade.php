@@ -6,7 +6,7 @@
             <h3><b>Addresses</b></h3>
         </div>
         <div class="col-md-6 text-end">
-            <a class="btn btn-dark" href="{{ route('addresses.create') }}">Add</a>
+            <a class="btn btn-dark" href="{{ route('addresses.create', ['change_address' => 1 ]) }}">Add</a>
         </div>
     </div>
     <div class="row mt-4 mb-5">
@@ -17,12 +17,7 @@
                     @if($address->default)
                         <span class="badge bg-primary fs-6 mt-2">Default</span>
                     @endif
-                    <form class="d-inline" method="POST" action="{{ route('addresses.destroy',$address->uuid) }}">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" title="Edit Address" class="btn btn-danger float-end m-1"><i class="bi bi-trash3-fill"></i></button>
-                    </form>
-                    <a title="Edit Address" href="{{ route('addresses.edit',$address->uuid) }}" class="btn btn-success float-end m-1"><i class="bi bi-pencil-square"></i></a>
+                    <a title="Edit Address" href="{{ route('checkout', ['address' => $address->id ]) }}" class="btn btn-success float-end m-1">Deliver Here</a>
                     </a>
                 </div>
                 <div class="card-body fs-6">

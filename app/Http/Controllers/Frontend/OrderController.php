@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
+use App\Models\Address;
 use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -29,7 +30,7 @@ class OrderController extends Controller
         $this->phonePePaymentGateway = $phonePePaymentGateway;
     }
 
-    public function index() {
+    public function index(Request $request) {
         $user = auth()->user();
         $userIdentifier = $user->name.$user->id;
         Cart::instance($userIdentifier)->restore($userIdentifier);
@@ -91,12 +92,18 @@ class OrderController extends Controller
         
         $deliveryCharge = 0;
         $totalPrice = $totalPrice + env('PLATFORM_FEE') - $totalCouponDiscounts ;
+        if(isset($request->address)){
+            $address = Address::where(['user_id' => $user->id])->where('id', $request->address)->first();
+        } else {
+            $address = Address::where(['user_id' => $user->id])->where('default', 1)->first();
+        }
+
         if (Cart::instance($userIdentifier)->count() === 0) {
             // notify()->error('Your Cart is Empty');
             request()->session()->put('msg', 'Your Cart is Empty');
             return  redirect()->route('cart.index');
         }
-        return view('frontend.order.checkout', compact('cartItems', 'totalPrice', 'totalDiscount', 'totalOriginalPrice', 'totalStrikedPrice','deliveryCharge', 'appliedCoupons', 'totalCouponDiscounts'));
+        return view('frontend.order.checkout', compact('cartItems', 'totalPrice', 'totalDiscount', 'totalOriginalPrice', 'totalStrikedPrice','deliveryCharge', 'appliedCoupons', 'address', 'totalCouponDiscounts'));
     }
 
     public function myOrders(Request $request) {
@@ -314,6 +321,9 @@ class OrderController extends Controller
 
         $orderPlatformFee->save();
 
+        if(isset($request->save_address) && $request->save_address == 1) {
+            $this->saveDeliveryAddress($request, $user);
+        }
         
         if($request->payment_method == 'phone_pe') {
 
@@ -338,6 +348,26 @@ class OrderController extends Controller
         Cart::store($userIdentifier); 
         // notify()->success("Order placed successfully");
         return redirect()->route('success-page');  
+    }
+
+    public function saveDeliveryAddress($request, $user) {
+
+        if($request->default_address){
+            Address::where('user_id', $user->id)->update(['default' => 0]);
+        }
+
+        $address = Address::create([
+            'address' => $request->address,
+            'pincode' => $request->pincode,
+            'state' => $request->state,
+            'locality' => $request->locality,
+            'city' => $request->city,
+            'user_id' => $user->id,
+            'default' => $request->default_address ?? 0,
+            'phone' => $request->mobile,
+        ]);
+
+        return $address;
     }
 
     public function paymentResponse(Request $request) {
