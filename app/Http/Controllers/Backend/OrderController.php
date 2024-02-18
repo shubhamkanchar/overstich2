@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\DataTables\OrderDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
@@ -19,21 +20,19 @@ class OrderController extends Controller
 
     public function viewOrder($id) {
 
-        $user = auth()->user();
+        $user = User::where('id', auth()->id())->with('sellerInfo')->first();
         $order = Order::where('id', $id)->with(['orderItem', 'orderItem.product'])->first();
         if($user->user_type == 'seller') {
             if($user->id !== $order->seller_id) {
                 return abort(401, "Don't try to access others");
             }
-            return view('backend.seller.order.view', compact('order'));    
+            return view('backend.seller.order.view', compact('order','user'));    
         }
         return view('backend.admin.order.view', compact('order'));
     }
 
     public function downloadInvoice($id) {
         $order = Order::where('id',$id)->with(['orderItem', 'seller', 'seller.sellerInfo'])->withCount('orderItem')->first();
-        
-        // return view('backend.seller.order.invoice', compact('order'));
         $pdf = Pdf::loadView('backend.seller.order.invoice', compact('order'));
  
         return $pdf->download($order->order_number.'.pdf');

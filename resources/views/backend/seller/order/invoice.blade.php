@@ -7,9 +7,17 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Invoice</title>
     <style>
-        h4 {
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        h3, h4, h5 {
             margin: 0;
         }
+
         .w-full {
             width: 100%;
         }
@@ -59,6 +67,10 @@
             font-weight: bold;
         }
 
+        th,tr,td{
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
         hr {
             border: 0.5px solid black;
         }
@@ -75,7 +87,9 @@
                 <tr>
                     <td class="w-half">
                         <div><b>Order ID: </b>{{ $order->order_number }}</div>
-                        <div><b>Transaction ID:</b> {{ $order->payment_transaction_id }}</div>
+                        @if ($order->payment_method == 'phone_pe')
+                            <div><b>Transaction ID:</b> {{ $order->payment_transaction_id }}</div>
+                        @endif
                         <div><b>Order Date:</b> {{ $order->created_at->format('d-m-Y') }}</div>
                         <div><b>Invoice Date:</b> {{ $order->invoice_generated_at->format('d-m-Y') }}</div>
                     </td>
@@ -125,7 +139,7 @@
         {{-- Total items:{{ $order->order_item_count }} --}}
             <table class="products">
                 <tr>
-                    <td colspan="6">
+                    <td colspan="9">
                         <hr style="border: 0.5px solid gray;">
                     </td>
                 </tr>
@@ -148,13 +162,24 @@
                 <tr class="items">
                     <tr>
                         <td class="text-center">{{ $order->orderItem->quantity }}</td>
-                        <td class="text-center">{{ ucfirst($order->orderItem->name) }}</td>
+                        <td class="text-center">
+                            <div>
+                                {{ ucfirst($order->orderItem->name) }}
+                            </div>
+                            <div>
+                                HSN: {{ $order->orderItem?->hsn }}
+                            </div>
+                            <div>
+                                <span>{{ $order->orderItem?->sgst_percent }}% SGST</span>
+                                <span>{{ $order->orderItem?->cgst_amount }}% CGST</span>
+                            </div>
+                        </td>
                         <td class="text-center">Rs.{{ number_format($order->orderItem->original_price, 2) }}</td>
                         <td class="text-center">Rs.{{ number_format($order->orderItem->discount, 2) }}</td>
-                        <td class="text-center">Rs.{{ number_format($order->orderItem->price, 2) }} </td>
-                        <td class="text-center">Rs.{{ number_format($order->igst_percent, 2) }} </td>
-                        <td class="text-center">Rs.{{ number_format($order->cgst_percent, 2) }} </td>
-                        <td class="text-center">Rs.{{ number_format($order->sgst_percent, 2) }} </td>
+                        <td class="text-center">Rs.{{ number_format($order->orderItem->taxable_amount, 2) }} </td>
+                        <td class="text-center">Rs.{{ number_format(($order->orderItem?->igst_amount ?? 0), 2) }}</td>
+                        <td class="text-center">Rs.{{ number_format(($order->orderItem?->cgst_amount ?? 0), 2) }}</td>
+                        <td class="text-center">Rs.{{ number_format(($order->orderItem?->sgst_amount ?? 0), 2) }}</td>
                         <td class="text-center">Rs.{{ number_format($order->orderItem->price, 2) }} </td>
                     </tr>
                 </tr>
@@ -178,10 +203,10 @@
                     <td colspan="1"> </td>
                     <td class="text-center"><b>Rs.{{ number_format($order->sub_total, 2) }}</b></td>
                     <td class="text-center"><b>Rs.{{ number_format($order->total_discount, 2) }}</b></td>
-                    <td class="text-center"><b>Rs.{{ number_format($order->total_amount, 2) }}</b> </td>
-                    <td class="text-center"><b>Rs.{{ number_format($order->igst_percent, 2) }}</b> </td>
-                    <td class="text-center"><b>Rs.{{ number_format($order->cgst_percent, 2) }}</b> </td>
-                    <td class="text-center"><b>Rs.{{ number_format($order->sgst_percent, 2) }}</b> </td>
+                    <td class="text-center"><b>Rs.{{ number_format($order->total_taxable_amount, 2) }}</b> </td>
+                    <td class="text-center"><b>Rs.{{ number_format($order->total_igst_amount, 2) }}</b> </td>
+                    <td class="text-center"><b>Rs.{{ number_format($order->total_cgst_amount, 2) }}</b> </td>
+                    <td class="text-center"><b>Rs.{{ number_format($order->total_sgst_amount, 2) }}</b> </td>
                     <td class="text-center"><b>Rs.{{ number_format($order->total_amount, 2) }}</b> </td>
                 </tr>
             </table>
@@ -193,20 +218,20 @@
             <span class="text-start" style="margin-left: 10px;"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span><b> {{ number_format($order->total_amount, 2) }}</b> </span>
         </div>
         <div class="text-end" style="margin: 5px;">{{  $order->seller->name }}</div>
-        <br>
-        <br>
-        <br>
-        <div class="div">
-            <img src="" alt="">
+        <div class="w-full" style="margin-bottom: 2px;">
+            <div style="text-align: right"><img src="{{ asset($order?->seller?->sellerInfo?->signature)}}" alt="" style="width: 180px; height: 80px;"></div>
         </div>
-        <div class="text-end">Authorized Signatory</div>
-        <hr>
-        <h5>DECLARATION</h5>
-        <p>The goods sold as part of this shipment are intended for end-user consumption and are not for retail sale.</p>
-        <hr>
-        <p>If you have any questions, contact us on +917066856414 or overstitch.in@gmail.com</p>
-        <hr>
-        <p>Purchase made on Overstitch</p>
+        <div>
+            <div class="text-end">Authorized Signatory</div>
+            <hr>
+            <h5>DECLARATION</h5>
+            <p>The goods sold as part of this shipment are intended for end-user consumption and are not for retail sale.</p>
+            <hr>
+            <p>If you have any questions, contact us on +917066856414 or overstitch.in@gmail.com</p>
+            <hr>
+            <p>Purchase made on Overstitch</p>
+        </div>
+        
         {{-- <div class="footer">
             <div class="text-end">Thank you</div>
             <div class="text-end">copyright @ overstitch</div>

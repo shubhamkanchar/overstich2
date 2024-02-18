@@ -144,7 +144,7 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('shipment/create/{id}',[DelhiveryController::class,'shipmentForm'])->name('shipment-form');
         Route::resource('coupon', CouponController::class);
         Route::get('accept/{order}',[BackendOrderController::class,'acceptOrder'])->name('order.accept');
-
+        Route::post('upload-signature',[SelllerController::class,'uploadSignature'])->name('upload-signature');
     });
 
     Route::get('download-invoice/{id}', [OrderController::class,'downloadInvoice'])->name('download.invoice');

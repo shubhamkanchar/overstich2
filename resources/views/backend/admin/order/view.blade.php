@@ -3,15 +3,21 @@
 @section('content')
     <div class="container">
         <div class="card">
+            <div class="card-header">
+                Order At: {{ $order->created_at->format('d/m/Y H:i A')}}
+            </div>
             <div class="card-body table-responsive">
                 <table class="table">
                     <thead>
                         <tr>
                             <th>Product</th>
                             <th style="width: 400px !important">Image</th>
-                            <th class="text-center">Price</th>
+                            <th class="text-center">Gross Amount(rs)</th>
+                            <th class="text-center">Discount(rs)</th>
+                            <th class="text-center">Taxable Amount(rs)</th>
                             <th class="text-center">Discount</th>
                             <th class="text-center">Quantity</th>
+                            <th class="text-center">Net Amount(rs)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -39,23 +45,20 @@
                                     </button>
                                 </div>
                             </td>
-                            <td class="text-center">{{ $order->orderItem->price }}</td>
-                            <td class="text-center">{{ $order->orderItem->discount }}</td>
+                            <td class="text-center">{{ number_format($order->orderItem->taxable_amount, 2) }}</td>
+                            <td class="text-center">{{ number_format($order->orderItem->discount, 2) }}</td>
+                            <td class="text-center">{{ number_format($order->orderItem->taxable_amount, 2) }}</td>
                             <td class="text-center">{{ $order->orderItem->quantity }}</td>
+                            <td class="text-center">{{ number_format($order->orderItem->price, 2) }}</td>
                         </tr>
                         <tr>
-                            <th class="text-center">Subtotal</th>
-                            <th class="text-center" style="width: 400px !important">Delivery Charge</th>
-                            <th class="text-center">Discount</th>
-                            <th class="text-center">Total Amount</th>
-                            <th class="text-center">Created At</th>
-                        </tr>
-                        <tr>
+                            <th>Total</th>
+                            <th></th>
                             <td class="text-center">{{ $order->sub_total }}</td>
-                            <td class="text-center" style="width: 400px !important">{{ $order->shipping_cost ?? '-' }}</td>
-                            <td class="text-center">{{ $order->total_discount }}</td>
+                            <td class="text-center">{{ $order->total_discount ?? '-' }}</td>
+                            <td class="text-center">{{ $order->total_taxable_amount }}</td>
+                            <td></td>
                             <td class="text-center">{{ $order->total_amount }}</td>
-                            <td class="text-center">{{ $order->created_at }}</td>
                         </tr>
                     </tbody>
                 </table>

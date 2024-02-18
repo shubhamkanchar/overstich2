@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Models\SellerInfo;
 use App\Models\SellerInfoImage;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class SelllerController extends Controller
@@ -70,5 +72,22 @@ class SelllerController extends Controller
         $sellerInfo = SellerInfo::where('seller_id',$request->id)->first();
         $sellerImage = SellerInfoImage::where('seller_id',$request->id)->get();
         return view('backend.admin.seller.view',compact('user','sellerInfo','sellerImage'));
+    }
+
+    public function uploadSignature(Request $request) {
+        $image = $request->signature;
+        $user = auth()->user();
+        $sellerInfo = SellerInfo::where('seller_id', $user->id)->first();
+        try {
+            $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('image/seller/' . $user->name.'/signature'), $imageName);
+
+            $sellerInfo->signature = 'image/seller/' . $user->name . '/'.'signature/' . $imageName;
+            $sellerInfo->update();
+            return redirect()->back()->with('success', 'Signature uploaded successfully');
+        } catch(Exception $e) {
+            request()->session()->put('error','something went wrong please try again');
+            return redirect()->back();
+        }
     }
 }
