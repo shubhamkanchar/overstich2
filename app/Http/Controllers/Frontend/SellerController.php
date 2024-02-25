@@ -43,7 +43,7 @@ class SellerController extends Controller
         DB::beginTransaction();
         try {
             $user = User::create([
-                'name' => $request->brand,
+                'name' => $request->owner_name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'user_type' => 'seller',
@@ -72,9 +72,9 @@ class SellerController extends Controller
                 'brand' => $request->brand,
                 'gst' => $request->gst,
                 'whatsapp' => $request->whatsapp,
-                'category' => $request->category,
-                'products' => $request->product,
-                'price_range' => $request->price_range,
+                // 'category' => $request->category,
+                // 'products' => $request->product,
+                // 'price_range' => $request->price_range,
                 'address' => $request->address_line,
                 'locality' => $request->locality,
                 'city' => $request->city,

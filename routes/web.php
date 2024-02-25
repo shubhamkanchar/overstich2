@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\Backend\AccountController;
 use App\Http\Controllers\Backend\AdsModelController;
 use App\Http\Controllers\Backend\WarehouseController;
 use App\Http\Controllers\Backend\CategoryController;
@@ -147,7 +148,11 @@ Route::group(['middleware'=>['auth']],function(){
         Route::post('pickup',[DelhiveryController::class,'raisePickup'])->name('pickup');
         Route::resource('warehouses',WarehouseController::class);
         Route::get('track/{id}',[DelhiveryController::class,'track'])->name('order.track');
-        
+        Route::get('account', [AccountController::class, 'sellerAccount'])->name('account.index');
+        Route::post('update-basic-info', [AccountController::class, 'updateBrandInfo'])->name('account.update.basic');
+        Route::post('deactivate-account', [AccountController::class, 'deactivate'])->name('account.deactivate');
+        Route::post('activate-account', [AccountController::class, 'activate'])->name('account.activate');
+        Route::post('update-products-details', [AccountController::class, 'updateProductDetails'])->name('account.products.details');
 
         Route::get('shipment/create/{id}',[DelhiveryController::class,'shipmentForm'])->name('shipment-form');
         Route::resource('coupon', CouponController::class);
@@ -172,6 +177,10 @@ Route::group(['middleware'=>['auth']],function(){
     Route::post('apply-coupon/{coupon}', [CouponController::class, 'applyCoupon'])->name('coupon.apply');
     Route::post('remove-coupon/{coupon}', [CouponController::class, 'removeCoupon'])->name('coupon.remove');
     Route::resource('addresses',AddressController::class);
+    Route::get('my-account', [AccountController::class, 'userAccount'])->name('account.index');
+    Route::post('/profile/update', [AccountController::class, 'updateProfile'])->name('account.update');
+    Route::post('/profile/update-password', [AccountController::class, 'updatePassword'])->name('account.update.password');
+    Route::post('profile/password-verification', [AccountController::class, 'passwordVerification'])->name('account.verify-old-password');
 });
 
 

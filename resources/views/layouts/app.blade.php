@@ -143,6 +143,7 @@
                                         <i class="bi bi-building-fill-add me-2"></i>Address
                                     </a>
                                 @endif
+                                
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -246,6 +247,9 @@
                                         </a>
                                         <a class="dropdown-item" href="{{ route('addresses.index') }}">
                                             <i class="bi bi-building-fill-add me-2"></i>Address
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('account.index') }}">
+                                            <i class="bi bi-person-circle me-2"></i>Account
                                         </a>
                                     @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
