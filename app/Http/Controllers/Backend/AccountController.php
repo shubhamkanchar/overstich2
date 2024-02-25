@@ -38,8 +38,56 @@ class AccountController extends Controller
         $user->save();
     }
 
-    public function updateBrandInfo(Request $request) {
+    public function updateCancelCheque(Request $request) {
+        request()->session()->put('tab', 'gst-account');
+        $request->validate([
+            'cancel_cheque' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+        ]);
+        try {
+            $user = auth()->user();
+            $sellerInfo = $user->sellerInfo;
+
+            if($request->hasFile('replace_cancel_cheque')){
+                $cancelChequeFile = $request->file('replace_cancel_cheque');
+                $cancelCheque = $request->brand . '_' . rand(1111, 9999) . '.' . $cancelChequeFile->getClientOriginalExtension();
+                $cancelChequeFile->move(public_path() .'/doc/seller/'.$user->id, $cancelCheque);
+            }
+
+            $sellerInfo->cancel_cheque = $cancelCheque;
+            $sellerInfo->update();
+            return redirect()->back()->with('success', 'Cancel Cheque Updated');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Something went wrong');
+        }
+            
+    }
+
+    public function updateGstDoc(Request $request) {
+        request()->session()->put('tab', 'gst-account');
+        $request->validate([
+            'replace_gst_doc' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+        ]);
+        try {
+            $user = auth()->user();
+            $sellerInfo = $user->sellerInfo;
+
+            if($request->hasFile('replace_gst_doc')){
+                $gstDocChequeFile = $request->file('replace_gst_doc');
+                $gstDocCheque = $request->brand . '_' . rand(1111, 9999) . '.' . $gstDocChequeFile->getClientOriginalExtension();
+                $gstDocChequeFile->move(public_path() .'/doc/seller/'.$user->id, $gstDocCheque);
+            }
         
+            $sellerInfo->gst_doc = $gstDocCheque;
+            $sellerInfo->update();
+            return redirect()->back()->with('success', 'Gst Document Updated');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Something went wrong');
+        }
+            
+    }
+
+    public function updateBrandInfo(Request $request) {
+        request()->session()->put('tab', 'basic');
         $request->validate([
             'name' => 'required|string|max:255',
             'brand' => 'required|string|max:255',
@@ -71,6 +119,59 @@ class AccountController extends Controller
         $sellerInfo->save();
     
         return redirect()->back()->with('success', 'Profile updated successfully.');    
+    }
+
+    public function updateGstAccount(Request $request) {
+
+        request()->session()->put('tab', 'gst-account');
+        try {
+            $request->validate([
+                'gst' => 'required|string|max:255',
+                'gst_address' => 'required|string|max:255',
+                'gst_name' => 'required|string|max:255',
+                'ifsc' => 'required|string|max:255',
+                'account' => 'required|string|max:255',
+                'bank_name' => 'required|string|max:255',
+                'account_holder_name' => 'required|string|max:255',
+                'account_type' => 'required|string|in:Saving,Current',
+                'cancel_cheque' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+                'gst_doc' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            ]);
+    
+            $user = auth()->user();
+            $sellerInfo = $user->sellerInfo;
+            
+            $sellerInfo->gst = $request->gst;
+            $sellerInfo->gst_address = $request->gst_address;
+            $sellerInfo->gst_name = $request->gst_name;
+            $sellerInfo->ifsc = $request->ifsc;
+            $sellerInfo->account = $request->account;
+            $sellerInfo->bank_name = $request->bank_name;
+            $sellerInfo->account_holder_name = $request->account_holder_name;
+            $sellerInfo->account_type = $request->account_type;
+        
+            if($request->hasFile('cancel_cheque')){
+                $cancelChequeFile = $request->file('cancel_cheque');
+                $cancelCheque = $request->brand . '_' . rand(1111, 9999) . '.' . $cancelChequeFile->getClientOriginalExtension();
+                $cancelChequeFile->move(public_path() .'/doc/seller/'.$user->id, $cancelCheque);
+            }
+
+            if($request->hasFile('gst_doc')){
+                $gstDocChequeFile = $request->file('gst_doc');
+                $gstDocCheque = $request->brand . '_' . rand(1111, 9999) . '.' . $gstDocChequeFile->getClientOriginalExtension();
+                $gstDocChequeFile->move(public_path() .'/doc/seller/'.$user->id, $gstDocCheque);
+            }
+        
+
+            $sellerInfo->cancel_cheque = $cancelCheque;
+            $sellerInfo->gst_doc = $gstDocCheque;
+            $sellerInfo->update();
+        
+            return redirect()->back()->with('success', 'GST and account details updated successfully.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Something went wrong');
+        }
+    
     }
 
     public function updateProfile(Request $request)
@@ -130,24 +231,29 @@ class AccountController extends Controller
     }
 
     public function updateProductDetails(Request $request){
+        request()->session()->put('tab', 'product-info');
+        try {
+            $user = Auth::user();
+            $sellerInfo = $user->sellerInfo;
+            $sellerInfo->category = $request->category;
+            $sellerInfo->products = $request->product;
+            $sellerInfo->price_range = $request->price_range;
+            $sellerInfo->is_completed = 1;
+            $sellerInfo->save();
 
-        $user = Auth::user();
-        $sellerInfo = $user->sellerInfo;
-        $sellerInfo->category = $request->category;
-        $sellerInfo->products = $request->product;
-        $sellerInfo->price_range = $request->price_range;
-        $sellerInfo->is_completed = 1;
-        $sellerInfo->save();
+            foreach ($request->file('product_photos') as $file) {
+                $fileName = $request->brand . '_' . rand(1111, 9999) . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path() .'/image/seller', $fileName);
+                SellerInfoImage::create([
+                    'seller_id' => $user->id,
+                    'file' => $fileName
+                ]);
+            }
 
-        foreach ($request->file('product_photos') as $file) {
-            $fileName = $request->brand . '_' . rand(1111, 9999) . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path() .'/image/seller', $fileName);
-            SellerInfoImage::create([
-                'seller_id' => $user->id,
-                'file' => $fileName
-            ]);
+            return redirect()->back()->with('success', 'Product Details updated successfully.'); 
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Something went wrong');
         }
-
-        return redirect()->back()->with('success', 'Profile updated successfully.');  
+             
     }
 }

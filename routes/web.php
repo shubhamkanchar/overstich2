@@ -153,6 +153,9 @@ Route::group(['middleware'=>['auth']],function(){
         Route::post('deactivate-account', [AccountController::class, 'deactivate'])->name('account.deactivate');
         Route::post('activate-account', [AccountController::class, 'activate'])->name('account.activate');
         Route::post('update-products-details', [AccountController::class, 'updateProductDetails'])->name('account.products.details');
+        Route::post('update-gst-account-details', [AccountController::class, 'updateGstAccount'])->name('account.update.gst-account');
+        Route::patch('update-cancel-cheque', [AccountController::class, 'updateCancelCheque'])->name('account.update-cancel-cheque');
+        Route::patch('update-gst-doc', [AccountController::class, 'updateGstDoc'])->name('account.update-gst-doc');
 
         Route::get('shipment/create/{id}',[DelhiveryController::class,'shipmentForm'])->name('shipment-form');
         Route::resource('coupon', CouponController::class);

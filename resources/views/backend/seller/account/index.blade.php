@@ -6,26 +6,29 @@
                 Please complete profile and upload product details
             </div>
         @endif
+        @php
+            $activeTab = session('tab') ?? 'basic';
+        @endphp
         <div class="card">
             <div class="card-header">
                 <div class="d-flex justify-content-between">
                     <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="basic-tab" data-bs-toggle="tab" data-bs-target="#basic" type="button" role="tab" aria-controls="basic" aria-selected="true">Basic Profile Details</button>
+                            <button class="nav-link {{ $activeTab == 'basic' ? 'active' : ''}}" id="basic-tab" data-bs-toggle="tab" data-bs-target="#basic" type="button" role="tab" aria-controls="basic" aria-selected="true">Basic Profile Details</button>
                         </li>
                         
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="seller-info-tab" data-bs-toggle="tab" data-bs-target="#seller-info" type="button" role="tab" aria-controls="seller-info" aria-selected="false">Gst & Account </button>
+                            <button class="nav-link {{ $activeTab == 'gst-account' ? 'active' : ''}}" id="seller-info-tab" data-bs-toggle="tab" data-bs-target="#seller-info" type="button" role="tab" aria-controls="seller-info" aria-selected="false">Gst & Account </button>
                         </li>
 
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="seller-documents-tab" data-bs-toggle="tab" data-bs-target="#seller-documents" type="button" role="tab" aria-controls="seller-documents" aria-selected="false">Documents</button>
+                            <button class="nav-link {{ $activeTab == 'document' ? 'active' : ''}}" id="seller-documents-tab" data-bs-toggle="tab" data-bs-target="#seller-documents" type="button" role="tab" aria-controls="seller-documents" aria-selected="false">Documents</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="seller-product-tab" data-bs-toggle="tab" data-bs-target="#seller-product" type="button" role="tab" aria-controls="seller-product" aria-selected="false">Product Details</button>
+                            <button class="nav-link {{ $activeTab == 'product-info' ? 'active' : ''}}" id="seller-product-tab" data-bs-toggle="tab" data-bs-target="#seller-product" type="button" role="tab" aria-controls="seller-product" aria-selected="false">Product Details</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="password-tab" data-bs-toggle="tab" data-bs-target="#password" type="button" role="tab" aria-controls="password" aria-selected="false">Password</button>
+                            <button class="nav-link {{ $activeTab == 'password' ? 'active' : ''}}" id="password-tab" data-bs-toggle="tab" data-bs-target="#password" type="button" role="tab" aria-controls="password" aria-selected="false">Password</button>
                         </li>
                     </ul>
                     @if ($user->is_active == 1)    
@@ -41,19 +44,19 @@
             </div>
             <div class="card-body">
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
+                    <div class="tab-pane fade {{ $activeTab == 'basic' ? 'show active' : ''}}" id="basic" role="tabpanel" aria-labelledby="basic-tab">
                         @include('backend.seller.account.brand')
                     </div>
-                    <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
+                    <div class="tab-pane fade {{ $activeTab == 'password' ? 'show active' : ''}}" id="password" role="tabpanel" aria-labelledby="password-tab">
                         @include('backend.seller.account.password')
                     </div>
-                    <div class="tab-pane fade" id="seller-info" role="tabpanel" aria-labelledby="seller-info-tab">
+                    <div class="tab-pane fade {{ $activeTab == 'gst-account' ? 'show active' : ''}}" id="seller-info" role="tabpanel" aria-labelledby="seller-info-tab">
                         @include('backend.seller.account.gst_account')
                     </div>
-                    <div class="tab-pane fade" id="seller-documents" role="tabpanel" aria-labelledby="seller-documents-tab">
+                    <div class="tab-pane fade {{ $activeTab == 'document' ? 'show active' : ''}}" id="seller-documents" role="tabpanel" aria-labelledby="seller-documents-tab">
                         @include('backend.seller.account.documents')
                     </div>
-                    <div class="tab-pane fade" id="seller-product" role="tabpanel" aria-labelledby="seller-product-tab">
+                    <div class="tab-pane fade {{ $activeTab == 'product-info' ? 'show active' : ''}}" id="seller-product" role="tabpanel" aria-labelledby="seller-product-tab">
                         @include('backend.seller.account.product-details')
                     </div>
                 </div>
@@ -200,6 +203,53 @@
                     },
                     confirm_password: {
                         equalTo: "Please enter the same password as above"
+                    }
+                },
+                submitHandler: function(form) {
+                    form.submit();
+                }
+            });
+
+            $('#replaceCancelCheque').on('change', function () {
+                let button = $($(this).data('target')).trigger('click');
+            });
+
+            $('#replaceGstDoc').on('change', function () {
+                let button = $($(this).data('target')).trigger('click');
+            });
+        
+            $('#GSTAccountForm').validate({
+                rules: {
+                    gst: {
+                        required: true,
+                        maxlength: 255 
+                    },
+                    gst_address: {
+                        required: true,
+                        maxlength: 255
+                    },
+                    gst_name: {
+                        required: true,
+                        maxlength: 255
+                    },
+                    ifsc: {
+                        required: true,
+                        maxlength: 255
+                    },
+                    account: {
+                        required: true,
+                        maxlength: 255
+                    },
+                    bank_name: {
+                        required: true,
+                        maxlength: 255
+                    },
+                    account_holder_name: {
+                        required: true,
+                        maxlength: 255
+                    },
+                    account_type: {
+                        required: true
                     }
                 },
                 submitHandler: function(form) {
