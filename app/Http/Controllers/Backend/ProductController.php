@@ -153,7 +153,8 @@ class ProductController extends Controller
         $masterCategory = Category::whereNull('parent_id')->get();
         $subCategory = Category::where('parent_id', $product->master_category_id)->whereNull('subcategory_id')->whereNotNull('parent_id')->get();
         $productSizes = ProductSize::where('product_id', $product->id)->get();
-        return view('backend.seller.product.edit',compact('product', 'category', 'masterCategory','subCategory', 'productSizes'));
+        $user = auth()->user();
+        return view('backend.seller.product.edit',compact('product', 'category', 'masterCategory','subCategory', 'productSizes', 'user'));
     }
 
     /**

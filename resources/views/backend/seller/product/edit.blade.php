@@ -397,7 +397,11 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-success">Update Product</button>
+                                @if ($user->is_active == 1)
+                                    <button type="submit" class="btn btn-success">Update Product</button>
+                                @else 
+                                    <p class="fs-4 fw-bold">Please Activate your account to update product</p>
+                                @endif
                             </div>
                         </form>
                     </div>

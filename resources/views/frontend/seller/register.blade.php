@@ -101,7 +101,7 @@
                                 <label class="form-check-label">Show Password</label>
                             </div>
                         </div>
-                        <div class="col-md-12 pt-3 ps-3">
+                        {{-- <div class="col-md-12 pt-3 ps-3">
                             <h5 class="text-decoration-underline">Product Details</h5>
                         </div>
                         <div class="col-md-6 p-3">
@@ -139,13 +139,12 @@
                             <label>Upload product photos</label>
                             <input class="form-control" accept="image/*" type="file" name="product_photos[]"
                                 placeholder="Minimum 5 photos" multiple>
-                            {{-- <small>(Note: Please upload file size less than 500KB )</small> --}}
                             @error('product_photos')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
-                        </div>
+                        </div> --}}
                         <div class="col-md-12 pt-3 ps-3">
                             <h5 class="text-decoration-underline">Document</h5>
                         </div>

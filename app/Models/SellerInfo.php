@@ -14,6 +14,8 @@ class SellerInfo extends Model
         'seller_id',
         'brand',
         'gst',
+        'gst_address',
+        'gst_name',
         'slug',
         'whatsapp',
         'category',
@@ -37,6 +39,10 @@ class SellerInfo extends Model
         'organization_name',
         'cancel_cheque',
     ];
+
+    public function seller() {
+        return $this->belongsTo(User::class, 'seller_id', 'id');
+    }
 
     protected static function boot()
     {
