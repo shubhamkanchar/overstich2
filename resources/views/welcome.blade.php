@@ -21,7 +21,9 @@
                     @endphp
                     @foreach ($topAds as  $ad)
                         <div class="carousel-item  @if($index == 0) active @endif">
-                            <img src="{{ asset('image/banner/' . $ad->file) }}" class="aspect-img br" alt="Los Angeles" style="aspect-ratio: 3/2 !important;">
+                            <a href="{{ $ad->link }}">
+                                <img src="{{ asset('image/banner/' . $ad->file) }}" class="aspect-img br" alt="Los Angeles" style="aspect-ratio: 3/2 !important;">
+                            </a>
                         </div>
                     @php
                     $index++ ;
@@ -98,7 +100,9 @@
                         @endphp
                         @foreach ($leftAds as  $ad)
                             <div class="carousel-item  @if($index == 0) active @endif">
-                                <img src="{{ asset('image/banner/' . $ad->file) }}" class="aspect-img br" alt="Los Angeles" style="aspect-ratio: 3/2 !important;">
+                                <a href="{{ $ad->link }}">
+                                    <img src="{{ asset('image/banner/' . $ad->file) }}" class="aspect-img br" alt="Los Angeles" style="aspect-ratio: 3/2 !important;">
+                                </a>
                             </div>
                         @php
                         $index++ ;
@@ -132,7 +136,9 @@
                         @endphp
                         @foreach ($rightAds as  $ad)
                             <div class="carousel-item  @if($index == 0) active @endif">
-                                <img src="{{ asset('image/banner/' . $ad->file) }}" class="aspect-img br" alt="Los Angeles" style="aspect-ratio: 3/2 !important;">
+                                <a href="{{ $ad->link }}">
+                                    <img src="{{ asset('image/banner/' . $ad->file) }}" class="aspect-img br" alt="Los Angeles" style="aspect-ratio: 3/2 !important;">
+                                </a>
                             </div>
                         @php
                         $index++ ;
@@ -170,7 +176,9 @@
                     @endphp
                     @foreach ($bottomAds as  $ad)
                         <div class="carousel-item  @if($index == 0) active @endif">
-                            <img src="{{ asset('image/banner/' . $ad->file) }}" class="aspect-img br" alt="Los Angeles" style="aspect-ratio: 3/2 !important;">
+                            <a href="{{ $ad->link }}">
+                                <img src="{{ asset('image/banner/' . $ad->file) }}" class="aspect-img br" alt="Los Angeles" style="aspect-ratio: 3/2 !important;">
+                            </a>
                         </div>
                     @php
                     $index++ ;

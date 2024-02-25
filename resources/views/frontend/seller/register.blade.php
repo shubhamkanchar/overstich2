@@ -159,7 +159,7 @@
                             @enderror
                         </div>
                         <div class="col-md-6 p-3">
-                            <label>Upload Brand Trademark/NOC document</label>
+                            <label>Upload Brand Trademark/NOC document (Optional)</label>
                             <input class="form-control" type="file" name="noc_doc" placeholder="Trademark/NOC document" required>
                             @error('noc_doc')
                                 <span class="invalid-feedback" role="alert">
@@ -382,7 +382,7 @@
                                 brand name, Legal name and address, will be visible to customers on the platform. This
                                 ensures transparency and trust in the products being offered.
                             </li>
-                            <li class="mt-3"><b class="d-block">2. Trademarks -</b> Sellers must ensure that the
+                            {{-- <li class="mt-3"><b class="d-block">2. Trademarks -</b> Sellers must ensure that the
                                 products they list do not violate any intellectual property rights or trademarks owned by
                                 others. This includes using unauthorised logos, images, or branding on products or in
                                 listings.
@@ -390,29 +390,29 @@
                                 <b class="d-block">2. NOC -</b>Sellers must have a No Objection Certificate (NOC) from the
                                 brand owner in order to sell other brand products on overstitch. This NOC is a legal
                                 document that gives the seller permission to sell the brand's products.
-                            </li>
-                            <li class="mt-3"><b class="d-block">3. GST Registration - </b> Sellers must have a valid GST
+                            </li> --}}
+                            <li class="mt-3"><b class="d-block">2. GST Registration - </b> Sellers must have a valid GST
                                 registration for their business.
                             </li>
-                            <li class="mt-3"><b class="d-block">4. Shipping and Delivery - </b> We handle shipping and
+                            <li class="mt-3"><b class="d-block">3. Shipping and Delivery - </b> We handle shipping and
                                 delivery of products to customers. Sellers do not need to worry about shipping and handling.
                                 Delhivery courier service is used.
                             </li>
-                            <li class="mt-3"><b class="d-block">5. Packaging and Labelling - </b>- All products must be
+                            <li class="mt-3"><b class="d-block">4. Packaging and Labelling - </b>- All products must be
                                 packaged in bags suitable for shipping. Additionally, each product should have a label
                                 sticker with dimensions 6x4 inches, displaying relevant information.
                             </li>
-                            <li class="mt-3"><b class="d-block">6. Pricing Policy - </b>- Product selling prices listed
+                            <li class="mt-3"><b class="d-block">5. Pricing Policy - </b>- Product selling prices listed
                                 on our platform should not exceed the Maximum Retail Price (M.R.P.) mentioned on the
                                 physical product label/tag.
                             </li>
-                            <li class="mt-3"><b class="d-block">7. Product Presentation - </b>For clothing items,
+                            <li class="mt-3"><b class="d-block">6. Product Presentation - </b>For clothing items,
                                 provide at least 5 high-quality photos of the product, including images with a model wearing
                                 the clothing, size chart, and detailed product information such as fabric, fit, and
                                 occasion. While model images are recommended for other products to reduce returns, they are
                                 not mandatory.
                             </li>
-                            <li class="mt-3"><b class="d-block">8. Delivery Charges - </b>Delivery charges will be borne
+                            <li class="mt-3"><b class="d-block">7. Delivery Charges - </b>Delivery charges will be borne
                                 by the seller. Delhivery courier service will be used for all product deliveries.
                             </li>
                         </ul>
