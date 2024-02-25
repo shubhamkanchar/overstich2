@@ -154,21 +154,21 @@ class AccountController extends Controller
                 $cancelChequeFile = $request->file('cancel_cheque');
                 $cancelCheque = $request->brand . '_' . rand(1111, 9999) . '.' . $cancelChequeFile->getClientOriginalExtension();
                 $cancelChequeFile->move(public_path() .'/doc/seller/'.$user->id, $cancelCheque);
+                $sellerInfo->cancel_cheque = $cancelCheque;
             }
 
             if($request->hasFile('gst_doc')){
                 $gstDocChequeFile = $request->file('gst_doc');
                 $gstDocCheque = $request->brand . '_' . rand(1111, 9999) . '.' . $gstDocChequeFile->getClientOriginalExtension();
                 $gstDocChequeFile->move(public_path() .'/doc/seller/'.$user->id, $gstDocCheque);
+                $sellerInfo->gst_doc = $gstDocCheque;
             }
         
-
-            $sellerInfo->cancel_cheque = $cancelCheque;
-            $sellerInfo->gst_doc = $gstDocCheque;
             $sellerInfo->update();
         
             return redirect()->back()->with('success', 'GST and account details updated successfully.');
         } catch (\Throwable $th) {
+            dd($th);
             return redirect()->back()->with('error', 'Something went wrong');
         }
     
