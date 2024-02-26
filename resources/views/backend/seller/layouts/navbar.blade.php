@@ -8,10 +8,12 @@
         </div>
         <div class="col-10 text-end">
             <div class="dropdown me-md-3 mt-2">
+                @if(auth()->user()->sellerInfo->is_approved)
                 <button type="button" class="btn btn-sm btn-dark me-3" data-bs-toggle="modal"
                     data-bs-target="#exampleModal">
                     Pickup request
                 </button>
+                @endif
                 <button class=" dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
                     {{ ucwords(Auth::user()->name) }}
                 </button>
