@@ -94,14 +94,14 @@ class SellerController extends Controller
                 'cancel_cheque' => $cancelCheque
             ]);
 
-            foreach ($request->file('product_photos') as $file) {
-                $fileName = $request->brand . '_' . rand(1111, 9999) . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path() .'/image/seller', $fileName);
-                SellerInfoImage::create([
-                    'seller_id' => $user->id,
-                    'file' => $fileName
-                ]);
-            }
+            // foreach ($request->file('product_photos') as $file) {
+            //     $fileName = $request->brand . '_' . rand(1111, 9999) . '.' . $file->getClientOriginalExtension();
+            //     $file->move(public_path() .'/image/seller', $fileName);
+            //     SellerInfoImage::create([
+            //         'seller_id' => $user->id,
+            //         'file' => $fileName
+            //     ]);
+            // }
             // notify()->success('Registration successful');
             request()->session()->put('msg', 'Registration successful');
 
