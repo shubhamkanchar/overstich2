@@ -22,7 +22,7 @@
                         </li>
 
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link {{ $activeTab == 'document' ? 'active' : ''}}" id="seller-documents-tab" data-bs-toggle="tab" data-bs-target="#seller-documents" type="button" role="tab" aria-controls="seller-documents" aria-selected="false">Documents</button>
+                            <button class="nav-link {{ $activeTab == 'documents' ? 'active' : ''}}" id="seller-documents-tab" data-bs-toggle="tab" data-bs-target="#seller-documents" type="button" role="tab" aria-controls="seller-documents" aria-selected="false">Documents</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link {{ $activeTab == 'product-info' ? 'active' : ''}}" id="seller-product-tab" data-bs-toggle="tab" data-bs-target="#seller-product" type="button" role="tab" aria-controls="seller-product" aria-selected="false">Product Details</button>
@@ -53,7 +53,7 @@
                     <div class="tab-pane fade {{ $activeTab == 'gst-account' ? 'show active' : ''}}" id="seller-info" role="tabpanel" aria-labelledby="seller-info-tab">
                         @include('backend.seller.account.gst_account')
                     </div>
-                    <div class="tab-pane fade {{ $activeTab == 'document' ? 'show active' : ''}}" id="seller-documents" role="tabpanel" aria-labelledby="seller-documents-tab">
+                    <div class="tab-pane fade {{ $activeTab == 'documents' ? 'show active' : ''}}" id="seller-documents" role="tabpanel" aria-labelledby="seller-documents-tab">
                         @include('backend.seller.account.documents')
                     </div>
                     <div class="tab-pane fade {{ $activeTab == 'product-info' ? 'show active' : ''}}" id="seller-product" role="tabpanel" aria-labelledby="seller-product-tab">
@@ -215,6 +215,14 @@
             });
 
             $('#replaceGstDoc').on('change', function () {
+                let button = $($(this).data('target')).trigger('click');
+            });
+
+            $('#NocDoc').on('change', function () {
+                let button = $($(this).data('target')).trigger('click');
+            });
+
+            $('#authorizeSignature').on('change', function () {
                 let button = $($(this).data('target')).trigger('click');
             });
         

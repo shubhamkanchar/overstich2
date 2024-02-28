@@ -33,15 +33,19 @@
         </div>
         <div class="col-md-6">
             <div class="mb-3">
-                <label for="gst_doc" class="form-label">GST Document</label>
+                <label for="gst_doc">GST Document</label>
                 @if($user->sellerInfo->gst_doc)
-                    <div class="form-control">
-                        <a class="btn btn-primary" href="{{ asset('/doc/seller/' .$user->id.'/'. $user->sellerInfo->gst_doc) }}" target="_blank">View GST Document</a>
-                        <label for="replaceGstDoc" class="btn btn-danger text-white">Replace</label>
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <a class="btn btn-primary" href="{{ asset('/doc/seller/' .$user->id.'/'. $user->sellerInfo->gst_doc) }}" target="_blank">View GST Document</a>
+                            <a class="btn btn-dark" href="{{ asset('/doc/seller/' .$user->id.'/'. $user->sellerInfo->gst_doc) }}" download>Download</a>
+                            <label for="replaceGstDoc" class="btn btn-danger text-white">Replace</label>
+                        </div>
                     </div>
                 @else
                     <input type="file" required class="form-control" id="gst_doc" name="gst_doc">
                 @endif
+                <input type="hidden" class="form-control" id="brand" name="brand" placeholder="Enter brand" value="{{  optional($user->sellerInfo)->brand }}">
             </div>
         </div>
         <h4 class="mt-3 mb-3">Account</h4>
@@ -103,13 +107,17 @@
             <div class="mb-3">
                 <label>Cancelled cheque</label>
                 @if($user->sellerInfo->cancel_cheque)
-                    <div class="form-control">
-                        <a class="btn btn-primary" href="{{ asset('/doc/seller/' .$user->id.'/'. $user->sellerInfo->cancel_cheque) }}" target="_blank">View Cancel Cheque</a>
-                        <label for="replaceCancelCheque" class="btn btn-danger text-white">Replace</label>
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <a class="btn btn-primary" href="{{ asset('/doc/seller/' .$user->id.'/'. $user->sellerInfo->cancel_cheque) }}" target="_blank">View Cancel Cheque</a>
+                            <a class="btn btn-dark" href="{{ asset('/doc/seller/' .$user->id.'/'. $user->sellerInfo->cancel_cheque) }}" download>Download</a>
+                            <label for="replaceCancelCheque" class="btn btn-danger text-white">Replace</label>
+                        </div>
                     </div>
                 @else
                     <input class="form-control" type="file" name="cancel_cheque" required placeholder="Cancel Cheque" required="">
                 @endif
+                <input type="hidden" class="form-control" id="brand" name="brand" placeholder="Enter brand" value="{{  optional($user->sellerInfo)->brand }}">
             </div>
         </div>
     </div>

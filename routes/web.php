@@ -156,6 +156,8 @@ Route::group(['middleware'=>['auth']],function(){
         Route::post('update-gst-account-details', [AccountController::class, 'updateGstAccount'])->name('account.update.gst-account');
         Route::patch('update-cancel-cheque', [AccountController::class, 'updateCancelCheque'])->name('account.update-cancel-cheque');
         Route::patch('update-gst-doc', [AccountController::class, 'updateGstDoc'])->name('account.update-gst-doc');
+        Route::patch('update-noc-doc', [AccountController::class, 'uploadNocDoc'])->name('account.update-noc-doc');
+        Route::patch('update-authorize-signature', [AccountController::class, 'uploadSignature'])->name('account.update-authorize-signature');
 
         Route::get('shipment/create/{id}',[DelhiveryController::class,'shipmentForm'])->name('shipment-form');
         Route::resource('coupon', CouponController::class);

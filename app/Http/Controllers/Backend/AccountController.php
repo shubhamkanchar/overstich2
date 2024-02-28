@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\SellerInfo;
 use App\Models\SellerInfoImage;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -47,9 +49,14 @@ class AccountController extends Controller
             $user = auth()->user();
             $sellerInfo = $user->sellerInfo;
 
-            if($request->hasFile('replace_cancel_cheque')){
+            if($request->hasFile('replace_cancel_cheque')) {
+                $oldImagePath = public_path().'/doc/seller/'.$user->id.'/'.$sellerInfo->cancel_cheque;
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+
                 $cancelChequeFile = $request->file('replace_cancel_cheque');
-                $cancelCheque = $request->brand . '_' . rand(1111, 9999) . '.' . $cancelChequeFile->getClientOriginalExtension();
+                $cancelCheque = $sellerInfo?->brand . '_cancel_cheque_' . rand(1111, 9999) . '.' . $cancelChequeFile->getClientOriginalExtension();
                 $cancelChequeFile->move(public_path() .'/doc/seller/'.$user->id, $cancelCheque);
             }
 
@@ -62,6 +69,34 @@ class AccountController extends Controller
             
     }
 
+    public function uploadNocDoc(Request $request) {
+        request()->session()->put('tab', 'documents');
+        $request->validate([
+            'noc_doc' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+        ]);
+        try {
+            $user = auth()->user();
+            $sellerInfo = $user->sellerInfo;
+
+            if($request->hasFile('noc_doc')) {
+                $oldImagePath = public_path().'/doc/seller/'.$user->id.'/'.$sellerInfo->noc_doc;
+                if (!empty($sellerInfo->noc_doc) && file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+                
+                $nocDocFile = $request->file('noc_doc');
+                $nocDoc = $sellerInfo?->brand . '_noc_document_' . rand(1111, 9999) . '.' . $nocDocFile->getClientOriginalExtension();
+                $nocDocFile->move(public_path() .'/doc/seller/'.$user->id, $nocDoc);
+            }
+        
+            $sellerInfo->noc_doc = $nocDoc;
+            $sellerInfo->update();
+            return redirect()->back()->with('success', 'Noc Document Updated');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Something went wrong');
+        }
+    }
+
     public function updateGstDoc(Request $request) {
         request()->session()->put('tab', 'gst-account');
         $request->validate([
@@ -71,9 +106,14 @@ class AccountController extends Controller
             $user = auth()->user();
             $sellerInfo = $user->sellerInfo;
 
-            if($request->hasFile('replace_gst_doc')){
+            if($request->hasFile('replace_gst_doc')) {
+                $oldImagePath = public_path().'/doc/seller/'.$user->id.'/'.$sellerInfo->gst_doc;
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                } 
+
                 $gstDocChequeFile = $request->file('replace_gst_doc');
-                $gstDocCheque = $request->brand . '_' . rand(1111, 9999) . '.' . $gstDocChequeFile->getClientOriginalExtension();
+                $gstDocCheque = $sellerInfo?->brand . '_gst_doc_' . rand(1111, 9999) . '.' . $gstDocChequeFile->getClientOriginalExtension();
                 $gstDocChequeFile->move(public_path() .'/doc/seller/'.$user->id, $gstDocCheque);
             }
         
@@ -84,6 +124,32 @@ class AccountController extends Controller
             return redirect()->back()->with('error', 'Something went wrong');
         }
             
+    }
+
+    public function uploadSignature(Request $request) {
+        request()->session()->put('tab', 'documents');
+        $request->validate([
+            'authorize_signature' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+        ]);
+        $image = $request->authorize_signature;
+        $user = auth()->user();
+        $sellerInfo = SellerInfo::where('seller_id', $user->id)->first();
+        try {
+            $oldImagePath = public_path($sellerInfo->signature);
+            if (!empty($sellerInfo->signature) && file_exists($oldImagePath)) {
+                unlink($oldImagePath);
+            }
+            
+            $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('image/seller/' . $user->name.'/signature'), $imageName);
+
+            $sellerInfo->signature = 'image/seller/' . $user->name . '/'.'signature/' . $imageName;
+            $sellerInfo->update();
+            return redirect()->back()->with('success', 'Signature uploaded successfully');
+        } catch(Exception $e) {
+            request()->session()->put('error','something went wrong please try again');
+            return redirect()->back();
+        }
     }
 
     public function updateBrandInfo(Request $request) {
@@ -152,14 +218,14 @@ class AccountController extends Controller
         
             if($request->hasFile('cancel_cheque')){
                 $cancelChequeFile = $request->file('cancel_cheque');
-                $cancelCheque = $request->brand . '_' . rand(1111, 9999) . '.' . $cancelChequeFile->getClientOriginalExtension();
+                $cancelCheque = $sellerInfo?->brand . '_cancel_cheque_' . rand(1111, 9999) . '.' . $cancelChequeFile->getClientOriginalExtension();
                 $cancelChequeFile->move(public_path() .'/doc/seller/'.$user->id, $cancelCheque);
                 $sellerInfo->cancel_cheque = $cancelCheque;
             }
 
             if($request->hasFile('gst_doc')){
                 $gstDocChequeFile = $request->file('gst_doc');
-                $gstDocCheque = $request->brand . '_' . rand(1111, 9999) . '.' . $gstDocChequeFile->getClientOriginalExtension();
+                $gstDocCheque = $sellerInfo?->brand . '_gst_doc_' . rand(1111, 9999) . '.' . $gstDocChequeFile->getClientOriginalExtension();
                 $gstDocChequeFile->move(public_path() .'/doc/seller/'.$user->id, $gstDocCheque);
                 $sellerInfo->gst_doc = $gstDocCheque;
             }
