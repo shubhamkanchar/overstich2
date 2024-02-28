@@ -3,6 +3,19 @@
 @section('content')
 <div class="grey-bg container-fluid">
     <div class="row">
+        <div class="col-12">
+        @if(!auth()->user()->sellerInfo->is_completed)
+            <div class="alert alert-warning" role="alert">
+                Please complete profile and upload product details
+                <a class="btn btn-dark" href="{{ route('seller.account.index')}}">Account</a>
+            </div>
+        @endif
+        @if(!auth()->user()->sellerInfo->is_approved)
+            <div class="alert alert-warning" role="alert">
+                Admin approval is pending Once your account is complete you able to use all functionality
+            </div>
+        @endif
+        </div>
         <div class="col-xl-3 col-sm-6 col-12">
             <div class="card">
                 <div class="card-content">

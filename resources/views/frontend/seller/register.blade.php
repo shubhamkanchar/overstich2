@@ -159,7 +159,7 @@
                         </div>
                         <div class="col-md-6 p-3">
                             <label>Upload Brand Trademark/NOC document (Optional)</label>
-                            <input class="form-control" type="file" name="noc_doc" placeholder="Trademark/NOC document" required>
+                            <input class="form-control" type="file" name="noc_doc" placeholder="Trademark/NOC document">
                             @error('noc_doc')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

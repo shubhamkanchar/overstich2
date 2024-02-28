@@ -16,6 +16,7 @@
                     </a>
                 </h6>
             </div>
+            @if(auth()->user()->sellerInfo->is_completed && auth()->user()->sellerInfo->is_approved)
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingOne">
                     <button class="accordion-button @if(Route::is('seller.products.*') )  @else collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseProduct" aria-expanded="false" aria-controls="flush-product">
@@ -76,6 +77,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             {{-- <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingThree">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
